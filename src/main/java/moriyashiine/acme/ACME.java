@@ -75,6 +75,18 @@ public class ACME
                 }
             }
             catch (Exception ignored) {}
+    
+            ModObjects.stone_cthulhu_mural.item = ModObjects.research_notes_cthulhu;
+            ModObjects.moss_stone_cthulhu_mural.item = ModObjects.research_notes_cthulhu;
+            ModObjects.prismarine_cthulhu_mural.item = ModObjects.research_notes_cthulhu;
+    
+            ModObjects.stone_hastur_mural.item = ModObjects.research_notes_hastur;
+            ModObjects.moss_stone_hastur_mural.item = ModObjects.research_notes_hastur;
+            ModObjects.terracotta_hastur_mural.item = ModObjects.research_notes_hastur;
+            ModObjects.yellow_terracotta_hastur_mural.item = ModObjects.research_notes_hastur;
+    
+            ModObjects.stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;
+            ModObjects.moss_stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;
         }
     }
 }

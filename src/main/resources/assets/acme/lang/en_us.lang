@@ -12,7 +12,9 @@ tile.acme.stone_shubniggurath_mural.name=Stone Shub-Niggurath Mural
 tile.acme.moss_stone_shubniggurath_mural.name=Moss Stone Shub-Niggurath Mural
 
 #ITEM
-item.acme.test.name=Testeroni
+item.acme.research_notes_cthulhu.name=Research Notes - Cthluhu
+item.acme.research_notes_hastur.name=Research Notes - Hastur
+item.acme.research_notes_shubniggurath.name=Research Notes - Shub-Niggurath
 
 #INFO
 itemGroup.acme=ACME
