@@ -27,7 +27,7 @@ public class ACME
     static CreativeTabs tab = new CreativeTabs(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModObjects.test);
+            return new ItemStack(ModObjects.stone_cthulhu_mural);
         }
     };
 

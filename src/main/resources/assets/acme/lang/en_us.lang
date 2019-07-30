@@ -1,4 +1,14 @@
 #BLOCK
+tile.acme.stone_cthulhu_mural.name=Stone Cthulhu Mural
+tile.acme.moss_stone_cthulhu_mural.name=Moss Stone Cthulhu Mural
+tile.acme.prismarine_cthulhu_mural.name=Prismarine Cthulhu Mural
+
+tile.acme.stone_hastur_mural.name=Stone Hastur Mural
+tile.acme.terracotta_hastur_mural.name=Terracotta Hastur Mural
+tile.acme.yellow_terracotta_hastur_mural.name=Yellow Terracotta Hastur Mural
+
+tile.acme.stone_shubniggurath_mural.name=Stone Shub-Niggurath Mural
+tile.acme.moss_stone_shubniggurath_mural.name=Moss Stone Shub-Niggurath Mural
 
 #ITEM
 item.acme.test.name=Testeroni

@@ -13,6 +13,6 @@ public class ClientProxy extends ServerProxy
 {
 	@Override
 	public void registerTexture(Item item) {
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "normal"));
 	}
 }
