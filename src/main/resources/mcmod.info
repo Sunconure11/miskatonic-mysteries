@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "acme",
+  "name": "Abyssalcraft: Miskatonic Edition",
+  "description": "cyber I need description",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["MoriyaShiine, cybercat5555"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -1,0 +1,7 @@
+#BLOCK
+
+#ITEM
+item.acme.test.name=Testeroni
+
+#INFO
+itemGroup.acme=ACME
