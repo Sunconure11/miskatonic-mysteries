@@ -2,8 +2,10 @@ package moriyashiine.acme;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -42,6 +44,12 @@ public class Util {
 	
 	public static Item create(String name) {
 		return create(new Item(), name);
+	}
+	
+	public static int getArmorPieces(EntityLivingBase living, ItemArmor.ArmorMaterial mat) {
+		int fin = 0;
+		for (ItemStack stack : living.getArmorInventoryList()) if (stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).getArmorMaterial() == mat) fin++;
+		return fin;
 	}
 	
 	public static void giveAndConsumeItem(EntityPlayer player, EnumHand hand, ItemStack stack) {

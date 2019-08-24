@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+	"layer0": "acme:items/black_goats_gutting_dagger"
+  }
+}
