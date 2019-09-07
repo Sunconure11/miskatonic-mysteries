@@ -23,6 +23,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
 
@@ -34,7 +36,7 @@ public class ACME
     
     @SidedProxy(serverSide = "moriyashiine.acme.proxy.ServerProxy", clientSide = "moriyashiine.acme.proxy.ClientProxy")
     static ServerProxy proxy;
-    
+    public static final Logger LOGGER = LogManager.getLogger(NAME);
     static CreativeTabs tab = new CreativeTabs(MODID) {
         @Override
         public ItemStack createIcon() {
@@ -50,6 +52,7 @@ public class ACME
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        proxy.init(event);
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
     }
     

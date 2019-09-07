@@ -16,6 +16,14 @@ public class Sanity implements ISanity {
 
     @Override
     public void setSanity(int sanity) {
+        if (sanity > SanityUtil.SANITY_MAX){
+            this.sanity = SanityUtil.SANITY_MAX;
+            return;
+        }
+        if (sanity < 0){
+            this.sanity = 0;
+            return;
+        }
         this.sanity = sanity;
     }
 }
