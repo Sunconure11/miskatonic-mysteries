@@ -1,5 +1,6 @@
 package moriyashiine.acme;
 
+import moriyashiine.acme.ACME;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;

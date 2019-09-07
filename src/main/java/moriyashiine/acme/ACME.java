@@ -1,5 +1,10 @@
 package moriyashiine.acme;
 
+import moriyashiine.acme.common.capability.ISanity;
+import moriyashiine.acme.common.capability.Sanity;
+import moriyashiine.acme.common.capability.SanityStorage;
+import moriyashiine.acme.common.handler.CapabilityHandler;
+import moriyashiine.acme.common.network.PacketHandler;
 import moriyashiine.acme.proxy.ServerProxy;
 import moriyashiine.acme.registry.ModObjects;
 import net.minecraft.block.Block;
@@ -9,6 +14,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -37,10 +44,13 @@ public class ACME
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        PacketHandler.init();
+        CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
     }
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
     }
     
     @Mod.EventBusSubscriber
