@@ -7,6 +7,7 @@ import moriyashiine.acme.common.handler.CapabilityHandler;
 import moriyashiine.acme.common.network.PacketHandler;
 import moriyashiine.acme.proxy.ServerProxy;
 import moriyashiine.acme.registry.ModObjects;
+import moriyashiine.acme.registry.ModPotions;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
@@ -58,6 +60,7 @@ public class ACME
     
     @Mod.EventBusSubscriber
     static class Registry {
+
         @SubscribeEvent
         public static void registerBlocks(RegistryEvent.Register<Block> event) {
             try {
@@ -99,6 +102,17 @@ public class ACME
             
             ModObjects.stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;
             ModObjects.moss_stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;
+        }
+
+        @SubscribeEvent
+        public static void registerPotions(RegistryEvent.Register<Potion> event){
+            try {
+                for (Field f : ModPotions.class.getFields()) {
+                    Object obj = f.get(null);
+                    if (obj instanceof Potion) event.getRegistry().register((Potion) obj);
+                }
+            }
+            catch (Exception ignored) {}
         }
     }
 }
