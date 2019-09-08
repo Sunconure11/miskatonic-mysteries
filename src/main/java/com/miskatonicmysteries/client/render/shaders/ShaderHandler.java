@@ -1,10 +1,7 @@
 package com.miskatonicmysteries.client.render.shaders;
 
 import com.google.gson.JsonSyntaxException;
-import com.miskatonicmysteries.ACMEConfig;
-import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.capability.Sanity;
-import com.miskatonicmysteries.registry.ModPotions;
+import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.Sanity;
 import com.miskatonicmysteries.registry.ModPotions;
@@ -41,7 +38,7 @@ public class ShaderHandler {
     @SubscribeEvent
     public void doRender(TickEvent.PlayerTickEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
-        if (ACMEConfig.client.useShaders && event.side == Side.CLIENT) {
+        if (ModConfig.client.useShaders && event.side == Side.CLIENT) {
             if (event.phase == TickEvent.Phase.START) {
                 handleShaders(event, mc);
             }
