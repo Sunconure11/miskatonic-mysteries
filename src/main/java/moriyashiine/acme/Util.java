@@ -1,6 +1,5 @@
 package moriyashiine.acme;
 
-import moriyashiine.acme.ACME;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +24,7 @@ public class Util {
 		block.setHarvestLevel(tool, level);
 		if (item != null) {
 			item.setRegistryName(name);
-			item.setTranslationKey(ACME.MODID + "." + name);
+			item.setTranslationKey(name);
 			ACME.proxy.registerTexture(item);
 			ForgeRegistries.ITEMS.register(item);
 		}

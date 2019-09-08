@@ -1,34 +1,39 @@
 #BLOCK
-tile.acme.stone_cthulhu_mural.name=Stone Cthulhu Mural
-tile.acme.moss_stone_cthulhu_mural.name=Moss Stone Cthulhu Mural
-tile.acme.prismarine_cthulhu_mural.name=Prismarine Cthulhu Mural
+tile.stone_cthulhu_mural.name=Stone Cthulhu Mural
+tile.moss_stone_cthulhu_mural.name=Moss Stone Cthulhu Mural
+tile.prismarine_cthulhu_mural.name=Prismarine Cthulhu Mural
 
-tile.acme.stone_hastur_mural.name=Stone Hastur Mural
-tile.acme.moss_stone_hastur_mural.name=Moss Stone Hastur Mural
-tile.acme.terracotta_hastur_mural.name=Terracotta Hastur Mural
-tile.acme.yellow_terracotta_hastur_mural.name=Yellow Terracotta Hastur Mural
+tile.stone_hastur_mural.name=Stone Hastur Mural
+tile.moss_stone_hastur_mural.name=Moss Stone Hastur Mural
+tile.terracotta_hastur_mural.name=Terracotta Hastur Mural
+tile.yellow_terracotta_hastur_mural.name=Yellow Terracotta Hastur Mural
 
-tile.acme.stone_shubniggurath_mural.name=Stone Shub-Niggurath Mural
-tile.acme.moss_stone_shubniggurath_mural.name=Moss Stone Shub-Niggurath Mural
+tile.stone_shubniggurath_mural.name=Stone Shub-Niggurath Mural
+tile.moss_stone_shubniggurath_mural.name=Moss Stone Shub-Niggurath Mural
 
 #ITEM
-item.acme.research_notes_cthulhu.name=Research Notes - Cthluhu
-item.acme.research_notes_hastur.name=Research Notes - Hastur
-item.acme.research_notes_shubniggurath.name=Research Notes - Shub-Niggurath
+item.research_notes_cthulhu.name=Research Notes - Cthluhu
+item.research_notes_hastur.name=Research Notes - Hastur
+item.research_notes_shubniggurath.name=Research Notes - Shub-Niggurath
 
-item.acme.hastur_cultist_hood.name=Hastur Cultist Hood
-item.acme.hastur_cultist_robes.name=Hastur Cultist Robes
-item.acme.hastur_cultist_pants.name=Hastur Cultist Pants
+item.hastur_cultist_hood.name=Hastur Cultist Hood
+item.hastur_cultist_robes.name=Hastur Cultist Robes
+item.hastur_cultist_pants.name=Hastur Cultist Pants
 
-item.acme.yellow_kings_dagger.name=Yellow King's Dagger
+item.yellow_kings_dagger.name=Yellow King's Dagger
 
-item.acme.shubniggurath_cultist_mask.name=Shub-Niggurath Cultist Mask
-item.acme.shubniggurath_cultist_hoodmask.name=Shub-Niggurath Cultist Hood-Mask
-item.acme.shubniggurath_cultist_robes.name=Shub-Niggurath Cultist Robes
-item.acme.shubniggurath_cultist_pants.name=Shub-Niggurath Cultist Pants
+item.shubniggurath_cultist_mask.name=Shub-Niggurath Cultist Mask
+item.shubniggurath_cultist_hoodmask.name=Shub-Niggurath Cultist Hood-Mask
+item.shubniggurath_cultist_robes.name=Shub-Niggurath Cultist Robes
+item.shubniggurath_cultist_pants.name=Shub-Niggurath Cultist Pants
 
-item.acme.black_goats_gutting_dagger.name=Black Goat's Gutting Dagger
-item.acme.black_goats_horned_dagger.name=Black Goat's Horned Dagger
+item.black_goats_gutting_dagger.name=Black Goat's Gutting Dagger
+item.black_goats_horned_dagger.name=Black Goat's Horned Dagger
 
 #INFO
 itemGroup.acme=ACME
+
+#CONFIG
+config.category_client=Client Settings
+
+config.use_shaders=Use Shaders

@@ -10,12 +10,17 @@ import moriyashiine.acme.registry.ModObjects;
 import moriyashiine.acme.registry.ModPotions;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
@@ -25,10 +30,13 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
 @SuppressWarnings("WeakerAccess")
 @Mod(modid = ACME.MODID, name = ACME.NAME, version = ACME.VERSION)
@@ -113,6 +121,17 @@ public class ACME
                 }
             }
             catch (Exception ignored) {}
+        }
+
+        @SubscribeEvent
+        public static void registerTrades(RegistryEvent.Register<VillagerRegistry.VillagerProfession> event){
+            VillagerRegistry.VillagerProfession profession = ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation("librarian"));
+            profession.getCareer(0).addTrade(1, new EntityVillager.ITradeList() {
+                @Override
+                public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+                    recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1 + random.nextInt(2)),new ItemStack(ModObjects.research_notes_hastur, 1))); //replace with tranqs
+                }
+            });
         }
     }
 }
