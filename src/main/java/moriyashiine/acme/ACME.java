@@ -5,6 +5,7 @@ import moriyashiine.acme.common.capability.Sanity;
 import moriyashiine.acme.common.capability.SanityStorage;
 import moriyashiine.acme.common.handler.CapabilityHandler;
 import moriyashiine.acme.common.network.PacketHandler;
+import moriyashiine.acme.common.world.gen.ModWorldGen;
 import moriyashiine.acme.proxy.ServerProxy;
 import moriyashiine.acme.registry.ModObjects;
 import moriyashiine.acme.registry.ModPotions;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,6 +60,8 @@ public class ACME
     public void preInit(FMLPreInitializationEvent event) {
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
+
+        GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
     }
     
     @EventHandler
