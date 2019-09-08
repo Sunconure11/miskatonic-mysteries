@@ -32,7 +32,7 @@ public class ItemYellowKingsDagger extends ItemSword {
 						break;
 					}
 				}
-				if (hasHelmet) event.setAmount(event.getAmount() + 5);
+				if (hasHelmet) event.setAmount(event.getAmount() + 5F * (1 - ((EntityLivingBase) source).swingProgress));
 			}
 		}
 	}
@@ -42,8 +42,9 @@ public class ItemYellowKingsDagger extends ItemSword {
 		if (!event.getEntityLiving().world.isRemote) {
 			Entity source = event.getSource().getImmediateSource();
 			if (source instanceof EntityLivingBase && ((EntityLivingBase) source).getHeldItemMainhand().getItem() == this) {
+				System.out.println(((EntityLivingBase) source).swingProgress);
 				event.getEntityLiving().hurtResistantTime = 0;
-				event.getEntityLiving().attackEntityFrom(DamageSource.MAGIC, event.getEntityLiving().getRNG().nextInt(5));
+				event.getEntityLiving().attackEntityFrom(DamageSource.MAGIC, (float) event.getEntityLiving().getRNG().nextInt(5) * (1 - ((EntityLivingBase) source).swingProgress));
 			}
 		}
 	}

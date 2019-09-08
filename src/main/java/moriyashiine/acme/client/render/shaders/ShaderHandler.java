@@ -2,7 +2,9 @@ package moriyashiine.acme.client.render.shaders;
 
 import com.google.gson.JsonSyntaxException;
 import moriyashiine.acme.ACME;
-import moriyashiine.acme.util.SanityUtil;
+import moriyashiine.acme.ACMEConfig;
+import moriyashiine.acme.common.capability.Sanity;
+import moriyashiine.acme.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.ShaderGroup;
@@ -25,16 +27,18 @@ public class ShaderHandler {
     private static int oldDisplayWidth = 0;
     private static int oldDisplayHeight = 0;
 
-    public static final int SHADER_MINOR_INSANITY = 0;
+    public static final int SHADER_INSANITY = 0; //hopefully, once custom shaders come in, the intensity can hopefully be handled
+    public static final int SHADER_TRANQ = 1; //in the code, instead of making
+    public static final int SHADER_MANIA = 2; //separate shaders for each intensity
 
-    public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/deconverge.json")}; //this shader is temporary, I'm just not good enough to make shaders :(
+    public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/deconverge.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/phosphor.json")};
+    //these shaders are temporary, I'm just not good enough to make shaders :(
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void doRender(TickEvent.PlayerTickEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
-
-        if (event.side == Side.CLIENT) {
+        if (ACMEConfig.client.useShaders && event.side == Side.CLIENT) {
             if (event.phase == TickEvent.Phase.START) {
                 handleShaders(event, mc);
             }
@@ -42,7 +46,9 @@ public class ShaderHandler {
     }
 
     public void handleShaders(TickEvent.PlayerTickEvent event, Minecraft mc) {
-        handleShader(SanityUtil.getSanity(event.player) < 100, SHADER_MINOR_INSANITY); //just an example
+        handleShader(Sanity.getSanity(event.player) < 100, SHADER_INSANITY); //just an example
+        handleShader(event.player.getActivePotionEffect(ModPotions.tranquilized) != null, SHADER_TRANQ);
+        handleShader(event.player.getActivePotionEffect(ModPotions.mania) != null, SHADER_MANIA);
     }
 
     public static void handleShader(boolean condition, int shaderId) {
@@ -60,7 +66,7 @@ public class ShaderHandler {
             ShaderGroup target = new ShaderGroup(Minecraft.getMinecraft().getTextureManager(), Minecraft.getMinecraft().getResourceManager(), Minecraft.getMinecraft().getFramebuffer(), shader_resources[shaderId]);
             if (OpenGlHelper.areShadersSupported()) {
                 if (shaderGroups.containsKey(shaderId)) {
-                    ((ShaderGroup) shaderGroups.get(shaderId)).deleteShaderGroup();//..func_148021_a();
+                    ((ShaderGroup) shaderGroups.get(shaderId)).deleteShaderGroup();
                     shaderGroups.remove(shaderId);
                 }
 

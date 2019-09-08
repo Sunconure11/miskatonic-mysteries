@@ -22,14 +22,17 @@ public class ModPotion extends Potion{
         setRegistryName(new ResourceLocation(ACME.MODID, name));
         setPotionName(getRegistryName().toString().replace(":", "."));
     }
+    public boolean hasEffect(EntityLivingBase entity) {
+        return hasEffect(entity, this);
+    } //look at Potion and search for Nausea to imitate effects somehow
 
-    @Override
-    public void affectEntity(Entity source, Entity indirectSource, EntityLivingBase living, int amplifier, double health) {
-
+    public boolean hasEffect(EntityLivingBase entity, Potion potion) {
+        return entity.getActivePotionEffect(potion) != null;
     }
 
-    public boolean onImpact(World world, BlockPos pos, int amplifier) {
-        return false;
+    @Override
+    public boolean isReady(int duration, int amplifier) {
+        return true;
     }
 
     @Override

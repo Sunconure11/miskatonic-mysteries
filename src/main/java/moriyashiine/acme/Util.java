@@ -37,7 +37,7 @@ public class Util {
 	
 	public static <T extends Item> T create(T item, String name) {
 		item.setRegistryName(name);
-		item.setTranslationKey(ACME.MODID + "." + name);
+		item.setTranslationKey(name);
 		item.setCreativeTab(ACME.tab);
 		return item;
 	}

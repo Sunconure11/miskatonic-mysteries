@@ -2,6 +2,7 @@ package moriyashiine.acme.common.item.tool;
 
 import moriyashiine.acme.common.item.armor.ItemShubniggurathArmor;
 import moriyashiine.acme.registry.ModObjects;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
@@ -10,17 +11,21 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemBlackGoatsGuttingDagger extends ItemSword {
 	public ItemBlackGoatsGuttingDagger() {
 		super(ModObjects.TOOL_CULTIST);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
 	@SubscribeEvent
 	public void livingHurt(LivingHurtEvent event) {
 		if (!event.getEntityLiving().world.isRemote) {
@@ -33,7 +38,7 @@ public class ItemBlackGoatsGuttingDagger extends ItemSword {
 						break;
 					}
 				}
-				if (hasHelmet) event.setAmount(event.getAmount() + 5);
+				if (hasHelmet) event.setAmount(event.getAmount() + 5F * (1 - ((EntityLivingBase) source).swingProgress));
 			}
 		}
 	}

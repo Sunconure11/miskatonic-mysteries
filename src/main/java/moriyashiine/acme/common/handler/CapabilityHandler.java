@@ -1,8 +1,8 @@
 package moriyashiine.acme.common.handler;
 
 import moriyashiine.acme.ACME;
+import moriyashiine.acme.common.capability.Sanity;
 import moriyashiine.acme.common.capability.SanityProvider;
-import moriyashiine.acme.util.SanityUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -21,7 +21,7 @@ public class CapabilityHandler {
 
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event) {
-        SanityUtil.transferToClone(event);
+        Sanity.transferToClone(event);
     }
 
 }

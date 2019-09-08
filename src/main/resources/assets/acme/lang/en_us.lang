@@ -30,10 +30,15 @@ item.shubniggurath_cultist_pants.name=Shub-Niggurath Cultist Pants
 item.black_goats_gutting_dagger.name=Black Goat's Gutting Dagger
 item.black_goats_horned_dagger.name=Black Goat's Horned Dagger
 
+item.tranquilizer.name=Tranquilizer
+
+#POTIONS
+acme.tranquilized=Tranquilized
+acme.mania=Mania
+
 #INFO
 itemGroup.acme=ACME
 
 #CONFIG
 config.category_client=Client Settings
-
 config.use_shaders=Use Shaders

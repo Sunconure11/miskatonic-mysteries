@@ -33,7 +33,7 @@ public class ItemBlackGoatsHornedDagger extends ItemSword {
 						break;
 					}
 				}
-				if (hasHelmet) event.setAmount(event.getAmount() + 5);
+				if (hasHelmet) event.setAmount(event.getAmount() + 5F * (1 - ((EntityLivingBase) source).swingProgress));
 			}
 		}
 	}
