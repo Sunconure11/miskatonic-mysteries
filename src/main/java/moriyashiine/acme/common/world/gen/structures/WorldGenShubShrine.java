@@ -1,6 +1,8 @@
 package moriyashiine.acme.common.world.gen.structures;
 
-import moriyashiine.acme.ACME;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.world.gen.ModWorldGen;
+import moriyashiine.acme.MiskatonicMysteries;
 import moriyashiine.acme.common.world.gen.ModWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -22,11 +24,11 @@ import java.util.Random;
 public class WorldGenShubShrine extends WorldGenerator {
 
     @Override
-    public boolean generate(World worldIn, Random rand, BlockPos position) {
+    public boolean generate(World worldIn, Random rand, BlockPos position) { //todo, for all shrines, add a processor to vary blocks now and then, see https://tutorials.darkhax.net/tutorials/structure_gen/
         WorldServer worldServer = (WorldServer) worldIn;
         MinecraftServer minecraftServer = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldServer.getStructureTemplateManager();
-        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(ACME.MODID,"shrine_cthulhu_prismarine_1"));
+        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrine_cthulhu_prismarine_1"));
 
         if (ModWorldGen.canSpawnHere(template, worldServer, position)) {
             IBlockState iBlockState = worldIn.getBlockState(position);

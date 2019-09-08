@@ -1,6 +1,7 @@
 package moriyashiine.acme.client.gui;
 
-import moriyashiine.acme.ACME;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import moriyashiine.acme.MiskatonicMysteries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
@@ -22,7 +23,7 @@ public class GuiFactory implements IModGuiFactory {
 
     @Override
     public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new GuiConfig(parentScreen, ACME.MODID, ACME.NAME);
+        return new GuiConfig(parentScreen, MiskatonicMysteries.MODID, MiskatonicMysteries.NAME);
     }
 
     public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {

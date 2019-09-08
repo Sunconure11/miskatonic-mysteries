@@ -1,8 +1,9 @@
 package moriyashiine.acme.common.capability;
-import moriyashiine.acme.common.network.PacketHandler;
+
+import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
 import moriyashiine.acme.common.network.message.capability.PacketSyncSanity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class Sanity implements ISanity {

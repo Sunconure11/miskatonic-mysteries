@@ -1,6 +1,8 @@
 package moriyashiine.acme.common.network;
 
-import moriyashiine.acme.ACME;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
+import moriyashiine.acme.MiskatonicMysteries;
 import moriyashiine.acme.common.network.message.capability.PacketSyncSanity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,7 +20,7 @@ public class PacketHandler {
         return nextId++;
     }
     public static void init() {
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(ACME.MODID);
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(MiskatonicMysteries.MODID);
 
         network.registerMessage(new PacketSyncSanity.Handler(), PacketSyncSanity.class, next(), Side.CLIENT);
     }

@@ -1,6 +1,7 @@
 package moriyashiine.acme.registry;
 
-import moriyashiine.acme.common.potion.PotionMania;
+import com.miskatonicmysteries.common.potion.PotionMania;
+import com.miskatonicmysteries.common.potion.PotionTranquilized;
 import moriyashiine.acme.common.potion.PotionTranquilized;
 
 public class ModPotions {

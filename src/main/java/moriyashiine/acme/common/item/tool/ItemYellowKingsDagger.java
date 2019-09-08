@@ -1,6 +1,7 @@
 package moriyashiine.acme.common.item.tool;
 
-import moriyashiine.acme.common.item.armor.ItemHasturArmor;
+import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
+import com.miskatonicmysteries.registry.ModObjects;
 import moriyashiine.acme.registry.ModObjects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

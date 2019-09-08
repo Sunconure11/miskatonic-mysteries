@@ -1,7 +1,9 @@
 package moriyashiine.acme.common.handler;
 
-import moriyashiine.acme.ACME;
-import moriyashiine.acme.common.capability.Sanity;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.capability.Sanity;
+import com.miskatonicmysteries.common.capability.SanityProvider;
+import moriyashiine.acme.MiskatonicMysteries;
 import moriyashiine.acme.common.capability.SanityProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -10,7 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CapabilityHandler {
-    public static final ResourceLocation SANITY = new ResourceLocation(ACME.MODID, "sanity");
+    public static final ResourceLocation SANITY = new ResourceLocation(MiskatonicMysteries.MODID, "sanity");
 
     @SubscribeEvent
     public void attachCapability(AttachCapabilitiesEvent event) {

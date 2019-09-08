@@ -1,15 +1,10 @@
 package moriyashiine.acme.common.item.consumable;
 
-import moriyashiine.acme.registry.ModPotions;
-import net.minecraft.client.Minecraft;
+import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemTranquilizer extends ItemFood{

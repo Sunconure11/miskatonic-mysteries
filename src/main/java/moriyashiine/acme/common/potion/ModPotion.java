@@ -1,25 +1,23 @@
 package moriyashiine.acme.common.potion;
 
-import moriyashiine.acme.ACME;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import moriyashiine.acme.MiskatonicMysteries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModPotion extends Potion{
     protected ModPotion(String name, boolean isNegative, int color) {
         super(isNegative, color);
-        setRegistryName(new ResourceLocation(ACME.MODID, name));
+        setRegistryName(new ResourceLocation(MiskatonicMysteries.MODID, name));
         setPotionName(getRegistryName().toString().replace(":", "."));
     }
     public boolean hasEffect(EntityLivingBase entity) {
@@ -49,7 +47,7 @@ public class ModPotion extends Potion{
 
     @SideOnly(Side.CLIENT)
     private void render(int x, int y, float alpha) {
-        Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ACME.MODID, "textures/gui/effect/" + getName().replace(ACME.MODID + ".", "") +".png"));
+        Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(MiskatonicMysteries.MODID, "textures/gui/effect/" + getName().replace(MiskatonicMysteries.MODID + ".", "") +".png"));
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buf = tessellator.getBuffer();
         buf.begin(7, DefaultVertexFormats.POSITION_TEX);

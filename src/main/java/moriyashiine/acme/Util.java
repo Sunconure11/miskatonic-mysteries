@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 public class Util {
 	public static <T extends Block> T create(Item item, T block, SoundType sound, float hardness, float resistance, String tool, int level, String name) {
 		block.setRegistryName(name);
-		block.setTranslationKey(ACME.MODID + "." + name);
-		block.setCreativeTab(ACME.tab);
+		block.setTranslationKey(name);
+		block.setCreativeTab(MiskatonicMysteries.tab);
 		ObfuscationReflectionHelper.setPrivateValue(Block.class, block, sound, "blockSoundType", "field_149762_H");
 		block.setHardness(hardness);
 		block.setResistance(resistance);
@@ -25,7 +25,7 @@ public class Util {
 		if (item != null) {
 			item.setRegistryName(name);
 			item.setTranslationKey(name);
-			ACME.proxy.registerTexture(item);
+			MiskatonicMysteries.proxy.registerTexture(item);
 			ForgeRegistries.ITEMS.register(item);
 		}
 		return block;
@@ -38,7 +38,7 @@ public class Util {
 	public static <T extends Item> T create(T item, String name) {
 		item.setRegistryName(name);
 		item.setTranslationKey(name);
-		item.setCreativeTab(ACME.tab);
+		item.setCreativeTab(MiskatonicMysteries.tab);
 		return item;
 	}
 	

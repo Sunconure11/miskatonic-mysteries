@@ -1,5 +1,6 @@
 package moriyashiine.acme.common.block;
 
+import com.miskatonicmysteries.Util;
 import moriyashiine.acme.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 public class BlockMural extends Block {
 	public Item item;
-	
+	//todo convert all other structures
 	public BlockMural(Material mat) {
 		super(mat);
 	}

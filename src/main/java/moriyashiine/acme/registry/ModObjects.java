@@ -1,14 +1,19 @@
 package moriyashiine.acme.registry;
 
-import moriyashiine.acme.ACME;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.Util;
+import com.miskatonicmysteries.common.block.BlockMural;
+import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
+import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
+import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
+import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
+import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
+import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
+import moriyashiine.acme.MiskatonicMysteries;
 import moriyashiine.acme.Util;
 import moriyashiine.acme.common.block.BlockMural;
-import moriyashiine.acme.common.item.armor.ItemHasturArmor;
-import moriyashiine.acme.common.item.armor.ItemShubniggurathArmor;
 import moriyashiine.acme.common.item.consumable.ItemTranquilizer;
 import moriyashiine.acme.common.item.tool.ItemBlackGoatsGuttingDagger;
-import moriyashiine.acme.common.item.tool.ItemBlackGoatsHornedDagger;
-import moriyashiine.acme.common.item.tool.ItemYellowKingsDagger;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.SoundEvents;
@@ -18,8 +23,8 @@ import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class ModObjects {
-	public static ItemArmor.ArmorMaterial ARMOR_HASTUR = EnumHelper.addArmorMaterial("hastur_cultist", ACME.MODID + ":hastur_cultist", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0);
-	public static ItemArmor.ArmorMaterial ARMOR_SHUBNIGGURATH = EnumHelper.addArmorMaterial("shubniggurath_cultist", ACME.MODID + ":shubniggurath_cultist", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0);
+	public static ItemArmor.ArmorMaterial ARMOR_HASTUR = EnumHelper.addArmorMaterial("hastur_cultist", MiskatonicMysteries.MODID + ":hastur_cultist", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0);
+	public static ItemArmor.ArmorMaterial ARMOR_SHUBNIGGURATH = EnumHelper.addArmorMaterial("shubniggurath_cultist", MiskatonicMysteries.MODID + ":shubniggurath_cultist", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0);
 	
 	public static Item.ToolMaterial TOOL_CULTIST = EnumHelper.addToolMaterial("cultist", 2, 250, 6, 1.5f, 14);
 	

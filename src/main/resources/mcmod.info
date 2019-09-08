@@ -1,7 +1,7 @@
 [
 {
-  "modid": "acme",
-  "name": "Abyssalcraft: Miskatonic Edition",
+  "modid": "miskatonicmysteries",
+  "name": "Miskatonic Mysteries",
   "description": "cyber I need description",
   "version": "${version}",
   "mcversion": "${mcversion}",

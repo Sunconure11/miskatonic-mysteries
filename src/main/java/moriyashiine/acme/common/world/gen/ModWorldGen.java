@@ -1,7 +1,7 @@
 package moriyashiine.acme.common.world.gen;
 
 import com.google.common.base.Predicate;
-import moriyashiine.acme.common.world.gen.structures.WorldGenShubShrine;
+import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

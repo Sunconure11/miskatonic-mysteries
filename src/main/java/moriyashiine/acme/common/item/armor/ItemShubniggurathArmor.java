@@ -1,6 +1,9 @@
 package moriyashiine.acme.common.item.armor;
 
-import moriyashiine.acme.ACME;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.client.model.armor.ModelShubniggurathArmor;
+import com.miskatonicmysteries.registry.ModObjects;
+import moriyashiine.acme.MiskatonicMysteries;
 import moriyashiine.acme.client.model.armor.ModelShubniggurathArmor;
 import moriyashiine.acme.registry.ModObjects;
 import net.minecraft.client.model.ModelBiped;
@@ -28,6 +31,6 @@ public class ItemShubniggurathArmor extends ItemArmor {
 	@Nullable
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return ACME.MODID + ":textures/models/armor/shubniggurath_cultist.png";
+		return MiskatonicMysteries.MODID + ":textures/models/armor/shubniggurath_cultist.png";
 	}
 }

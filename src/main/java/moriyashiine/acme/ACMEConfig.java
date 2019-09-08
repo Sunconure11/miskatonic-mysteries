@@ -2,7 +2,7 @@ package moriyashiine.acme;
 
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = ACME.MODID)
+@Config(modid = MiskatonicMysteries.MODID)
 public class ACMEConfig {
     @Config.LangKey("config.category_client")
     @Config.Comment("Client-side config settings.")

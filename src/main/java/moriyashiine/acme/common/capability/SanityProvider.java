@@ -6,9 +6,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 public class SanityProvider implements ICapabilitySerializable<NBTBase> {
 
     @CapabilityInject(ISanity.class)

@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+	"layer0": "miskatonicmysteries:items/yellow_kings_dagger"
+  }
+}

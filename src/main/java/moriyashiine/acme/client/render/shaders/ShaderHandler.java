@@ -1,8 +1,11 @@
 package moriyashiine.acme.client.render.shaders;
 
 import com.google.gson.JsonSyntaxException;
-import moriyashiine.acme.ACME;
-import moriyashiine.acme.ACMEConfig;
+import com.miskatonicmysteries.ACMEConfig;
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.capability.Sanity;
+import com.miskatonicmysteries.registry.ModPotions;
+import moriyashiine.acme.MiskatonicMysteries;
 import moriyashiine.acme.common.capability.Sanity;
 import moriyashiine.acme.registry.ModPotions;
 import net.minecraft.client.Minecraft;
@@ -82,10 +85,10 @@ public class ShaderHandler {
                 }
             }
         } catch (JsonSyntaxException exception) {
-            ACME.LOGGER.fatal("An incorrect shader file syntax was detected!");
+            MiskatonicMysteries.LOGGER.fatal("An incorrect shader file syntax was detected!");
             exception.printStackTrace();
         } catch (IOException exception) {
-            ACME.LOGGER.fatal("Shader file was not found!");
+            MiskatonicMysteries.LOGGER.fatal("Shader file was not found!");
             exception.printStackTrace();
         }
     }

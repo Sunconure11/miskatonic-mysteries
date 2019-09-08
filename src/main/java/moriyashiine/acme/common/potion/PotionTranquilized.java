@@ -1,9 +1,7 @@
 package moriyashiine.acme.common.potion;
 
-import moriyashiine.acme.registry.ModPotions;
-import net.minecraft.entity.Entity;
+import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.PotionEffect;
 
 public class PotionTranquilized extends ModPotion {
     public PotionTranquilized() {

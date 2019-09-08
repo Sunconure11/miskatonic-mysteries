@@ -1,7 +1,8 @@
 package moriyashiine.acme.common.network.message.capability;
 
+import com.miskatonicmysteries.common.capability.ISanity;
+import com.miskatonicmysteries.common.capability.SanityProvider;
 import io.netty.buffer.ByteBuf;
-import moriyashiine.acme.common.capability.ISanity;
 import moriyashiine.acme.common.capability.SanityProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
