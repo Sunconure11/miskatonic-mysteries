@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures": {
-	"layer0": "miskatonicmysteries:items/black_goats_horned_dagger"
-  }
-}
