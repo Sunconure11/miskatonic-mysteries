@@ -129,7 +129,7 @@ public class ACME
             profession.getCareer(0).addTrade(1, new EntityVillager.ITradeList() {
                 @Override
                 public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
-                    recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1 + random.nextInt(2)),new ItemStack(ModObjects.research_notes_hastur, 1))); //replace with tranqs
+                    recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1 + random.nextInt(2)),new ItemStack(ModObjects.tranquilizer, 1 + random.nextInt(3))));
                 }
             });
         }

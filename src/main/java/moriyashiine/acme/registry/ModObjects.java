@@ -5,6 +5,7 @@ import moriyashiine.acme.Util;
 import moriyashiine.acme.common.block.BlockMural;
 import moriyashiine.acme.common.item.armor.ItemHasturArmor;
 import moriyashiine.acme.common.item.armor.ItemShubniggurathArmor;
+import moriyashiine.acme.common.item.consumable.ItemTranquilizer;
 import moriyashiine.acme.common.item.tool.ItemBlackGoatsGuttingDagger;
 import moriyashiine.acme.common.item.tool.ItemBlackGoatsHornedDagger;
 import moriyashiine.acme.common.item.tool.ItemYellowKingsDagger;
@@ -33,7 +34,7 @@ public class ModObjects {
 	
 	public static BlockMural stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_shubniggurath_mural");
 	public static BlockMural moss_stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_shubniggurath_mural");
-	
+
 	public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
 	public static Item research_notes_hastur = Util.create("research_notes_hastur");
 	public static Item research_notes_shubniggurath = Util.create("research_notes_shubniggurath");
@@ -50,4 +51,6 @@ public class ModObjects {
 	
 	public static Item black_goats_gutting_dagger = Util.create(new ItemBlackGoatsGuttingDagger(), "black_goats_gutting_dagger");
 	public static Item black_goats_horned_dagger = Util.create(new ItemBlackGoatsHornedDagger(), "black_goats_horned_dagger");
+
+	public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 }
