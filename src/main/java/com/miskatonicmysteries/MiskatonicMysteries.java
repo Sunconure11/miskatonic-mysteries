@@ -61,8 +61,7 @@ public class MiskatonicMysteries {
     public void preInit(FMLPreInitializationEvent event) {
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
-
-        GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);
+        GameRegistry.registerWorldGenerator(new ModWorldGen(), 100);
     }
 
     @EventHandler

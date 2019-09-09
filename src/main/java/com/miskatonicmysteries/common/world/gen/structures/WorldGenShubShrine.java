@@ -4,6 +4,7 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
+import com.miskatonicmysteries.common.world.gen.processor.ShubStructureProcessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.server.MinecraftServer;
@@ -23,20 +24,26 @@ import java.util.Random;
 
 public class WorldGenShubShrine extends WorldGenerator {
 
+    public WorldGenShubShrine(boolean notify) {
+        super(notify);
+    }
+
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) { //todo, for all shrines, add a processor to vary blocks now and then, see https://tutorials.darkhax.net/tutorials/structure_gen/
         WorldServer worldServer = (WorldServer) worldIn;
         MinecraftServer minecraftServer = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldServer.getStructureTemplateManager();
-        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrine_cthulhu_prismarine_1"));
+        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/shub/shrine_shubniggurath_forest_" + rand.nextInt(5)));
 
         if (ModWorldGen.canSpawnHere(template, worldServer, position)) {
             IBlockState iBlockState = worldIn.getBlockState(position);
             worldIn.notifyBlockUpdate(position, iBlockState, iBlockState, 3);
-            PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE).setRotation(Rotation.NONE).setIgnoreEntities(false).setChunk((ChunkPos) null).setReplacedBlock((Block) null).setIgnoreStructureBlock(false);
-            template.addBlocksToWorld(worldIn, position.add(0, -1, 0), placementsettings);
+            Rotation rotat = rand.nextBoolean() ? Rotation.NONE  : rand.nextBoolean() ?  Rotation.CLOCKWISE_90 :  rand.nextBoolean() ? Rotation.CLOCKWISE_180 : Rotation.COUNTERCLOCKWISE_90;
+            PlacementSettings placementsettings = (new PlacementSettings()).setMirror(rand.nextBoolean() ? Mirror.NONE : Mirror.LEFT_RIGHT).setRotation(rotat).setIgnoreEntities(false).setChunk((ChunkPos) null).setReplacedBlock((Block) null).setIgnoreStructureBlock(false);
+            template.addBlocksToWorld(worldIn, position.add(0, 1, 0), new ShubStructureProcessor(position.getY() + 1), placementsettings, 2);
             return true;
         }
         return false;
     }
+
 }

@@ -42,3 +42,7 @@ itemGroup.miskatonicmysteries=Miskatonic Mysteries
 #CONFIG
 config.category_client=Client Settings
 config.use_shaders=Use Shaders
+
+
+config.category_world=World Generation
+config.chanceShubShrines=Chance for Shub-Niggurath shrines
