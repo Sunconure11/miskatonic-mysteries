@@ -6,9 +6,30 @@
 	  "all": "miskatonicmysteries:blocks/yellow_terracotta_hastur_mural"
 	}
   },
-  "variants": {
-	"normal": [
-	  {}
-	]
-  }
+	"variants": {
+		"normal": [
+			{}
+		],
+		"inventory": [
+			{}
+		],
+		"facing": {
+			"north": {},
+			"south": {
+				"y": 180
+			},
+			"west": {
+				"y": 270
+			},
+			"east": {
+				"y": 90
+			},
+			"up": {
+				"x": 90
+			},
+			"down": {
+				"x": -90
+			}
+		}
+	}
 }
