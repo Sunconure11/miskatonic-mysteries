@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockMural extends Block {
-	public Item item;
+	public ItemStack item = ItemStack.EMPTY;
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public BlockMural(Material mat) {
 		super(mat);
@@ -65,7 +65,7 @@ public class BlockMural extends Block {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ) {
 		if (player.getHeldItem(hand).getItem() instanceof ItemWritableBook) {
-			if (!world.isRemote) Util.giveAndConsumeItem(player, hand, new ItemStack(item));
+			if (!world.isRemote) Util.giveAndConsumeItem(player, hand, item);
 			return true;
 		}
 		return super.onBlockActivated(world, pos, state, player, hand, face, hitX, hitY, hitZ);

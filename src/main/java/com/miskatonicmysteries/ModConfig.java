@@ -1,6 +1,11 @@
 package com.miskatonicmysteries;
 
+import com.miskatonicmysteries.common.capability.Sanity;
 import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = MiskatonicMysteries.MODID)
 public class ModConfig {
@@ -13,15 +18,37 @@ public class ModConfig {
     @Config.Comment("Client-side config settings.")
     public static final Client client = new Client();
 
+
+    @Config.LangKey("config.category_sanity")
+    @Config.Comment("Config settings on this mod's sanity system.")
+    public static final SanitySettings sanity = new SanitySettings();
+
     public static class Client{
         @Config.Comment("Set this to false to disable the shaders in this mod.")
         @Config.LangKey("config.use_shaders")
         public boolean useShaders = true;
     }
 
+    public static class SanitySettings{
+        @Config.Comment("Sets the insanity event interval.\n\nSometimes it is hard to stay sane inside insanity.")
+        @Config.LangKey("config.insanity_interval")
+        public int insanityInterval = 1977;
+    }
+
     public static class WorldGen{
-        @Config.Comment("Determines the chance for the Black Goat' shrines to spawn. Set to 1 to spawn a shrine in (almost) every chunk it can spawn in, set to 0 to disable.")
+        @Config.Comment("Determines the chance for the Black Goat's shrines to spawn. Set to 1 to spawn a shrine in (almost) every chunk it can spawn in, set to 0 to disable.")
         @Config.LangKey("config.chanceShubShrines")
-        public float chanceShubShrines = 0.5F;
+        @Config.RangeDouble(min = 0, max = 1)
+        public float chanceShubShrines = 0.05F;
+    }
+
+    @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
+    private static class SyncConfig {
+        @SubscribeEvent
+        public static void onConfigChanged(final ConfigChangedEvent.OnConfigChangedEvent event) {
+            if (event.getModID().equals(MiskatonicMysteries.MODID)) {
+                ConfigManager.sync(MiskatonicMysteries.MODID, net.minecraftforge.common.config.Config.Type.INSTANCE);
+            }
+        }
     }
 }

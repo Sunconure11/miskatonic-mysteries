@@ -12,6 +12,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @SuppressWarnings("WeakerAccess")
 public class Util {
 	public static <T extends Block> T create(Item item, T block, SoundType sound, float hardness, float resistance, String tool, int level, String name) {
@@ -60,5 +65,11 @@ public class Util {
 	
 	public static void giveItem(EntityPlayer player, ItemStack stack) {
 		if (!player.inventory.addItemStackToInventory(stack)) player.dropItem(stack, false);
+	}
+
+	public static List<?> iterableToShuffledList(Iterable<?> iterable){
+		List<?> list = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+		Collections.shuffle(list);
+		return list;
 	}
 }

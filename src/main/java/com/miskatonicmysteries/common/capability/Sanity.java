@@ -2,19 +2,25 @@ package com.miskatonicmysteries.common.capability;
 
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
-import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sanity implements ISanity {
     public static final int SANITY_MAX = 150;
     private int sanity; //150 is for now the standard
+    private boolean dirty;
+    private Map<String, Integer> expansions = new HashMap<>();
+
+    //todo continue with that and hastur world gen; expansions can be (and generally are) negative
+    //todo also make this code more efficient and less tedious, namely by adding a "isDirty" var that gets changed, instead of having to use the helpers.
 
     public Sanity() {
         this.sanity = Sanity.SANITY_MAX;
     }
 
-    //================
     @Override
     public int getSanity() {
         return sanity;
@@ -22,7 +28,7 @@ public class Sanity implements ISanity {
 
     @Override
     public void setSanity(int sanity) {
-        if (sanity > SANITY_MAX){
+        if (sanity > getSanityMax()){
             this.sanity = SANITY_MAX;
             return;
         }
@@ -31,44 +37,93 @@ public class Sanity implements ISanity {
             return;
         }
         this.sanity = sanity;
+        this.dirty = true;
     }
-    //===============
 
-    public static boolean setSanity(int amount, EntityPlayer player){
-        if (!player.world.isRemote && getSanityCapability(player) != null){
-            ISanity sanity = getSanityCapability(player);
-            if (amount < 0 || amount > SANITY_MAX)
-                return false;
-            sanity.setSanity(amount);
-            syncSanity(player, sanity);
-            return true;
+    @Override
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
+
+    @Override
+    public int getSanityMax() {
+        return SANITY_MAX + getTotalIncrease();
+    }
+
+    @Override
+    public int getTotalIncrease() {
+        return this.expansions.values().parallelStream().reduce(0, (a, b) -> a + b);
+    }
+
+    @Override //DO NOT USE THIS FOR ADDING EXPANSIONS; that's what the helper method is for
+    public Map<String, Integer> getExpansionMap() {
+        return expansions;
+    }
+
+    @Override
+    public void addExpansion(String id, int value) {
+        setDirty(true);
+        expansions.put(id, value);
+    }
+
+    @Override
+    public boolean isDirty() {
+        return dirty;
+    }
+
+
+    public static class Util {
+        public static boolean setSanity(int amount, EntityPlayer player) {
+            if (!player.world.isRemote && getSanityCapability(player) != null) {
+                ISanity sanity = getSanityCapability(player);
+                if (amount < 0 || amount > sanity.getSanity())
+                    return false;
+                sanity.setSanity(amount);
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    public static int getSanity(EntityPlayer player){
-        if (getSanityCapability(player) != null){
-            ISanity sanity = getSanityCapability(player);
-            return sanity.getSanity();
+        public static boolean addExpansion(String id, int value, EntityPlayer player) {
+            if (getSanityCapability(player) != null) {
+                ISanity sanity = getSanityCapability(player);
+                if (sanity.getExpansionMap().keySet().contains(id)){
+                    return false;
+                }
+                sanity.addExpansion(id, value);
+                return true;
+            }
+            return false;
         }
-        return -1;
-    }
 
-    //this is really just a shortcut because I hate typing this all the time
-    public static ISanity getSanityCapability(EntityPlayer player){
-        return player.getCapability(SanityProvider.SANITY, null);
-    }
-
-    public static void transferToClone(PlayerEvent.Clone event){
-        if (event.getEntityPlayer().hasCapability(SanityProvider.SANITY, null)) {
-            ISanity sanity = event.getEntityPlayer().getCapability(SanityProvider.SANITY, null);
-            ISanity oldSanity = event.getOriginal().getCapability(SanityProvider.SANITY, null);
-            sanity.setSanity(oldSanity.getSanity());
-            syncSanity(event.getEntityPlayer(), sanity);
+        public static int getSanity(EntityPlayer player) {
+            if (getSanityCapability(player) != null) {
+                ISanity sanity = getSanityCapability(player);
+                return sanity.getSanity();
+            }
+            return -1;
         }
-    }
 
-    public static void syncSanity(EntityPlayer player, ISanity sanity){
-        PacketHandler.sendTo(player, new PacketSyncSanity(sanity));
+        //this is really just a shortcut because I hate typing this all the time
+        public static ISanity getSanityCapability(EntityPlayer player) {
+            return player.getCapability(SanityProvider.SANITY, null);
+        }
+
+        public static void transferToClone(PlayerEvent.Clone event) {
+            if (event.getEntityPlayer().hasCapability(SanityProvider.SANITY, null)) {
+                ISanity sanity = event.getEntityPlayer().getCapability(SanityProvider.SANITY, null);
+                ISanity oldSanity = event.getOriginal().getCapability(SanityProvider.SANITY, null);
+                sanity.setSanity(oldSanity.getSanity());
+                sanity.getExpansionMap().putAll(oldSanity.getExpansionMap());
+                syncSanity(event.getEntityPlayer(), sanity);
+            }
+        }
+
+        public static void syncSanity(EntityPlayer player, ISanity sanity) {
+            if (sanity.getSanity() > sanity.getSanityMax()){
+                sanity.setSanity(sanity.getSanityMax());
+            }
+            PacketHandler.sendTo(player, new PacketSyncSanity(sanity));
+        }
     }
 }

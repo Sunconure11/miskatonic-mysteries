@@ -4,13 +4,14 @@ import com.miskatonicmysteries.common.capability.ISanity;
 import com.miskatonicmysteries.common.capability.Sanity;
 import com.miskatonicmysteries.common.capability.SanityStorage;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
+import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
+import com.miskatonicmysteries.common.world.gen.structures.village.VillageComponentHasturShrine;
+import com.miskatonicmysteries.common.world.gen.structures.village.VillageHasturShrineHandler;
 import com.miskatonicmysteries.proxy.ServerProxy;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
-import com.miskatonicmysteries.common.world.gen.ModWorldGen;
-import com.miskatonicmysteries.proxy.ServerProxy;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.IMerchant;
@@ -24,6 +25,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
@@ -61,13 +63,16 @@ public class MiskatonicMysteries {
     public void preInit(FMLPreInitializationEvent event) {
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
-        GameRegistry.registerWorldGenerator(new ModWorldGen(), 100);
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
+        GameRegistry.registerWorldGenerator(new ModWorldGen(), Integer.MAX_VALUE);
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillageHasturShrineHandler());
+        MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
+        MinecraftForge.EVENT_BUS.register(new InsanityHandler());
     }
 
     @Mod.EventBusSubscriber
@@ -103,9 +108,9 @@ public class MiskatonicMysteries {
 
             ModObjects.TOOL_CULTIST.setRepairItem(new ItemStack(Items.IRON_INGOT));
 
-            ModObjects.stone_cthulhu_mural.item = ModObjects.research_notes_cthulhu;
-            ModObjects.moss_stone_cthulhu_mural.item = ModObjects.research_notes_cthulhu;
-            ModObjects.prismarine_cthulhu_mural.item = ModObjects.research_notes_cthulhu;
+           /* ModObjects.stone_cthulhu_mural.item = PatchouliAPI.instance.getBookStack(MODID + ":notes_cthulhu");
+            ModObjects.moss_stone_cthulhu_mural.item = PatchouliAPI.instance.getBookStack(MODID + ":notes_cthulhu");
+            ModObjects.prismarine_cthulhu_mural.item = PatchouliAPI.instance.getBookStack(MODID + ":notes_cthulhu");
 
             ModObjects.stone_hastur_mural.item = ModObjects.research_notes_hastur;
             ModObjects.moss_stone_hastur_mural.item = ModObjects.research_notes_hastur;
@@ -113,7 +118,7 @@ public class MiskatonicMysteries {
             ModObjects.yellow_terracotta_hastur_mural.item = ModObjects.research_notes_hastur;
 
             ModObjects.stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;
-            ModObjects.moss_stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;
+            ModObjects.moss_stone_shubniggurath_mural.item = ModObjects.research_notes_shubniggurath;*/
         }
 
         @SubscribeEvent

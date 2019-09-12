@@ -25,7 +25,19 @@ minecraft {
     mappings = "stable_39"
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url = "http://dvs1.progwml6.com/files/maven" }
+    maven { url = "https://minecraft.curseforge.com/api/maven" }
+    maven { url "http://maven.tterrag.com" }
+    maven { url "https://maven.blamejared.com" }
+    maven { url "https://maven.mcmoddev.com/" }
+}
+
 dependencies {
+    compile "vazkii.patchouli:Patchouli:1.0-20.99"
 }
 
 processResources {

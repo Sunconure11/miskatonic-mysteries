@@ -31,7 +31,7 @@ public class ShaderHandler {
     public static final int SHADER_TRANQ = 1; //in the code, instead of making
     public static final int SHADER_MANIA = 2; //separate shaders for each intensity
 
-    public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/deconverge.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/phosphor.json")};
+    public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/desaturate.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/phosphor.json")};
     //these shaders are temporary, I'm just not good enough to make shaders :(
 
     @SideOnly(Side.CLIENT)
@@ -46,7 +46,7 @@ public class ShaderHandler {
     }
 
     public void handleShaders(TickEvent.PlayerTickEvent event, Minecraft mc) {
-        handleShader(Sanity.getSanity(event.player) < 100, SHADER_INSANITY); //just an example
+        handleShader(Sanity.Util.getSanity(event.player) < 100, SHADER_INSANITY); //just an example
         handleShader(event.player.getActivePotionEffect(ModPotions.tranquilized) != null, SHADER_TRANQ);
         handleShader(event.player.getActivePotionEffect(ModPotions.mania) != null, SHADER_MANIA);
     }

@@ -6,9 +6,7 @@ import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
 import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
-import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
-import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
-import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
+import com.miskatonicmysteries.common.item.tool.*;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.Util;
 import com.miskatonicmysteries.common.block.BlockMural;
@@ -58,4 +56,6 @@ public class ModObjects {
 	public static Item black_goats_horned_dagger = Util.create(new ItemBlackGoatsHornedDagger(), "black_goats_horned_dagger");
 
 	public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
+
+	public static Item terraform = Util.create(new ItemTerraform(), "item_terraform");
 }

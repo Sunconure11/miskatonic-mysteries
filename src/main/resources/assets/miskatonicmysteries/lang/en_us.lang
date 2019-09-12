@@ -33,8 +33,9 @@ item.black_goats_horned_dagger.name=Black Goat's Horned Dagger
 item.tranquilizer.name=Tranquilizer
 
 #POTIONS
-acme.tranquilized=Tranquilized
-acme.mania=Mania
+miskatonicmysteries.tranquilized=Tranquilized
+miskatonicmysteries.mania=Mania
+miskatonicmysteries.hunger_exotic=Exotic Cravings
 
 #INFO
 itemGroup.miskatonicmysteries=Miskatonic Mysteries
@@ -43,6 +44,8 @@ itemGroup.miskatonicmysteries=Miskatonic Mysteries
 config.category_client=Client Settings
 config.use_shaders=Use Shaders
 
+config.category_worldgen=World Generation
+config.chanceShubShrines=Chance for Shub-Niggurath Shrines
 
-config.category_world=World Generation
-config.chanceShubShrines=Chance for Shub-Niggurath shrines
+config.category_sanity=Sanity
+config.insanity_interval=Insanity Event Interval
