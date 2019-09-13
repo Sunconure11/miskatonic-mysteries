@@ -31,13 +31,6 @@ public class OldStructureProcessor implements ITemplateProcessor {
     @Nullable
     @Override
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
-        //todo replace log and oak etc.
-            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.CONIFEROUS)){
-
-            }else {
-
-            }
-
         if (blockInfoIn.blockState.getBlock().equals(Blocks.STONE)){
             if (crack && worldIn.rand.nextBoolean()){
                 blockInfoIn = new Template.BlockInfo(pos, Blocks.COBBLESTONE.getDefaultState(), null);

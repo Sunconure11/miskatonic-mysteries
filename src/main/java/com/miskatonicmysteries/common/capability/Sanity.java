@@ -32,8 +32,8 @@ public class Sanity implements ISanity {
             this.sanity = SANITY_MAX;
             return;
         }
-        if (sanity < 0){
-            this.sanity = 0;
+        if (sanity < 1){
+            this.sanity = 1;
             return;
         }
         this.sanity = sanity;
@@ -76,7 +76,7 @@ public class Sanity implements ISanity {
         public static boolean setSanity(int amount, EntityPlayer player) {
             if (!player.world.isRemote && getSanityCapability(player) != null) {
                 ISanity sanity = getSanityCapability(player);
-                if (amount < 0)
+                if (amount < 1)
                     return false;
                 sanity.setSanity(amount);
                 return true;

@@ -30,7 +30,7 @@ public class InsanityHandler {
     @SubscribeEvent
     public void handleInsanity(InsanityEvent insanityEvent) {
         if (!insanityEvent.getPlayer().world.isRemote) {
-            int event = insanityEvent.getPlayer().world.rand.nextInt(Math.abs(120 - insanityEvent.getSanity().getSanity()));
+            int event = insanityEvent.getPlayer().world.rand.nextInt(Math.abs(115 - insanityEvent.getSanity().getSanity()));
             if (event <= 15) {
                 //SoundEvents, which are handled client side
                 PacketHandler.sendTo(insanityEvent.getPlayer(), new PacketHandleInsanityClient(event));

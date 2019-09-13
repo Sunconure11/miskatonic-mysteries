@@ -76,7 +76,7 @@ public class PacketHandleInsanityClient implements IMessage{
                         InsanityHandler.playParanoiaSound(player, SoundEvents.ENTITY_ELDER_GUARDIAN_CURSE, 0.2F);
                     } else if (message.event <= 25) {
                         List<Entity> livings = world.getEntitiesInAABBexcluding(player, Minecraft.getMinecraft().player.getEntityBoundingBox().grow(50, 10, 50), p -> p instanceof EntityLivingBase && (p instanceof IMob || p instanceof EntityPlayer));
-                        int amount = (int) ((float) (100 -Sanity.Util.getSanity(player)) / 50F) + player.getRNG().nextInt(3) + 1;
+                        int amount = (int) ((float) (100 -Sanity.Util.getSanity(player)) / 20F) + player.getRNG().nextInt(3) + 2;
                         for (int i = 0; i < amount; i++) {
                             Entity entityIn = livings.get(player.getRNG().nextInt(livings.size()));
                             if (entityIn instanceof EntityLivingBase) {

@@ -11,6 +11,7 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
@@ -73,8 +74,10 @@ public class ItemTerraform extends Item {
 
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase living, int count) {
-        if (count != getMaxItemUseDuration(stack) && count % 10 == 0 && living instanceof EntityPlayer)
-            terraform(stack, living.world, (EntityPlayer) living);
+        if (living.world.isRemote) {
+            RenderManipulatorHandler.mobMob.put(living.getEntityId(), new EntityZombie(living.world));
+            System.out.println("YAY!");
+        }
     }
 
     @Override

@@ -13,6 +13,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -25,6 +30,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class RenderManipulatorHandler {
     //todo, register this handler, change stuff, etc. etc. etc., call stuff in InsanityHandler, optimize stuff NGGHWAHGWGWAG
@@ -35,32 +41,10 @@ public class RenderManipulatorHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onRender(RenderLivingEvent.Pre event) {//might remove the ifDirty part
-        System.out.println(mobMob);
         if(mobMob.get(event.getEntity().getEntityId()) != null) {
             event.setCanceled(true);
 
             EntityLivingBase entity = mobMob.get(event.getEntity().getEntityId());
-            /*if(entity == null || entity.worldObj != event.entityPlayer.worldObj) {
-                BiomeGenBase biome = event.entityPlayer.worldObj.getBiomeGenForCoords(MathHelper.floor_double(event.entityPlayer.posX), MathHelper.floor_double(event.entityPlayer.posZ));
-                ArrayList<Biome.SpawnListEntry> spawnList = (ArrayList<Biome.SpawnListEntry>)biome.getSpawnableList(EnumCreatureType.monster);
-
-                if(spawnList.size() <= 0)
-                {
-                    entity = new EntityZombie(event.entityPlayer.worldObj);
-                } else
-                {
-                    int spawnIndex = event.entityPlayer.getRNG().nextInt(spawnList.size());
-                    try
-                    {
-                        entity = (EntityLiving)spawnList.get(spawnIndex).entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {event.entityPlayer.worldObj});
-                    } catch(Exception e)
-                    {
-                        entity = new EntityZombie(event.entityPlayer.worldObj);
-                    }
-                }
-
-                playerMob.put(event.getEntityPlayer().getName(), entity);
-            }*/
             entity.renderYawOffset = event.getEntity().renderYawOffset;
             entity.prevRenderYawOffset = event.getEntity().prevRenderYawOffset;
             entity.cameraPitch = event.getEntity().cameraPitch;
@@ -85,34 +69,21 @@ public class RenderManipulatorHandler {
             entity.prevSwingProgress = event.getEntity().prevSwingProgress;
             entity.swingProgress = event.getEntity().swingProgress;
             entity.swingProgressInt = event.getEntity().swingProgressInt;
-            //ItemStack[] equipped = Arrayevent.getEntity().getEquipmentAndArmor().getLastActiveItems();
-            //entity.getArmorInventoryList(0, event.entityPlayer.getHeldItem());
-            /*entity.setCurrentItemOrArmor(1, equipped[0]);
-            entity.setCurrentItemOrArmor(2, equipped[1]);
-            entity.setCurrentItemOrArmor(3, equipped[2]);
-            entity.setCurrentItemOrArmor(4, equipped[3]);*///todo add equipment stuff later
+            entity.setHeldItem(EnumHand.MAIN_HAND, event.getEntity().getHeldItemMainhand());
+            entity.setHeldItem(EnumHand.OFF_HAND, event.getEntity().getHeldItemOffhand());
+            int slot = 0;
+            for (ItemStack piece : event.getEntity().getArmorInventoryList()){
+                entity.setItemStackToSlot(slot == 0 ? EntityEquipmentSlot.FEET : slot == 1 ? EntityEquipmentSlot.LEGS : slot == 2 ? EntityEquipmentSlot.CHEST : EntityEquipmentSlot.HEAD, piece);
+                slot++;
+            }
             entity.motionX = event.getEntity().motionX;
             entity.motionY = event.getEntity().motionY;
             entity.motionZ = event.getEntity().motionZ;
             entity.ticksExisted = event.getEntity().ticksExisted;
             GL11.glPushMatrix();
-            if (event.getEntity() instanceof EntityCreeper){
-                CREEPERINFLATION((EntityCreeper) event.getEntity(), event.getPartialRenderTick());
-            }
             Minecraft.getMinecraft().getRenderManager().renderEntity(entity, event.getX(), event.getY(), event.getZ(), entity.rotationYaw, event.getPartialRenderTick(), false);
             GL11.glPopMatrix();
         }
-    }
-
-    protected void CREEPERINFLATION(EntityCreeper entitylivingbaseIn, float partialTickTime) {
-        float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
-        float f1 = 1.0F + MathHelper.sin(f * 100.0F) * f * 0.01F;
-        f = MathHelper.clamp(f, 0.0F, 1.0F);
-        f = f * f;
-        f = f * f;
-        float f2 = (1.0F + f * 0.4F) * f1;
-        float f3 = (1.0F + f * 0.1F) / f1;
-        GlStateManager.scale(f2, f3, f2);
     }
 
     /**

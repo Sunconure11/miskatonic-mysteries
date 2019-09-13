@@ -68,12 +68,7 @@ public class CommandMiskatonicMysteries extends CommandBase{
         }
 
         if (mode.equalsIgnoreCase("setSanity")){
-           // int amount = 0;
-           // try {
               int amount = Integer.valueOf(value);
-          //  }catch (NumberFormatException e){
-            //    throw new WrongUsageException("command.miskmyst.amount_", args[0]);
-          //  }
             System.out.println(Sanity.Util.getSanity(player));
             if (Sanity.Util.setSanity(amount, player))
                 notifyCommandListener(sender, this, 1, "commands.miskmyst.sanity.success", player.getDisplayName(), value);

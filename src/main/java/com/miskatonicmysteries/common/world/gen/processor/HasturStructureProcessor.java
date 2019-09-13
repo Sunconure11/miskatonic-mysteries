@@ -8,6 +8,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -15,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class HasturStructureProcessor extends OldStructureProcessor {
     public HasturStructureProcessor(int groundY, boolean coldBiomeIn) {
-        super(groundY, false, true, !coldBiomeIn, Biomes.FOREST);
+        super(groundY, true, true, !coldBiomeIn, Biomes.FOREST);
     }
 
     @Nullable
@@ -51,18 +52,16 @@ public class HasturStructureProcessor extends OldStructureProcessor {
                 case 1: return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//actual statue
             }
         }
-        if (!blockInfoIn.blockState.getBlock().equals(Blocks.AIR) && pos.getY() <= groundY){
+        /*if (worldIn.getBlockState(pos.down()).getBlock().equals(Blocks.AIR) && pos.getY() <= groundY){
             boolean flag = true;
-            for (int i = 1; flag; i++){
+            for (int i = 2; flag; i++){
                 if (ModWorldGen.isBlockSolid(worldIn, pos.add(0, -i, 0))){
                     flag = false;
                 }else{
-                    if (blockInfoIn.blockState.isFullBlock() || blockInfoIn.blockState.isFullCube()){
-                        worldIn.setBlockState(pos.add(0, -i, 0), blockInfoIn.blockState);
-                    }
+                    worldIn.setBlockState(pos.add(0, -i, 0), worldIn.getBiome(pos).fillerBlock);
                 }
             }
-        }
+        }*/
 
         return super.processBlock(worldIn, pos, blockInfoIn);//blockInfoIn.blockState.getBlock().equals(Blocks.AIR) ? new Template.BlockInfo(pos, worldIn.getBlockState(pos), null) :
     }

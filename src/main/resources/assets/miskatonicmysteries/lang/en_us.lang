@@ -53,3 +53,4 @@ config.insanity_interval=Insanity Event Interval
 #COMMANDS
 commands.gamemode.usage=miskatonicmysteries <player> <setSanity> <amount>
 commands.miskmyst.sanity.success=Successfully set %s's sanity to %s
+commands.miskmyst.sanity.fail_badnum=%s is not a valid number
