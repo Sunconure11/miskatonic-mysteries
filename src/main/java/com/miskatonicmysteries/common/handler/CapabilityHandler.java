@@ -43,12 +43,12 @@ public class CapabilityHandler {
                     Sanity.Util.syncSanity((EntityPlayer) event.getEntityLiving(), sanity);
                     sanity.setDirty(false);
                 }
+                if (event.getEntityLiving().ticksExisted > 0 && sanity.getSanity() < 100 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && event.getEntityLiving().ticksExisted % (ModConfig.sanity.insanityInterval - (100 - sanity.getSanity())) == 0){
+                    MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), sanity, event));
+                }
             }
             //do you by chance want to do the timewarp again?
-            if (event.getEntityLiving().ticksExisted > 0 && sanity.getSanity() < 100 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && event.getEntityLiving().ticksExisted % (ModConfig.sanity.insanityInterval - (100 - sanity.getSanity())) == 0){
-                System.out.println("oof");
-                MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), sanity, event));
-            }
+
         }
     }
 }

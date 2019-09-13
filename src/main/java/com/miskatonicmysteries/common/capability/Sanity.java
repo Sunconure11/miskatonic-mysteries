@@ -76,7 +76,7 @@ public class Sanity implements ISanity {
         public static boolean setSanity(int amount, EntityPlayer player) {
             if (!player.world.isRemote && getSanityCapability(player) != null) {
                 ISanity sanity = getSanityCapability(player);
-                if (amount < 0 || amount > sanity.getSanity())
+                if (amount < 0)
                     return false;
                 sanity.setSanity(amount);
                 return true;

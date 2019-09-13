@@ -23,7 +23,6 @@ public class PacketSyncSanity implements IMessage{
     public PacketSyncSanity(ISanity cap) {
         this.sanity = cap.getSanity();
         this.expansionAmount = cap.getExpansionMap().size();
-        System.out.println(cap.getExpansionMap().keySet());
         if (!cap.getExpansionMap().isEmpty()) {
             this.expansionTags = cap.getExpansionMap().keySet().toArray(new String[cap.getExpansionMap().keySet().size()]);
             this.expansionValues = cap.getExpansionMap().values().toArray(new Integer[cap.getExpansionMap().values().size()]);

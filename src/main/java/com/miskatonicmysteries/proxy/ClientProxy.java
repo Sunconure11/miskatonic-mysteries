@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.proxy;
 
+import com.miskatonicmysteries.client.render.shaders.RenderManipulatorHandler;
 import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -17,6 +18,7 @@ public class ClientProxy extends ServerProxy {
 
 	public void init(FMLInitializationEvent event){
 		MinecraftForge.EVENT_BUS.register(new ShaderHandler());
+		MinecraftForge.EVENT_BUS.register(new RenderManipulatorHandler());
 	}
 	@Override
 	public void registerTexture(Item item) {

@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.item.tool;
 import com.google.common.collect.ImmutableList;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.ModConfig;
+import com.miskatonicmysteries.client.render.shaders.RenderManipulatorHandler;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.common.world.gen.processor.ShubStructureProcessor;
 import net.minecraft.block.Block;
@@ -10,6 +11,8 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -72,6 +75,15 @@ public class ItemTerraform extends Item {
     public void onUsingTick(ItemStack stack, EntityLivingBase living, int count) {
         if (count != getMaxItemUseDuration(stack) && count % 10 == 0 && living instanceof EntityPlayer)
             terraform(stack, living.world, (EntityPlayer) living);
+    }
+
+    @Override
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase entityIn, EnumHand hand) {
+            if (playerIn.world.isRemote) {
+                RenderManipulatorHandler.mobMob.put(entityIn.getEntityId(), new EntityPig(playerIn.world));
+                System.out.println("YAY!");
+            }
+        return super.itemInteractionForEntity(stack, playerIn, entityIn, hand);
     }
 
     @Nonnull

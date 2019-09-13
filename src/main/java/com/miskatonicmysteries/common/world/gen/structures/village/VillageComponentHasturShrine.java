@@ -41,26 +41,32 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Church 
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
 
-        if(getAverageGroundLevel(worldIn, structureBoundingBoxIn) < 0){
+        /*if(getAverageGroundLevel(worldIn, structureBoundingBoxIn) < 0){
             return true;
-        }
+        }*/
 
         WorldServer worldServer = (WorldServer) worldIn;
         MinecraftServer minecraftServer = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldServer.getStructureTemplateManager();
         Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/hastur/shrine_hastur_" + (1 + worldIn.rand.nextInt(2)))); //replace with plains
-        this.boundingBox = new StructureBoundingBox(new BlockPos(0, 0, 0), template.getSize());
+
+        /*this.boundingBox = new StructureBoundingBox(new BlockPos(0, 0, 0), template.getSize());
         this.boundingBox.offset(0, this.getAverageGroundLevel(worldIn, structureBoundingBoxIn) -this.boundingBox.maxY+template.getSize().getY() - 1, 0);
-        //todo, fix placement issues
-        BlockPos pos = new BlockPos(getXWithOffset(0, 0), this.getYWithOffset(0), this.getZWithOffset(0, 0));
-
+        *///todo, fix placement issues
+        BlockPos pos = new BlockPos(getXWithOffset(0, 0), getYWithOffset(0), this.getZWithOffset(0, 0));
         this.fillWithBlocks(worldIn, boundingBox, 0, 0, 0, template.getSize().getX() -1, template.getSize().getY() -1, template.getSize().getZ() -1, Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), true);
-        if (BiomeDictionary.hasType(worldIn.getBiome(pos), BiomeDictionary.Type.SAVANNA)){
-            template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
+        if (BiomeDictionary.hasType(worldIn.getBiome(pos), BiomeDictionary.Type.SAVANNA)) {
+            template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
         }
-
         PlacementSettings settings = new PlacementSettings().setRotation(Rotation.NONE).setMirror(Mirror.NONE).setBoundingBox(new StructureBoundingBox(pos, pos.add(template.getSize())));
         template.addBlocksToWorld(worldIn, pos, new OldStructureProcessor(pos.getY(), false, true, true, worldIn.getBiome(pos)) ,settings, 2);
+        /*for(int i = 0; i < template.getSize().getX(); i++){
+            for(int j = 0; j < template.getSize().getZ(); j++){
+                this.clearCurrentPositionBlocksUpwards(worldIn, i, template.getSize().getY(), j, boundingBox);
+                this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), i, -1, j, boundingBox);
+            }
+        }*/
+
         return true;
     }
 

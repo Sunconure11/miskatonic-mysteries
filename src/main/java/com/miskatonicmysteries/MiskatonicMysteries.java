@@ -3,6 +3,7 @@ package com.miskatonicmysteries;
 import com.miskatonicmysteries.common.capability.ISanity;
 import com.miskatonicmysteries.common.capability.Sanity;
 import com.miskatonicmysteries.common.capability.SanityStorage;
+import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.common.network.PacketHandler;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -73,6 +75,11 @@ public class MiskatonicMysteries {
         MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new InsanityHandler());
+    }
+
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandMiskatonicMysteries());
     }
 
     @Mod.EventBusSubscriber
