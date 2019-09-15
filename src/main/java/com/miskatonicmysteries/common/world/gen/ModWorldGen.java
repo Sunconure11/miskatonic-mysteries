@@ -49,7 +49,7 @@ public class ModWorldGen implements IWorldGenerator {
         generateStructure(shubShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
 
         //add this to also generate the shrines in the depths of the ocean and not only in caves generateOceanStructure(luluShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
-        generateCaveStuff(luluShrine, world, random, ModConfig.worldGen.chanceCthulhuShrines, chunkX, chunkZ, 0, 0, b -> StructureOceanMonument.WATER_BIOMES.contains(b) || BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
+        generateCaveStuff(luluShrine, world, random, ModConfig.worldGen.chanceCthulhuShrines, chunkX, chunkZ, 1, 1, b -> StructureOceanMonument.WATER_BIOMES.contains(b) || BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
 
     }
 
@@ -63,23 +63,13 @@ public class ModWorldGen implements IWorldGenerator {
         BlockPos pos = new BlockPos(chunkX * 16 + xOffset, getActualGround(world, chunkX * 16 + xOffset, chunkz * 16 + zOffset), chunkz * 16 + zOffset);
         if (rand.nextDouble() < chance && biomes.test(world.getBiome(pos)) && biomes.test(world.getBiome(pos.add(7, 0, 7))))
             structure.generate(world, rand, pos);
-*/  //  }
+    }*/
 
     private void generateCaveStuff(WorldGenerator structure, World world, Random rand, double chance, int chunkX, int chunkz, int xOffset, int zOffset, Predicate<Biome> biomes) {
-        BlockPos pos = new BlockPos(chunkX * 16 + xOffset, getFirstCaveGround(world, chunkX * 16 + xOffset, chunkX * 16 + zOffset), chunkz * 16 + zOffset);
+        BlockPos pos = new BlockPos(chunkX * 16 + xOffset, 31, chunkz * 16 + zOffset); //getCaveGround
         //replace cave top with cave ground
         if (rand.nextDouble() < chance && biomes.test(world.getBiome(pos)) && biomes.test(world.getBiome(pos.add(7, 0, 7))))
             structure.generate(world, rand, pos);
-    }
-
-    public static boolean canSpawnHere(Template template, World world, BlockPos posAboveGround) {
-        int zwidth = template.getSize().getZ();
-        int xwidth = template.getSize().getX();
-        boolean corner1 = isCornerValid(world, posAboveGround.add(-1, 0, -1), false);
-        boolean corner2 = isCornerValid(world, posAboveGround.add(xwidth + 1, 0, -1), false);
-        boolean corner3 = isCornerValid(world, posAboveGround.add(xwidth + 1, 0, zwidth + 1), false);
-        boolean corner4 = isCornerValid(world, posAboveGround.add(1, 0, zwidth + 1), false);
-        return posAboveGround.getY() > 31 && corner1 && corner2 && corner3 && corner4;
     }
 
     public static int getGround(World world, int x, int z) {
@@ -95,19 +85,10 @@ public class ModWorldGen implements IWorldGenerator {
         return y + 1;
     }
 
-    public static int getActualGround(World world, int x, int z) {
-        int y = world.getHeight(x, z);
-        boolean foundGround = false;
-        while (!foundGround && y-- >= 0) {
-            foundGround = isBlockSolid(world, new BlockPos(x, y, z));
-        }
-        return y + 1;
-    }
-
-    public static int getCaveTop(World world, int x, int z) {
+   public static int getCaveTop(World world, int x, int z) {
         int y = 31;
         while (y-- >= 6) { //no spawns under that height
-            if (!isBlockSolid(world, new BlockPos(x, y, z))){
+            if (world.isAirBlock(new BlockPos(x, y, z))){//!isBlockSolid(world, new BlockPos(x, y, z))){
                 return y;
             }
         }
@@ -117,14 +98,14 @@ public class ModWorldGen implements IWorldGenerator {
     public static int getCaveGround(World world, int x, int z) {
         int y = getCaveTop(world, x, z);
         while (y-- >= 6) { //no spawns under that height
-            if (isBlockSolid(world, new BlockPos(x, y, z))){
+            if (!world.isAirBlock(new BlockPos(x, y, z))){//if (isBlockSolid(world, new BlockPos(x, y, z))){
                 return y + 1;
             }
         }
         return -1;
     }
 
-    public static int getFirstCaveGround(World world, int x, int z) {
+    /*public static int getFirstCaveGround(World world, int x, int z) {
         int y = 5;
         while (y++ <= 42) { //no spawns under that height
             if (world.getBlockState(new BlockPos(x, y, z)).getBlock().equals(Blocks.AIR)){//!isBlockSolid(world, new BlockPos(x, y, z))){
@@ -132,7 +113,7 @@ public class ModWorldGen implements IWorldGenerator {
             }
         }
         return -1;
-    }
+    }*/
 
     public static boolean checkIndestructable(World world, BlockPos pos, Block... whitelistBlock){
         TileEntity tile = world.getTileEntity(pos);
@@ -143,7 +124,6 @@ public class ModWorldGen implements IWorldGenerator {
         IBlockState state = world.getBlockState(pos);
         if(state != null){
             Block block = state.getBlock();
-            //check if it's tree or grass that is generated here
             if(Arrays.asList(whitelistBlock).contains(block)){
                 return true;
             }
@@ -158,9 +138,6 @@ public class ModWorldGen implements IWorldGenerator {
         return !(world.getBlockState(pos).getMaterial().isLiquid() || world.isAirBlock(pos) || world.getBlockState(pos).getMaterial().isReplaceable() || !world.getBlockState(pos).getMaterial().blocksMovement());
     }
 
-    public static boolean isCornerValid(World world, BlockPos pos, boolean cave) {
-        return isCornerValid(world, pos, 1, cave);
-    }
     public static boolean isCornerValid(World world, BlockPos pos, int heightVar, boolean cave) {
         return isCornerValid(world, pos, heightVar, heightVar, cave);
     }

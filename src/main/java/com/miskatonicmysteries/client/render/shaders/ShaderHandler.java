@@ -3,7 +3,7 @@ package com.miskatonicmysteries.client.render.shaders;
 import com.google.gson.JsonSyntaxException;
 import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.capability.Sanity;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;

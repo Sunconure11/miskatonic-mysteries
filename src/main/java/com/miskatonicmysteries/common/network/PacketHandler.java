@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.common.network;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.network.message.capability.PacketSyncBlessing;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
 import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +23,7 @@ public class PacketHandler {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(MiskatonicMysteries.MODID);
 
         network.registerMessage(new PacketSyncSanity.Handler(), PacketSyncSanity.class, next(), Side.CLIENT);
+        network.registerMessage(new PacketSyncBlessing.Handler(), PacketSyncBlessing.class, next(), Side.CLIENT);
 
         network.registerMessage(new PacketHandleInsanityClient.Handler(), PacketHandleInsanityClient.class, next(), Side.CLIENT);
     }

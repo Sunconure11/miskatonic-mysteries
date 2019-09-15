@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.common.capability;
+package com.miskatonicmysteries.common.capability.sanity;
 
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
@@ -10,12 +10,9 @@ import java.util.Map;
 
 public class Sanity implements ISanity {
     public static final int SANITY_MAX = 150;
-    private int sanity; //150 is for now the standard
+    private int sanity;
     private boolean dirty;
     private Map<String, Integer> expansions = new HashMap<>();
-
-    //todo continue with that and hastur world gen; expansions can be (and generally are) negative
-    //todo also make this code more efficient and less tedious, namely by adding a "isDirty" var that gets changed, instead of having to use the helpers.
 
     public Sanity() {
         this.sanity = Sanity.SANITY_MAX;

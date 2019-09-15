@@ -1,20 +1,22 @@
 package com.miskatonicmysteries.common.commands;
 
-import com.miskatonicmysteries.common.capability.Sanity;
+import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import org.apache.commons.lang3.ArrayUtils;
+import net.minecraft.util.text.TextComponentTranslation;
 import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CommandMiskatonicMysteries extends CommandBase{
+    public static final String COMMAND_SANITY = "setSanity";
+    public static final String COMMAND_BLESSING = "setBlessing";
     @Override
     public String getName() {
         return "miskatonicmysteries";
@@ -37,16 +39,16 @@ public class CommandMiskatonicMysteries extends CommandBase{
         if (args.length == 1){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         } else if (args.length == 2){
-            return getListOfStringsMatchingLastWord(args, new String[] {"setSanity"});
+            return getListOfStringsMatchingLastWord(args, new String[] {COMMAND_SANITY, COMMAND_BLESSING});
         } else if (args.length == 3){
-            return args[1].equalsIgnoreCase("setSanity") ? Arrays.asList(new String[]{"150"}) : Arrays.asList(new String[]{"false"});
+            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) :  args[1].equalsIgnoreCase(COMMAND_BLESSING) ?  getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) : Arrays.asList(new String[]{"false"});
         }
         return super.getTabCompletions(server, sender, args, targetPos);
     }
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "commands.gamemode.usage";//"miskatonicmysteries <player> <setSanity> <amount>";
+        return "commands.miskmyst.usage";
     }
 
     @Override
@@ -67,15 +69,27 @@ public class CommandMiskatonicMysteries extends CommandBase{
             throw new WrongUsageException("command.miskmyst.player_null", args[0]);
         }
 
-        if (mode.equalsIgnoreCase("setSanity")){
+        if (mode.equalsIgnoreCase(COMMAND_SANITY)){
               int amount = Integer.valueOf(value);
-            System.out.println(Sanity.Util.getSanity(player));
             if (Sanity.Util.setSanity(amount, player))
-                notifyCommandListener(sender, this, 1, "commands.miskmyst.sanity.success", player.getDisplayName(), value);
+                sendNotification(sender, player, "commands.miskmyst.sanity.success", player.getDisplayName(), value);
             else
-                notifyCommandListener(sender, this, 1, "commands.miskmyst.sanity.fail_badnum", value);
+                sendNotification(sender, player, "commands.miskmyst.sanity.fail_badnum", value);
+        }else if (mode.equalsIgnoreCase(COMMAND_BLESSING)){
+            String blessing = value;
+            if (BlessingCapability.Util.setBlessing(Blessing.getBlessingWithNull(value), player))
+                sendNotification(sender, player, "commands.miskmyst.blessing.success", player.getDisplayName(), Blessing.getBlessing(blessing).getName());
+            else
+                sendNotification(sender, player, "commands.miskmyst.sanity.fail_badblessing", value);
         }else{
-            throw new WrongUsageException("command.miskmyst.no_command", args.length == 2 ? args[0] : args[1]);
+            throw new WrongUsageException(getUsage(sender), args[1]);
         }
+    }
+
+    public void sendNotification(ICommandSender sender, EntityPlayer player, String transKey, Object... args){
+        if (sender.getEntityWorld().getGameRules().getBoolean("sendCommandFeedback")) {
+            player.sendMessage(new TextComponentTranslation(transKey, args));
+        }
+        notifyCommandListener(sender, this, 1, transKey, player.getDisplayName(), args);
     }
 }

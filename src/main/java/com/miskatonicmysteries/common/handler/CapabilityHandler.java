@@ -2,13 +2,13 @@ package com.miskatonicmysteries.common.handler;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.ModConfig;
-import com.miskatonicmysteries.common.capability.ISanity;
-import com.miskatonicmysteries.common.capability.Sanity;
-import com.miskatonicmysteries.common.capability.SanityProvider;
-import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.capability.SanityProvider;
+import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
+import com.miskatonicmysteries.common.capability.blessing.BlessingProvider;
+import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
+import com.miskatonicmysteries.common.capability.sanity.ISanity;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
 import com.miskatonicmysteries.common.handler.event.InsanityEvent;
-import com.miskatonicmysteries.common.potion.ModPotion;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -17,21 +17,23 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class CapabilityHandler {
     public static final ResourceLocation SANITY = new ResourceLocation(MiskatonicMysteries.MODID, "sanity");
+    public static final ResourceLocation BLESSING = new ResourceLocation(MiskatonicMysteries.MODID, "blessing");
 
     @SubscribeEvent
     public void attachCapability(AttachCapabilitiesEvent event) {
         if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(SANITY, new SanityProvider());
+            event.addCapability(BLESSING, new BlessingProvider());
         }
     }
 
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event) {
         Sanity.Util.transferToClone(event);
+        BlessingCapability.Util.transferToClone(event);
     }
 
     @SubscribeEvent
@@ -47,8 +49,13 @@ public class CapabilityHandler {
                     MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), sanity, event));
                 }
             }
-            //do you by chance want to do the timewarp again?
+        }
 
+        if (event.getEntityLiving().hasCapability(BlessingProvider.BLESSING, null)){
+            IBlessingCapability blessing = event.getEntityLiving().getCapability(BlessingProvider.BLESSING, null);
+            if (event.getEntityLiving() instanceof EntityPlayer && blessing.isDirty() && !event.getEntityLiving().world.isRemote){
+                BlessingCapability.Util.syncBlessing((EntityPlayer) event.getEntityLiving(), blessing);
+            }
         }
     }
 }

@@ -12,12 +12,12 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 public class ModelShubniggurathArmor extends ModelArmor {
 	private final boolean hoodMask;
 	
-	private ModelRenderer bipedRightArm;
+	/*private ModelRenderer bipedRightArm;
 	private ModelRenderer bipedRightLeg;
 	private ModelRenderer bipedHead;
 	private ModelRenderer bipedBody;
 	private ModelRenderer bipedLeftArm;
-	private ModelRenderer bipedLeftLeg;
+	private ModelRenderer bipedLeftLeg;*/
 	private ModelRenderer hood;
 	
 	public ModelShubniggurathArmor(EntityEquipmentSlot slot, boolean hoodMask) {

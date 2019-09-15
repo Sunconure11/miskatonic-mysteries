@@ -63,9 +63,9 @@ public class PotionHungerExotic extends ModPotion {
 
     @Override
     public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {//remove mania, but only if it's weaker or equally strong
-        entityLivingBaseIn.addPotionEffect(new PotionEffect(MobEffects.HUNGER,60, (amplifier+ 1) * 3, false, false));
+        entityLivingBaseIn.addPotionEffect(new PotionEffect(MobEffects.HUNGER,100, (amplifier+ 1) * 3, false, false));
         if (entityLivingBaseIn.ticksExisted % 100 == 0 && entityLivingBaseIn.world.rand.nextBoolean()){
-            entityLivingBaseIn.attackEntityFrom(DamageSource.STARVE, 0.5F);
+            entityLivingBaseIn.attackEntityFrom(DamageSource.STARVE, 2F);
         }
         super.performEffect(entityLivingBaseIn, amplifier);
     }

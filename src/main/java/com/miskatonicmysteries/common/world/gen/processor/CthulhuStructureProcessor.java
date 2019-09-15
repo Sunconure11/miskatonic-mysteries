@@ -27,7 +27,7 @@ public class CthulhuStructureProcessor extends OldStructureProcessor {
         if (blockInfoIn.blockState.getBlock().equals(ModObjects.prismarine_cthulhu_mural)){
             if (worldIn.rand.nextFloat() < 0.2F){
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.stone_cthulhu_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
-            }else if (worldIn.rand.nextFloat() < 0.5F){
+            }else if (worldIn.rand.nextFloat() < 0.2F){
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.moss_stone_cthulhu_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
             }
         }else

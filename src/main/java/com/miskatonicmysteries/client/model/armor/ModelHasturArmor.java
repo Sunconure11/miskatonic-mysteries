@@ -10,12 +10,12 @@ import net.minecraft.inventory.EntityEquipmentSlot;
  */
 @SuppressWarnings("NullableProblems")
 public class ModelHasturArmor extends ModelArmor {
-	private ModelRenderer bipedRightArm;
+	/*private ModelRenderer bipedRightArm;
 	private ModelRenderer bipedRightLeg;
 	private ModelRenderer bipedHead;
 	private ModelRenderer bipedBody;
 	private ModelRenderer bipedLeftArm;
-	private ModelRenderer bipedLeftLeg;
+	private ModelRenderer bipedLeftLeg;*/
 	
 	public ModelHasturArmor(EntityEquipmentSlot slot) {
 		super(slot);

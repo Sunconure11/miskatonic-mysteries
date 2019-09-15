@@ -1,8 +1,11 @@
 package com.miskatonicmysteries;
 
-import com.miskatonicmysteries.common.capability.ISanity;
-import com.miskatonicmysteries.common.capability.Sanity;
-import com.miskatonicmysteries.common.capability.SanityStorage;
+import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
+import com.miskatonicmysteries.common.capability.blessing.BlessingStorage;
+import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
+import com.miskatonicmysteries.common.capability.sanity.ISanity;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.capability.sanity.SanityStorage;
 import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
@@ -65,6 +68,7 @@ public class MiskatonicMysteries {
     public void preInit(FMLPreInitializationEvent event) {
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
+        CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
     }
 
     @EventHandler

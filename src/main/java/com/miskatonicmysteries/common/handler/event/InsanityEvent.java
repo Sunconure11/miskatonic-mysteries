@@ -1,9 +1,7 @@
 package com.miskatonicmysteries.common.handler.event;
 
-import com.miskatonicmysteries.common.capability.ISanity;
-import net.minecraft.entity.EntityLivingBase;
+import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 

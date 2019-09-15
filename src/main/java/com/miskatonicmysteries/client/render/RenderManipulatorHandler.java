@@ -1,13 +1,20 @@
 package com.miskatonicmysteries.client.render;
 
+import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.client.render.models.ModelGoatBlessing;
 import com.miskatonicmysteries.client.render.util.RenderGoatLegs;
+import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,15 +25,13 @@ import org.lwjgl.opengl.GL11;
 import java.util.HashMap;
 
 public class RenderManipulatorHandler {
-    //todo, register this handler, change stuff, etc. etc. etc., call stuff in InsanityHandler, optimize stuff NGGHWAHGWGWAG
     public static HashMap<Integer, EntityLivingBase> mobMob = new HashMap<>(); //actual mob - mob displayed
-
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onRender(RenderLivingEvent.Pre event) {//might remove the ifDirty part
-        if(mobMob.get(event.getEntity().getEntityId()) != null) {
+        if (mobMob.get(event.getEntity().getEntityId()) != null) {
             event.setCanceled(true);
 
             EntityLivingBase entity = mobMob.get(event.getEntity().getEntityId());
@@ -57,7 +62,7 @@ public class RenderManipulatorHandler {
             entity.setHeldItem(EnumHand.MAIN_HAND, event.getEntity().getHeldItemMainhand());
             entity.setHeldItem(EnumHand.OFF_HAND, event.getEntity().getHeldItemOffhand());
             int slot = 0;
-            for (ItemStack piece : event.getEntity().getArmorInventoryList()){
+            for (ItemStack piece : event.getEntity().getArmorInventoryList()) {
                 entity.setItemStackToSlot(slot == 0 ? EntityEquipmentSlot.FEET : slot == 1 ? EntityEquipmentSlot.LEGS : slot == 2 ? EntityEquipmentSlot.CHEST : EntityEquipmentSlot.HEAD, piece);
                 slot++;
             }
@@ -72,12 +77,14 @@ public class RenderManipulatorHandler {
     }
 
     @SubscribeEvent
-    public void renderBlessing(RenderPlayerEvent.Pre event){
-        if(!(event.getRenderer() instanceof RenderGoatLegs) && event.getEntityPlayer() instanceof AbstractClientPlayer) {
-            event.setCanceled(true);
-            boolean smolArms = !((AbstractClientPlayer) event.getEntityPlayer()).getSkinType().equals("default");
-            RenderGoatLegs render = new RenderGoatLegs(Minecraft.getMinecraft().getRenderManager(), new ModelGoatBlessing(0, smolArms), smolArms);
-            render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, event.getPartialRenderTick());
+    public void renderBlessing(RenderPlayerEvent.Pre event) {
+        if (ModConfig.client.playerModelOverrides) {
+            if (BlessingCapability.Util.hasBlessing(event.getEntityPlayer(), Blessing.SHUB) && !(event.getRenderer() instanceof RenderGoatLegs) && event.getEntityPlayer() instanceof AbstractClientPlayer) {
+                event.setCanceled(true);
+                boolean smolArms = !((AbstractClientPlayer) event.getEntityPlayer()).getSkinType().equals("default");
+                RenderGoatLegs render = new RenderGoatLegs(Minecraft.getMinecraft().getRenderManager(), new ModelGoatBlessing(0, smolArms), smolArms);
+                render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, event.getPartialRenderTick());
+            }
         }
     }
 }

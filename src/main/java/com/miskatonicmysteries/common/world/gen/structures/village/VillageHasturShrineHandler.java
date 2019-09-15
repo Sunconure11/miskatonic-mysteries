@@ -13,7 +13,7 @@ public class VillageHasturShrineHandler implements VillagerRegistry.IVillageCrea
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i) {
-        return new StructureVillagePieces.PieceWeight(VillageComponentHasturShrine.class, 6, 1);
+        return new StructureVillagePieces.PieceWeight(VillageComponentHasturShrine.class, 6, random.nextDouble() < ModConfig.worldGen.chanceHasturShrines ? 1 : 0);
     }
 
     @Override
@@ -23,9 +23,6 @@ public class VillageHasturShrineHandler implements VillagerRegistry.IVillageCrea
 
     @Override
     public StructureVillagePieces.Village buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start startPiece, List<StructureComponent> pieces, Random random, int p1, int p2, int p3, EnumFacing facing, int p5) {
-        if (random.nextFloat() <= ModConfig.worldGen.chanceHasturShrines) {
-            return VillageComponentHasturShrine.buildComponent(pieces, p1, p2, p3, facing);
-        }
-        return null;
+        return VillageComponentHasturShrine.buildComponent(pieces, p1, p2, p3, facing);
     }
 }

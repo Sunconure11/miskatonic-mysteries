@@ -1,9 +1,8 @@
 package com.miskatonicmysteries.common.network.message.capability;
 
-import com.miskatonicmysteries.common.capability.ISanity;
-import com.miskatonicmysteries.common.capability.SanityProvider;
+import com.miskatonicmysteries.common.capability.sanity.ISanity;
+import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
 import io.netty.buffer.ByteBuf;
-import com.miskatonicmysteries.common.capability.SanityProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.common.capability;
+package com.miskatonicmysteries.common.capability.sanity;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;

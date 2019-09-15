@@ -1,8 +1,8 @@
 package com.miskatonicmysteries.common.network.message.event;
 
 import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
-import com.miskatonicmysteries.common.capability.Sanity;
-import com.miskatonicmysteries.common.capability.SanityProvider;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.registry.ModPotions;
 import io.netty.buffer.ByteBuf;

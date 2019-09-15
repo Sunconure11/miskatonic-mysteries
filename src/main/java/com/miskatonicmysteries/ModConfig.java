@@ -1,6 +1,5 @@
 package com.miskatonicmysteries;
 
-import com.miskatonicmysteries.common.capability.Sanity;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -27,6 +26,11 @@ public class ModConfig {
         @Config.Comment("Set this to false to disable the shaders in this mod.")
         @Config.LangKey("config.use_shaders")
         public boolean useShaders = true;
+
+
+        @Config.Comment("Set this to false to disable changes to the player's model under certain circumstances, e.g. when under a special transformation.")
+        @Config.LangKey("config.change_player_model")
+        public boolean playerModelOverrides = true;
     }
 
     public static class SanitySettings{
@@ -39,7 +43,7 @@ public class ModConfig {
         @Config.Comment("Determines the chance for the Black Goat's shrines to spawn. Set to 1 to spawn a shrine in (almost) every chunk it can spawn in, set to 0 to disable.")
         @Config.LangKey("config.chanceShubShrines")
         @Config.RangeDouble(min = 0, max = 1)
-        public float chanceShubShrines = 0.001F; //todo adapt all these values
+        public float chanceShubShrines = 0.001F;
 
 
         @Config.Comment("Determines the chance for Hastur shrines to spawn. Set to 1 to attempt spawning a shrine in every non-desert village, set to 0 to disable.")
@@ -51,7 +55,7 @@ public class ModConfig {
         @Config.Comment("Determines the chance for Cthulhu shrines to spawn. Set to 1 to attempt spawning a shrine in every ocean cave, set to 0 to disable.")
         @Config.LangKey("config.chanceCthulhuShrines")
         @Config.RangeDouble(min = 0, max = 1)
-        public float chanceCthulhuShrines = 0.1F;
+        public float chanceCthulhuShrines = 0.05F;
     }
 
     @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
