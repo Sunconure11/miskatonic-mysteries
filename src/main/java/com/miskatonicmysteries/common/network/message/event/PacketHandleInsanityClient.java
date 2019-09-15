@@ -1,11 +1,9 @@
 package com.miskatonicmysteries.common.network.message.event;
 
-import com.miskatonicmysteries.client.render.shaders.RenderManipulatorHandler;
-import com.miskatonicmysteries.common.capability.ISanity;
+import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
 import com.miskatonicmysteries.common.capability.Sanity;
 import com.miskatonicmysteries.common.capability.SanityProvider;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
-import com.miskatonicmysteries.common.handler.event.InsanityEvent;
 import com.miskatonicmysteries.registry.ModPotions;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -17,7 +15,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

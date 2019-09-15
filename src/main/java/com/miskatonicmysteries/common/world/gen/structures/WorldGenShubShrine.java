@@ -34,10 +34,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Random;
 
 public class WorldGenShubShrine extends WorldGenerator {
-    protected int type;
-    public WorldGenShubShrine(int type, boolean cave) {
+    public WorldGenShubShrine() {
         super(true);
-        this.type = type;
     }
 
     @Override
@@ -45,7 +43,7 @@ public class WorldGenShubShrine extends WorldGenerator {
         WorldServer worldServer = (WorldServer) worldIn;
         MinecraftServer minecraftServer = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldServer.getStructureTemplateManager();
-        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/shub/shrine_shubniggurath_forest_" + type));//(1 + rand.nextInt(4))));
+        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/shub/shrine_shubniggurath_forest_" + (1 + rand.nextInt(4))));
         if (canSpawnHere(template, worldServer, position)) { //better flattening is needed
             IBlockState iBlockState = worldIn.getBlockState(position);
             worldIn.notifyBlockUpdate(position, iBlockState, iBlockState, 3);

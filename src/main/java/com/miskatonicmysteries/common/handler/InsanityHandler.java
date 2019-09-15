@@ -1,27 +1,19 @@
 package com.miskatonicmysteries.common.handler;
 
-import com.miskatonicmysteries.client.render.shaders.RenderManipulatorHandler;
 import com.miskatonicmysteries.common.handler.event.InsanityEvent;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
 import com.miskatonicmysteries.registry.ModPotions;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;

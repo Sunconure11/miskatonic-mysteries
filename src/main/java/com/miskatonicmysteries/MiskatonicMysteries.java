@@ -70,7 +70,7 @@ public class MiskatonicMysteries {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
-        GameRegistry.registerWorldGenerator(new ModWorldGen(), Integer.MAX_VALUE);
+        GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);//set to max int value if stuff gets shitty
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHasturShrineHandler());
         MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());

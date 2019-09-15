@@ -46,6 +46,8 @@ config.use_shaders=Use Shaders
 
 config.category_worldgen=World Generation
 config.chanceShubShrines=Chance for Shub-Niggurath Shrines
+config.chanceBananaShrines=Chance for Hastur Shrines
+config.chanceCthulhuShrines=Chance for Cthulhu Shrines
 
 config.category_sanity=Sanity
 config.insanity_interval=Insanity Event Interval

@@ -1,6 +1,6 @@
 package com.miskatonicmysteries.proxy;
 
-import com.miskatonicmysteries.client.render.shaders.RenderManipulatorHandler;
+import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
 import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;

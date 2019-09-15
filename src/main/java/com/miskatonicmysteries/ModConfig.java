@@ -39,7 +39,19 @@ public class ModConfig {
         @Config.Comment("Determines the chance for the Black Goat's shrines to spawn. Set to 1 to spawn a shrine in (almost) every chunk it can spawn in, set to 0 to disable.")
         @Config.LangKey("config.chanceShubShrines")
         @Config.RangeDouble(min = 0, max = 1)
-        public float chanceShubShrines = 0.05F;
+        public float chanceShubShrines = 0.001F; //todo adapt all these values
+
+
+        @Config.Comment("Determines the chance for Hastur shrines to spawn. Set to 1 to attempt spawning a shrine in every non-desert village, set to 0 to disable.")
+        @Config.LangKey("config.chanceBananaShrines")
+        @Config.RangeDouble(min = 0, max = 1)
+        public float chanceHasturShrines = 0.1F;
+
+
+        @Config.Comment("Determines the chance for Cthulhu shrines to spawn. Set to 1 to attempt spawning a shrine in every ocean cave, set to 0 to disable.")
+        @Config.LangKey("config.chanceCthulhuShrines")
+        @Config.RangeDouble(min = 0, max = 1)
+        public float chanceCthulhuShrines = 0.1F;
     }
 
     @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)

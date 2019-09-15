@@ -56,6 +56,9 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
         if (BiomeDictionary.hasType(worldIn.getBiome(new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0))), BiomeDictionary.Type.SAVANNA)) {
             template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
         }
+        if (BiomeDictionary.hasType(worldIn.getBiome(new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0))), BiomeDictionary.Type.SANDY)){
+            return true;
+        }
         EnumFacing facing = this.getCoordBaseMode();
 
         Mirror mirror;
@@ -83,7 +86,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
             }
         }
         PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(mirror);
-        template.addBlocksToWorld(worldIn, new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0)), new HasturStructureProcessor(averageGroundLvl,false), settings, 2);
+        template.addBlocksToWorld(worldIn, new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0)), new HasturStructureProcessor(averageGroundLvl), settings, 2);
         return true;
     }
 

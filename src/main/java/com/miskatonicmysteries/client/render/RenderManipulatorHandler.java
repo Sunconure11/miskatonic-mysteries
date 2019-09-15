@@ -1,26 +1,13 @@
-package com.miskatonicmysteries.client.render.shaders;
+package com.miskatonicmysteries.client.render;
 
-import com.miskatonicmysteries.common.capability.Sanity;
+import com.miskatonicmysteries.client.render.models.ModelTestBlessing;
+import com.miskatonicmysteries.client.render.util.RenderGoatLegs;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBox;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderCreeper;
-import net.minecraft.client.renderer.entity.RenderEntity;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,9 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class RenderManipulatorHandler {
     //todo, register this handler, change stuff, etc. etc. etc., call stuff in InsanityHandler, optimize stuff NGGHWAHGWGWAG
@@ -86,23 +71,13 @@ public class RenderManipulatorHandler {
         }
     }
 
-    /**
-     * Gets an RGBA int color multiplier to apply.
-     */
-    protected int getColorMultiplier(EntityCreeper entitylivingbaseIn, float lightBrightness, float partialTickTime)
-    {
-        float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
-
-        if ((int)(f * 10.0F) % 2 == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            int i = (int)(f * 0.2F * 255.0F);
-            i = MathHelper.clamp(i, 0, 255);
-            return i << 24 | 822083583;
+    @SubscribeEvent
+    public void renderBlessing(RenderPlayerEvent.Pre event){
+        if(!(event.getRenderer() instanceof RenderGoatLegs) && event.getEntityPlayer() instanceof AbstractClientPlayer) {
+            event.setCanceled(true);
+            boolean smolArms = !((AbstractClientPlayer) event.getEntityPlayer()).getSkinType().equals("default");
+            RenderGoatLegs render = new RenderGoatLegs(Minecraft.getMinecraft().getRenderManager(), new ModelTestBlessing(0, smolArms), smolArms);
+            render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, event.getPartialRenderTick());
         }
     }
-
 }

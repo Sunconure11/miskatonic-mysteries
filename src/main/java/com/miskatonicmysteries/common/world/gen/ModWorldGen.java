@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.Util;
 import com.miskatonicmysteries.common.item.tool.ItemTerraform;
+import com.miskatonicmysteries.common.world.gen.structures.WorldGenCthulhuShrine;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
 import com.sun.xml.internal.ws.binding.FeatureListUtil;
 import net.minecraft.block.*;
@@ -25,6 +26,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.structure.StructureOceanMonument;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.storage.loot.ILootContainer;
 import net.minecraftforge.common.BiomeDictionary;
@@ -38,17 +40,17 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class ModWorldGen implements IWorldGenerator {
-    //Fixme, make world gen beautiful again :(
-    private final WorldGenerator shubShrine1 = new WorldGenShubShrine(1, false);
-    private final WorldGenerator shubShrine2 = new WorldGenShubShrine(2, false);
-    private final WorldGenerator shubShrine3 = new WorldGenShubShrine(3, false);
-    private final WorldGenerator shubShrine4 = new WorldGenShubShrine(4, false);
+    private final WorldGenerator shubShrine = new WorldGenShubShrine();
+
+    private final WorldGenerator luluShrine = new WorldGenCthulhuShrine();
+
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        generateStructure(shubShrine1, world, random, ModConfig.worldGen.chanceShubShrines / 4F, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
-        generateStructure(shubShrine2, world, random, ModConfig.worldGen.chanceShubShrines / 4F, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
-        generateStructure(shubShrine3, world, random, ModConfig.worldGen.chanceShubShrines / 4F, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
-        generateStructure(shubShrine4, world, random, ModConfig.worldGen.chanceShubShrines / 4F, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
+        generateStructure(shubShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
+
+        //add this to also generate the shrines in the depths of the ocean and not only in caves generateOceanStructure(luluShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
+        generateCaveStuff(luluShrine, world, random, ModConfig.worldGen.chanceCthulhuShrines, chunkX, chunkZ, 0, 0, b -> StructureOceanMonument.WATER_BIOMES.contains(b) || BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
+
     }
 
     private void generateStructure(WorldGenerator structure, World world, Random rand, double chance, int chunkX, int chunkz, int xOffset, int zOffset, Predicate<Biome> biomes) {
@@ -57,8 +59,15 @@ public class ModWorldGen implements IWorldGenerator {
             structure.generate(world, rand, pos);
     }
 
+    /*private void generateOceanStructure(WorldGenerator structure, World world, Random rand, double chance, int chunkX, int chunkz, int xOffset, int zOffset, Predicate<Biome> biomes) {
+        BlockPos pos = new BlockPos(chunkX * 16 + xOffset, getActualGround(world, chunkX * 16 + xOffset, chunkz * 16 + zOffset), chunkz * 16 + zOffset);
+        if (rand.nextDouble() < chance && biomes.test(world.getBiome(pos)) && biomes.test(world.getBiome(pos.add(7, 0, 7))))
+            structure.generate(world, rand, pos);
+*/  //  }
+
     private void generateCaveStuff(WorldGenerator structure, World world, Random rand, double chance, int chunkX, int chunkz, int xOffset, int zOffset, Predicate<Biome> biomes) {
-        BlockPos pos = new BlockPos(chunkX * 16 + xOffset, getCaveGround(world, chunkX * 16 + xOffset, chunkX * 16 + zOffset), chunkz * 16 + zOffset);
+        BlockPos pos = new BlockPos(chunkX * 16 + xOffset, getFirstCaveGround(world, chunkX * 16 + xOffset, chunkX * 16 + zOffset), chunkz * 16 + zOffset);
+        //replace cave top with cave ground
         if (rand.nextDouble() < chance && biomes.test(world.getBiome(pos)) && biomes.test(world.getBiome(pos.add(7, 0, 7))))
             structure.generate(world, rand, pos);
     }
@@ -86,24 +95,43 @@ public class ModWorldGen implements IWorldGenerator {
         return y + 1;
     }
 
+    public static int getActualGround(World world, int x, int z) {
+        int y = world.getHeight(x, z);
+        boolean foundGround = false;
+        while (!foundGround && y-- >= 0) {
+            foundGround = isBlockSolid(world, new BlockPos(x, y, z));
+        }
+        return y + 1;
+    }
+
     public static int getCaveTop(World world, int x, int z) {
         int y = 31;
-        boolean foundAir = false;
-        while (!foundAir && y-- >= 6) { //no spawns under that height
-            foundAir = !isBlockSolid(world, new BlockPos(x, y, z));
+        while (y-- >= 6) { //no spawns under that height
+            if (!isBlockSolid(world, new BlockPos(x, y, z))){
+                return y;
+            }
         }
-        return foundAir ? y : world.rand.nextInt(25) + 10;
+        return -1;
     }
 
     public static int getCaveGround(World world, int x, int z) {
         int y = getCaveTop(world, x, z);
-        boolean foundGround = false;
-        while (!foundGround && y-- >= 6) { //no spawns under that height
+        while (y-- >= 6) { //no spawns under that height
             if (isBlockSolid(world, new BlockPos(x, y, z))){
                 return y + 1;
             }
         }
-        return world.rand.nextInt(25) + 10;
+        return -1;
+    }
+
+    public static int getFirstCaveGround(World world, int x, int z) {
+        int y = 5;
+        while (y++ <= 42) { //no spawns under that height
+            if (world.getBlockState(new BlockPos(x, y, z)).getBlock().equals(Blocks.AIR)){//!isBlockSolid(world, new BlockPos(x, y, z))){
+                return y;
+            }
+        }
+        return -1;
     }
 
     public static boolean checkIndestructable(World world, BlockPos pos, Block... whitelistBlock){
@@ -155,40 +183,6 @@ public class ModWorldGen implements IWorldGenerator {
                     growable.grow(world, world.rand, pos, world.getBlockState(pos));
                     return true;
                 }
-            }
-        }
-        return false;
-    }
-
-    public static boolean growTrees(World world, Iterable<BlockPos.MutableBlockPos> blocks){
-        for (BlockPos pos : getPossibleGrowingPos(world, blocks)){
-            WorldGenAbstractTree tree = new WorldGenBirchTree(true, false);//Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState());// world.getBiome(pos).getRandomTreeFeature(world.rand);
-            if (tree.generate(world, world.rand, pos.up())){
-                System.out.println(":(");
-                tree.generateSaplings(world, world.rand, pos.up());
-            }
-        }
-        return false;
-    }
-
-    public static List<BlockPos> getPossibleGrowingPos(World world, Iterable<BlockPos.MutableBlockPos> blocks){
-        List<BlockPos> pos = new ArrayList<>();
-        for (BlockPos block : blocks){
-            if (world.getBlockState(block).getBlock().equals(Blocks.GRASS)){
-                pos.add(block);
-            }
-        }
-        Collections.shuffle(pos);
-        return pos;
-    }
-
-    public static boolean growVines(World world, Iterable<BlockPos.MutableBlockPos> blocks){
-        List<BlockPos.MutableBlockPos> positions = (List<BlockPos.MutableBlockPos>) Util.iterableToShuffledList(blocks);
-        for (BlockPos pos : positions){
-            WorldGenVines vines = new WorldGenVines();
-            if (vines.generate(world, world.rand, pos)){
-                System.out.println(":)");
-                return true;
             }
         }
         return false;
