@@ -1,20 +1,22 @@
 package com.miskatonicmysteries.client.render.models;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * ModelGoatBlessing - cybecat5555
  * Created using Tabula 7.0.1
  */
-public class ModelGoatBlessing extends ModelBase {
-    public ModelRenderer bipedRightArm;
-    public ModelRenderer bipedRightLeg;
-    public ModelRenderer bipedHead;
-    public ModelRenderer bipedBody;
-    public ModelRenderer bipedLeftArm;
-    public ModelRenderer bipedLeftLeg;
+public class ModelGoatBlessing extends ModelPlayer {
     public ModelRenderer rGoatLeg01;
     public ModelRenderer rGoatLeg02;
     public ModelRenderer rGoatLeg03;
@@ -32,7 +34,8 @@ public class ModelGoatBlessing extends ModelBase {
     public ModelRenderer lHoofClaw01b;
     public ModelRenderer lHoofClaw02b;
 
-    public ModelGoatBlessing() {
+    public ModelGoatBlessing(float modelSize, boolean smallArmsIn) {
+        super(modelSize,smallArmsIn);
         this.textureWidth = 128;
         this.textureHeight = 64;
         this.lGoatLeg01 = new ModelRenderer(this, 65, 0);
@@ -70,16 +73,10 @@ public class ModelGoatBlessing extends ModelBase {
         this.rGoatLeg01.setRotationPoint(-0.1F, 0.0F, 0.0F);
         this.rGoatLeg01.addBox(-2.0F, -1.5F, -2.4F, 4, 7, 4, 0.0F);
         this.setRotateAngle(rGoatLeg01, -0.5235987755982988F, 0.03490658503988659F, 0.03490658503988659F);
-        this.bipedBody = new ModelRenderer(this, 16, 16);
-        this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
         this.lHoofClaw01a = new ModelRenderer(this, 81, 0);
         this.lHoofClaw01a.setRotationPoint(0.9F, 0.0F, -1.3F);
         this.lHoofClaw01a.addBox(-0.5F, -0.5F, -1.9F, 1, 1, 2, 0.0F);
         this.setRotateAngle(lHoofClaw01a, 0.3490658503988659F, -0.10471975511965977F, 0.0F);
-        this.bipedHead = new ModelRenderer(this, 0, 0);
-        this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
         this.rGoatLeg03 = new ModelRenderer(this, 67, 23);
         this.rGoatLeg03.mirror = true;
         this.rGoatLeg03.setRotationPoint(0.0F, 4.4F, -0.2F);
@@ -109,16 +106,10 @@ public class ModelGoatBlessing extends ModelBase {
         this.rHoofClaw02b.setRotationPoint(0.0F, 0.3F, -0.5F);
         this.rHoofClaw02b.addBox(-0.5F, -0.5F, -2.2F, 1, 1, 2, 0.0F);
         this.setRotateAngle(rHoofClaw02b, -0.22689280275926282F, -0.22689280275926282F, -0.7853981633974483F);
-        this.bipedRightArm = new ModelRenderer(this, 40, 16);
-        this.bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-        this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
         this.lGoatLeg03 = new ModelRenderer(this, 67, 23);
         this.lGoatLeg03.setRotationPoint(0.0F, 4.4F, -0.2F);
         this.lGoatLeg03.addBox(-1.4F, -0.4F, -1.0F, 3, 6, 2, 0.0F);
         this.setRotateAngle(lGoatLeg03, -0.6283185307179586F, 0.0F, 0.0F);
-        this.bipedLeftArm = new ModelRenderer(this, 32, 48);
-        this.bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-        this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
         this.lGoatLeg02 = new ModelRenderer(this, 66, 13);
         this.lGoatLeg02.setRotationPoint(0.0F, 3.8F, -0.8F);
         this.lGoatLeg02.addBox(-1.39F, -0.4F, -2.0F, 3, 5, 3, 0.0F);
@@ -142,15 +133,69 @@ public class ModelGoatBlessing extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-        this.bipedBody.render(f5);
-        this.bipedHead.render(f5);
-        this.bipedLeftLeg.render(f5);
-        this.bipedRightLeg.render(f5);
-        this.bipedRightArm.render(f5);
-        this.bipedLeftArm.render(f5);
+    public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        if (entity instanceof EntityPlayer) {
+            this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+            GlStateManager.pushMatrix();
+            ResourceLocation texture = ((AbstractClientPlayer) entity).getLocationSkin();
+            Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
+
+            if (this.isChild) {
+                GlStateManager.scale(0.75F, 0.75F, 0.75F);
+                GlStateManager.translate(0.0F, 16.0F * scale, 0.0F);
+                this.bipedHead.render(scale);
+                GlStateManager.popMatrix();
+                GlStateManager.pushMatrix();
+                GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+                this.bipedBody.render(scale);
+                this.bipedRightArm.render(scale);
+                this.bipedLeftArm.render(scale);
+                this.bipedHeadwear.render(scale);
+                renderLegs(scale, texture);
+            } else {
+                if (entity.isSneaking()) {
+                    GlStateManager.translate(0.0F, 0.2F, 0.0F);
+                }
+
+                this.bipedHead.render(scale);
+                this.bipedBody.render(scale);
+                this.bipedRightArm.render(scale);
+                this.bipedLeftArm.render(scale);
+                this.bipedHeadwear.render(scale);
+
+                renderLegs(scale, texture);
+            }
+
+            GlStateManager.popMatrix();
+
+            //player stuff
+            GlStateManager.pushMatrix();
+            if (this.isChild) {
+                GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+                this.bipedLeftArmwear.render(scale);
+                this.bipedRightArmwear.render(scale);
+                this.bipedBodyWear.render(scale);
+            } else {
+                if (entity.isSneaking()) {
+                    GlStateManager.translate(0.0F, 0.2F, 0.0F);
+                }
+                this.bipedLeftArmwear.render(scale);
+                this.bipedRightArmwear.render(scale);
+                this.bipedBodyWear.render(scale);
+            }
+            GlStateManager.popMatrix();
+
+        }
     }
 
+    private void renderLegs(float scale, ResourceLocation origTex){
+        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(MiskatonicMysteries.MODID, "textures/entity/blessing_goat.png"));
+        this.bipedRightLeg.render(scale);
+        this.bipedLeftLeg.render(scale);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(origTex);
+    }
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
