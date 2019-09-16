@@ -3,7 +3,6 @@ package com.miskatonicmysteries.common.world.gen;
 import com.google.common.base.Predicate;
 import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.Util;
-import com.miskatonicmysteries.common.item.tool.ItemTerraform;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenCthulhuShrine;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
 import com.sun.xml.internal.ws.binding.FeatureListUtil;

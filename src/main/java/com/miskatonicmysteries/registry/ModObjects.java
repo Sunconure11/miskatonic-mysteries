@@ -5,6 +5,7 @@ import com.miskatonicmysteries.Util;
 import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
+import com.miskatonicmysteries.common.item.consumable.ItemMilkGoat;
 import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
 import com.miskatonicmysteries.common.item.tool.*;
 import com.miskatonicmysteries.MiskatonicMysteries;
@@ -57,5 +58,7 @@ public class ModObjects {
 
 	public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 
-	public static Item terraform = Util.create(new ItemTerraform(), "item_terraform");
+	public static Item milk_black_goat = Util.create(new ItemMilkGoat(), "milk_black_goat");
+
+	public static Item gold_oceanic = Util.create("gold_oceanic");
 }

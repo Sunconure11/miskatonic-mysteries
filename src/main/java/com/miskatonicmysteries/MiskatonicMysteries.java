@@ -43,6 +43,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,12 +80,15 @@ public class MiskatonicMysteries {
         MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new InsanityHandler());
+        registerOreDict();
     }
 
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandMiskatonicMysteries());
     }
+
+
 
     @Mod.EventBusSubscriber
     static class Registry {
@@ -153,5 +157,10 @@ public class MiskatonicMysteries {
                 }
             });
         }
+    }
+
+    public void registerOreDict(){
+        OreDictionary.registerOre("ingotGold", ModObjects.gold_oceanic);
+        OreDictionary.registerOre("oreGold", ModObjects.gold_oceanic);
     }
 }
