@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.common.world.gen.structures.village;
+package com.miskatonicmysteries.common.world.gen.village;
 
 import com.miskatonicmysteries.ModConfig;
 import net.minecraft.util.EnumFacing;

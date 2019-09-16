@@ -1,10 +1,7 @@
-package com.miskatonicmysteries.common.world.gen.structures.village;
+package com.miskatonicmysteries.common.world.gen.village;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.world.gen.processor.HasturStructureProcessor;
-import com.miskatonicmysteries.common.world.gen.processor.OldStructureProcessor;
-import com.sun.jna.platform.win32.WinUser;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;

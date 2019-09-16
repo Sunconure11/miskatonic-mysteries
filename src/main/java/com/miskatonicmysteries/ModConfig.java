@@ -49,7 +49,7 @@ public class ModConfig {
         @Config.Comment("Determines the chance for Hastur shrines to spawn. Set to 1 to attempt spawning a shrine in every non-desert village, set to 0 to disable.")
         @Config.LangKey("config.chanceBananaShrines")
         @Config.RangeDouble(min = 0, max = 1)
-        public float chanceHasturShrines = 0.1F;
+        public float chanceHasturShrines = 0.3F;
 
 
         @Config.Comment("Determines the chance for Cthulhu shrines to spawn. Set to 1 to attempt spawning a shrine in every ocean cave, set to 0 to disable.")

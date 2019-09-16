@@ -9,10 +9,11 @@ import com.miskatonicmysteries.common.capability.sanity.SanityStorage;
 import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
+import com.miskatonicmysteries.common.handler.LootHandler;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
-import com.miskatonicmysteries.common.world.gen.structures.village.VillageComponentHasturShrine;
-import com.miskatonicmysteries.common.world.gen.structures.village.VillageHasturShrineHandler;
+import com.miskatonicmysteries.common.world.gen.village.VillageComponentHasturShrine;
+import com.miskatonicmysteries.common.world.gen.village.VillageHasturShrineHandler;
 import com.miskatonicmysteries.proxy.ServerProxy;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
@@ -25,6 +26,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
@@ -78,9 +80,13 @@ public class MiskatonicMysteries {
         GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);//set to max int value if stuff gets shitty
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHasturShrineHandler());
         MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
+
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new InsanityHandler());
+        new LootHandler();
+
         registerOreDict();
+        registerFurnaceRecipes();
     }
 
     @Mod.EventHandler
@@ -162,5 +168,9 @@ public class MiskatonicMysteries {
     public void registerOreDict(){
         OreDictionary.registerOre("ingotGold", ModObjects.gold_oceanic);
         OreDictionary.registerOre("oreGold", ModObjects.gold_oceanic);
+    }
+
+    public void registerFurnaceRecipes(){
+        FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ModObjects.gold_oceanic), new ItemStack(Items.GOLD_INGOT), 10);
     }
 }

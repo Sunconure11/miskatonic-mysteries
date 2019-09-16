@@ -32,6 +32,9 @@ item.black_goats_horned_dagger.name=Black Goat's Horned Dagger
 
 item.tranquilizer.name=Tranquilizer
 
+item.milk_black_goat.name=Milk of the Black Goat
+item.gold_oceanic.name=Oceanic Gold
+
 #POTIONS
 miskatonicmysteries.tranquilized=Tranquilized
 miskatonicmysteries.mania=Mania
