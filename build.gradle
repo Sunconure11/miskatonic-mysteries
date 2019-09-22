@@ -11,8 +11,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 version = "1.0"
-group = "moriyashiine.acme"
-archivesBaseName = "acme"
+group = "com.miskatonicmysteries"
+archivesBaseName = "miskatonicmysteries"
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {

@@ -5,7 +5,6 @@ import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.Util;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenCthulhuShrine;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
-import com.sun.xml.internal.ws.binding.FeatureListUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
