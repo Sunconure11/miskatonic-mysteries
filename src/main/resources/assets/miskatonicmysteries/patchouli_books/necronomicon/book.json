@@ -17,5 +17,5 @@
     "$(item)": "$(#230A47)"
   },
   "dont_generate_book": true,
-  "custom_book_item": "miskatonicmysteries:necronomicon"
+  "custom_book_item": "minecraft:book"
 }

@@ -1,9 +1,9 @@
 package com.miskatonicmysteries.common.item.misc;
 
-import net.minecraft.item.Item;
+import vazkii.patchouli.common.item.ItemModBook;
 
-public class ItemMMBook extends Item{
+public class ItemMMBook extends ItemModBook{
     public ItemMMBook() {
-
+        super();
     }
 }
