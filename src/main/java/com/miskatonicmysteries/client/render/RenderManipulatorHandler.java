@@ -2,7 +2,7 @@ package com.miskatonicmysteries.client.render;
 
 import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.client.render.models.ModelGoatBlessing;
-import com.miskatonicmysteries.client.render.util.RenderGoatLegs;
+import com.miskatonicmysteries.client.render.renderer.RenderGoatLegs;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import net.minecraft.client.Minecraft;
@@ -79,7 +79,7 @@ public class RenderManipulatorHandler {
                 event.setCanceled(true);
                 boolean smolArms = !((AbstractClientPlayer) event.getEntityPlayer()).getSkinType().equals("default");
                 RenderGoatLegs render = new RenderGoatLegs(Minecraft.getMinecraft().getRenderManager(), new ModelGoatBlessing(0, smolArms), smolArms);
-                render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, event.getPartialRenderTick());
+                render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, 0.0625F);
             }
         }
     }

@@ -29,9 +29,7 @@ public class LootHandler {
     );
 
     public LootHandler() {
-        for (String s : TABLES) {
-            LootTableList.register(new ResourceLocation(MiskatonicMysteries.MODID, s));
-        }
+        LootTableList.register(new ResourceLocation(MiskatonicMysteries.MODID, "oceanic_gold"));
         MinecraftForge.EVENT_BUS.register(this);
     }
 

@@ -1,0 +1,81 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+        "model": "miskatonicmysteries:candle",
+		"textures": {
+			"all": "miskatonicmysteries:blocks/candle_unlit"
+		}
+	},
+	"variants": {
+		"normal": [
+			{}
+		],
+		"inventory": [
+			{}
+		],
+		"candles=1,lit=false": [
+			{
+				"model": "miskatonicmysteries:candle",
+				"textures": {
+					"all": "miskatonicmysteries:blocks/candle_unlit"
+				}
+			}
+		],
+		"candles=2,lit=false": [
+          {
+            "model": "miskatonicmysteries:candle",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_unlit"
+            }
+          }
+		],
+		"candles=3,lit=false": [
+          {
+            "model": "miskatonicmysteries:candle",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_unlit"
+            }
+          }
+		],
+		"candles=4,lit=false": [
+          {
+            "model": "miskatonicmysteries:candle",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_unlit"
+            }
+          }
+		],
+		"candles=1,lit=true": [
+          {
+            "model": "miskatonicmysteries:candle",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_lit"
+            }
+          }
+		],
+		"candles=2,lit=true": [
+          {
+            "model": "miskatonicmysteries:two_candles",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_lit"
+            }
+          }
+		],
+		"candles=3,lit=true": [
+          {
+            "model": "miskatonicmysteries:three_candles",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_lit"
+            }
+          }
+		],
+		"candles=4,lit=true": [
+          {
+            "model": "miskatonicmysteries:four_candles",
+            "textures": {
+              "all": "miskatonicmysteries:blocks/candle_lit"
+            }
+          }
+		]
+	}
+}

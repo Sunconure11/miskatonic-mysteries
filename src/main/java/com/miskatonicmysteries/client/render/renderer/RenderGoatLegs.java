@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.client.render.util;
+package com.miskatonicmysteries.client.render.renderer;
 
 import com.miskatonicmysteries.client.render.models.ModelGoatBlessing;
 import net.minecraft.client.model.ModelBiped;

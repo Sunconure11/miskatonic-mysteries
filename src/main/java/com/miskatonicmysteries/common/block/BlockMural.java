@@ -1,6 +1,6 @@
 package com.miskatonicmysteries.common.block;
 
-import com.miskatonicmysteries.Util;
+import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

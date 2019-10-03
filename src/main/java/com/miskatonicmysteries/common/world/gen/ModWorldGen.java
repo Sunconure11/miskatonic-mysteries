@@ -2,9 +2,9 @@ package com.miskatonicmysteries.common.world.gen;
 
 import com.google.common.base.Predicate;
 import com.miskatonicmysteries.ModConfig;
-import com.miskatonicmysteries.Util;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenCthulhuShrine;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
+import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;

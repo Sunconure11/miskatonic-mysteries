@@ -10,11 +10,13 @@ import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.common.handler.LootHandler;
+import com.miskatonicmysteries.common.misc.ColorCandlesRecipe;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.common.world.gen.village.VillageComponentHasturShrine;
 import com.miskatonicmysteries.common.world.gen.village.VillageHasturShrineHandler;
 import com.miskatonicmysteries.proxy.ServerProxy;
+import com.miskatonicmysteries.registry.ModEntities;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.block.Block;
@@ -27,6 +29,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
@@ -57,10 +60,14 @@ import java.util.Random;
 public class MiskatonicMysteries {
     public static final String MODID = "miskatonicmysteries", NAME = "Miskatonic Mysteries", VERSION = "1.0";
 
+
+    @Mod.Instance(MODID)
+    public static MiskatonicMysteries instance;
+
     @SidedProxy(serverSide = "com.miskatonicmysteries.proxy.ServerProxy", clientSide = "com.miskatonicmysteries.proxy.ClientProxy")
-    static ServerProxy proxy;
+    public static ServerProxy proxy;
     public static final Logger LOGGER = LogManager.getLogger(NAME);
-    static CreativeTabs tab = new CreativeTabs(MODID) {
+    public static CreativeTabs tab = new CreativeTabs(MODID) {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(ModObjects.milk_black_goat);
@@ -69,9 +76,13 @@ public class MiskatonicMysteries {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        proxy.preInit(event);
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
         CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
+
+        ModEntities.init();
+
     }
 
     @EventHandler
@@ -151,6 +162,11 @@ public class MiskatonicMysteries {
                 }
             } catch (Exception ignored) {
             }
+        }
+
+        @SubscribeEvent
+        public static void registerCustomRecipes(RegistryEvent.Register<IRecipe> event) {
+            event.getRegistry().register(new ColorCandlesRecipe().setRegistryName(MODID, "color_candles"));
         }
 
         @SubscribeEvent

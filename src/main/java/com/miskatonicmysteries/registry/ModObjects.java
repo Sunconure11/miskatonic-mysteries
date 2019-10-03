@@ -1,7 +1,7 @@
 package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.Util;
+import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
@@ -10,6 +10,7 @@ import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
 import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
+import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.SoundEvents;
@@ -35,6 +36,9 @@ public class ModObjects {
 
     public static BlockMural stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_shubniggurath_mural");
     public static BlockMural moss_stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_shubniggurath_mural");
+
+    public static BlockCandles candles = Util.create(new BlockCandles(), SoundType.CLOTH, 0F, 0.2F, "none", 0, "candles");
+
 
     public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
     public static Item research_notes_hastur = Util.create("research_notes_hastur");

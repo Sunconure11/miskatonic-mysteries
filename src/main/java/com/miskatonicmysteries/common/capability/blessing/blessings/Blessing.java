@@ -10,6 +10,8 @@ public class Blessing {
     public static final Blessing NONE = addBlessing(new Blessing("none"));
     public static final Blessing SHUB = addBlessing(new Blessing("shub"));
     public static final Blessing HASTUR = addBlessing(new Blessing("hastur"));
+    public static final Blessing CTHULHU = addBlessing(new Blessing("cthulhu"));
+    public static final Blessing YOG_SOTOTH = addBlessing(new Blessing("yog_sothoth"));
 
 
     public Blessing(String name) {

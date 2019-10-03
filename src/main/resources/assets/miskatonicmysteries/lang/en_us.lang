@@ -47,7 +47,7 @@ itemGroup.miskatonicmysteries=Miskatonic Mysteries
 config.category_client=Client Settings
 config.use_shaders=Use Shaders
 config.change_player_model=Player Model Overrides
-
+config.particle_amount=Particle Amount
 config.category_worldgen=World Generation
 config.chanceShubShrines=Chance for Shub-Niggurath Shrines
 config.chanceBananaShrines=Chance for Hastur Shrines

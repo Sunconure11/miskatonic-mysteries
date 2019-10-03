@@ -1,5 +1,7 @@
-package com.miskatonicmysteries;
+package com.miskatonicmysteries.util;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,12 +29,17 @@ public class Util {
 		ObfuscationReflectionHelper.setPrivateValue(Block.class, block, sound, "blockSoundType", "field_149762_H");
 		block.setHardness(hardness);
 		block.setResistance(resistance);
-		block.setHarvestLevel(tool, level);
+		if (!tool.equals("none"))
+			block.setHarvestLevel(tool, level);
 		if (item != null) {
 			item.setRegistryName(name);
 			item.setUnlocalizedName(name);
 			MiskatonicMysteries.proxy.registerTexture(item);
 			ForgeRegistries.ITEMS.register(item);
+		}
+
+		if (block instanceof BlockTileEntity){
+			GameRegistry.registerTileEntity(((BlockTileEntity) block).getTileEntityClass(), block.getRegistryName());
 		}
 		return block;
 	}
