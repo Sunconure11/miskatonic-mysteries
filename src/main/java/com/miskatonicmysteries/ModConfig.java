@@ -52,7 +52,7 @@ public class ModConfig {
         @Config.Comment("Determines the chance for the Black Goat's shrines to spawn. Set to 1 to spawn a shrine in (almost) every chunk it can spawn in, set to 0 to disable.")
         @Config.LangKey("config.chanceShubShrines")
         @Config.RangeDouble(min = 0, max = 1)
-        public float chanceShubShrines = 0.001F;
+        public float chanceShubShrines = 0.01F;
 
 
         @Config.Comment("Determines the chance for Hastur shrines to spawn. Set to 1 to attempt spawning a shrine in every non-desert village, set to 0 to disable.")

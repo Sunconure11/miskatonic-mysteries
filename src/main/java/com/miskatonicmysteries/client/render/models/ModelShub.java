@@ -7,6 +7,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.ModelWolf;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderWolf;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,37 +19,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class ModelShub extends ModelBase {
-    //finish sorting that sometime
-    public ModelRenderer head;
-
-    public ModelRenderer mane02;
-    public ModelRenderer mane04;
-    public ModelRenderer mane07;
-    public ModelRenderer mane08;
-    public ModelRenderer mane01;
-    public ModelRenderer mane02_1;
-    public ModelRenderer mane05;
-    public ModelRenderer mane06;
-    //base body
     public ModelRenderer body;
     public ModelRenderer waist;
     public ModelRenderer neck01;
-
-
-    public ModelRenderer lfLeg01;
-    public ModelRenderer rbLeg01;
-    public ModelRenderer lfLeg02;
-    public ModelRenderer lfLeg03;
-
-
-    //literally forbidden
+    public ModelRenderer branch01a;
     public ModelRenderer lBoob01;
     public ModelRenderer rBoob01;
     public ModelRenderer lBoob02;
     public ModelRenderer rBoob02;
-
-    //branches
-    public ModelRenderer branch01a;
     public ModelRenderer branch02a;
     public ModelRenderer branch03a;
     public ModelRenderer branch04a;
@@ -58,14 +36,87 @@ public class ModelShub extends ModelBase {
     public ModelRenderer branch08a;
     public ModelRenderer branch09a;
     public ModelRenderer branch10a;
+    public ModelRenderer lTentacle01a;
+    public ModelRenderer lTentacle02a;
+    public ModelRenderer rTentacle01a;
+    public ModelRenderer rTentacle02a;
     public ModelRenderer branch11a;
     public ModelRenderer branch12a;
+    public ModelRenderer lMouth01;
+    public ModelRenderer rMouth01;
+    public ModelRenderer lTentacle00a;
+    public ModelRenderer rTentacle00a;
+    public ModelRenderer lTentacle03a;
+    public ModelRenderer rTentacle03a;
+    public ModelRenderer NS;
+    public ModelRenderer EW;
     public ModelRenderer branch13a;
     public ModelRenderer branch14a;
+    public ModelRenderer lMouth02;
+    public ModelRenderer rMouth02;
+    public ModelRenderer lTentacle03b;
+    public ModelRenderer lTentacle03c;
+    public ModelRenderer lTentacle03d;
+    public ModelRenderer lTentacle03e;
+    public ModelRenderer rTentacle03b;
+    public ModelRenderer rTentacle03c;
+    public ModelRenderer rTentacle03d;
+    public ModelRenderer rTentacle03e;
+    public ModelRenderer lfLeg01;
+    public ModelRenderer rbLeg01;
+    public ModelRenderer lfLeg02;
+    public ModelRenderer lfLeg03;
+    public ModelRenderer lfHoof;
+    public ModelRenderer lFClaw01;
+    public ModelRenderer lFClaw02;
+    public ModelRenderer rbLeg02;
+    public ModelRenderer rbLeg03;
+    public ModelRenderer rbHoof;
+    public ModelRenderer rBClaw01;
+    public ModelRenderer rBClaw02;
+    public ModelRenderer lbLeg01;
+    public ModelRenderer rfLeg01;
+    public ModelRenderer lbLeg02;
+    public ModelRenderer lbLeg03;
+    public ModelRenderer lbHoof;
+    public ModelRenderer lBClaw01;
+    public ModelRenderer lBClaw02;
+    public ModelRenderer rfLeg02;
+    public ModelRenderer rfLeg03;
+    public ModelRenderer rfHoof;
+    public ModelRenderer rFClaw01;
+    public ModelRenderer rFClaw02;
     public ModelRenderer branch13b;
     public ModelRenderer branch13c;
     public ModelRenderer branch14b;
     public ModelRenderer branch14c;
+    public ModelRenderer neck02;
+    public ModelRenderer mane02;
+    public ModelRenderer mane04;
+    public ModelRenderer mane07;
+    public ModelRenderer mane08;
+    public ModelRenderer head;
+    public ModelRenderer mane01;
+    public ModelRenderer mane02_1;
+    public ModelRenderer mane05;
+    public ModelRenderer mane06;
+    public ModelRenderer snout;
+    public ModelRenderer upperJaw;
+    public ModelRenderer lowerJaw;
+    public ModelRenderer lEar01;
+    public ModelRenderer rEar01;
+    public ModelRenderer lHorn01;
+    public ModelRenderer rHorn01;
+    public ModelRenderer lEar02;
+    public ModelRenderer rEar02;
+
+    public ModelRenderer lHorn02;
+    public ModelRenderer lHorn03;
+    public ModelRenderer lHorn04;
+    public ModelRenderer rHorn02;
+    public ModelRenderer rHorn03;
+    public ModelRenderer rHorn04;
+
     public ModelRenderer branch01b;
     public ModelRenderer branch01c;
     public ModelRenderer branch01d;
@@ -101,28 +152,7 @@ public class ModelShub extends ModelBase {
     public ModelRenderer branch10b;
     public ModelRenderer branch10d;
     public ModelRenderer branch10c;
-    public ModelRenderer branch11b;
-    public ModelRenderer branch11c;
-    public ModelRenderer branch12b;
-    public ModelRenderer branch12d;
-    public ModelRenderer branch12c;
-    //owo
-    public ModelRenderer lTentacle01a;
-    public ModelRenderer lTentacle02a;
-    public ModelRenderer rTentacle01a;
-    public ModelRenderer rTentacle02a;
-    public ModelRenderer lTentacle00a;
-    public ModelRenderer rTentacle00a;
-    public ModelRenderer lTentacle03a;
-    public ModelRenderer rTentacle03a;
-    public ModelRenderer lTentacle03b;
-    public ModelRenderer lTentacle03c;
-    public ModelRenderer lTentacle03d;
-    public ModelRenderer lTentacle03e;
-    public ModelRenderer rTentacle03b;
-    public ModelRenderer rTentacle03c;
-    public ModelRenderer rTentacle03d;
-    public ModelRenderer rTentacle03e;
+
     public ModelRenderer lTentacle01b;
     public ModelRenderer lTentacle01c;
     public ModelRenderer lTentacle01d;
@@ -139,6 +169,11 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rTentacle02c;
     public ModelRenderer rTentacle02d;
     public ModelRenderer rTentacle02e;
+    public ModelRenderer branch11b;
+    public ModelRenderer branch11c;
+    public ModelRenderer branch12b;
+    public ModelRenderer branch12d;
+    public ModelRenderer branch12c;
     public ModelRenderer lTentacle00b;
     public ModelRenderer lTentacle00c;
     public ModelRenderer lTentacle00d;
@@ -147,55 +182,6 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rTentacle00c;
     public ModelRenderer rTentacle00d;
     public ModelRenderer rTentacle00e;
-
-    //oh god cat why did you have to do that that's pretty cursed
-    public ModelRenderer lMouth01;
-    public ModelRenderer rMouth01;
-    public ModelRenderer lMouth02;
-    public ModelRenderer rMouth02;
-
-
-    public ModelRenderer NS;
-    public ModelRenderer EW;
-    public ModelRenderer lfHoof;
-    public ModelRenderer lFClaw01;
-    public ModelRenderer lFClaw02;
-    public ModelRenderer rbLeg02;
-    public ModelRenderer rbLeg03;
-    public ModelRenderer rbHoof;
-    public ModelRenderer rBClaw01;
-    public ModelRenderer rBClaw02;
-    public ModelRenderer lbLeg01;
-    public ModelRenderer rfLeg01;
-    public ModelRenderer lbLeg02;
-    public ModelRenderer lbLeg03;
-    public ModelRenderer lbHoof;
-    public ModelRenderer lBClaw01;
-    public ModelRenderer lBClaw02;
-    public ModelRenderer rfLeg02;
-    public ModelRenderer rfLeg03;
-    public ModelRenderer rfHoof;
-    public ModelRenderer rFClaw01;
-    public ModelRenderer rFClaw02;
-    public ModelRenderer neck02;
-    public ModelRenderer snout;
-    public ModelRenderer upperJaw;
-    public ModelRenderer lowerJaw;
-
-    public ModelRenderer lEar01;
-    public ModelRenderer rEar01;
-    public ModelRenderer lHorn01;
-    public ModelRenderer rHorn01;
-
-    public ModelRenderer lEar02;
-    public ModelRenderer rEar02;
-
-    public ModelRenderer lHorn02;
-    public ModelRenderer lHorn03;
-    public ModelRenderer lHorn04;
-    public ModelRenderer rHorn02;
-    public ModelRenderer rHorn03;
-    public ModelRenderer rHorn04;
 
     public ModelShub() {
         this.textureWidth = 128;
@@ -1042,101 +1028,255 @@ public class ModelShub extends ModelBase {
 
     @Override
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        GlStateManager.pushMatrix();
+        if (entity instanceof EntityShub) {
+            EntityShub shub = (EntityShub) entity;
+            GlStateManager.translate(0, 2 * shub.sittingProgress, 0F);
+        }
         this.body.render(scale);
-        super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+        GlStateManager.popMatrix();
     }
 
+    public void setAnimations(EntityShub shub, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+            sit(shub.sittingProgress);
+            openTheCursedMaw(shub.openingProgress);
+    }
 
-    @Override
-    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        if (entitylivingbaseIn instanceof EntityShub){
-            //fixme  have the models render separately and not copy each other's angles
-            if (((EntityShub) entitylivingbaseIn).isSitting)
-                sit();
-        }
-        super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
+    public void sit(float progression) {
+        this.setRotateAngle(rTentacle01a, 0.6283185307179586F, 0.6283185307179586F, 0.0F, progression);
+        this.setRotateAngle(rbLeg01, 0.0F, 0.0F, 0.6981317007977318F, progression);
+        this.setRotateAngle(lbLeg03, 0.0F, 0.0F, -1.2217304763960306F, progression);
+        this.setRotateAngle(lfLeg01, -1.5707963267948966F, -0.22689280275926282F, 0.17453292519943295F, progression);
+        this.setRotateAngle(rTentacle03b, -0.45378560551852565F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(lTentacle03c, -0.13962634015954636F, -0.03490658503988659F, 0.0F, progression);
+        this.setRotateAngle(lTentacle03e, -0.17453292519943295F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(lTentacle02b, -0.17453292519943295F, -0.13962634015954636F, 0.0F, progression);
+        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F, progression);
+        this.setRotateAngle(lBClaw02, 0.0F, 0.0F, -0.4363323129985824F, progression);
+        this.setRotateAngle(rTentacle02d, -0.3141592653589793F, -0.08726646259971647F, 0.0F, progression);
+        this.setRotateAngle(lTentacle00e, -0.5918411493512771F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(rTentacle00a, 1.2747884856566583F, 1.3613568165555772F, 0.0F, progression);
+        this.setRotateAngle(lTentacle03d, 0.08726646259971647F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(lbHoof, 0.0F, 0.0F, 1.9198621771937625F, progression);
+        this.setRotateAngle(lTentacle02a, 0.7853981633974483F, -1.7453292519943295F, 0.0F, progression);
+        this.setRotateAngle(rTentacle00b, 0.22759093446006054F, 0.13962634015954636F, 0.0F, progression);
+        this.setRotateAngle(lTentacle00c, -0.5918411493512771F, -0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(lfLeg03, 0.0F, 0.0F, -0.2792526803190927F, progression);
+        this.setRotateAngle(lTentacle00d, -0.31869712141416456F, 0.08726646259971647F, 0.0F, progression);
+        this.setRotateAngle(rTentacle03d, 0.08726646259971647F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(lTentacle01d, 0.12217304763960307F, 0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(rTentacle03a, 0.6806784082777886F, 1.3089969389957472F, 0.0F, progression);
+        this.setRotateAngle(rTentacle00e, 0.091106186954104F, -0.31869712141416456F, 0.0F, progression);
+        this.setRotateAngle(lTentacle02d, -0.3141592653589793F, 0.08726646259971647F, 0.0F, progression);
+        this.setRotateAngle(rfLeg01, -1.48352986419518F, 0.22689280275926282F, -0.17453292519943295F, progression);
+        this.setRotateAngle(rTentacle00d, -0.5918411493512771F, -0.08726646259971647F, 0.0F, progression);
+        this.setRotateAngle(lTentacle00b, 0.5235987755982988F, -0.13962634015954636F, 0.0F, progression);
+        this.setRotateAngle(rTentacle03c, -0.13962634015954636F, 0.03490658503988659F, 0.0F, progression);
+        this.setRotateAngle(lTentacle03b, -0.45378560551852565F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(lTentacle01c, 0.0F, -0.03490658503988659F, 0.0F, progression);
+        this.setRotateAngle(rTentacle02a, 0.7853981633974483F, 1.7453292519943295F, 0.0F, progression);
+        this.setRotateAngle(lTentacle03a, 0.6806784082777886F, -1.3089969389957472F, 0.0F, progression);
+        this.setRotateAngle(lTentacle02c, -0.3490658503988659F, -0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(lfHoof, 0.0F, 0.0F, 0.296705972839036F, progression);
+        this.setRotateAngle(rTentacle01e, -0.8028514559173915F, 0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(rTentacle02b, -0.17453292519943295F, 0.13962634015954636F, 0.0F, progression);
+        this.setRotateAngle(rTentacle02c, -0.3490658503988659F, 0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(rTentacle03e, -0.17453292519943295F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(branch06e, 0.0F, 0.0F, -0.05235987755982988F, progression);
+        this.setRotateAngle(lTentacle00a, 0.9948376736367678F, -1.3613568165555772F, 0.0F, progression);
+        this.setRotateAngle(lbLeg02, 0.0F, 0.0F, 0.03490658503988659F, progression);
+        this.setRotateAngle(rTentacle01b, 0.15707963267948966F, 0.22689280275926282F, 0.0F, progression);
+        this.setRotateAngle(lbLeg01, 0.0F, 0.0F, -0.6981317007977318F, progression);
+        this.setRotateAngle(rTentacle00c, -0.8196066167365371F, 0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(rfHoof, 0.0F, 0.0F, -0.296705972839036F, progression);
+        this.setRotateAngle(rTentacle01c, 0.0F, 0.03490658503988659F, 0.0F, progression);
+        this.setRotateAngle(lTentacle01a, 0.6283185307179586F, -0.6283185307179586F, 0.0F, progression);
+        this.setRotateAngle(rTentacle02e, -0.17453292519943295F, 0.0F, 0.0F, progression);
+        this.setRotateAngle(lTentacle01e, -0.8028514559173915F, -0.10471975511965977F, 0.0F, progression);
+        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, -0.2617993877991494F, progression);
+        this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 1.2217304763960306F, progression);
+        this.setRotateAngle(lTentacle01b, 0.15707963267948966F, -0.22689280275926282F, 0.0F, progression);
+        this.setRotateAngle(rbHoof, 0.0F, 0.0F, -1.9198621771937625F, progression);
+        this.setRotateAngle(rTentacle01d, 0.12217304763960307F, -0.10471975511965977F, 0.0F, progression);
+    }
+
+    public void openTheCursedMaw(float progression) {
+        this.setRotateAngle(lMouth01, 0.0F, -0.9599310885968813F, 0.0F, progression);
+        this.setRotateAngle(lMouth02, 0.0F, -0.9599310885968813F, 0.0F, progression);
+        this.setRotateAngle(rMouth01, 0.0F, 0.9599310885968813F, 0.0F, progression);
+        this.setRotateAngle(rMouth02, 0.0F, 0.9599310885968813F, 0.0F, progression);
     }
 
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+        this.setRotateAngle(branch02e, 0.0F, 0.0F, 0.2792526803190927F);
+        this.setRotateAngle(rTentacle03e, -0.2792526803190927F, 0.0F, 0.0F);
+        this.setRotateAngle(lbLeg03, 0.0F, 0.0F, -0.7853981633974483F);
+        this.setRotateAngle(lHorn03, -0.2792526803190927F, 0.0F, 0.24434609527920614F);
+        this.setRotateAngle(branch10c, 0.0F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(branch06d, 0.0F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(rTentacle01d, -0.17453292519943295F, -0.10471975511965977F, 0.0F);
+        this.setRotateAngle(branch09b, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(rEar02, 0.0F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(branch08c, 0.0F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(rHorn03, -0.2792526803190927F, 0.0F, -0.24434609527920614F);
+        this.setRotateAngle(lFClaw02, 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(lBClaw01, 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(mane07, 0.4363323129985824F, 0.0F, 0.0F);
+        this.setRotateAngle(lTentacle02a, 0.7853981633974483F, -1.7453292519943295F, 0.0F);
+        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, -0.03490658503988659F);
+        this.setRotateAngle(rTentacle02e, -0.13962634015954636F, 0.0F, 0.0F);
+        this.setRotateAngle(branch11c, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(branch06c, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(lMouth01, 0.0F, -0.3490658503988659F, 0.0F);
+        this.setRotateAngle(branch02b, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(mane04, -0.9424777960769379F, 0.0F, 0.0F);
+        this.setRotateAngle(rTentacle02b, 0.5235987755982988F, 0.13962634015954636F, 0.0F);
+        this.setRotateAngle(branch08a, -0.40142572795869574F, 0.0F, -0.8377580409572781F);
+        this.setRotateAngle(branch04a, -0.9599310885968813F, -0.7853981633974483F, 0.0F);
+        this.setRotateAngle(head, -0.10471975511965977F, 0.0F, 0.0F);
+        this.setRotateAngle(branch02d, 0.0F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(mane05, 0.6981317007977318F, 0.0F, 0.0F);
+        this.setRotateAngle(branch06e, 0.0F, 0.0F, -0.05235987755982988F);
+        this.setRotateAngle(lHorn01, -0.6981317007977318F, 0.0F, 0.2617993877991494F);
+        this.setRotateAngle(rTentacle03a, 0.6806784082777886F, 1.3089969389957472F, 0.0F);
+        this.setRotateAngle(rBClaw01, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(lTentacle02c, 0.08726646259971647F, -0.10471975511965977F, 0.0F);
+        this.setRotateAngle(branch10d, 0.0F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(lbLeg02, 0.0F, 0.0F, 0.03490658503988659F);
+        this.setRotateAngle(lTentacle03b, 0.6981317007977318F, 0.0F, 0.0F);
+        this.setRotateAngle(branch12a, -0.2792526803190927F, 0.0F, -0.7853981633974483F);
+        this.setRotateAngle(mane01, -0.9424777960769379F, 0.0F, 0.0F);
+        this.setRotateAngle(rTentacle00e, 0.19198621771937624F, 0.0F, 0.0F);
+        this.setRotateAngle(branch12d, 0.0F, 0.0F, -0.10471975511965977F);
+        this.setRotateAngle(branch01b, 0.0F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(mane02, -0.8726646259971648F, 0.0F, 0.0F);
+        this.setRotateAngle(rTentacle02d, 0.3141592653589793F, -0.08726646259971647F, 0.0F);
+        this.setRotateAngle(branch09c, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(lTentacle03d, 0.08726646259971647F, 0.0F, 0.0F);
+        this.setRotateAngle(rTentacle03c, 0.17453292519943295F, 0.03490658503988659F, 0.0F);
+        this.setRotateAngle(branch13b, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(rMouth01, 0.0F, 0.3490658503988659F, 0.0F);
+        this.setRotateAngle(rTentacle00b, 0.2792526803190927F, 0.13962634015954636F, 0.0F);
+        this.setRotateAngle(branch03c, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(body, -0.13962634015954636F, 0.0F, 0.0F);
+        this.setRotateAngle(branch01c, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(lTentacle00d, 0.3141592653589793F, 0.08726646259971647F, 0.0F);
+        this.setRotateAngle(lTentacle00c, -0.45378560551852565F, -0.10471975511965977F, 0.0F);
+        this.setRotateAngle(branch07d, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(branch06a, -0.9075712110370513F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(branch14c, 0.0F, 0.0F, 0.17453292519943295F);
+        this.setRotateAngle(branch08d, 0.0F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(rbLeg01, 0.0F, 0.0F, -0.45378560551852565F);
+        this.setRotateAngle(lTentacle03c, 0.17453292519943295F, -0.03490658503988659F, 0.0F);
+        this.setRotateAngle(lowerJaw, -0.06981317007977318F, 0.0F, 0.0F);
+        this.setRotateAngle(rEar01, -0.8726646259971648F, 0.08726646259971647F, 0.3490658503988659F);
+        this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 0.7853981633974483F);
+        this.setRotateAngle(neck01, 0.22689280275926282F, 0.0F, 0.0F);
+        this.setRotateAngle(branch11a, -0.17453292519943295F, 0.0F, 0.8726646259971648F);
+        this.setRotateAngle(NS, 0.0F, 0.7853981633974483F, 0.0F);
+        this.setRotateAngle(branch13c, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(rHorn01, -0.6981317007977318F, 0.0F, -0.2617993877991494F);
+        this.setRotateAngle(lTentacle01a, 0.9599310885968813F, -0.12217304763960307F, 0.0F);
+        this.setRotateAngle(branch04b, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(lTentacle00a, 1.2217304763960306F, -1.3613568165555772F, 0.0F);
+        this.setRotateAngle(branch04c, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(branch05b, 0.0F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(lMouth02, 0.0F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(branch03b, 0.0F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(rfLeg01, 0.0F, 0.0F, -0.45378560551852565F);
+        this.setRotateAngle(branch05d, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(branch12c, 0.0F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(branch09d, 0.0F, 0.0F, 0.17453292519943295F);
+        this.setRotateAngle(rTentacle01e, 0.08726646259971647F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(branch05c, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(branch05a, -0.8726646259971648F, 0.6283185307179586F, 0.0F);
+        this.setRotateAngle(rTentacle03b, 0.6981317007977318F, 0.0F, 0.0F);
+        this.setRotateAngle(lTentacle01d, -0.17453292519943295F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(rTentacle00d, 0.3141592653589793F, -0.08726646259971647F, 0.0F);
+        this.setRotateAngle(rTentacle03d, 0.08726646259971647F, 0.0F, 0.0F);
+        this.setRotateAngle(mane08, 0.3490658503988659F, 0.0F, 0.0F);
+        this.setRotateAngle(rfHoof, 0.0F, 0.0F, -0.296705972839036F);
+        this.setRotateAngle(lfLeg03, 0.0F, 0.0F, -0.7853981633974483F);
+        this.setRotateAngle(lTentacle01b, 0.6981317007977318F, 0.03490658503988659F, 0.0F);
+        this.setRotateAngle(lBClaw02, 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(rfLeg03, 0.0F, 0.0F, 0.7853981633974483F);
+        this.setRotateAngle(branch08b, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(branch01a, -0.45378560551852565F, 0.6108652381980153F, 0.0F);
+        this.setRotateAngle(branch11b, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(lbHoof, 0.0F, 0.0F, 0.296705972839036F);
+        this.setRotateAngle(lTentacle03e, -0.2792526803190927F, 0.0F, 0.0F);
+        this.setRotateAngle(EW, 0.0F, -0.7853981633974483F, 0.0F);
+        this.setRotateAngle(lfLeg02, 0.0F, 0.0F, 0.03490658503988659F);
+        this.setRotateAngle(branch07a, -0.5585053606381855F, -0.12217304763960307F, 0.8028514559173915F);
+        this.setRotateAngle(lfLeg01, 0.0F, 0.0F, 0.45378560551852565F);
+        this.setRotateAngle(neck02, 0.13962634015954636F, 0.0F, 0.0F);
+        this.setRotateAngle(branch06f, 0.0F, 0.0F, 0.08726646259971647F);
+        this.setRotateAngle(lbLeg01, 0.0F, 0.0F, 0.45378560551852565F);
+        this.setRotateAngle(lTentacle02d, 0.3141592653589793F, 0.08726646259971647F, 0.0F);
+        this.setRotateAngle(rTentacle01b, 0.6981317007977318F, -0.03490658503988659F, 0.0F);
+        this.setRotateAngle(rMouth02, 0.0F, 0.17453292519943295F, 0.0F);
+        this.setRotateAngle(branch07c, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(lFClaw01, 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(rbHoof, 0.0F, 0.0F, -0.296705972839036F);
+        this.setRotateAngle(rBClaw02, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(branch12b, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(lEar01, -0.8726646259971648F, -0.08726646259971647F, -0.3490658503988659F);
+        this.setRotateAngle(rTentacle01a, 0.9599310885968813F, 0.12217304763960307F, 0.0F);
+        this.setRotateAngle(rTentacle02a, 0.7853981633974483F, 1.7453292519943295F, 0.0F);
+        this.setRotateAngle(lTentacle00e, 0.19198621771937624F, 0.0F, 0.0F);
+        this.setRotateAngle(branch14a, -1.5707963267948966F, -0.22689280275926282F, 1.2217304763960306F);
+        this.setRotateAngle(lTentacle01e, 0.08726646259971647F, -0.10471975511965977F, 0.0F);
+        this.setRotateAngle(waist, 0.13962634015954636F, 0.0F, 0.0F);
+        this.setRotateAngle(rHorn02, -0.24434609527920614F, 0.0F, -0.20943951023931953F);
+        this.setRotateAngle(lTentacle02b, 0.5235987755982988F, -0.13962634015954636F, 0.0F);
+        this.setRotateAngle(lBoob02, 0.6108652381980153F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(lEar02, 0.0F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(lTentacle03a, 0.6806784082777886F, -1.3089969389957472F, 0.0F);
+        this.setRotateAngle(rFClaw02, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(branch02a, -0.4886921905584123F, -0.5235987755982988F, 0.0F);
+        this.setRotateAngle(branch03d, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(mane02_1, -1.0471975511965976F, 0.0F, 0.0F);
+        this.setRotateAngle(branch09a, -0.4363323129985824F, 0.17453292519943295F, 0.6283185307179586F);
+        this.setRotateAngle(branch01d, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(lfHoof, 0.0F, 0.0F, 0.296705972839036F);
+        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F);
+        this.setRotateAngle(rTentacle02c, 0.08726646259971647F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(lBoob01, 0.6108652381980153F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(rFClaw01, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(branch03f, -0.20943951023931953F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(lTentacle01c, 0.08726646259971647F, -0.03490658503988659F, 0.0F);
+        this.setRotateAngle(lTentacle02e, -0.13962634015954636F, 0.0F, 0.0F);
+        this.setRotateAngle(rTentacle00c, -0.45378560551852565F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(branch02c, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(branch04d, 0.0F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(branch06b, 0.0F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(mane06, 0.5235987755982988F, 0.0F, 0.0F);
+        this.setRotateAngle(branch07b, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(rBoob02, 0.6108652381980153F, 0.17453292519943295F, 0.0F);
+        this.setRotateAngle(branch03a, -0.9948376736367678F, 0.6457718232379019F, -0.45378560551852565F);
+        this.setRotateAngle(branch13a, -1.3613568165555772F, -0.5585053606381855F, 1.5707963267948966F);
+        this.setRotateAngle(branch05e, 0.0F, 0.0F, 0.7155849933176751F);
+        this.setRotateAngle(snout, 0.3490658503988659F, 0.0F, 0.0F);
+        this.setRotateAngle(rTentacle00a, 1.2217304763960306F, 1.3613568165555772F, 0.0F);
+        this.setRotateAngle(branch10b, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(branch14b, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(branch10a, -0.17453292519943295F, 0.0F, -0.5759586531581287F);
+        this.setRotateAngle(lTentacle00b, 0.2792526803190927F, -0.13962634015954636F, 0.0F);
+        this.setRotateAngle(rBoob01, 0.6108652381980153F, 0.17453292519943295F, 0.0F);
+        this.setRotateAngle(lHorn02, -0.2792526803190927F, 0.0F, 0.20943951023931953F);
+        this.setRotateAngle(rTentacle01c, 0.08726646259971647F, 0.03490658503988659F, 0.0F);
+
+        if (entityIn instanceof EntityShub)
+            setAnimations((EntityShub) entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
     }
 
-    public void sit(){
-        //setOffsetGradually(body, 0, -0.5F, 1.5F);
-        setRotateAngle(lTentacle00a, 55, -78, 0);
-        setRotateAngle(lTentacle00b, 30, -8, 0);
-        setRotateAngle(lTentacle00c, -33, -6, 0);
-        setRotateAngle(lTentacle00d, -18, 5, 0);
-        setRotateAngle(lTentacle00e, -33, 0, 0);
-
-        setRotateAngle(rTentacle00a, 55, 78, 0);
-        setRotateAngle(rTentacle00b, 30, 8, 0);
-        setRotateAngle(rTentacle00c, -33, 6, 0);
-        setRotateAngle(rTentacle00d, -18, -5, 0);
-        setRotateAngle(rTentacle00e, -33, 0, 0);
-
-
-        setRotateAngle(lTentacle01a, 36, -36, 0);
-        setRotateAngle(lTentacle01b, 9, 10, 0);
-        setRotateAngle(lTentacle01c, 0, 2, 0);
-        setRotateAngle(lTentacle01d, 7, 6, 0);
-        setRotateAngle(lTentacle01e, -46, -6, 0);
-
-        setRotateAngle(rTentacle01a, 36, 36, 0);
-        setRotateAngle(rTentacle01b, 9, -10, 0);
-        setRotateAngle(rTentacle01c, 0, -2, 0);
-        setRotateAngle(rTentacle01d, 7, -6, 0);
-        setRotateAngle(rTentacle01e, -46, 6, 0);
-
-
-        setRotateAngle(lTentacle02a, 45, -100, 0);
-        setRotateAngle(lTentacle02b, -10, -8, 0);
-        setRotateAngle(lTentacle02c, -20, -6, 0);
-        setRotateAngle(lTentacle02d, -18, 5, 0);
-        setRotateAngle(lTentacle02e, 0, 0, 0);
-
-        setRotateAngle(rTentacle02a, 45, 100, 0);
-        setRotateAngle(rTentacle02b, -10, 8, 0);
-        setRotateAngle(rTentacle02c, -20, 6, 0);
-        setRotateAngle(rTentacle02d, -18, -5, 0);
-        setRotateAngle(rTentacle02e, 0, 0, 0);
-
-
-        setRotateAngle(lTentacle03a, 39, -75, 0);
-        setRotateAngle(lTentacle03b, -26, 0, 0);
-        setRotateAngle(lTentacle03c, -8, -2, 0);
-        setRotateAngle(lTentacle03d, 5, 0, 0);
-        setRotateAngle(lTentacle03e, -10, 0, 0);
-
-        setRotateAngle(rTentacle03a, 39, 75, 0);
-        setRotateAngle(rTentacle03b, -26, 0, 0);
-        setRotateAngle(rTentacle03c, -8, 2, 0);
-        setRotateAngle(rTentacle03d, 5, 0, 0);
-        setRotateAngle(rTentacle03e, -10, 0, 0);
-
-
-        setRotateAngle(lfLeg01, -90, -13, 10);
-        setRotateAngle(lfLeg02, 2, 0, 15);
-        setRotateAngle(lfLeg03, 0, 0, -16);
-        setRotateAngle(lfHoof, 0, 0, 17);
-
-        setRotateAngle(rfLeg01, -85, 13, -10);
-        setRotateAngle(rfLeg02, 0, 0, -15);
-        setRotateAngle(rfLeg03, 0, 0, 0);
-        setRotateAngle(rfHoof, 0, 0, -17);
-
-        setRotateAngle(lbLeg01, 0, 0, -40);
-        setRotateAngle(lbLeg02, 0, 0, 2);
-        setRotateAngle(lbLeg03, 0, 0, -70);
-        setRotateAngle(lbHoof, 0, 0, 106);
-
-        setRotateAngle(rbLeg01, 0, 0, 40);
-        setRotateAngle(rbLeg02, 0, 0, -2);
-        setRotateAngle(rbLeg03, 0, 0, 70);
-        setRotateAngle(rbHoof, 0, 0, -106);
+    public void setRotateAngle(ModelRenderer model, float x, float y, float z, float progression){
+        model.rotateAngleX = model.rotateAngleX * (1 - progression) + x * progression;
+        model.rotateAngleY = model.rotateAngleY * (1 - progression) + y * progression;
+        model.rotateAngleZ = model.rotateAngleZ * (1 - progression) + z * progression;
     }
-
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
@@ -1146,6 +1286,4 @@ public class ModelShub extends ModelBase {
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
-
-
 }

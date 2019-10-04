@@ -24,8 +24,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Random;
 
@@ -42,6 +47,18 @@ public class BlockCandles extends Block {
 	public BlockCandles() {
 		super(CANDLE);
         setLightOpacity(1);
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	@SubscribeEvent
+	public void onBlockBroken(BlockEvent.BreakEvent event){
+		if (event.getState().getBlock() instanceof BlockCandles){
+			if (event.getState().getValue(CANDLES) > 1){
+				event.getWorld().setBlockState(event.getPos(), event.getState().withProperty(CANDLES, event.getState().getValue(CANDLES) - 1));
+				ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), new ItemStack(this));
+				event.setCanceled(true);
+			}
+		}
 	}
 
     @Override
@@ -108,10 +125,27 @@ public class BlockCandles extends Block {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (stateIn.getValue(LIT)) {
+			float blockPart = 1F / 16F;
+			int candles = stateIn.getValue(CANDLES);
 			double x = (double) pos.getX() + 0.5D;
 			double y = (double) pos.getY() + 0.55D;
 			double z = (double) pos.getZ() + 0.5D;
-			MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x, y, z, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+
+			if (candles == 1) {
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x, y, z, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+			}else if (candles == 2){
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x - 3 * blockPart, y, z - 3 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x + 2 * blockPart, y - 2 * blockPart, z + 2 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+			}else if (candles == 3){
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x, y, z + 3 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x - 4 * blockPart, y - 2 * blockPart, z - 4 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x + 2 * blockPart, y, z - 2 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+			}else{
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x - 4 * blockPart, y, z - 4 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x + 3 * blockPart, y - 2 * blockPart, z + 4 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x - 4 * blockPart, y, z + 2 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+				MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(worldIn, x + 3 * blockPart, y, z - 4 * blockPart, 0, 0, 0).multipleParticleScaleBy(0.8F + (float) rand.nextGaussian() / 20F));
+			}
 		}
 	}
 

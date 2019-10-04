@@ -23,7 +23,7 @@
 		],
 		"candles=2,lit=false": [
           {
-            "model": "miskatonicmysteries:candle",
+            "model": "miskatonicmysteries:two_candles",
             "textures": {
               "all": "miskatonicmysteries:blocks/candle_unlit"
             }
@@ -31,7 +31,7 @@
 		],
 		"candles=3,lit=false": [
           {
-            "model": "miskatonicmysteries:candle",
+            "model": "miskatonicmysteries:three_candles",
             "textures": {
               "all": "miskatonicmysteries:blocks/candle_unlit"
             }
@@ -39,7 +39,7 @@
 		],
 		"candles=4,lit=false": [
           {
-            "model": "miskatonicmysteries:candle",
+            "model": "miskatonicmysteries:four_candles",
             "textures": {
               "all": "miskatonicmysteries:blocks/candle_unlit"
             }

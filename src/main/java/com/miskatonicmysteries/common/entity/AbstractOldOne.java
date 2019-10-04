@@ -10,4 +10,9 @@ public abstract class AbstractOldOne extends EntityLiving {
     }
     //add other common stuff, like the way the biome is distorted, there etc.
     public abstract Blessing getAssociatedBlessing();
+
+    @Override
+    public boolean canBePushed() {
+        return false;
+    }
 }

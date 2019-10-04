@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.client.render.models;
 
 import com.miskatonicmysteries.common.entity.EntityHastur;
+import com.miskatonicmysteries.common.entity.EntityShub;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -684,9 +685,130 @@ public class ModelHastur extends ModelBase {
         this.chest.render(f5);
     }
 
+    public void setAnimations(EntityHastur shub, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+
+    }
+
+    public void setRotateAngleLeftArm(float x, float y, float z){
+        lTentacle01A.rotateAngleX = x;
+        lTentacle01A.rotateAngleY = y;
+        lTentacle01A.rotateAngleZ = z;
+
+        lTentacle02A.rotateAngleX = x;
+        lTentacle02A.rotateAngleY = y;
+        lTentacle02A.rotateAngleY = z;
+
+        lTentacle03A.rotateAngleX = x;
+        lTentacle03A.rotateAngleY = y;
+        lTentacle03A.rotateAngleY = z;
+    }
+
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+        this.setRotateAngle(rLowerTent03b, 1.3613568165555772F, 1.3962634015954636F, 0.0F);
+       this.setRotateAngle(rLowerTent02a, 0.0F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(lTentacle03B, 0.0F, 0.0F, 0.17453292519943295F);
+       this.setRotateAngle(lTentacle01F, 0.0F, 0.0F, 0.12217304763960307F);
+        this.setRotateAngle(lLowerTent03c, -1.1693705988362009F, -0.08726646259971647F, 0.0F);
+        this.setRotateAngle(lSkirt, 0.0F, 0.0F, -0.17453292519943295F);
+       this.setRotateAngle(lHorn02b, -0.12217304763960307F, 0.8726646259971648F, 0.13962634015954636F);
+        this.setRotateAngle(lTentacle03A, 0.0F, 0.0F, 0.8726646259971648F);
+        this.setRotateAngle(hoodRTop, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(lTentacle01E, 0.0F, 0.0F, -0.08726646259971647F);
+        this.setRotateAngle(lLowerTent01c_1, -1.239183768915974F, 0.0F, 0.0F);
+        this.setRotateAngle(claw01a, -0.05235987755982988F, 0.0F, 0.13962634015954636F);
+        this.setRotateAngle(rHorn03c, 0.0F, 0.0F, 0.5759586531581287F);
+        this.setRotateAngle(lTentacle01D, 0.0F, 0.0F, 0.17453292519943295F);
+        this.setRotateAngle(lLowerTent03a, 0.0F, -1.0471975511965976F, -0.03490658503988659F);
+        this.setRotateAngle(rLowerTent03e, 0.0F, 0.17453292519943295F, 0.0F);
+        this.setRotateAngle(rHorn01b, -0.12217304763960307F, -0.8726646259971648F, -0.20943951023931953F);
+        this.setRotateAngle(lTentacle01A, 0.0F, 0.0F, 0.8726646259971648F);
+        this.setRotateAngle(claw04a, -0.08726646259971647F, 0.0F, -0.13962634015954636F);
+        this.setRotateAngle(claw04b, 0.0F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(lTentacle02A, 0.0F, 0.0F, 0.8726646259971648F);
+        this.setRotateAngle(lTentacle02C, 0.0F, 0.0F, 0.2617993877991494F);
+        this.setRotateAngle(lLowerTent01e_1, 0.0F, 0.3490658503988659F, 0.0F);
+        this.setRotateAngle(claw02a, -0.05235987755982988F, 0.0F, 0.13962634015954636F);
+        this.setRotateAngle(lHorn02a, 0.08726646259971647F, 0.0F, 0.296705972839036F);
+        this.setRotateAngle(hoodRSide01, 0.0F, 0.0F, 0.2792526803190927F);
+        this.setRotateAngle(LowerTent04c, -1.0471975511965976F, 0.08726646259971647F, 0.0F);
+        this.setRotateAngle(rLowerTent02c, -1.1344640137963142F, -0.08726646259971647F, 0.0F);
+        this.setRotateAngle(lLowerTent01b, 1.3613568165555772F, 0.0F, 0.0F);
+        this.setRotateAngle(lLowerTent02b, 1.5707963267948966F, -1.3962634015954636F, 0.0F);
+        this.setRotateAngle(lLowerTent03b, 1.3613568165555772F, -1.3962634015954636F, 0.0F);
+        this.setRotateAngle(hoodLSide02, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(LowerTent04d, -0.22689280275926282F, 0.0F, 0.0F);
+        this.setRotateAngle(lTentacle01G, 0.0F, 0.0F, 0.03490658503988659F);
+        this.setRotateAngle(rSkirt, 0.0F, 0.0F, 0.17453292519943295F);
+        this.setRotateAngle(lMaskPlate, 0.0F, -0.3490658503988659F, 0.0F);
+       this.setRotateAngle(rSleeve, 0.2617993877991494F, 0.0F, 0.0F);
+        this.setRotateAngle(lLowerTent03d, -0.19198621771937624F, 0.3141592653589793F, 0.0F);
+        this.setRotateAngle(lLowerTent01e, 0.0F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(lHorn03d, 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(rHorn03a, 0.0F, 0.0F, -0.13962634015954636F);
+        this.setRotateAngle(lLowerTent01d, 0.0F, 0.3141592653589793F, 0.0F);
+        this.setRotateAngle(hoodPipe01, -0.40142572795869574F, 0.0F, 0.0F);
+        this.setRotateAngle(rArm02, 0.0F, 0.0F, -0.22689280275926282F);
+       this.setRotateAngle(rHorn01a, 0.08726646259971647F, 0.0F, -0.45378560551852565F);
+        this.setRotateAngle(hoodPipe02, -0.45378560551852565F, 0.0F, 0.0F);
+       this.setRotateAngle(lTentacle02F, 0.0F, 0.0F, -0.12217304763960307F);
+        this.setRotateAngle(lLowerTent02a, 0.0F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(lLowerTent02c, -1.1344640137963142F, 0.08726646259971647F, 0.0F);
+        this.setRotateAngle(rHorn02a, 0.08726646259971647F, 0.0F, -0.3490658503988659F);
+        this.setRotateAngle(lLowerTent01c, -1.239183768915974F, 0.0F, 0.0F);
+        this.setRotateAngle(bSkirt01, 0.3490658503988659F, 0.0F, 0.0F);
+        this.setRotateAngle(lTentacle03G, 0.0F, 0.0F, 0.03490658503988659F);
+        this.setRotateAngle(rLowerTent03d, -0.19198621771937624F, -0.3141592653589793F, 0.0F);
+       this.setRotateAngle(rLowerTent02e, 0.0F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(fSkirt01, -0.17453292519943295F, 0.0F, 0.0F);
+        this.setRotateAngle(lTentacle03E, 0.0F, 0.0F, -0.08726646259971647F);
+       this.setRotateAngle(rLowerTent03a, 0.0F, 1.0471975511965976F, 0.03490658503988659F);
+        this.setRotateAngle(lTentacle02D, 0.0F, 0.0F, -0.03490658503988659F);
+        this.setRotateAngle(rLowerTent01a, -0.13962634015954636F, 0.22689280275926282F, 0.0F);
+         this.setRotateAngle(lTentacle03C, 0.0F, 0.0F, 0.40142572795869574F);
+        this.setRotateAngle(claw03a, -0.05235987755982988F, 0.0F, 0.13962634015954636F);
+        this.setRotateAngle(lTentacle01B, 0.0F, 0.0F, 0.17453292519943295F);
+       this.setRotateAngle(rHorn02b, -0.12217304763960307F, -0.8726646259971648F, -0.13962634015954636F);
+        this.setRotateAngle(claw03b, 0.0F, 0.0F, -0.3665191429188092F);
+        this.setRotateAngle(rArm01, 0.0F, 0.0F, 0.2792526803190927F);
+        this.setRotateAngle(lTentacle02B, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(fSkirt02, -0.12217304763960307F, 0.0F, 0.0F);
+        this.setRotateAngle(lHorn01a, 0.08726646259971647F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(lLowerTent01b_1, 1.3613568165555772F, 0.0F, 0.0F);
+        this.setRotateAngle(LowerTent04b, 1.48352986419518F, 0.0F, 0.0F);
+        this.setRotateAngle(lSleeve01, 0.0F, 0.0F, 0.5235987755982988F);
+       this.setRotateAngle(lLowerTent02e, 0.0F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(LowerTent04a, -0.2617993877991494F, 3.141592653589793F, 0.0F);
+       this.setRotateAngle(rHorn03b, 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(rLowerTent03c, -1.1693705988362009F, 0.2792526803190927F, -0.12217304763960307F);
+        this.setRotateAngle(lLowerTent03e, 0.0F, -0.17453292519943295F, 0.0F);
+        this.setRotateAngle(lHorn03c, 0.0F, 0.0F, -0.5759586531581287F);
+       this.setRotateAngle(lLowerTent01a, -0.13962634015954636F, -0.22689280275926282F, 0.0F);
+        this.setRotateAngle(rLowerTent02d, -0.24434609527920614F, 0.3141592653589793F, 0.0F);
+        this.setRotateAngle(rMaskPlate, 0.0F, 0.3490658503988659F, 0.0F);
+       this.setRotateAngle(lTentacle01C, 0.0F, 0.0F, 0.2792526803190927F);
+        this.setRotateAngle(claw01b, 0.0F, 0.0F, -0.3665191429188092F);
+        this.setRotateAngle(lTentacle03D, 0.0F, 0.0F, 0.08726646259971647F);
+        this.setRotateAngle(rHorn03e, 0.0F, 0.0F, -0.767944870877505F);
+        this.setRotateAngle(lHorn03e, 0.0F, 0.0F, 0.767944870877505F);
+       this.setRotateAngle(lTentacle03F, 0.0F, 0.0F, 0.12217304763960307F);
+        this.setRotateAngle(hoodRSide02, 0.0F, 0.0F, 0.3141592653589793F);
+       this.setRotateAngle(hoodLSide01, 0.0F, 0.0F, -0.2792526803190927F);
+        this.setRotateAngle(rHorn03d, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(lTentacle02G, 0.0F, 0.0F, 0.12217304763960307F);
+        this.setRotateAngle(claw02b, 0.0F, 0.0F, -0.3665191429188092F);
+       this.setRotateAngle(lHorn03a, 0.0F, 0.0F, 0.13962634015954636F);
+       this.setRotateAngle(lHorn03b, 0.0F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(rLowerTent02b, 1.5707963267948966F, 1.3962634015954636F, 0.0F);
+        this.setRotateAngle(lLowerTent01d_1, 0.0F, -0.3490658503988659F, 0.0F);
+       this.setRotateAngle(hoodLTop, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(lLowerTent02d, -0.24434609527920614F, 0.3141592653589793F, 0.0F);
+        this.setRotateAngle(lHorn01b, -0.12217304763960307F, 0.8726646259971648F, 0.20943951023931953F);
+        this.setRotateAngle(fSkirt02_1, -0.13962634015954636F, 0.0F, 0.0F);
+
+        if (entityIn instanceof EntityHastur)
+            setAnimations((EntityHastur) entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
     }
 
     /**

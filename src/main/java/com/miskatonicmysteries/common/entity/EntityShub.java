@@ -15,7 +15,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityShub extends AbstractOldOne {
-    public boolean isSitting = false;
+    public boolean mouthOpen = false;
+    public boolean sitting = false;
+
+    public float sittingProgress = 0;
+    public float openingProgress = 0;
+
     public EntityShub(World worldIn) {
         super(worldIn);
         setSize(3, 5.5F);
@@ -26,12 +31,31 @@ public class EntityShub extends AbstractOldOne {
         if(world.isRemote) {
             if (player.isSneaking()) {
                 if (hand == EnumHand.MAIN_HAND) {
-                    setSitting(!isSitting);
+                    setSitting(!sitting);
+                }
+            }else{
+                if (hand == EnumHand.MAIN_HAND) {
+                    openMouth(!isMouthOpen());
                 }
             }
-            System.out.println(isSitting);
         }
         return super.applyPlayerInteraction(player, vec, hand);
+    }
+
+    @Override
+    public void onLivingUpdate() {
+        if (mouthOpen && openingProgress < 1){
+            openingProgress += 0.05F;
+        }else if (!mouthOpen && openingProgress > 0){
+            openingProgress -= 0.05F;
+        }
+
+        if (sitting && sittingProgress < 1){
+            sittingProgress += 0.05F;
+        }else if (!sitting && sittingProgress > 0){
+            sittingProgress -= 0.05F;
+        }
+        super.onLivingUpdate();
     }
 
     @Override
@@ -42,14 +66,19 @@ public class EntityShub extends AbstractOldOne {
         super.initEntityAI();
     }
 
-    @SideOnly(Side.CLIENT)
     public boolean isSitting(){
-        return isSitting;
+        return sitting && sittingProgress >= 1;
+    }
+    public void setSitting(boolean sit){
+        this.sitting = sit;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void setSitting(boolean sit){
-        this.isSitting = sit;
+    public boolean isMouthOpen(){
+        return mouthOpen && openingProgress >= 1;
+    }
+
+    public void openMouth(boolean open){
+        this.mouthOpen = open;
     }
 
     @Override
@@ -59,11 +88,21 @@ public class EntityShub extends AbstractOldOne {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setBoolean("isSitting", sitting);
+        compound.setBoolean("mouthOpen", mouthOpen);
+
+        compound.setFloat("sittingProgress", sittingProgress);
+        compound.setFloat("openingProgress", openingProgress);
         return super.writeToNBT(compound);
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
+        sitting = compound.getBoolean("isSitting");
+        mouthOpen = compound.getBoolean("mouthOpen");
+
+        sittingProgress = compound.getFloat("sittingProgress");
+        openingProgress = compound.getFloat("openingProgress");
         super.readEntityFromNBT(compound);
     }
 }
