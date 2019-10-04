@@ -1,8 +1,8 @@
 {
   "parent": "block/block",
   "textures": {
-    "particle": "miskatonicmysteries:blocks/candle_unlit",
-    "all": "miskatonicmysteries:blocks/candle_unlit"
+    "all": "miskatonicmysteries:blocks/candle_unlit",
+    "particle": "miskatonicmysteries:blocks/candle_unlit"
   },
   "elements": [
     {   "from": [ 6, 0, 6 ],

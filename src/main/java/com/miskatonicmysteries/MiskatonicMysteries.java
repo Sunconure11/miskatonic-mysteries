@@ -80,9 +80,7 @@ public class MiskatonicMysteries {
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
         CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
-
         ModEntities.init();
-
     }
 
     @EventHandler

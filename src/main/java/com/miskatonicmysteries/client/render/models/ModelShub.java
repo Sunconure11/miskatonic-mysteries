@@ -1,19 +1,46 @@
 package com.miskatonicmysteries.client.render.models;
 
+import com.miskatonicmysteries.common.entity.EntityShub;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.model.ModelWolf;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * shubniggurath - cybercat5555
  * Created using Tabula 7.0.1
  */
+@SideOnly(Side.CLIENT)
 public class ModelShub extends ModelBase {
+    //finish sorting that sometime
     public ModelRenderer head;
+
+    public ModelRenderer mane02;
+    public ModelRenderer mane04;
+    public ModelRenderer mane07;
+    public ModelRenderer mane08;
+    public ModelRenderer mane01;
+    public ModelRenderer mane02_1;
+    public ModelRenderer mane05;
+    public ModelRenderer mane06;
     //base body
     public ModelRenderer body;
     public ModelRenderer waist;
     public ModelRenderer neck01;
+
+
+    public ModelRenderer lfLeg01;
+    public ModelRenderer rbLeg01;
+    public ModelRenderer lfLeg02;
+    public ModelRenderer lfLeg03;
+
+
     //literally forbidden
     public ModelRenderer lBoob01;
     public ModelRenderer rBoob01;
@@ -33,87 +60,12 @@ public class ModelShub extends ModelBase {
     public ModelRenderer branch10a;
     public ModelRenderer branch11a;
     public ModelRenderer branch12a;
-
-    //owo
-    public ModelRenderer lTentacle01a;
-    public ModelRenderer lTentacle02a;
-    public ModelRenderer rTentacle01a;
-    public ModelRenderer rTentacle02a;
-    public ModelRenderer lTentacle00a;
-    public ModelRenderer rTentacle00a;
-    public ModelRenderer lTentacle03a;
-    public ModelRenderer rTentacle03a;
-    public ModelRenderer lTentacle03b;
-    public ModelRenderer lTentacle03c;
-    public ModelRenderer lTentacle03d;
-    public ModelRenderer lTentacle03e;
-    public ModelRenderer rTentacle03b;
-    public ModelRenderer rTentacle03c;
-    public ModelRenderer rTentacle03d;
-    public ModelRenderer rTentacle03e;
-
-    //oh god cat why did you have to do that that's pretty cursed
-    public ModelRenderer lMouth01;
-    public ModelRenderer rMouth01;
-
-    public ModelRenderer NS;
-    public ModelRenderer EW;
     public ModelRenderer branch13a;
     public ModelRenderer branch14a;
-    public ModelRenderer lMouth02;
-    public ModelRenderer rMouth02;
-    public ModelRenderer lfLeg01;
-    public ModelRenderer rbLeg01;
-    public ModelRenderer lfLeg02;
-    public ModelRenderer lfLeg03;
-    public ModelRenderer lfHoof;
-    public ModelRenderer lFClaw01;
-    public ModelRenderer lFClaw02;
-    public ModelRenderer rbLeg02;
-    public ModelRenderer rbLeg03;
-    public ModelRenderer rbHoof;
-    public ModelRenderer rBClaw01;
-    public ModelRenderer rBClaw02;
-    public ModelRenderer lbLeg01;
-    public ModelRenderer rfLeg01;
-    public ModelRenderer lbLeg02;
-    public ModelRenderer lbLeg03;
-    public ModelRenderer lbHoof;
-    public ModelRenderer lBClaw01;
-    public ModelRenderer lBClaw02;
-    public ModelRenderer rfLeg02;
-    public ModelRenderer rfLeg03;
-    public ModelRenderer rfHoof;
-    public ModelRenderer rFClaw01;
-    public ModelRenderer rFClaw02;
     public ModelRenderer branch13b;
     public ModelRenderer branch13c;
     public ModelRenderer branch14b;
     public ModelRenderer branch14c;
-    public ModelRenderer neck02;
-    public ModelRenderer mane02;
-    public ModelRenderer mane04;
-    public ModelRenderer mane07;
-    public ModelRenderer mane08;
-    public ModelRenderer mane01;
-    public ModelRenderer mane02_1;
-    public ModelRenderer mane05;
-    public ModelRenderer mane06;
-    public ModelRenderer snout;
-    public ModelRenderer upperJaw;
-    public ModelRenderer lowerJaw;
-    public ModelRenderer lEar01;
-    public ModelRenderer rEar01;
-    public ModelRenderer lHorn01;
-    public ModelRenderer rHorn01;
-    public ModelRenderer lEar02;
-    public ModelRenderer rEar02;
-    public ModelRenderer lHorn02;
-    public ModelRenderer lHorn03;
-    public ModelRenderer lHorn04;
-    public ModelRenderer rHorn02;
-    public ModelRenderer rHorn03;
-    public ModelRenderer rHorn04;
     public ModelRenderer branch01b;
     public ModelRenderer branch01c;
     public ModelRenderer branch01d;
@@ -149,6 +101,28 @@ public class ModelShub extends ModelBase {
     public ModelRenderer branch10b;
     public ModelRenderer branch10d;
     public ModelRenderer branch10c;
+    public ModelRenderer branch11b;
+    public ModelRenderer branch11c;
+    public ModelRenderer branch12b;
+    public ModelRenderer branch12d;
+    public ModelRenderer branch12c;
+    //owo
+    public ModelRenderer lTentacle01a;
+    public ModelRenderer lTentacle02a;
+    public ModelRenderer rTentacle01a;
+    public ModelRenderer rTentacle02a;
+    public ModelRenderer lTentacle00a;
+    public ModelRenderer rTentacle00a;
+    public ModelRenderer lTentacle03a;
+    public ModelRenderer rTentacle03a;
+    public ModelRenderer lTentacle03b;
+    public ModelRenderer lTentacle03c;
+    public ModelRenderer lTentacle03d;
+    public ModelRenderer lTentacle03e;
+    public ModelRenderer rTentacle03b;
+    public ModelRenderer rTentacle03c;
+    public ModelRenderer rTentacle03d;
+    public ModelRenderer rTentacle03e;
     public ModelRenderer lTentacle01b;
     public ModelRenderer lTentacle01c;
     public ModelRenderer lTentacle01d;
@@ -165,11 +139,6 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rTentacle02c;
     public ModelRenderer rTentacle02d;
     public ModelRenderer rTentacle02e;
-    public ModelRenderer branch11b;
-    public ModelRenderer branch11c;
-    public ModelRenderer branch12b;
-    public ModelRenderer branch12d;
-    public ModelRenderer branch12c;
     public ModelRenderer lTentacle00b;
     public ModelRenderer lTentacle00c;
     public ModelRenderer lTentacle00d;
@@ -178,6 +147,55 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rTentacle00c;
     public ModelRenderer rTentacle00d;
     public ModelRenderer rTentacle00e;
+
+    //oh god cat why did you have to do that that's pretty cursed
+    public ModelRenderer lMouth01;
+    public ModelRenderer rMouth01;
+    public ModelRenderer lMouth02;
+    public ModelRenderer rMouth02;
+
+
+    public ModelRenderer NS;
+    public ModelRenderer EW;
+    public ModelRenderer lfHoof;
+    public ModelRenderer lFClaw01;
+    public ModelRenderer lFClaw02;
+    public ModelRenderer rbLeg02;
+    public ModelRenderer rbLeg03;
+    public ModelRenderer rbHoof;
+    public ModelRenderer rBClaw01;
+    public ModelRenderer rBClaw02;
+    public ModelRenderer lbLeg01;
+    public ModelRenderer rfLeg01;
+    public ModelRenderer lbLeg02;
+    public ModelRenderer lbLeg03;
+    public ModelRenderer lbHoof;
+    public ModelRenderer lBClaw01;
+    public ModelRenderer lBClaw02;
+    public ModelRenderer rfLeg02;
+    public ModelRenderer rfLeg03;
+    public ModelRenderer rfHoof;
+    public ModelRenderer rFClaw01;
+    public ModelRenderer rFClaw02;
+    public ModelRenderer neck02;
+    public ModelRenderer snout;
+    public ModelRenderer upperJaw;
+    public ModelRenderer lowerJaw;
+
+    public ModelRenderer lEar01;
+    public ModelRenderer rEar01;
+    public ModelRenderer lHorn01;
+    public ModelRenderer rHorn01;
+
+    public ModelRenderer lEar02;
+    public ModelRenderer rEar02;
+
+    public ModelRenderer lHorn02;
+    public ModelRenderer lHorn03;
+    public ModelRenderer lHorn04;
+    public ModelRenderer rHorn02;
+    public ModelRenderer rHorn03;
+    public ModelRenderer rHorn04;
 
     public ModelShub() {
         this.textureWidth = 128;
@@ -1025,7 +1043,100 @@ public class ModelShub extends ModelBase {
     @Override
     public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         this.body.render(scale);
+        super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     }
+
+
+    @Override
+    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        if (entitylivingbaseIn instanceof EntityShub){
+            //fixme  have the models render separately and not copy each other's angles
+            if (((EntityShub) entitylivingbaseIn).isSitting)
+                sit();
+        }
+        super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+    }
+
+    public void sit(){
+        //setOffsetGradually(body, 0, -0.5F, 1.5F);
+        setRotateAngle(lTentacle00a, 55, -78, 0);
+        setRotateAngle(lTentacle00b, 30, -8, 0);
+        setRotateAngle(lTentacle00c, -33, -6, 0);
+        setRotateAngle(lTentacle00d, -18, 5, 0);
+        setRotateAngle(lTentacle00e, -33, 0, 0);
+
+        setRotateAngle(rTentacle00a, 55, 78, 0);
+        setRotateAngle(rTentacle00b, 30, 8, 0);
+        setRotateAngle(rTentacle00c, -33, 6, 0);
+        setRotateAngle(rTentacle00d, -18, -5, 0);
+        setRotateAngle(rTentacle00e, -33, 0, 0);
+
+
+        setRotateAngle(lTentacle01a, 36, -36, 0);
+        setRotateAngle(lTentacle01b, 9, 10, 0);
+        setRotateAngle(lTentacle01c, 0, 2, 0);
+        setRotateAngle(lTentacle01d, 7, 6, 0);
+        setRotateAngle(lTentacle01e, -46, -6, 0);
+
+        setRotateAngle(rTentacle01a, 36, 36, 0);
+        setRotateAngle(rTentacle01b, 9, -10, 0);
+        setRotateAngle(rTentacle01c, 0, -2, 0);
+        setRotateAngle(rTentacle01d, 7, -6, 0);
+        setRotateAngle(rTentacle01e, -46, 6, 0);
+
+
+        setRotateAngle(lTentacle02a, 45, -100, 0);
+        setRotateAngle(lTentacle02b, -10, -8, 0);
+        setRotateAngle(lTentacle02c, -20, -6, 0);
+        setRotateAngle(lTentacle02d, -18, 5, 0);
+        setRotateAngle(lTentacle02e, 0, 0, 0);
+
+        setRotateAngle(rTentacle02a, 45, 100, 0);
+        setRotateAngle(rTentacle02b, -10, 8, 0);
+        setRotateAngle(rTentacle02c, -20, 6, 0);
+        setRotateAngle(rTentacle02d, -18, -5, 0);
+        setRotateAngle(rTentacle02e, 0, 0, 0);
+
+
+        setRotateAngle(lTentacle03a, 39, -75, 0);
+        setRotateAngle(lTentacle03b, -26, 0, 0);
+        setRotateAngle(lTentacle03c, -8, -2, 0);
+        setRotateAngle(lTentacle03d, 5, 0, 0);
+        setRotateAngle(lTentacle03e, -10, 0, 0);
+
+        setRotateAngle(rTentacle03a, 39, 75, 0);
+        setRotateAngle(rTentacle03b, -26, 0, 0);
+        setRotateAngle(rTentacle03c, -8, 2, 0);
+        setRotateAngle(rTentacle03d, 5, 0, 0);
+        setRotateAngle(rTentacle03e, -10, 0, 0);
+
+
+        setRotateAngle(lfLeg01, -90, -13, 10);
+        setRotateAngle(lfLeg02, 2, 0, 15);
+        setRotateAngle(lfLeg03, 0, 0, -16);
+        setRotateAngle(lfHoof, 0, 0, 17);
+
+        setRotateAngle(rfLeg01, -85, 13, -10);
+        setRotateAngle(rfLeg02, 0, 0, -15);
+        setRotateAngle(rfLeg03, 0, 0, 0);
+        setRotateAngle(rfHoof, 0, 0, -17);
+
+        setRotateAngle(lbLeg01, 0, 0, -40);
+        setRotateAngle(lbLeg02, 0, 0, 2);
+        setRotateAngle(lbLeg03, 0, 0, -70);
+        setRotateAngle(lbHoof, 0, 0, 106);
+
+        setRotateAngle(rbLeg01, 0, 0, 40);
+        setRotateAngle(rbLeg02, 0, 0, -2);
+        setRotateAngle(rbLeg03, 0, 0, 70);
+        setRotateAngle(rbHoof, 0, 0, -106);
+    }
+
 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
@@ -1035,4 +1146,6 @@ public class ModelShub extends ModelBase {
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
+
+
 }

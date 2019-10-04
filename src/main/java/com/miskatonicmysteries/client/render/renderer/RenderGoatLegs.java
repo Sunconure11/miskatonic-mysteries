@@ -35,7 +35,6 @@ public class RenderGoatLegs extends RenderPlayer {
             return slot == EntityEquipmentSlot.LEGS || slot == EntityEquipmentSlot.FEET ?  model : super.getArmorModelHook(entity, itemStack, slot, model);
         }
 
-
         @Override
         protected void setModelSlotVisible(ModelBiped p_188359_1_, EntityEquipmentSlot slotIn) {
             super.setModelSlotVisible(p_188359_1_, slotIn);

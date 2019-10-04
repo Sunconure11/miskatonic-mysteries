@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
@@ -39,7 +40,18 @@ public class ModObjects {
 
     public static BlockCandles candles = Util.create(new BlockCandles(), SoundType.CLOTH, 0F, 0.2F, "none", 0, "candles");
 
+    public static BlockAltar altar_stone = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_stone");
+    public static BlockAltar altar_stone_mossy = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_stone_mossy");
+    public static BlockAltar altar_netherbrick = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_netherbrick");
+    public static BlockAltar altar_prismarine = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_prismarine");
+    public static BlockAltar altar_sandstone = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_sandstone");
+    public static BlockAltar altar_purpur = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_purpur");
+/* TODO, this is for later ;)
+    public static BlockAltar altar_coral_dead = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_coral_dead");
 
+    public static BlockAltar altar_stone_enriched = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_stone_enriched");
+    public static BlockAltar altar_brick_scorned = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_brick_scorned");
+*/
     public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
     public static Item research_notes_hastur = Util.create("research_notes_hastur");
     public static Item research_notes_shubniggurath = Util.create("research_notes_shubniggurath");
