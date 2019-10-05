@@ -1,21 +1,20 @@
-package com.miskatonicmysteries.client.render.renderer;
+package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.models.ModelShub;
+import com.miskatonicmysteries.client.model.entity.ModelShub;
 import com.miskatonicmysteries.common.entity.EntityShub;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelWolf;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
 public class RenderShub extends RenderLiving<EntityShub> {
     public RenderShub(RenderManager rendermanagerIn) {
-        super(rendermanagerIn, new ModelShub(), 1.5F);
+        super(rendermanagerIn, new ModelShub(), 4);
     }
 
     @Override
@@ -26,6 +25,13 @@ public class RenderShub extends RenderLiving<EntityShub> {
     @Override
     public boolean shouldRender(EntityShub livingEntity, ICamera camera, double camX, double camY, double camZ) {
         return super.shouldRender(livingEntity, camera, camX, camY, camZ); //change this later
+    }
+
+    @Override
+    protected void preRenderCallback(EntityShub entitylivingbaseIn, float partialTickTime) {
+        float angle = Float.valueOf(I18n.format("temp.1"));
+        GlStateManager.scale(2.5F, 2.5F, 2.5F);
+        super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     }
 
     @Nullable

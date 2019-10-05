@@ -74,6 +74,24 @@ public class BlockAltar extends Block {
     }
 
     @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
+        EnumFacing entityFacing = entity.getHorizontalFacing();
+
+        if (!world.isRemote) {
+            if (entityFacing == EnumFacing.NORTH) {
+                entityFacing = EnumFacing.SOUTH;
+            } else if (entityFacing == EnumFacing.EAST) {
+                entityFacing = EnumFacing.WEST;
+            } else if (entityFacing == EnumFacing.SOUTH) {
+                entityFacing = EnumFacing.NORTH;
+            } else if (entityFacing == EnumFacing.WEST) {
+                entityFacing = EnumFacing.EAST;
+            }
+
+            world.setBlockState(pos, state.withProperty(FACING, entityFacing), 2);
+        }
+    }
+    @Override
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }

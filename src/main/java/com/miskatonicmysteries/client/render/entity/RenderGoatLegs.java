@@ -1,6 +1,6 @@
-package com.miskatonicmysteries.client.render.renderer;
+package com.miskatonicmysteries.client.render.entity;
 
-import com.miskatonicmysteries.client.render.models.ModelGoatBlessing;
+import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;

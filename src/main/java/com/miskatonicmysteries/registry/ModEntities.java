@@ -1,16 +1,12 @@
 package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.renderer.RenderHastur;
-import com.miskatonicmysteries.client.render.renderer.RenderShub;
+import com.miskatonicmysteries.client.render.entity.RenderHastur;
+import com.miskatonicmysteries.client.render.entity.RenderShub;
 import com.miskatonicmysteries.common.entity.EntityHastur;
 import com.miskatonicmysteries.common.entity.EntityShub;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 

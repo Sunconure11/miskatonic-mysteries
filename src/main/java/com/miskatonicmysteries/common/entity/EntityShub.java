@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,7 +24,7 @@ public class EntityShub extends AbstractOldOne {
 
     public EntityShub(World worldIn) {
         super(worldIn);
-        setSize(3, 5.5F);
+        setSize(7.5F, 13.75F);
     }
 
     @Override
@@ -60,9 +61,9 @@ public class EntityShub extends AbstractOldOne {
 
     @Override
     protected void initEntityAI() {
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(2, new EntityAILookIdle(this));
+      //  this.tasks.addTask(0, new EntityAISwimming(this));
+       // this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+    //    this.tasks.addTask(2, new EntityAILookIdle(this));
         super.initEntityAI();
     }
 
@@ -84,6 +85,21 @@ public class EntityShub extends AbstractOldOne {
     @Override
     public Blessing getAssociatedBlessing() {
         return Blessing.SHUB;
+    }
+
+    @Override
+    public float getEyeHeight() {
+        return super.getEyeHeight() * (-4.75F * sittingProgress * 0.5F);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return super.getRenderBoundingBox().grow(4);
+    }
+
+    @Override
+    public AxisAlignedBB getEntityBoundingBox() {
+        return super.getEntityBoundingBox().grow(0, -4.75 * sittingProgress * 0.5, 0).offset(0, -4.75 * sittingProgress * 0.5, 0);
     }
 
     @Override

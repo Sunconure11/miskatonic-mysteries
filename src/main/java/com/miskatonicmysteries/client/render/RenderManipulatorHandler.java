@@ -1,8 +1,8 @@
 package com.miskatonicmysteries.client.render;
 
 import com.miskatonicmysteries.ModConfig;
-import com.miskatonicmysteries.client.render.models.ModelGoatBlessing;
-import com.miskatonicmysteries.client.render.renderer.RenderGoatLegs;
+import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
+import com.miskatonicmysteries.client.render.entity.RenderGoatLegs;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import net.minecraft.client.Minecraft;

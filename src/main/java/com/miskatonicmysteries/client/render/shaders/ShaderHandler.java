@@ -33,7 +33,7 @@ public class ShaderHandler {
 
     public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/desaturate.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/phosphor.json")};
     //these shaders are temporary, I'm just not good enough to make shaders :(
-
+    //do fog in shaders? copy that stuff and look
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void doRender(TickEvent.PlayerTickEvent event) {

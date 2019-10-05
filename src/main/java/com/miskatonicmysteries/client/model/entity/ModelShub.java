@@ -1,11 +1,9 @@
-package com.miskatonicmysteries.client.render.models;
+package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.common.entity.EntityShub;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.model.ModelWolf;
+import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderSlime;
 import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -64,7 +62,10 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rTentacle03e;
     public ModelRenderer lfLeg01;
     public ModelRenderer rbLeg01;
+
     public ModelRenderer lfLeg02;
+    public ModelRenderer rfLeg02;
+
     public ModelRenderer lfLeg03;
     public ModelRenderer lfHoof;
     public ModelRenderer lFClaw01;
@@ -81,7 +82,7 @@ public class ModelShub extends ModelBase {
     public ModelRenderer lbHoof;
     public ModelRenderer lBClaw01;
     public ModelRenderer lBClaw02;
-    public ModelRenderer rfLeg02;
+
     public ModelRenderer rfLeg03;
     public ModelRenderer rfHoof;
     public ModelRenderer rFClaw01;
@@ -1038,20 +1039,32 @@ public class ModelShub extends ModelBase {
     }
 
     public void setAnimations(EntityShub shub, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
-            sit(shub.sittingProgress);
-            openTheCursedMaw(shub.openingProgress);
+        sit(shub.sittingProgress);
+        openTheCursedMaw(shub.openingProgress);
     }
 
     public void sit(float progression) {
-        this.setRotateAngle(rTentacle01a, 0.6283185307179586F, 0.6283185307179586F, 0.0F, progression);
         this.setRotateAngle(rbLeg01, 0.0F, 0.0F, 0.6981317007977318F, progression);
+        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F, progression);//change that
+        this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 1.2217304763960306F, progression);
+
+        this.setRotateAngle(lbLeg01, 0.0F, 0.0F, -0.6981317007977318F, progression);
+        this.setRotateAngle(lbLeg02, 0.0F, 0.0F, 0.03490658503988659F, progression);
         this.setRotateAngle(lbLeg03, 0.0F, 0.0F, -1.2217304763960306F, progression);
+
+        this.setRotateAngle(rfLeg01, -1.48352986419518F, 0.22689280275926282F, -0.17453292519943295F, progression);
+        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, -0.2617993877991494F, progression);//change that to work, look at the setAngles stuff
+        this.setRotateAngle(rfLeg03, 0.0F, 0.0F, 0.2792526803190927F, progression);
+
         this.setRotateAngle(lfLeg01, -1.5707963267948966F, -0.22689280275926282F, 0.17453292519943295F, progression);
+        this.setRotateAngle(lfLeg02, 0, 0.0F, 0.2617993877991494F, progression);  ///that behaves weird - and only that
+        this.setRotateAngle(lfLeg03, 0.0F, 0.0F, -0.2792526803190927F, progression);
+
+        this.setRotateAngle(rTentacle01a, 0.6283185307179586F, 0.6283185307179586F, 0.0F, progression);
         this.setRotateAngle(rTentacle03b, -0.45378560551852565F, 0.0F, 0.0F, progression);
         this.setRotateAngle(lTentacle03c, -0.13962634015954636F, -0.03490658503988659F, 0.0F, progression);
         this.setRotateAngle(lTentacle03e, -0.17453292519943295F, 0.0F, 0.0F, progression);
         this.setRotateAngle(lTentacle02b, -0.17453292519943295F, -0.13962634015954636F, 0.0F, progression);
-        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F, progression);
         this.setRotateAngle(lBClaw02, 0.0F, 0.0F, -0.4363323129985824F, progression);
         this.setRotateAngle(rTentacle02d, -0.3141592653589793F, -0.08726646259971647F, 0.0F, progression);
         this.setRotateAngle(lTentacle00e, -0.5918411493512771F, 0.0F, 0.0F, progression);
@@ -1061,14 +1074,12 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(lTentacle02a, 0.7853981633974483F, -1.7453292519943295F, 0.0F, progression);
         this.setRotateAngle(rTentacle00b, 0.22759093446006054F, 0.13962634015954636F, 0.0F, progression);
         this.setRotateAngle(lTentacle00c, -0.5918411493512771F, -0.10471975511965977F, 0.0F, progression);
-        this.setRotateAngle(lfLeg03, 0.0F, 0.0F, -0.2792526803190927F, progression);
         this.setRotateAngle(lTentacle00d, -0.31869712141416456F, 0.08726646259971647F, 0.0F, progression);
         this.setRotateAngle(rTentacle03d, 0.08726646259971647F, 0.0F, 0.0F, progression);
         this.setRotateAngle(lTentacle01d, 0.12217304763960307F, 0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(rTentacle03a, 0.6806784082777886F, 1.3089969389957472F, 0.0F, progression);
         this.setRotateAngle(rTentacle00e, 0.091106186954104F, -0.31869712141416456F, 0.0F, progression);
         this.setRotateAngle(lTentacle02d, -0.3141592653589793F, 0.08726646259971647F, 0.0F, progression);
-        this.setRotateAngle(rfLeg01, -1.48352986419518F, 0.22689280275926282F, -0.17453292519943295F, progression);
         this.setRotateAngle(rTentacle00d, -0.5918411493512771F, -0.08726646259971647F, 0.0F, progression);
         this.setRotateAngle(lTentacle00b, 0.5235987755982988F, -0.13962634015954636F, 0.0F, progression);
         this.setRotateAngle(rTentacle03c, -0.13962634015954636F, 0.03490658503988659F, 0.0F, progression);
@@ -1077,24 +1088,20 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(rTentacle02a, 0.7853981633974483F, 1.7453292519943295F, 0.0F, progression);
         this.setRotateAngle(lTentacle03a, 0.6806784082777886F, -1.3089969389957472F, 0.0F, progression);
         this.setRotateAngle(lTentacle02c, -0.3490658503988659F, -0.10471975511965977F, 0.0F, progression);
-        this.setRotateAngle(lfHoof, 0.0F, 0.0F, 0.296705972839036F, progression);
+        //    this.setRotateAngle(lfHoof, 0.0F, 0.0F, 0.296705972839036F, progression);
         this.setRotateAngle(rTentacle01e, -0.8028514559173915F, 0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(rTentacle02b, -0.17453292519943295F, 0.13962634015954636F, 0.0F, progression);
         this.setRotateAngle(rTentacle02c, -0.3490658503988659F, 0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(rTentacle03e, -0.17453292519943295F, 0.0F, 0.0F, progression);
         this.setRotateAngle(branch06e, 0.0F, 0.0F, -0.05235987755982988F, progression);
         this.setRotateAngle(lTentacle00a, 0.9948376736367678F, -1.3613568165555772F, 0.0F, progression);
-        this.setRotateAngle(lbLeg02, 0.0F, 0.0F, 0.03490658503988659F, progression);
         this.setRotateAngle(rTentacle01b, 0.15707963267948966F, 0.22689280275926282F, 0.0F, progression);
-        this.setRotateAngle(lbLeg01, 0.0F, 0.0F, -0.6981317007977318F, progression);
         this.setRotateAngle(rTentacle00c, -0.8196066167365371F, 0.10471975511965977F, 0.0F, progression);
-        this.setRotateAngle(rfHoof, 0.0F, 0.0F, -0.296705972839036F, progression);
+        //this.setRotateAngle(rfHoof, 0.0F, 0.0F, -0.296705972839036F, progression);
         this.setRotateAngle(rTentacle01c, 0.0F, 0.03490658503988659F, 0.0F, progression);
         this.setRotateAngle(lTentacle01a, 0.6283185307179586F, -0.6283185307179586F, 0.0F, progression);
         this.setRotateAngle(rTentacle02e, -0.17453292519943295F, 0.0F, 0.0F, progression);
         this.setRotateAngle(lTentacle01e, -0.8028514559173915F, -0.10471975511965977F, 0.0F, progression);
-        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, -0.2617993877991494F, progression);
-        this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 1.2217304763960306F, progression);
         this.setRotateAngle(lTentacle01b, 0.15707963267948966F, -0.22689280275926282F, 0.0F, progression);
         this.setRotateAngle(rbHoof, 0.0F, 0.0F, -1.9198621771937625F, progression);
         this.setRotateAngle(rTentacle01d, 0.12217304763960307F, -0.10471975511965977F, 0.0F, progression);
@@ -1267,12 +1274,11 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(rBoob01, 0.6108652381980153F, 0.17453292519943295F, 0.0F);
         this.setRotateAngle(lHorn02, -0.2792526803190927F, 0.0F, 0.20943951023931953F);
         this.setRotateAngle(rTentacle01c, 0.08726646259971647F, 0.03490658503988659F, 0.0F);
-
         if (entityIn instanceof EntityShub)
             setAnimations((EntityShub) entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
     }
 
-    public void setRotateAngle(ModelRenderer model, float x, float y, float z, float progression){
+    public void setRotateAngle(ModelRenderer model, float x, float y, float z, float progression) {
         model.rotateAngleX = model.rotateAngleX * (1 - progression) + x * progression;
         model.rotateAngleY = model.rotateAngleY * (1 - progression) + y * progression;
         model.rotateAngleZ = model.rotateAngleZ * (1 - progression) + z * progression;

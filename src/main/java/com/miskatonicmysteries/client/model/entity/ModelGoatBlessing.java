@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.client.render.models;
+package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import net.minecraft.client.Minecraft;

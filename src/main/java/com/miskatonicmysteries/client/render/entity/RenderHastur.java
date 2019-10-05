@@ -1,7 +1,7 @@
-package com.miskatonicmysteries.client.render.renderer;
+package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.models.ModelHastur;
+import com.miskatonicmysteries.client.model.entity.ModelHastur;
 import com.miskatonicmysteries.common.entity.EntityHastur;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
