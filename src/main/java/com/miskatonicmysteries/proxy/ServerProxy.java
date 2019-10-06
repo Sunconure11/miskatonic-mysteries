@@ -15,7 +15,7 @@ public class ServerProxy {
 
 	}
 
-	public void registerTexture(Item item) {
+	public void registerTexture(Item item, int meta, String id) {
 
 	}
 

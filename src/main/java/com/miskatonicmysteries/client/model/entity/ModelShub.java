@@ -1043,7 +1043,7 @@ public class ModelShub extends ModelBase {
         openTheCursedMaw(shub.openingProgress);
     }
 
-    public void sit(float progression) {
+    public void sit(float progression) { //elevate the frontal tentacles a bit, so that they don't fall directly into the ground
         this.setRotateAngle(rbLeg01, 0.0F, 0.0F, 0.6981317007977318F, progression);
         this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F, progression);//change that
         this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 1.2217304763960306F, progression);

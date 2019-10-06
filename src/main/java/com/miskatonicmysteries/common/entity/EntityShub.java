@@ -59,6 +59,7 @@ public class EntityShub extends AbstractOldOne {
         super.onLivingUpdate();
     }
 
+
     @Override
     protected void initEntityAI() {
       //  this.tasks.addTask(0, new EntityAISwimming(this));
@@ -89,7 +90,7 @@ public class EntityShub extends AbstractOldOne {
 
     @Override
     public float getEyeHeight() {
-        return super.getEyeHeight() * (-4.75F * sittingProgress * 0.5F);
+        return super.getEyeHeight() - 4.75F * sittingProgress;
     }
 
     @Override

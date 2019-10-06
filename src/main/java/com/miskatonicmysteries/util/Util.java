@@ -34,13 +34,10 @@ public class Util {
 		if (item != null) {
 			item.setRegistryName(name);
 			item.setUnlocalizedName(name);
-			MiskatonicMysteries.proxy.registerTexture(item);
+			MiskatonicMysteries.proxy.registerTexture(item, 0, name);
 			ForgeRegistries.ITEMS.register(item);
 		}
 
-		if (block instanceof BlockTileEntity){
-			GameRegistry.registerTileEntity(((BlockTileEntity) block).getTileEntityClass(), block.getRegistryName());
-		}
 		return block;
 	}
 	

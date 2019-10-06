@@ -71,6 +71,8 @@ public class ModObjects {
 
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 
+    public static Item tallow = Util.create(new Item(), "tallow");
+
     public static Item milk_black_goat = Util.create(new ItemMilkGoat(), "milk_black_goat");
 
     public static Item gold_oceanic = Util.create("gold_oceanic");

@@ -4,7 +4,7 @@
 	"ambientocclusion": false,
 	"textures": {
 		"all": "miskatonicmysteries:blocks/eldritch_altar_stone",
-        "particle": "miskatonicmysteries:blocks/eldritch_altar_stone"
+		"particle": "miskatonicmysteries:blocks/eldritch_altar_stone"
 	},
 	"elements": [
 		{
@@ -23,8 +23,8 @@
 		},
 		{
 			"name": "candle01",
-			"from": [11, 24, 10.2],
-			"to": [12, 27, 11.2],
+			"from": [12, 25, 10.2],
+			"to": [13, 28, 11.2],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [13.5, 2, 13.75, 2.75], "texture": "#all"},
@@ -107,8 +107,8 @@
 		},
 		{
 			"name": "candle03",
-			"from": [1, 18, 0.5],
-			"to": [2, 21, 1.5],
+			"from": [2, 19, 0.5],
+			"to": [3, 22, 1.5],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [15, 2, 15.25, 2.75], "texture": "#all"},
@@ -149,8 +149,8 @@
 		},
 		{
 			"name": "edgeFL",
-			"from": [8, 3, -6.7],
-			"to": [11, 17, -5.7],
+			"from": [9.8, 3, -7],
+			"to": [12.8, 17, -6],
 			"rotation": {"angle": -45, "axis": "y", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [0.25, 0.25, 1, 3.75], "texture": "#all"},
@@ -163,8 +163,8 @@
 		},
 		{
 			"name": "candle04",
-			"from": [0.5, 18, 3],
-			"to": [1.5, 21, 4],
+			"from": [1.5, 19, 3],
+			"to": [2.5, 22, 4],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [15, 2, 15.25, 2.75], "texture": "#all"},
@@ -177,8 +177,8 @@
 		},
 		{
 			"name": "altarBack",
-			"from": [3, 3, 12],
-			"to": [11, 17, 13],
+			"from": [4, 3, 13],
+			"to": [12, 17, 14],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [0.25, 5.25, 2.25, 8.75], "texture": "#all"},
@@ -191,8 +191,8 @@
 		},
 		{
 			"name": "edgeFR",
-			"from": [-1.7, 3, 3.1],
-			"to": [1.3, 17, 4.1],
+			"from": [-1.5, 3, 4],
+			"to": [1.5, 17, 5],
 			"rotation": {"angle": 45, "axis": "y", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [0.25, 0.25, 1, 3.75], "texture": "#all"},
@@ -205,8 +205,8 @@
 		},
 		{
 			"name": "edgeBL",
-			"from": [-1.7, 3, 15.7],
-			"to": [1.3, 17, 16.7],
+			"from": [-1.7, 3, 17.3],
+			"to": [1.3, 17, 18.3],
 			"rotation": {"angle": 45, "axis": "y", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [0.25, 0.25, 1, 3.75], "texture": "#all"},
@@ -219,8 +219,8 @@
 		},
 		{
 			"name": "candle02",
-			"from": [7, 24, 10.5],
-			"to": [8, 27, 11.5],
+			"from": [8, 25, 10.5],
+			"to": [9, 28, 11.5],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [13.5, 2, 13.75, 2.75], "texture": "#all"},
@@ -233,8 +233,8 @@
 		},
 		{
 			"name": "bookholder",
-			"from": [2, 12, 8],
-			"to": [12, 17, 18],
+			"from": [3, 13, 8],
+			"to": [13, 18, 18],
 			"rotation": {"angle": -22.5, "axis": "x", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [7.5, 12.25, 10, 13.5], "texture": "#all"},
@@ -275,8 +275,8 @@
 		},
 		{
 			"name": "candle05",
-			"from": [12.5, 18, 2],
-			"to": [13.5, 21, 3],
+			"from": [13.5, 19, 2],
+			"to": [14.5, 22, 3],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [15, 2, 15.25, 2.75], "texture": "#all"},
@@ -303,8 +303,8 @@
 		},
 		{
 			"name": "altarFront",
-			"from": [3, 3, 1],
-			"to": [11, 17, 2],
+			"from": [4, 3, 2],
+			"to": [12, 17, 3],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [0.25, 5.25, 2.25, 8.75], "texture": "#all"},
@@ -317,8 +317,8 @@
 		},
 		{
 			"name": "altarRight",
-			"from": [1, 3, 3],
-			"to": [2, 17, 11],
+			"from": [2, 3, 4],
+			"to": [3, 17, 12],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [2, 11.75, 2.25, 15.25], "texture": "#all"},
@@ -331,8 +331,8 @@
 		},
 		{
 			"name": "edgeBR",
-			"from": [8.7, 3, 5.8],
-			"to": [11.7, 17, 6.8],
+			"from": [10, 3, 6.1],
+			"to": [13, 17, 7.1],
 			"rotation": {"angle": -45, "axis": "y", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [0.25, 0.25, 1, 3.75], "texture": "#all"},
@@ -345,8 +345,8 @@
 		},
 		{
 			"name": "top",
-			"from": [0, 16, 0],
-			"to": [14, 18, 14],
+			"from": [1, 17, 0],
+			"to": [15, 19, 14],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [4.75, 9, 8.25, 9.5], "texture": "#all"},
@@ -429,8 +429,8 @@
 		},
 		{
 			"name": "candle00",
-			"from": [8.5, 24, 11],
-			"to": [10.5, 28, 13],
+			"from": [9.5, 25, 11],
+			"to": [11.5, 29, 13],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [13.75, 0.5, 14.25, 1.5], "texture": "#all"},
@@ -443,8 +443,8 @@
 		},
 		{
 			"name": "shelf",
-			"from": [1, 18, 10],
-			"to": [13, 24, 13],
+			"from": [2, 19, 10],
+			"to": [14, 25, 13],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [5.75, 14.25, 8.75, 15.75], "texture": "#all"},
@@ -457,8 +457,8 @@
 		},
 		{
 			"name": "altarLeft",
-			"from": [12, 3, 3],
-			"to": [13, 17, 11],
+			"from": [13, 3, 4],
+			"to": [14, 17, 12],
 			"rotation": {"angle": 0, "axis": "z", "origin": [0, 2, 0]},
 			"faces": {
 				"north": {"uv": [2, 11.75, 2.25, 15.25], "texture": "#all"},

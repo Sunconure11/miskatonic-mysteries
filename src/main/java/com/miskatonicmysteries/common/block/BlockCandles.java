@@ -55,7 +55,8 @@ public class BlockCandles extends Block {
 		if (event.getState().getBlock() instanceof BlockCandles){
 			if (event.getState().getValue(CANDLES) > 1){
 				event.getWorld().setBlockState(event.getPos(), event.getState().withProperty(CANDLES, event.getState().getValue(CANDLES) - 1));
-				ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), new ItemStack(this));
+				if (!event.getPlayer().isCreative())
+					ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), new ItemStack(this));
 				event.setCanceled(true);
 			}
 		}
@@ -155,7 +156,7 @@ public class BlockCandles extends Block {
 			if (playerIn.getHeldItem(hand).getItem().equals(Item.getItemFromBlock(this))) {
 				if (state.getValue(CANDLES) < 4) {
 					worldIn.setBlockState(pos, state.withProperty(CANDLES, state.getValue(CANDLES) + 1), 3);
-					playerIn.getHeldItem(hand).shrink(1);
+					if (!playerIn.isCreative()) playerIn.getHeldItem(hand).shrink(1);
 				}
 			} else if (playerIn.getHeldItem(hand).getItem() instanceof ItemFlintAndSteel) {
 				if (!state.getValue(LIT)) {

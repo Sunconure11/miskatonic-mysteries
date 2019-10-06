@@ -29,8 +29,7 @@ public class RenderShub extends RenderLiving<EntityShub> {
 
     @Override
     protected void preRenderCallback(EntityShub entitylivingbaseIn, float partialTickTime) {
-        float angle = Float.valueOf(I18n.format("temp.1"));
-        GlStateManager.scale(2.5F, 2.5F, 2.5F);
+        GlStateManager.scale(3, 3, 3);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     }
 

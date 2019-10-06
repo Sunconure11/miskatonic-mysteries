@@ -2,6 +2,8 @@ package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.particles.ParticleOccultFlame;
+import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
+import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockStairs;
@@ -32,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockAltar extends Block {
+public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     public BlockAltar() {
@@ -104,5 +106,15 @@ public class BlockAltar extends Block {
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public Class<TileEntityAltar> getTileEntityClass() {
+        return TileEntityAltar.class;
+    }
+
+    @Override
+    public TileEntityAltar createTileEntity(World world, IBlockState state) {
+        return new TileEntityAltar();
     }
 }

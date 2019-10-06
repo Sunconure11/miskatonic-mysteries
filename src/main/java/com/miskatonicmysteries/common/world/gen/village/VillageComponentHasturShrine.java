@@ -31,6 +31,10 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
         this.boundingBox = boundingBox;
     }
 
+    public void init(){
+
+    }
+
     public static VillageComponentHasturShrine buildComponent(List pieces, int p1, int p2, int p3, EnumFacing p4){
         StructureBoundingBox maxBoundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, MAX_X, MAX_Y, MAX_Z, p4);
         return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(pieces, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4) : null;

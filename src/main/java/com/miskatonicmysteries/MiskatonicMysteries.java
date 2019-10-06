@@ -1,5 +1,7 @@
 package com.miskatonicmysteries;
 
+import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
+import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.BlessingStorage;
 import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
@@ -81,6 +83,7 @@ public class MiskatonicMysteries {
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
         CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
         ModEntities.init();
+        initTileEntities();
     }
 
     @EventHandler
@@ -103,6 +106,10 @@ public class MiskatonicMysteries {
         event.registerServerCommand(new CommandMiskatonicMysteries());
     }
 
+
+    public void initTileEntities(){
+        GameRegistry.registerTileEntity(TileEntityAltar.class, new ResourceLocation(MODID, "altar"));
+    }
 
 
     @Mod.EventBusSubscriber
