@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class ModEntities {
     public static int entityId = 0;
     public static void init(){
-        registerEntity("shub_niggurath", EntityShub.class, 64, 1003, 134);
-        registerEntity("hastur", EntityHastur.class, 64, 1003, 134);
+        registerEntity("shub_niggurath", EntityShub.class, 64);
+        registerEntity("hastur", EntityHastur.class, 64);
     }
 
     public static void registerRenderers(){
