@@ -78,7 +78,7 @@ public class InsanityHandler {
 
     @SubscribeEvent
     public void onHurt(LivingAttackEvent event){ // PlayerEvent.ItemCraftedEvent!
-        if (event.getEntityLiving() instanceof EntityWither && Sanity.Util.getSanity((EntityPlayer) event.getEntityLiving()) < 90){
+        if (event.getEntityLiving() instanceof EntityPlayer && Sanity.Util.getSanity((EntityPlayer) event.getEntityLiving()) < 90){
             MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), Sanity.Util.getSanityCapability((EntityPlayer) event.getEntityLiving()),event));
         }
     }

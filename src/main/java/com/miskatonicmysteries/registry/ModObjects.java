@@ -8,6 +8,7 @@ import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
 import com.miskatonicmysteries.common.item.consumable.ItemMilkGoat;
 import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
+import com.miskatonicmysteries.common.item.misc.ItemMMBook;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
 import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
@@ -76,4 +77,6 @@ public class ModObjects {
     public static Item milk_black_goat = Util.create(new ItemMilkGoat(), "milk_black_goat");
 
     public static Item gold_oceanic = Util.create("gold_oceanic");
+
+    public static Item necronomicon = Util.create(new ItemMMBook("necronomicon"), "necronomicon");
 }

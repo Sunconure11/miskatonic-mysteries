@@ -4,8 +4,15 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncBlessing;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
 import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
+import com.miskatonicmysteries.common.network.message.world.PacketChangeBiome;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.server.management.PlayerChunkMapEntry;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -26,9 +33,29 @@ public class PacketHandler {
         network.registerMessage(new PacketSyncBlessing.Handler(), PacketSyncBlessing.class, next(), Side.CLIENT);
 
         network.registerMessage(new PacketHandleInsanityClient.Handler(), PacketHandleInsanityClient.class, next(), Side.CLIENT);
+
+        network.registerMessage(new PacketChangeBiome.Handler(), PacketChangeBiome.class, next(), Side.CLIENT);
     }
 
     public static void sendTo(EntityPlayer player, IMessage message) {
         network.sendTo(message, (EntityPlayerMP) player);
     }
+
+    public static void updateTE(TileEntity tile) {
+        SPacketUpdateTileEntity packet = tile.getUpdatePacket();
+
+        if(packet != null && tile.getWorld() instanceof WorldServer) {
+            PlayerChunkMapEntry chunk = ((WorldServer) tile.getWorld()).getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
+            if(chunk != null) {
+                chunk.sendPacket(packet);
+            }
+        }
+    }
+
+    public static void updateTE(World world, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        if(tile != null)
+            updateTE(tile);
+    }
+
 }

@@ -2,31 +2,45 @@ package com.miskatonicmysteries.client.render;
 
 import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
+import net.minecraft.block.BlockEnchantmentTable;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntityEnchantmentTableRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.command.CommandLocate;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemBook;
+import net.minecraft.item.ItemWritableBook;
+import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class RenderAltar extends TileEntitySpecialRenderer<TileEntityAltar> {
-    private static final ResourceLocation TEXTURE_BOOK = new ResourceLocation("textures/entity/enchanting_table_book.png");
+    public static final ResourceLocation TEXTURE_BOOK = new ResourceLocation("textures/entity/enchanting_table_book.png");
     private final ModelBook modelBook = new ModelBook();
 
     @Override
     public void render(TileEntityAltar te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.translate((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
+        if (TileEntityAltar.BOOK_TEXTURES.containsKey(te.inventory.getStackInSlot(0).getItem())) {
+            GlStateManager.pushMatrix();
+            //todo, page flip
+            doStandardTransformations(te, x, y, z);
+            bindTexture(TileEntityAltar.BOOK_TEXTURES.getOrDefault(te.inventory.getStackInSlot(0).getItem(), TEXTURE_BOOK));
+            GlStateManager.rotate(90 * (1 - te.bookOpeningProgress), 0, 1, 0);
+            this.modelBook.render(null, 0, 0, 0, 1.185F * te.bookOpeningProgress + 0.015F, 0, 0.0425F); //perhaps adapt some values
+            GlStateManager.popMatrix();
+        }
+    }
+
+    public void doStandardTransformations(TileEntityAltar te, double x, double y, double z){
+        GlStateManager.translate(x + 0.5F, y + 1.5F, z + 0.5F);
         EnumFacing facing = te.getWorld().getBlockState(te.getPos()).getValue(BlockAltar.FACING); //south had west, check, west had south, check
         GlStateManager.rotate(90 * (facing == EnumFacing.NORTH ? 1 : facing == EnumFacing.EAST ? 0 : facing == EnumFacing.SOUTH ? 3 : 2), 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(67.5F, 0.0F, 0.0F, 1.0F); //0-22.5
-        GlStateManager.translate(-0.075, -0.2, 0);
-        this.bindTexture(TEXTURE_BOOK); //this will be adapted depending on the book used
-        this.modelBook.render(null, 0, 0, 0, 1.2F, 0, 0.0425F); //perhaps adapt some values
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
+        GlStateManager.translate(-0.05 * (te.bookOpeningProgress * te.bookOpeningProgress) - 0.025, -0.2, 0);
+
     }
 }

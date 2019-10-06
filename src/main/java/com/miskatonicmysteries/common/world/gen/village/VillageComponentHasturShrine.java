@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import java.util.List;
 import java.util.Random;
 
-public class VillageComponentHasturShrine extends StructureVillagePieces.Village {
+public class VillageComponentHasturShrine extends StructureVillagePieces.Church {
     public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12;
     public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5){
         this.setCoordBaseMode(par5);
