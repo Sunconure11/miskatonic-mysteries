@@ -26,7 +26,7 @@ public class Sanity implements ISanity {
     @Override
     public void setSanity(int sanity) {
         if (sanity > getSanityMax()){
-            this.sanity = SANITY_MAX;
+            this.sanity = getSanityMax();
             return;
         }
         if (sanity < 1){

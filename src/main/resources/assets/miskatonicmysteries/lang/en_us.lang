@@ -16,6 +16,15 @@ tile.yellow_terracotta_hastur_mural.name=Yellow Terracotta Hastur Mural
 tile.stone_shubniggurath_mural.name=Stone Shub-Niggurath Mural
 tile.moss_stone_shubniggurath_mural.name=Moss Stone Shub-Niggurath Mural
 
+tile.altar_stone.name=Stone Altar
+tile.altar_stone_mossy.name=Mossy Stone Altar
+tile.altar_netherbrick.name=Nether Brick Altar
+tile.altar_prismarine.name=Prismarine Altar
+tile.altar_sandstone.name=Sandstone Altar
+tile.altar_purpur.name=Funky Altar
+
+tile.candles.name=Candle
+
 #ITEM
 item.research_notes_cthulhu.name=Research Notes - Cthluhu
 item.research_notes_hastur.name=Research Notes - Hastur
@@ -39,6 +48,14 @@ item.tranquilizer.name=Tranquilizer
 
 item.milk_black_goat.name=Milk of the Black Goat
 item.gold_oceanic.name=Oceanic Gold
+
+item.necronomicon.name=Necronomicon
+
+item.tallow.name=Tallow
+
+#ENTITIES
+entity.shub_niggurath.name=Shub-Niggurath
+entity.hastur.name=Hastur
 
 #POTIONS
 miskatonicmysteries.tranquilized=Tranquilized
