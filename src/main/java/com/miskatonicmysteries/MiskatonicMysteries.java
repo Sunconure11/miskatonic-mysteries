@@ -193,6 +193,8 @@ public class MiskatonicMysteries {
     public void registerOreDict(){
         OreDictionary.registerOre("ingotGold", ModObjects.gold_oceanic);
         OreDictionary.registerOre("oreGold", ModObjects.gold_oceanic);
+
+        OreDictionary.registerOre("wax", ModObjects.tallow);
     }
 
     public void registerFurnaceRecipes(){

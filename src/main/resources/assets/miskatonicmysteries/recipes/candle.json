@@ -1,0 +1,17 @@
+{
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "wax"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "string"
+    }
+  ],
+  "result": {
+    "item": "miskatonicmysteries:candles",
+    "count": 1
+  }
+}
