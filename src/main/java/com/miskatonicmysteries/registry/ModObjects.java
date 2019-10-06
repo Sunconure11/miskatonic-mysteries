@@ -79,4 +79,5 @@ public class ModObjects {
     public static Item gold_oceanic = Util.create("gold_oceanic");
 
     public static Item necronomicon = Util.create(new ItemMMBook("necronomicon"), "necronomicon");
+
 }

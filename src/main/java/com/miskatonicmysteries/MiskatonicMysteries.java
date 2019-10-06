@@ -18,6 +18,7 @@ import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.common.world.gen.village.VillageComponentHasturShrine;
 import com.miskatonicmysteries.common.world.gen.village.VillageHasturShrineHandler;
 import com.miskatonicmysteries.proxy.ServerProxy;
+import com.miskatonicmysteries.registry.ModBiomes;
 import com.miskatonicmysteries.registry.ModEntities;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
@@ -83,6 +84,7 @@ public class MiskatonicMysteries {
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
         CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
         ModEntities.init();
+        ModBiomes.registerBiomes();
         initTileEntities();
     }
 

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class InsanityHandler {
     //todo, add config to some of this stuff
-    //also todo, change the way the chance is calculated
+    //also todo, change the way the chance is calculated, alSO WORK ON THIS WTH I'VE BEEN LAZY >:(
     @SubscribeEvent
     public void handleInsanity(InsanityEvent insanityEvent) {
         if (!insanityEvent.getPlayer().world.isRemote) {
@@ -82,6 +82,4 @@ public class InsanityHandler {
             MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), Sanity.Util.getSanityCapability((EntityPlayer) event.getEntityLiving()),event));
         }
     }
-
-
 }

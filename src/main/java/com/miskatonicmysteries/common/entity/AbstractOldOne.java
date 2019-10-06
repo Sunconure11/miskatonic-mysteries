@@ -22,6 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 
@@ -52,8 +53,12 @@ public abstract class AbstractOldOne extends EntityLiving {
     }
 
     public void manipulateEnvironment(){
-        BiomeManipulator.setMultiBiome(world, Biomes.SAVANNA, Iterables.toArray(BlockPos.getAllInBox(getPosition().add(-10, -10, -10), getPosition().add(10, 10, 10)), BlockPos.class));
-        //possibly add custom biome that will be converted by nearby biomes, if possible (certainly is)
+        //if (getDistortionBiome() != null)
+        //    BiomeManipulator.setMultiBiome(world, getDistortionBiome(), Iterables.toArray(BlockPos.getAllInBox(getPosition().add(-10, -10, -10), getPosition().add(10, 10, 10)), BlockPos.class));
+    }
+
+    public Biome getDistortionBiome(){
+        return null;
     }
 
     @Override

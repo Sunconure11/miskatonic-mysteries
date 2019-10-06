@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.common.entity;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.registry.ModBiomes;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -53,6 +55,7 @@ public class EntityShub extends AbstractOldOne {
 
     @Override
     public void onLivingUpdate() {
+
         if (mouthOpen && openingProgress < 1) {
             openingProgress += 0.05F;
         } else if (!mouthOpen && openingProgress > 0) {
@@ -95,6 +98,11 @@ public class EntityShub extends AbstractOldOne {
     @Override
     public Blessing getAssociatedBlessing() {
         return Blessing.SHUB;
+    }
+
+    @Override
+    public Biome getDistortionBiome() {
+        return ModBiomes.SHUB;
     }
 
     @Override

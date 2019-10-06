@@ -9,6 +9,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config(modid = MiskatonicMysteries.MODID)
 public class ModConfig {
 
+    @Config.LangKey("config.category_goos")
+    @Config.Comment("Config settings on Great Old Ones.")
+    public static final GreatOldOnes greatOldOnes = new GreatOldOnes();
+
     @Config.LangKey("config.category_worldgen")
     @Config.Comment("Config settings on world generation.")
     public static final WorldGen worldGen = new WorldGen();
@@ -66,6 +70,14 @@ public class ModConfig {
         @Config.RangeDouble(min = 0, max = 1)
         public float chanceCthulhuShrines = 0.05F;
     }
+
+    public static class GreatOldOnes{
+        @Config.Comment("Determines the radius of the area around the Great Old One in which biomes will be corrupted. Set this to 0 to disable.")
+        @Config.LangKey("config.chunkSpreadInfluence")
+        @Config.RangeDouble(min = 0, max = 32)
+        public float chunkSpreadInfluence = 16;
+    }
+
 
     @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
     private static class SyncConfig {

@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 
 public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
+    private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 20.0/16, 1); //24
 
     public BlockAltar() {
         super(Material.ROCK);
@@ -37,9 +38,10 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
            }
         }else{
             if (altar.inventory.getStackInSlot(0).isEmpty() && TileEntityAltar.BOOK_TEXTURES.containsKey(playerIn.inventory.getCurrentItem().getItem())){
+                System.out.println("ah");
                 playerIn.inventory.setItemStack(altar.inventory.insertItem(0, playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1), false));
             }else
-            if (!worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
+            if (playerIn.getHeldItem(hand).isEmpty() && !worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
                 altar.bookOpen = !altar.bookOpen;
                 altar.markDirty();
                 worldIn.updateComparatorOutputLevel(pos, worldIn.getBlockState(pos).getBlock());
@@ -48,7 +50,7 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
             }
         }
         PacketHandler.updateTE(altar);
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+        return false;
     }
 
     @Override
@@ -63,12 +65,12 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return super.getBoundingBox(state, source, pos).grow(0, 0.5, 0);
+        return AABB;
     }
 
     @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
-        return new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+        return new AxisAlignedBB(0, 0, 0, 0, 0,0);
     }
 
     @Override
@@ -98,10 +100,6 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
         }
     }
 
-    @Override
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
-        return super.canPlaceBlockOnSide(worldIn, pos, side);
-    }
 
     @Override
     public BlockRenderLayer getBlockLayer() {
@@ -120,6 +118,11 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullBlock(IBlockState state) {
         return false;
     }
 

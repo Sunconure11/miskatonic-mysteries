@@ -1076,7 +1076,7 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(lTentacle00c, -0.5918411493512771F, -0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(lTentacle00d, -0.31869712141416456F, 0.08726646259971647F, 0.0F, progression);
         this.setRotateAngle(rTentacle03d, 0.08726646259971647F, 0.0F, 0.0F, progression);
-        this.setRotateAngle(lTentacle01d, 0.12217304763960307F, 0.10471975511965977F, 0.0F, progression);
+      //  this.setRotateAngle(lTentacle01d, 0.12217304763960307F, 0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(rTentacle03a, 0.6806784082777886F, 1.3089969389957472F, 0.0F, progression);
         this.setRotateAngle(rTentacle00e, 0.091106186954104F, -0.31869712141416456F, 0.0F, progression);
         this.setRotateAngle(lTentacle02d, -0.3141592653589793F, 0.08726646259971647F, 0.0F, progression);
@@ -1088,23 +1088,35 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(rTentacle02a, 0.7853981633974483F, 1.7453292519943295F, 0.0F, progression);
         this.setRotateAngle(lTentacle03a, 0.6806784082777886F, -1.3089969389957472F, 0.0F, progression);
         this.setRotateAngle(lTentacle02c, -0.3490658503988659F, -0.10471975511965977F, 0.0F, progression);
-        //    this.setRotateAngle(lfHoof, 0.0F, 0.0F, 0.296705972839036F, progression);
-        this.setRotateAngle(rTentacle01e, -0.8028514559173915F, 0.10471975511965977F, 0.0F, progression);
+        //this.setRotateAngle(rTentacle01e, -0.8028514559173915F, 0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(rTentacle02b, -0.17453292519943295F, 0.13962634015954636F, 0.0F, progression);
         this.setRotateAngle(rTentacle02c, -0.3490658503988659F, 0.10471975511965977F, 0.0F, progression);
         this.setRotateAngle(rTentacle03e, -0.17453292519943295F, 0.0F, 0.0F, progression);
         this.setRotateAngle(branch06e, 0.0F, 0.0F, -0.05235987755982988F, progression);
         this.setRotateAngle(lTentacle00a, 0.9948376736367678F, -1.3613568165555772F, 0.0F, progression);
-        this.setRotateAngle(rTentacle01b, 0.15707963267948966F, 0.22689280275926282F, 0.0F, progression);
+        //this.setRotateAngle(rTentacle01b, 0.15707963267948966F, 0.22689280275926282F, 0.0F, progression);
         this.setRotateAngle(rTentacle00c, -0.8196066167365371F, 0.10471975511965977F, 0.0F, progression);
-        //this.setRotateAngle(rfHoof, 0.0F, 0.0F, -0.296705972839036F, progression);
         this.setRotateAngle(rTentacle01c, 0.0F, 0.03490658503988659F, 0.0F, progression);
         this.setRotateAngle(lTentacle01a, 0.6283185307179586F, -0.6283185307179586F, 0.0F, progression);
         this.setRotateAngle(rTentacle02e, -0.17453292519943295F, 0.0F, 0.0F, progression);
-        this.setRotateAngle(lTentacle01e, -0.8028514559173915F, -0.10471975511965977F, 0.0F, progression);
-        this.setRotateAngle(lTentacle01b, 0.15707963267948966F, -0.22689280275926282F, 0.0F, progression);
+        //this.setRotateAngle(lTentacle01e, -0.8028514559173915F, -0.10471975511965977F, 0.0F, progression);
+        //this.setRotateAngle(lTentacle01b, 0.15707963267948966F, -0.22689280275926282F, 0.0F, progression);
+        this.setRotateAngle(rTentacle01b, 0.136659280431156F, 0.22689280275926282F, 0.0F);
+        this.setRotateAngle(lTentacle01b, 0.136659280431156F, -0.22689280275926282F, 0.0F);
+        this.setRotateAngle(lTentacle01d, -0.31869712141416456F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(rTentacle01d, -0.31869712141416456F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(rTentacle01e, -0.31869712141416456F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(lTentacle01e, -0.31869712141416456F, -0.10471975511965977F, 0.0F);
+
         this.setRotateAngle(rbHoof, 0.0F, 0.0F, -1.9198621771937625F, progression);
-        this.setRotateAngle(rTentacle01d, 0.12217304763960307F, -0.10471975511965977F, 0.0F, progression);
+        //this.setRotateAngle(rTentacle01d, 0.12217304763960307F, -0.10471975511965977F, 0.0F, progression);
+
+        //changed, must add:
+        //lTentacle01b-
+        //rTentacle01b-
+        //lTentacle01d-
+        //lTentacle01e
+        //rTentacle01e-
     }
 
     public void openTheCursedMaw(float progression) {

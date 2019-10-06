@@ -50,6 +50,11 @@ public class BlockCandles extends Block {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	@Override
+	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+		super.randomTick(worldIn, pos, state, random);
+	}
+
 	@SubscribeEvent
 	public void onBlockBroken(BlockEvent.BreakEvent event){
 		if (event.getState().getBlock() instanceof BlockCandles){
