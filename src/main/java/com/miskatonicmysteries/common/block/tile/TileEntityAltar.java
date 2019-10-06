@@ -53,10 +53,10 @@ public class TileEntityAltar extends TileEntity { //use modelBook for the TESR, 
         super.readFromNBT(compound);
     }
 
-   // @Override
-   // public AxisAlignedBB getRenderBoundingBox() {
-   //     return new AxisAlignedBB(getPos(), getPos().add(1, 1.2, 1));
-   // }
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(getPos(), getPos().add(1, 1.2, 1));
+    }
 
 
     @Override
