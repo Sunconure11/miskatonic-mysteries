@@ -120,7 +120,9 @@ public class MiskatonicMysteries {
             try {
                 for (Field f : ModObjects.class.getFields()) {
                     Object obj = f.get(null);
-                    if (obj instanceof Block) event.getRegistry().register((Block) obj);
+                    if (obj instanceof Block) {
+                        event.getRegistry().register((Block) obj);
+                    }
                 }
             } catch (Exception ignored) {
             }
@@ -134,7 +136,7 @@ public class MiskatonicMysteries {
                     if (obj instanceof Item) {
                         Item item = (Item) obj;
                         event.getRegistry().register(item);
-                        proxy.registerTexture(item);
+                        proxy.registerTexture(item, 0, item.getRegistryName().getResourcePath());
                     }
                 }
             } catch (Exception ignored) {

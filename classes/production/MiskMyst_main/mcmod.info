@@ -1,0 +1,16 @@
+[
+{
+  "modid": "miskatonicmysteries",
+  "name": "Miskatonic Mysteries",
+  "description": "cyber I need description",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["cybercat5555, Aelpecyem, MoriyaShiine"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["patchouli"]
+}
+]

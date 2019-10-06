@@ -1,0 +1,36 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+        "model": "miskatonicmysteries:altar",
+		"textures": {
+			"all": "miskatonicmysteries:blocks/eldritch_altar_brick_scorned",
+			"particle": "miskatonicmysteries:blocks/eldritch_altar_brick_scorned"
+		}
+	},
+	"variants": {
+		"normal": [
+			{}
+		],
+		"inventory": [
+			{}
+		],
+		"facing": {
+			"north": {},
+			"south": {
+				"y": 180
+			},
+			"west": {
+				"y": 270
+			},
+			"east": {
+				"y": 90
+			},
+			"up": {
+				"x": 90
+			},
+			"down": {
+				"x": -90
+			}
+		}
+	}
+}

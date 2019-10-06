@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class RenderHastur extends RenderLiving<EntityHastur> {
+public class RenderHastur extends RenderOldOne<EntityHastur> {
     public RenderHastur(RenderManager rendermanagerIn) {
         super(rendermanagerIn, new ModelHastur(), 2.25F);
     }

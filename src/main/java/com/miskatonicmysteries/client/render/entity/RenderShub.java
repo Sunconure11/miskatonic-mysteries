@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class RenderShub extends RenderLiving<EntityShub> {
+public class RenderShub extends RenderOldOne<EntityShub> {
     public RenderShub(RenderManager rendermanagerIn) {
         super(rendermanagerIn, new ModelShub(), 4);
     }

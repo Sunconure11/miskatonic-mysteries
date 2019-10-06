@@ -9,6 +9,7 @@ import com.miskatonicmysteries.registry.ModEntities;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -34,6 +35,7 @@ public class ClientProxy extends ServerProxy {
 
     @Override
     public void registerTexture(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MiskatonicMysteries.MODID + ":" + id, "inventory")); //ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), item instanceof ItemBlock ? "normal" : "inventory"));
+        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MiskatonicMysteries.MODID + ":" + id, "inventory"));
+        //ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(new ResourceLocation(MiskatonicMysteries.MODID, id), "inventory")); //ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), item instanceof ItemBlock ? "normal" : "inventory"));
     }
 }
