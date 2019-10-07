@@ -2,6 +2,7 @@ package com.miskatonicmysteries;
 
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.BlessingStorage;
 import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
@@ -111,6 +112,7 @@ public class MiskatonicMysteries {
 
     public void initTileEntities(){
         GameRegistry.registerTileEntity(TileEntityAltar.class, new ResourceLocation(MODID, "altar"));
+        GameRegistry.registerTileEntity(TileEntityOctagram.class, new ResourceLocation(MODID, "octagram"));
     }
 
 
@@ -181,12 +183,7 @@ public class MiskatonicMysteries {
         @SubscribeEvent
         public static void registerTrades(RegistryEvent.Register<VillagerRegistry.VillagerProfession> event) {
             VillagerRegistry.VillagerProfession profession = ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation("librarian"));
-            profession.getCareer(0).addTrade(1, new EntityVillager.ITradeList() {
-                @Override
-                public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
-                    recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1 + random.nextInt(2)), new ItemStack(ModObjects.tranquilizer, 1 + random.nextInt(3))));
-                }
-            });
+            profession.getCareer(0).addTrade(1, (EntityVillager.ITradeList) (merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1 + random.nextInt(2)), new ItemStack(ModObjects.tranquilizer, 1 + random.nextInt(3)))));
         }
     }
 

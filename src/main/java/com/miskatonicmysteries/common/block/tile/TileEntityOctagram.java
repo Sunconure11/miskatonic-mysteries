@@ -16,7 +16,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -25,25 +24,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public class TileEntityAltar extends TileEntityMod implements ITickable {
-    public static final HashMap<Item, ResourceLocation> BOOK_TEXTURES = new HashMap<Item, ResourceLocation>();
+public class TileEntityOctagram extends TileEntityMod implements ITickable {
 
-    static {
-        BOOK_TEXTURES.put(ModObjects.research_notes_shubniggurath, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_shub.png"));
-        BOOK_TEXTURES.put(ModObjects.research_notes_hastur, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_hastur.png"));
-        BOOK_TEXTURES.put(ModObjects.research_notes_cthulhu, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_cthulhu.png"));
-        BOOK_TEXTURES.put(ModObjects.necronomicon, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_necronomicon.png"));
-
-        BOOK_TEXTURES.put(Items.BOOK, RenderAltar.TEXTURE_BOOK);
-        BOOK_TEXTURES.put(Items.ENCHANTED_BOOK, RenderAltar.TEXTURE_BOOK);
-        BOOK_TEXTURES.put(Items.WRITABLE_BOOK, RenderAltar.TEXTURE_BOOK);
-        BOOK_TEXTURES.put(Items.WRITTEN_BOOK, RenderAltar.TEXTURE_BOOK);
-
-    }
-
-    public boolean bookOpen = false;
-    public float flipSpeed;
-    public ItemStackHandler inventory = new ItemStackHandler(1) {
+    public ItemStackHandler inventory = new ItemStackHandler(8) {
         @Override
         public int getSlotLimit(int slot) {
             return 1;
@@ -56,28 +39,22 @@ public class TileEntityAltar extends TileEntityMod implements ITickable {
         }
     };
 
-    //rendering vars
-    public float bookOpeningProgress;
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("inventory", inventory.serializeNBT());
-        compound.setBoolean("opened", bookOpen);
-        compound.setFloat("flipSpeed", flipSpeed);
         return super.writeToNBT(compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         inventory.deserializeNBT(compound.getCompoundTag("inventory"));
-        bookOpen = compound.getBoolean("opened");
-        flipSpeed = compound.getFloat("flipSpeed");
         super.readFromNBT(compound);
     }
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(getPos(), getPos().add(1, 1.2, 1));
+        return super.getRenderBoundingBox().grow(2, 2, 2);
     }
 
 
@@ -93,13 +70,6 @@ public class TileEntityAltar extends TileEntityMod implements ITickable {
 
     @Override
     public void update() {
-        if (world.isRemote) {
-            if (bookOpen && bookOpeningProgress < 1) {
-                bookOpeningProgress += 0.05;
-                flipSpeed += 0.001;
-            } else if (!bookOpen && bookOpeningProgress > 0) {
-                bookOpeningProgress -= 0.05;
-            }
-        }
+        //stuff
     }
 }

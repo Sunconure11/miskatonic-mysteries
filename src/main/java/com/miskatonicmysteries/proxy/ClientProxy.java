@@ -3,8 +3,10 @@ package com.miskatonicmysteries.proxy;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.render.RenderAltar;
 import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
+import com.miskatonicmysteries.client.render.RenderOctagram;
 import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.registry.ModEntities;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -25,6 +27,8 @@ public class ClientProxy extends ServerProxy {
 
     public void preInit(FMLPreInitializationEvent event){
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAltar.class, new RenderAltar());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOctagram.class, new RenderOctagram());
+
         ModEntities.registerRenderers();
     }
 

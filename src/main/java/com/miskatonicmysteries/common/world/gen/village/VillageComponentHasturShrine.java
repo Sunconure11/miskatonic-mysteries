@@ -24,20 +24,16 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import java.util.List;
 import java.util.Random;
 
-public class VillageComponentHasturShrine extends StructureVillagePieces.Church {
+public class VillageComponentHasturShrine extends StructureVillagePieces.Village {
     public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12;
     public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5){
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
     }
 
-    public void init(){
-
-    }
-
-    public static VillageComponentHasturShrine buildComponent(List pieces, int p1, int p2, int p3, EnumFacing p4){
+    public static VillageComponentHasturShrine createPiece(StructureVillagePieces.Start start, List<StructureComponent> p_175854_1_, Random rand, int p1, int p2, int p3, EnumFacing p4, int p5){//List pieces, int p1, int p2, int p3, EnumFacing p4){
         StructureBoundingBox maxBoundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, MAX_X, MAX_Y, MAX_Z, p4);
-        return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(pieces, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4) : null;
+        return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(p_175854_1_, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4) : null;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.block;
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -38,7 +39,6 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
            }
         }else{
             if (altar.inventory.getStackInSlot(0).isEmpty() && TileEntityAltar.BOOK_TEXTURES.containsKey(playerIn.inventory.getCurrentItem().getItem())){
-                System.out.println("ah");
                 playerIn.inventory.setItemStack(altar.inventory.insertItem(0, playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1), false));
             }else
             if (playerIn.getHeldItem(hand).isEmpty() && !worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
@@ -51,6 +51,12 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
         }
         PacketHandler.updateTE(altar);
         return false;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        InventoryUtil.dropAllItems(worldIn, getTileEntity(worldIn, pos).inventory, pos);
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override
@@ -72,6 +78,7 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
         return new AxisAlignedBB(0, 0, 0, 0, 0,0);
     }
+    
 
     @Override
     public IBlockState getStateFromMeta(int meta) {

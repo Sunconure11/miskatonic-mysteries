@@ -4,10 +4,12 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
+import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
 import com.miskatonicmysteries.common.item.consumable.ItemMilkGoat;
 import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
+import com.miskatonicmysteries.common.item.misc.ItemChalk;
 import com.miskatonicmysteries.common.item.misc.ItemMMBook;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
@@ -15,6 +17,7 @@ import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -53,6 +56,12 @@ public class ModObjects {
     public static BlockAltar altar_stone_enriched = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_stone_enriched");
     public static BlockAltar altar_brick_scorned = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_brick_scorned");
 */
+    public static BlockOctagram octagram_shub = Util.create(null, new BlockOctagram(), SoundType.STONE, 3, 20, "shovel", 0, "octagram_shub");
+    public static BlockOctagram octagram_hastur = Util.create(null, new BlockOctagram(), SoundType.STONE, 3, 20, "shovel", 0, "octagram_hastur");
+
+    public static ItemChalk chalk_shub = Util.create(new ItemChalk(octagram_shub), "chalk_shub");
+    public static ItemChalk chalk_hastur = Util.create(new ItemChalk(octagram_hastur), "chalk_hastur");
+
     public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
     public static Item research_notes_hastur = Util.create("research_notes_hastur");
     public static Item research_notes_shubniggurath = Util.create("research_notes_shubniggurath");

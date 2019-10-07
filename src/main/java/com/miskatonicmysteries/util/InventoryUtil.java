@@ -22,6 +22,12 @@ public class InventoryUtil {
         }
         return -1;
     }
+    public static void dropAllItems(World world, IItemHandler handler, BlockPos pos){
+        for (int i = 0; i < handler.getSlots(); i++){
+            if (!world.isRemote)
+                world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i)));
+        }
+    }
 
     public static void dropItem(World world, IItemHandler handler, BlockPos pos, int slot, int amount){
         EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), handler.extractItem(slot, amount, false));
