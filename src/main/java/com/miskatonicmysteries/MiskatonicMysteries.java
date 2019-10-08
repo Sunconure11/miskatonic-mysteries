@@ -1,6 +1,5 @@
 package com.miskatonicmysteries;
 
-import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
@@ -25,7 +24,6 @@ import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -37,7 +35,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -57,7 +54,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
-import java.util.Random;
 
 @SuppressWarnings("WeakerAccess")
 @Mod(modid = MiskatonicMysteries.MODID, name = MiskatonicMysteries.NAME, version = MiskatonicMysteries.VERSION)

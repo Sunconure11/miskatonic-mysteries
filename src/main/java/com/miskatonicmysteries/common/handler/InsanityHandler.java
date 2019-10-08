@@ -7,7 +7,6 @@ import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanity
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;

@@ -3,9 +3,6 @@ package com.miskatonicmysteries.common.world.gen;
 import com.google.common.collect.HashMultimap;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.world.PacketChangeBiome;
-import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.math.BlockPos;
@@ -14,10 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.relauncher.Side;
-import vazkii.patchouli.common.network.NetworkHandler;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 

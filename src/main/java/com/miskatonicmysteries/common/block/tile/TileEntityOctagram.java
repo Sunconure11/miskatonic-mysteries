@@ -1,28 +1,13 @@
 package com.miskatonicmysteries.common.block.tile;
 
-import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.RenderAltar;
 import com.miskatonicmysteries.common.network.PacketHandler;
-import com.miskatonicmysteries.registry.ModObjects;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public class TileEntityOctagram extends TileEntityMod implements ITickable {
 

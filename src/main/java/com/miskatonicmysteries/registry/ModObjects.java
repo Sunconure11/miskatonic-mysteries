@@ -17,7 +17,6 @@ import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;

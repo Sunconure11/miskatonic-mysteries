@@ -2,7 +2,6 @@ package com.miskatonicmysteries.common.handler;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.registry.ModObjects;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityVindicator;

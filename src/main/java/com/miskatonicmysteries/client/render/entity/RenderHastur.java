@@ -4,7 +4,6 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.model.entity.ModelHastur;
 import com.miskatonicmysteries.common.entity.EntityHastur;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 

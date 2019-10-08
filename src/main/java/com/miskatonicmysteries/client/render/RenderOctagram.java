@@ -1,11 +1,8 @@
 package com.miskatonicmysteries.client.render;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.BlockOctagram;
-import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
-import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

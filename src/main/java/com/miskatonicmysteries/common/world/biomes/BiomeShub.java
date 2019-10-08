@@ -1,10 +1,6 @@
 package com.miskatonicmysteries.common.world.biomes;
 
-import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeForest;
-import net.minecraft.world.biome.BiomeJungle;
-import net.minecraft.world.biome.BiomeMushroomIsland;
 
 public class BiomeShub extends Biome {
     public BiomeShub() {

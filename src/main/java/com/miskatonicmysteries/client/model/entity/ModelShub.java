@@ -1,13 +1,10 @@
 package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.common.entity.EntityShub;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderSlime;
-import net.minecraft.client.renderer.entity.RenderWolf;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

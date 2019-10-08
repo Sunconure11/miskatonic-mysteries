@@ -2,21 +2,11 @@ package com.miskatonicmysteries.client.render;
 
 import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
-import net.minecraft.block.BlockEnchantmentTable;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.tileentity.TileEntityEnchantmentTableRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.command.CommandLocate;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemBook;
-import net.minecraft.item.ItemWritableBook;
-import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import org.lwjgl.opengl.GL11;
 
 public class RenderAltar extends TileEntitySpecialRenderer<TileEntityAltar> {
     public static final ResourceLocation TEXTURE_BOOK = new ResourceLocation("textures/entity/enchanting_table_book.png");

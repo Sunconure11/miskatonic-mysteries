@@ -1,7 +1,6 @@
 package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.common.entity.EntityHastur;
-import com.miskatonicmysteries.common.entity.EntityShub;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

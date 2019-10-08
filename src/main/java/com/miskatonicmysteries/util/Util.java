@@ -1,7 +1,6 @@
 package com.miskatonicmysteries.util;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Collections;
 import java.util.List;

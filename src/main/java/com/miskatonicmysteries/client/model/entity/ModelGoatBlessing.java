@@ -167,7 +167,6 @@ public class ModelGoatBlessing extends ModelPlayer {
 
             GlStateManager.popMatrix();
 
-            //player stuff
             GlStateManager.pushMatrix();
             if (this.isChild) {
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
