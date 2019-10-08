@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Collections;
 import java.util.List;
@@ -74,5 +75,15 @@ public class Util {
 		List<?> list = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
 		Collections.shuffle(list);
 		return list;
+	}
+
+	public static boolean hasStringInOre(String string,ItemStack stack){
+		if(stack.isEmpty()) return false;
+
+		for (int i : OreDictionary.getOreIDs(stack)){
+			if (OreDictionary.getOreName(i).contains(string)) return true;
+		}
+		return false;
+
 	}
 }

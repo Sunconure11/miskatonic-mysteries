@@ -1,9 +1,9 @@
 {
   "name": "item.necronomicon.book.name",
-  "landing_text": "info.necronomicon.book.landing",
   "advancement_namespaces": [
     "miskatonicmysteries"
   ],
+  "landing_text": "info.necronomicon.book.landing",
   "creative_tab": "miskatonicmysteries",
   "advancements_tab": "miskatonicmysteries",
   "book_texture": "patchouli:textures/gui/book_blue.png",
@@ -11,7 +11,7 @@
   "progress_bar_background": "990000",
   "progress_bar_color": "060000",
   "model": "miskatonicmysteries:necronomicon",
-  "subtitle": "info.miskatonicmysteries.book.subtitle",
+  "subtitle": "info.miskatonicmysteries.necronomicon.subtitle",
   "macros": {
     "$(marked)": "$(#840A00)",
     "$(item)": "$(#230A47)"

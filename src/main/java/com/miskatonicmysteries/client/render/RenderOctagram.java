@@ -3,6 +3,7 @@ package com.miskatonicmysteries.client.render;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.util.RenderUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -18,16 +19,16 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
     public void render(TileEntityOctagram te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5F, y + 0.01, z + 0.5F);
-        EnumFacing facing = getWorld().getBlockState(te.getPos()).getValue(BlockOctagram.FACING);
-        GlStateManager.rotate(facing == EnumFacing.EAST ? 90 : facing == EnumFacing.SOUTH ? 180 : facing == EnumFacing.WEST ? 270 : 0, 0, 1, 0);
-        bindTexture(getTexture(te));
-
         GlStateManager.disableLighting();
         GlStateManager.enableBlend();
+        bindTexture(getTexture(te));
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
+        GlStateManager.pushMatrix();
+        EnumFacing facing = getWorld().getBlockState(te.getPos()).getValue(BlockOctagram.FACING);
+        GlStateManager.rotate(facing == EnumFacing.EAST ? 90 : facing == EnumFacing.SOUTH ? 180 : facing == EnumFacing.WEST ? 270 : 0, 0, 1, 0);
         drawOctagram();
-
+        GlStateManager.popMatrix();
+        renderItems(te);
         GlStateManager.disableBlend();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
@@ -46,6 +47,24 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
         buffer.pos(end, 0, end).tex(0, 0).endVertex();
 
         tessellator.draw();
+    }
+
+    public void renderItems(TileEntityOctagram octagram){
+        int pos;
+        for (int x = -1; x <= 1; x++){
+            for (int z = -1; z <= 1; z++){
+                if (!(x == 0 && z == 0)) {
+                    pos = BlockOctagram.getSlot(x, z);
+                    GlStateManager.pushMatrix();
+                    boolean corners = Math.abs(x) == 1 && Math.abs(z) == 1;
+                    GlStateManager.translate((float) x * (corners ? 0.8F: 1), 0, (float) z * (corners ? 0.8: 1));
+                    GlStateManager.rotate(90, 1, 0, 0);
+                    GlStateManager.rotate(45 * pos + 90, 0,  0, 1); //remove that part to have them around the center
+                    RenderUtil.renderItem(octagram.inventory.getStackInSlot(pos), getWorld());
+                    GlStateManager.popMatrix();
+                }
+            }
+        }
     }
 
 

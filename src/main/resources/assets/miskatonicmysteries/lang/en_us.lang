@@ -25,6 +25,10 @@ tile.altar_purpur.name=Funky Altar
 
 tile.candles.name=Candle
 
+tile.octagram_shub.name=Profane Chalk
+tile.octagram_hastur.name=Profane Chalk
+item.chalk.name=Profane Chalk
+
 #ITEM
 item.research_notes_cthulhu.name=Research Notes - Cthluhu
 item.research_notes_hastur.name=Research Notes - Hastur
@@ -52,6 +56,7 @@ item.gold_oceanic.name=Oceanic Gold
 item.necronomicon.name=Necronomicon
 
 item.tallow.name=Tallow
+
 
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath
@@ -88,3 +93,7 @@ commands.miskmyst.sanity.fail_badnum=%s is not a valid number
 
 commands.miskmyst.blessing.success=Successfully set %s's blessing to %s
 commands.miskmyst.sanity.fail_badblessing=%s is not a valid blessing
+
+#BOOK
+info.necronomicon.book.landing=FNORD (this is a placeholder landing text)
+info.miskatonicmysteries.necronomicon.subtitle=FNORD SUBTITLE

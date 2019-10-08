@@ -40,7 +40,7 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
            }
         }else{
             if (altar.inventory.getStackInSlot(0).isEmpty() && TileEntityAltar.BOOK_TEXTURES.containsKey(playerIn.inventory.getCurrentItem().getItem())){
-                playerIn.inventory.setItemStack(altar.inventory.insertItem(0, playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1), false));
+                InventoryUtil.insertCurrentItemStack(playerIn, altar.inventory, 0);
             }else
             if (playerIn.getHeldItem(hand).isEmpty() && !worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
                 altar.bookOpen = !altar.bookOpen;

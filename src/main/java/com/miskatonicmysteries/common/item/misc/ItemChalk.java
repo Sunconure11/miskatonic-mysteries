@@ -21,6 +21,12 @@ public class ItemChalk extends ItemBlock {
         super(block);
     }
 
+
+    @Override
+    public String getUnlocalizedName() {
+        return "item.chalk.name";
+    }
+
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {

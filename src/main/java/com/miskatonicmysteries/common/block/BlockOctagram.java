@@ -2,6 +2,8 @@ package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.EnumPushReaction;
@@ -23,6 +25,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -31,10 +34,27 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyEnum<EnumPartType> PART = PropertyEnum.<EnumPartType>create("part", EnumPartType.class); //maybe have many many parts instead, as in 9
     public static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.01, 1);
+
+    public static final int[][] PARTS = new int[3][3];
+
     public BlockOctagram() {
         super(Material.CIRCUITS);
         this.setDefaultState(this.blockState.getBaseState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, EnumFacing.NORTH));
         setLightOpacity(0);
+
+        PARTS[2][1] = 1;
+        PARTS[2][2] = 2;
+        PARTS[1][2] = 3;
+
+        PARTS[0][2] = 4;
+        PARTS[0][1] = 5;
+        PARTS[0][0] = 6;
+
+        PARTS[1][0] = 7;
+        PARTS[2][0] = 8;
+
+
+        PARTS[1][1] = 0;
     }
 
 
@@ -73,19 +93,39 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
         }
         else {
             if (state.getValue(PART) != EnumPartType.CENTER) {
-                pos = getCenterPos(worldIn, pos);
-                if (pos != null) {
-                    state = worldIn.getBlockState(pos);
+                BlockPos centerPos = getCenterPos(worldIn, pos);
+                if (centerPos != null) {
+                    state = worldIn.getBlockState(centerPos);
                     if (state.getBlock() != this) {
                         return true;
                     }
-                    this.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+                    int distanceX = pos.getX() - centerPos.getX();
+                    int distanceZ = pos.getZ() - centerPos.getZ();
+                    this.onBlockActivated(worldIn, centerPos, state, playerIn, hand, facing, hitX + distanceX, hitY, hitZ + distanceZ);
                 }
             }else{
-                //do stuff
+                TileEntityOctagram octagram = getTileEntity(worldIn, pos);
+                int floorHitX = (int) Math.floor(hitX);
+                int floorHitZ = (int) Math.floor(hitZ);
+                if (!(floorHitX == 0 && floorHitZ == 0)) {
+                    int slot = getSlot(floorHitX, floorHitZ);
+                    System.out.println(slot);
+                    if (octagram.inventory.getStackInSlot(slot).isEmpty()) {
+                        InventoryUtil.insertCurrentItemStack(playerIn, octagram.inventory, slot);
+                    }else if (playerIn.isSneaking()){
+                        ItemHandlerHelper.giveItemToPlayer(playerIn, octagram.inventory.extractItem(slot, 1, false));
+                    }
+                }
+
+                PacketHandler.updateTE(octagram);
             }
         }
         return false;
+    }
+
+    public static int getSlot(int floorHitX, int floorHitZ){
+
+        return PARTS[1 - floorHitX] [1 - floorHitZ] -  1;
     }
 
     public boolean isFullCube(IBlockState state)
@@ -134,6 +174,9 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if (worldIn.getTileEntity(pos) instanceof TileEntityOctagram){
+            InventoryUtil.dropAllItems(worldIn, getTileEntity(worldIn, pos).inventory, pos);
+        }
         super.breakBlock(worldIn, pos, state);
         if (state.getValue(PART) != EnumPartType.CENTER) {
             pos = getCenterPos(worldIn, pos);
@@ -192,13 +235,10 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
         return new BlockStateContainer(this, FACING, PART);
     }
 
-    //todo, fix center finding method, block removal method AND ALL THAT JAZZ
-    //-> the  center not being found is because it gets removed
     public BlockPos getCenterPos(World world, BlockPos pos){
         for (int x = -1; x <= 1; x++){
             for (int z = -1; z <= 1; z++){
                 if (world.getBlockState(pos.add(x, 0, z)).getBlock().equals(this) && world.getBlockState(pos.add(x, 0, z)).getValue(PART).equals(EnumPartType.CENTER)){
-                    System.out.println("found center");
                     return pos.add(x, 0, z);
                 }
             }

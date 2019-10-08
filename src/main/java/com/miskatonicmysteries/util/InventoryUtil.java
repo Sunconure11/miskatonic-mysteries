@@ -1,11 +1,23 @@
 package com.miskatonicmysteries.util;
 
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class InventoryUtil {
+    public static void insertCurrentItemStack(EntityPlayer player, ItemStackHandler inventory, int slot, int count){
+        ItemStack stack = player.inventory.decrStackSize(player.inventory.currentItem, count);
+        player.inventory.addItemStackToInventory(inventory.insertItem(slot, stack, false));
+    }
+
+    public static void insertCurrentItemStack(EntityPlayer player, ItemStackHandler inventory, int slot){
+        insertCurrentItemStack(player, inventory, slot, 1);
+    }
+
     public static int getFreeSlot(IItemHandler handler){
         for (int i = 0; i < handler.getSlots(); i++){
             if (handler.getStackInSlot(i).isEmpty())
