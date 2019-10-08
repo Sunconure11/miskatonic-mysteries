@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.block.*;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
@@ -12,25 +13,35 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.ParticleDigging;
+import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyEnum<EnumPartType> PART = PropertyEnum.<EnumPartType>create("part", EnumPartType.class); //maybe have many many parts instead, as in 9
     public static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.01, 1);
-
     public BlockOctagram() {
         super(Material.CIRCUITS);
         this.setDefaultState(this.blockState.getBaseState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, EnumFacing.NORTH));
@@ -57,30 +68,32 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
     }
 
     @Override
-    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
-        System.out.println("neighbor changed");
-        if (world instanceof World && !canPlace(world, pos)){
-            System.out.println("block changed");
-            ((World) world).setBlockToAir(pos);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (!canPlace(worldIn, pos)){
+            worldIn.setBlockToAir(pos);
         }
-        super.onNeighborChange(world, pos, neighbor);
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 
     /**
      * Called when the block is right clicked by a player.
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote) { //redirect all pos to the center if it's outer
+        if (worldIn.isRemote) {
             return true;
         }
         else {
             if (state.getValue(PART) != EnumPartType.CENTER) {
-                pos = getCenterPos(worldIn, pos);//pos.offset(state.getValue(FACING));
-                state = worldIn.getBlockState(pos);
-
-                if (state.getBlock() != this) {
-                    return true;
+                pos = getCenterPos(worldIn, pos);
+                if (pos != null) {
+                    state = worldIn.getBlockState(pos);
+                    if (state.getBlock() != this) {
+                        return true;
+                    }
+                    this.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
                 }
+            }else{
+                //do stuff
             }
         }
         return false;
@@ -132,19 +145,24 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        super.breakBlock(worldIn, pos, state);
         if (state.getValue(PART) != EnumPartType.CENTER) {
             pos = getCenterPos(worldIn, pos);
         }
-        System.out.println(pos);
+        if (pos != null) {
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
-                    if (worldIn.getBlockState(pos.add(x, 0, z)).getBlock().equals(this)) {
-                        worldIn.setBlockToAir(pos.add(x, 0, z));
+                    if (!(x == 0 && z == 0)) {
+                        if (worldIn.getBlockState(pos.add(x, 0, z)).getBlock().equals(this)) {
+                            worldIn.setBlockToAir(pos.add(x, 0, z));
+                        }
                     }
                 }
             }
-        super.breakBlock(worldIn, pos, state);
+            worldIn.setBlockToAir(pos);
+        }
     }
+
 
     /**
      * Convert the given metadata into a BlockState for this Block
@@ -186,6 +204,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
     }
 
     //todo, fix center finding method, block removal method AND ALL THAT JAZZ
+    //-> the  center not being found is because it gets removed
     public BlockPos getCenterPos(World world, BlockPos pos){
         for (int x = -1; x <= 1; x++){
             for (int z = -1; z <= 1; z++){
@@ -196,7 +215,12 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
             }
         }
         world.setBlockState(pos, Blocks.AIR.getDefaultState());
-        return pos;
+        return null;
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Items.AIR;
     }
 
     @Override
@@ -218,8 +242,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
         private final int index;
         private final EnumPartType[] VALUES = new EnumPartType[9];
 
-        private EnumPartType(String name, int index)
-        {
+        private EnumPartType(String name, int index){
             this.name = name;
             this.index = index;
             VALUES[index] = this;

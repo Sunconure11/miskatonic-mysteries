@@ -1,19 +1,22 @@
 {
 	"forge_marker": 1,
 	"defaults": {
+        "model": "cube_all",
 		"textures": {
-			"all": "miskatonicmysteries:blocks/octagram_shub",
-			"particle": "miskatonicmysteries:blocks/octagram_shub"
+          "all": "miskatonicmysteries:blocks/octagram_shub",
+          "particle": "miskatonicmysteries:blocks/octagram_shub"
 		}
 	},
 	"variants": {
-		"part=outer": {"model": "cube_all"},
-		"part=center": {"model": "cube_all"},
-		"facing=north": {"model": "cube_all"},
-		"facing=south": {"model": "cube_all"},
-		"facing=west": {"model": "cube_all"},
-		"facing=east": {"model": "cube_all"},
-		"normal": {"model": "cube_all"},
-		"inventory": {}
+		"normal": [{}],
+		"inventory": [{}],
+		"facing=north,part=outer": [{}],
+		"facing=east,part=outer": [{}],
+		"facing=south,part=outer": [{}],
+		"facing=west,part=outer": [{}],
+		"facing=north,part=center": [{}],
+		"facing=east,part=center": [{}],
+		"facing=south,part=center": [{}],
+		"facing=west,part=center": [{}]
 	}
 }

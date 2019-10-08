@@ -38,8 +38,8 @@ public class ItemChalk extends ItemBlock {
         if (!worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) {
             pos = pos.up();
         }
-        boolean flag = block instanceof BlockOctagram && ((BlockOctagram) block).canPlace(worldIn, pos);
-        if (flag && canPlaceBlockOnSide(worldIn, pos, facing, player, player.getHeldItem(hand))) {
+
+        if (canPlaceBlockOnSide(worldIn, pos, facing, player, player.getHeldItem(hand))) {
             IBlockState state = block.getDefaultState().withProperty(BlockOctagram.FACING, EnumFacing.getHorizontal(MathHelper.floor((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3));
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
@@ -67,10 +67,12 @@ public class ItemChalk extends ItemBlock {
         if (side != EnumFacing.UP) {
             return false;
         }
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                if (!(block instanceof BlockOctagram && ((BlockOctagram) block).canPlace(worldIn, pos.add(x, 0, z))) || !super.canPlaceBlockOnSide(worldIn, pos.add(x, 0, z), side, player, stack)) {
-                    return false;
+        if (block instanceof BlockOctagram) {
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    if (!((BlockOctagram) block).canPlace(worldIn, pos.add(x, 0, z)) || !super.canPlaceBlockOnSide(worldIn, pos.add(x, 0, z), side, player, stack)) {
+                        return false;
+                    }
                 }
             }
         }

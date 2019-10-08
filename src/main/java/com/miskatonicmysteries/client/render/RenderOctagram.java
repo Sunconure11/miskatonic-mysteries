@@ -51,6 +51,7 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
         tessellator.draw();
     }
 
+
     public ResourceLocation getTexture(TileEntityOctagram te){
         return new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/" + te.getBlockType().getRegistryName().getResourcePath() + ".png");
     }
