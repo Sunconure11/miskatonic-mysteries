@@ -1,31 +1,34 @@
 package com.miskatonicmysteries.client.model.entity;
 
+import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.ModelVillager;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 
-public class ModelCultist extends ModelBiped {
-    public ModelRenderer head;//
-    public ModelRenderer rightArm;//
-    public ModelRenderer rightLeg;//
-    public ModelRenderer leftLeg;//
-    public ModelRenderer leftArm;//
-    public ModelRenderer body;//
-    public ModelRenderer robe;//
-    public ModelRenderer rightArmFolded;//
-    public ModelRenderer middleArmFolded;//
-    public ModelRenderer nose;//
-    public ModelRenderer hood;//
-    public ModelRenderer hoodFringeL01;//
-    public ModelRenderer hoodFringeR01;//
-    public ModelRenderer hoodFringeL02;//
-    public ModelRenderer hoodFringeR03;//
-    public ModelRenderer hoodPipe01;//
-    public ModelRenderer hoodLSide02;//
-    public ModelRenderer hoodRSide02;//
-    public ModelRenderer hoodPipe02;//
-    public ModelRenderer leftArmFolded;//
+public class ModelCultist extends ModelBase {
+    public ModelRenderer head;
+    public ModelRenderer rightArm;
+    public ModelRenderer rightLeg;
+    public ModelRenderer leftLeg;
+    public ModelRenderer leftArm;
+    public ModelRenderer body;
+    public ModelRenderer robe;
+    public ModelRenderer rightArmFolded;
+    public ModelRenderer middleArmFolded;
+    public ModelRenderer nose;
+    public ModelRenderer hood;
+    public ModelRenderer hoodFringeL01;
+    public ModelRenderer hoodFringeR01;
+    public ModelRenderer hoodFringeL02;
+    public ModelRenderer hoodFringeR03;
+    public ModelRenderer hoodPipe01;
+    public ModelRenderer hoodLSide02;
+    public ModelRenderer hoodRSide02;
+    public ModelRenderer hoodPipe02;
+    public ModelRenderer leftArmFolded;
 
     public ModelCultist() {
         this.textureWidth = 128;
@@ -123,11 +126,15 @@ public class ModelCultist extends ModelBiped {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.leftLeg.render(f5);
         this.body.render(f5);
-        this.middleArmFolded.render(f5);
-        this.rightArmFolded.render(f5);
+
+        if (entity instanceof AbstractCultist && ((AbstractCultist) entity).armsFolded()) {
+            this.middleArmFolded.render(f5);
+            this.rightArmFolded.render(f5);
+        }else{
+            this.rightArm.render(f5);
+            this.leftArm.render(f5);
+        }
         this.head.render(f5);
-        this.rightArm.render(f5);
-        this.leftArm.render(f5);
         this.robe.render(f5);
         this.rightLeg.render(f5);
     }

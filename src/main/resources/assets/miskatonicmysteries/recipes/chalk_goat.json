@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "type": "minecraft:coal",
+      "data": 1
+    },
+    {
+      "type": "minecraft:coal",
+      "data": 1
+    },
+    {
+      "type": "minecraft:sandstone",
+      "data": 32767
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "nuggetGold"
+    }
+  ],
+  "result": {
+    "item": "miskatonicmysteries:chalk_yellowking",
+    "count": 1
+  }
+}

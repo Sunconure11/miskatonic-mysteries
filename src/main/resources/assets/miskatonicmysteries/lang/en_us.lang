@@ -61,6 +61,8 @@ item.tallow.name=Tallow
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath
 entity.hastur.name=Hastur
+entity.cultist_hastur.name=Hastur Cultist
+entity.cultist_shub.name=Cultist of the Goat
 
 #POTIONS
 miskatonicmysteries.tranquilized=Tranquilized

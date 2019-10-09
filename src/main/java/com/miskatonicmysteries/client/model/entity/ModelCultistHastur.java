@@ -11,8 +11,8 @@ import net.minecraft.entity.Entity;
 public class ModelCultistHastur extends ModelCultist {
 
     public ModelCultistHastur() {
-        super();
-        /*this.textureWidth = 128;
+        //super();
+        this.textureWidth = 128;
         this.textureHeight = 64;
         this.leftArm = new ModelRenderer(this, 40, 46);
         this.leftArm.mirror = true;
@@ -100,7 +100,7 @@ public class ModelCultistHastur extends ModelCultist {
         this.hood.addChild(this.hoodFringeL02);
         this.hood.addChild(this.hoodFringeR01);
         this.hood.addChild(this.hoodPipe01);
-        this.hood.addChild(this.hoodFringeL01);*/
+        this.hood.addChild(this.hoodFringeL01);
     }
 
    /* @Override

@@ -1,27 +1,21 @@
 package com.miskatonicmysteries.client.model.entity;
 
+import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
+import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.model.ModelVillager;
+import net.minecraft.client.renderer.entity.RenderVillager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityVillager;
 
 /**
  * ModelCultistShub - cybercat5555
  * Created using Tabula 7.0.1
  */
-public class ModelCultistShub extends ModelBase {
-    public ModelRenderer head;
-    public ModelRenderer rightArm;
-    public ModelRenderer rightLeg;
-    public ModelRenderer leftLeg;
-    public ModelRenderer leftArm;
-    public ModelRenderer body;
-    public ModelRenderer robe;
-    public ModelRenderer rightArmFolded;
-    public ModelRenderer middleArmFolded;
-    public ModelRenderer nose;
+public class ModelCultistShub extends ModelCultist {
     public ModelRenderer leftMaskPlate;
     public ModelRenderer rightMaskPlate;
-    public ModelRenderer hood;
     public ModelRenderer leftEar;
     public ModelRenderer leftHorn00;
     public ModelRenderer strapL;
@@ -37,14 +31,6 @@ public class ModelCultistShub extends ModelBase {
     public ModelRenderer rightHorn01b;
     public ModelRenderer rightHorn02;
     public ModelRenderer rightHorn03;
-    public ModelRenderer hoodFringeL01;
-    public ModelRenderer hoodFringeR01;
-    public ModelRenderer hoodFringeL02;
-    public ModelRenderer hoodFringeR03;
-    public ModelRenderer hoodPipe01;
-    public ModelRenderer hoodLSide02;
-    public ModelRenderer hoodRSide02;
-    public ModelRenderer hoodPipe02;
     public ModelRenderer rGoatLeg01;
     public ModelRenderer rGoatLeg02;
     public ModelRenderer rGoatLeg03;
@@ -53,6 +39,7 @@ public class ModelCultistShub extends ModelBase {
     public ModelRenderer rHoofClaw02a;
     public ModelRenderer rHoofClaw01b;
     public ModelRenderer rHoofClaw02b;
+
     public ModelRenderer lGoatLeg01;
     public ModelRenderer lGoatLeg02;
     public ModelRenderer lGoatLeg03;
@@ -61,7 +48,6 @@ public class ModelCultistShub extends ModelBase {
     public ModelRenderer lHoofClaw02a;
     public ModelRenderer lHoofClaw01b;
     public ModelRenderer lHoofClaw02b;
-    public ModelRenderer leftArmFolded;
 
     public ModelCultistShub() {
         this.textureWidth = 128;
@@ -88,6 +74,7 @@ public class ModelCultistShub extends ModelBase {
         this.lGoatLeg01.setRotationPoint(0.1F, 0.0F, 0.0F);
         this.lGoatLeg01.addBox(-2.0F, -1.5F, -2.4F, 4, 7, 4, 0.0F);
         this.setRotateAngle(lGoatLeg01, -0.5235987755982988F, -0.03490658503988659F, -0.03490658503988659F);
+        lGoatLeg01.isHidden = true;
         this.leftHorn01b = new ModelRenderer(this, 78, 9);
         this.leftHorn01b.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.leftHorn01b.addBox(-0.5F, -3.0F, -0.5F, 1, 3, 1, 0.0F);
@@ -105,6 +92,7 @@ public class ModelCultistShub extends ModelBase {
         this.rGoatLeg01.setRotationPoint(-0.1F, 0.0F, 0.0F);
         this.rGoatLeg01.addBox(-2.0F, -1.5F, -2.4F, 4, 7, 4, 0.0F);
         this.setRotateAngle(rGoatLeg01, -0.5235987755982988F, 0.03490658503988659F, 0.03490658503988659F);
+        this.rGoatLeg01.isHidden = true;
         this.nose = new ModelRenderer(this, 24, 0);
         this.nose.setRotationPoint(0.0F, -2.0F, 0.0F);
         this.nose.addBox(-1.0F, -1.0F, -6.0F, 2, 4, 2, 0.0F);
@@ -331,16 +319,59 @@ public class ModelCultistShub extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-        this.leftLeg.render(f5);
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        if (entity instanceof EntityShubCultist) {
+            if (((EntityShubCultist) entity).isGoat()){
+                lGoatLeg01.isHidden = false;
+                rGoatLeg01.isHidden = false;
+            }
+        }
         this.body.render(f5);
-        this.middleArmFolded.render(f5);
-        this.rightArmFolded.render(f5);
-        this.head.render(f5);
-        this.rightArm.render(f5);
-        this.leftArm.render(f5);
-        this.robe.render(f5);
+        if (entity instanceof AbstractCultist && ((AbstractCultist) entity).armsFolded()) {
+            this.middleArmFolded.render(f5);
+            this.rightArmFolded.render(f5);
+        }else{
+            this.rightArm.render(f5);
+            this.leftArm.render(f5);
+        }
+        this.leftLeg.render(f5);
         this.rightLeg.render(f5);
+
+        this.head.render(f5);
+        this.robe.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        this.setRotateAngle(lHoofClaw02a, 0.3490658503988659F, 0.06981317007977318F, 0.0F);
+        this.setRotateAngle(rGoatLeg03, -0.6283185307179586F, 0.0F, 0.0F);
+        this.setRotateAngle(lHoofClaw01b, -0.22689280275926282F, 0.22689280275926282F, 0.7853981633974483F);
+        this.setRotateAngle(leftEar, 0.3141592653589793F, 0.0F, -0.20943951023931953F);
+        this.setRotateAngle(lGoatLeg02, 1.1693705988362009F, 0.0F, 0.03490658503988659F);
+        this.setRotateAngle(rHoofClaw01b, -0.22689280275926282F, -0.22689280275926282F, -0.7853981633974483F);
+        this.setRotateAngle(leftHorn01a, 0.0F, 0.0F, 0.20943951023931953F);
+        this.setRotateAngle(strapR, 0.12217304763960307F, -0.13962634015954636F, 0.0F);
+        this.setRotateAngle(strapL, 0.12217304763960307F, 0.13962634015954636F, 0.0F);
+        this.setRotateAngle(rHoofClaw02b, -0.22689280275926282F, -0.22689280275926282F, -0.7853981633974483F);
+        this.setRotateAngle(rHoofClaw01a, 0.3490658503988659F, 0.10471975511965977F, 0.0F);
+        this.setRotateAngle(lGoatLeg03, -0.6283185307179586F, 0.0F, 0.0F);
+        this.setRotateAngle(rightHorn01a, 0.0F, 0.0F, -0.20943951023931953F);
+        this.setRotateAngle(rGoatLeg02, 1.1693705988362009F, 0.0F, -0.03490658503988659F);
+        this.setRotateAngle(rGoatLeg01, -0.5235987755982988F, 0.03490658503988659F, 0.03490658503988659F);
+        this.setRotateAngle(rightHorn00, 0.0F, 0.0F, -0.3839724354387525F);
+        this.setRotateAngle(leftHorn03, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(lGoatLeg01, -0.5235987755982988F, -0.03490658503988659F, -0.03490658503988659F);
+        this.setRotateAngle(rightEar, 0.3141592653589793F, 0.0F, 0.20943951023931953F);
+        this.setRotateAngle(leftMaskPlate, -0.12217304763960307F, -0.13962634015954636F, 0.0F);
+        this.setRotateAngle(rHoofClaw02a, 0.3490658503988659F, -0.06981317007977318F, 0.0F);
+        this.setRotateAngle(lHoofClaw01a, 0.3490658503988659F, -0.10471975511965977F, 0.0F);
+        this.setRotateAngle(rightHorn03, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(rightMaskPlate, -0.12217304763960307F, 0.13962634015954636F, 0.0F);
+        this.setRotateAngle(rightHorn02, 0.0F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(leftHorn02, 0.0F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(lHoofClaw02b, -0.22689280275926282F, 0.22689280275926282F, 0.7853981633974483F);
+        this.setRotateAngle(leftHorn00, 0.0F, 0.0F, 0.3839724354387525F);
+        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
     }
 
     /**

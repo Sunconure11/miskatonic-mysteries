@@ -58,8 +58,8 @@ public class ModObjects {
     public static BlockOctagram octagram_shub = Util.create(null, new BlockOctagram(), SoundType.STONE, 3, 20, "shovel", 0, "octagram_shub");
     public static BlockOctagram octagram_hastur = Util.create(null, new BlockOctagram(), SoundType.STONE, 3, 20, "shovel", 0, "octagram_hastur");
 
-    public static ItemChalk chalk_shub = Util.create(new ItemChalk(octagram_shub), "chalk_shub");
-    public static ItemChalk chalk_hastur = Util.create(new ItemChalk(octagram_hastur), "chalk_hastur");
+    public static ItemChalk chalk_goat = Util.create(new ItemChalk(octagram_shub), "chalk_goat");
+    public static ItemChalk chalk_yellowking = Util.create(new ItemChalk(octagram_hastur), "chalk_yellowking");
 
     public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
     public static Item research_notes_hastur = Util.create("research_notes_hastur");
