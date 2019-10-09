@@ -2,7 +2,7 @@ package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.model.entity.ModelShub;
-import com.miskatonicmysteries.common.entity.EntityShub;
+import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.RenderManager;

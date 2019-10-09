@@ -2,7 +2,7 @@ package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.model.entity.ModelHastur;
-import com.miskatonicmysteries.common.entity.EntityHastur;
+import com.miskatonicmysteries.common.entity.goo.EntityHastur;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

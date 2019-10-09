@@ -12,7 +12,6 @@ import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.common.handler.LootHandler;
-import com.miskatonicmysteries.common.misc.ColorCandlesRecipe;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.common.world.gen.village.VillageComponentHasturShrine;
@@ -173,7 +172,7 @@ public class MiskatonicMysteries {
 
         @SubscribeEvent
         public static void registerCustomRecipes(RegistryEvent.Register<IRecipe> event) {
-            event.getRegistry().register(new ColorCandlesRecipe().setRegistryName(MODID, "color_candles"));
+            //this is empty for now lul
         }
 
         @SubscribeEvent

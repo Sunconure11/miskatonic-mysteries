@@ -1,6 +1,6 @@
 package com.miskatonicmysteries.client.render.entity;
 
-import com.miskatonicmysteries.common.entity.AbstractOldOne;
+import com.miskatonicmysteries.common.entity.goo.AbstractOldOne;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.culling.ICamera;

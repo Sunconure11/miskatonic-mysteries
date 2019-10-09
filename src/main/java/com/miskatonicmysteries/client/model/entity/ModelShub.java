@@ -1,6 +1,6 @@
 package com.miskatonicmysteries.client.model.entity;
 
-import com.miskatonicmysteries.common.entity.EntityShub;
+import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;

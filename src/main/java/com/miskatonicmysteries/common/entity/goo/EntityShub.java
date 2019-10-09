@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.common.entity;
+package com.miskatonicmysteries.common.entity.goo;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.registry.ModBiomes;
@@ -7,6 +7,7 @@ import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -17,6 +18,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class EntityShub extends AbstractOldOne {
     public boolean mouthOpen = false;

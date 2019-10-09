@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.common.entity;
+package com.miskatonicmysteries.common.entity.goo;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import net.minecraft.world.World;
