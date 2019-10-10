@@ -21,7 +21,6 @@ public class ItemMMBook extends Item{
     }
 
     public Book getBook(){
-        System.out.println(BookRegistry.INSTANCE.books.keySet());
         return BookRegistry.INSTANCE.books.get(bookName);
     }
 
