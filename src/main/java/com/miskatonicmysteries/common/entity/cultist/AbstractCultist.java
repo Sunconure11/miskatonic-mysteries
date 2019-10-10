@@ -11,6 +11,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,20 +20,25 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTableManager;
+import scala.Int;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant {
     private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.<Boolean>createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> WANDERING = EntityDataManager.<Boolean>createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
-    protected EntityCultistAISit cultistAISit;
+    private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.<Integer>createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
+    protected EntityCultistAIWander cultistAIWander;
     public AbstractCultist(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
@@ -43,15 +49,27 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     public abstract Blessing getAssociatedBlessing();
 
     @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
+    }
+
+    @Override
     protected void initEntityAI() {
-        this.cultistAISit = new EntityCultistAISit(this); //replace this with "cultist sit", which is bound to a block
+        if (aiSit == null)
+            this.aiSit = new EntityCultistAISit(this); //replace this with "cultist sit", which is bound to a block
+
+        if (cultistAIWander == null)
+            this.cultistAIWander = new EntityCultistAIWander(this);
         this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, this.cultistAISit);// extend AIWander to also consider a second field: wander
+        this.tasks.addTask(2, this.aiSit);// extend AIWander to also consider a second field: wander
         //this.tasks.addTask(3, new EntityAIAvoidEntity<EntityIronGolem>());
-        this.tasks.addTask(5, new EntityAIAttackMelee(this, 1.0D, true));
-        this.tasks.addTask(6, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+        this.tasks.addTask(5, new EntityAIAttackMelee(this, 1, true));
+        this.tasks.addTask(6, new EntityAIFollowOwner(this, 1, 4.0F, 8.0F));
         this.tasks.addTask(7, new EntityAIMate(this, 1.0D)); //maybe?
-        this.tasks.addTask(8, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(8, this.cultistAIWander);
         this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 12.0F));
         this.tasks.addTask(10, new EntityAILookIdle(this));
 
@@ -69,11 +87,12 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
+    public abstract List<ItemStack> getAvailableWeapons();
 
     @Override
     protected void entityInit() {
         this.dataManager.register(ARMS_FOLDED, true);
-        this.dataManager.register(WANDERING, false);
+        this.dataManager.register(FOLLOW_MODE, 0);
         super.entityInit();
     }
 
@@ -86,22 +105,43 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     }
 
     public void setWandering(boolean wandering){
-        if (wandering)
-            setSitting(true);
-        dataManager.set(WANDERING, wandering);
+        dataManager.set(FOLLOW_MODE, wandering ? 2 : 1);
     }
 
     public boolean isWandering(){
-        return dataManager.get(WANDERING);
+        return dataManager.get(FOLLOW_MODE) > 1;
+    }
+
+    @Override
+    public void setSitting(boolean sitting) {
+        dataManager.set(FOLLOW_MODE, sitting ? 1 : 0);
+    }
+
+    @Override
+    public boolean isSitting() {
+        return dataManager.get(FOLLOW_MODE) > 0;
     }
 
     @Override
     public void onLivingUpdate() {
+        setArmsFolded(getHeldItemMainhand().isEmpty() && getHeldItemOffhand().isEmpty());
         super.onLivingUpdate();
     }
 
     public boolean isNeutral(){
         return isTamed() && getOwnerId() == null;
+    }
+
+    //these are tests
+    @Nullable
+    @Override
+    public EntityLivingBase getOwner() {
+        return world.getClosestPlayer(posX, posY, posZ, 20, false);//super.getOwner();
+    }
+
+    @Override
+    public boolean isTamed() {
+        return true;
     }
 
     @Override
@@ -112,13 +152,15 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         return super.attackEntityFrom(source, amount);
     }
 
-    //this may be a test
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         setArmsFolded(world.rand.nextBoolean());
-
-        //some spawn tamed, but with no owner
+        if (getAvailableWeapons() != null && !getAvailableWeapons().isEmpty()){
+            setItemStackToSlot(EntityEquipmentSlot.MAINHAND, getAvailableWeapons().get(rand.nextInt(getAvailableWeapons().size())));
+        }
+        cultistAIWander = new EntityCultistAIWander(this);
+        cultistAIWander.boundPos = getPos();
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
@@ -126,9 +168,11 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     public void readEntityFromNBT(NBTTagCompound compound) {
         setArmsFolded(compound.getBoolean("armsFolded"));
         setWandering(compound.getBoolean("wandering"));
-        if (this.cultistAISit != null) {
-            (this.cultistAISit).setWandering(compound.getBoolean("wandering"));
-            (this.cultistAISit).setBoundPos(BlockPos.fromLong(compound.getLong("wanderingPos")));
+        if (this.cultistAIWander != null) {
+            this.cultistAIWander.setBoundPos(BlockPos.fromLong(compound.getLong("wanderingPos")));
+        }
+        if (aiSit instanceof EntityCultistAISit){
+            this.setWandering(isWandering());
         }
         super.readEntityFromNBT(compound);
     }
@@ -137,68 +181,105 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     public void writeEntityToNBT(NBTTagCompound compound) {
         compound.setBoolean("armsFolded", armsFolded());
         compound.setBoolean("wandering", isWandering());
-        if (this.cultistAISit != null && cultistAISit.getBoundPos() != null) {
-            compound.setLong("wanderingPos", cultistAISit.boundPos.toLong());
+        if (this.cultistAIWander != null && cultistAIWander.getBoundPos() != null) {
+            compound.setLong("wanderingPos", cultistAIWander.boundPos.toLong());
         }
         super.writeEntityToNBT(compound);
     }
 
-    static class EntityCultistAISit extends EntityAIWander{
+    @Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        if (hand == EnumHand.MAIN_HAND) {
+            if (this.isOwner(player) && !this.world.isRemote && !this.isBreedingItem(player.getHeldItem(hand))) {
+                dataManager.set(FOLLOW_MODE, dataManager.get(FOLLOW_MODE) > 1 ? 0 : dataManager.get(FOLLOW_MODE) + 1);
+                this.navigator.clearPath();
+                setAttackTarget(null);
+                /*if (isWandering()){
+                setSitting(false);
+                setWandering(false);
+            }else
+            if (isSitting()){
+                setWandering(true);
+            }else{
+                this.navigator.clearPath();
+                this.setAttackTarget((EntityLivingBase)null);
+                setSitting(true);
+            }*/
+
+                System.out.println(dataManager.get(FOLLOW_MODE));
+                this.isJumping = false;
+                return true;
+            }
+        }
+        return super.processInteract(player, hand);
+    }
+
+    static class EntityCultistAISit extends EntityAISit{
+        //private boolean isWandering;
         private final AbstractCultist cultist;
-        private boolean isWandering;
-        private BlockPos boundPos;
 
         public EntityCultistAISit(AbstractCultist entityIn) {
-            super(entityIn, 1.0D, 120);
-            this.cultist = entityIn;
-            isWandering = entityIn.isWandering();
+            super(entityIn); //120 originally
+          //  isWandering = entityIn.isWandering();
+            cultist = entityIn;
+            setMutexBits(5);
+        }
+
+        @Override
+        public boolean shouldExecute() {
+            return !isWandering() && super.shouldExecute();
+        }
+
+        @Override
+        public void startExecuting() {
+            if (!isWandering())
+                super.startExecuting();
+        }
+
+        public boolean isWandering() {
+            return cultist.isWandering();
+        }
+
+        @Override
+        public boolean shouldContinueExecuting() {
+            return false;
+        }
+
+        //public void setWandering(boolean wandering) {
+         //   isWandering = wandering;
+        //}
+    }
+
+    static class EntityCultistAIWander extends EntityAIWander{ //completely set this to AIWander
+        private BlockPos boundPos;
+
+        public EntityCultistAIWander(AbstractCultist entityIn) {
+            super(entityIn, 1.0D, 2); //120 originally
             setMutexBits(1);
         }
 
         @Override
         public boolean shouldExecute() {
-            return isWandering && super.shouldExecute() || (!isWandering && cultist.isTamed() && !cultist.isInWater() && cultist.onGround);
+            return boundPos != null && isWandering() && super.shouldExecute();
         }
 
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
-        public void startExecuting() {
-            if (!isWandering) {
-                cultist.getNavigator().clearPath();
-            }else{
-                this.cultist.getNavigator().tryMoveToXYZ(this.x, this.y, this.z, this.speed);
-            }
-            this.cultist.setSitting(true);
-            this.cultist.setWandering(!isWandering);
+        public boolean isWandering() {
+            return ((AbstractCultist) entity).isWandering();
         }
 
         @Nullable
         @Override
         protected Vec3d getPosition() {
-            return super.getPosition(); //calculate that so it tries to stay within the bounds (also store the bound position in NBT)
+            Vec3d pos;
+            int i = 0;
+            do {
+                pos = RandomPositionGenerator.getLandPos(entity, 10, 7);
+                i++;
+            }while((pos == null ||
+                    pos.distanceTo(new Vec3d(boundPos.getX() + 0.5, boundPos.getY() + 0.5, boundPos.getZ() + 0.5)) > 16)
+                    && i < 10 );
+            return pos;
         }
-
-        /**
-         * Reset the task's internal state. Called when this task is interrupted by another one
-         */
-        public void resetTask() {
-            this.cultist.setSitting(false);
-            this.cultist.setWandering(false);
-        }
-
-        public boolean isWandering() {
-            return isWandering;
-        }
-
-        public void setWandering(boolean wandering) {
-            isWandering = wandering;
-        }
-
-        public boolean shouldContinueExecuting() {
-            return (!this.cultist.getNavigator().noPath() && isWandering);
-        }
-
 
         public BlockPos getBoundPos() {
             return boundPos;

@@ -1,23 +1,25 @@
 package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.model.entity.ModelCultistHastur;
-import com.miskatonicmysteries.client.model.entity.ModelHastur;
-import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
+import com.miskatonicmysteries.client.model.entity.ModelCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
-import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
-import com.miskatonicmysteries.common.entity.goo.EntityHastur;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderVillager;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class RenderHasturCultist extends RenderLiving<EntityHasturCultist> {
+public class RenderHasturCultist extends RenderBiped<EntityHasturCultist> {
     public RenderHasturCultist(RenderManager rendermanagerIn) {
-        super(rendermanagerIn, new ModelCultistHastur(), 0.5F);
+        super(rendermanagerIn, new ModelCultist(), 0.5F);
     }
 
     @Nullable
@@ -40,5 +42,9 @@ public class RenderHasturCultist extends RenderLiving<EntityHasturCultist> {
 
         GlStateManager.scale(f, f, f);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);
+    }
+
+    public ModelCultist getMainModel() {
+        return this.getMainModel();
     }
 }

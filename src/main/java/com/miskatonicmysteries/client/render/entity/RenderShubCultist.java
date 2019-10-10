@@ -1,19 +1,18 @@
 package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.model.entity.ModelCultistHastur;
 import com.miskatonicmysteries.client.model.entity.ModelCultistShub;
-import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class RenderShubCultist extends RenderLiving<EntityShubCultist> {
+public class RenderShubCultist extends RenderBiped<EntityShubCultist> {
     public RenderShubCultist(RenderManager rendermanagerIn) {
         super(rendermanagerIn, new ModelCultistShub(), 0.5F);
     }

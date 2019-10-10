@@ -19,10 +19,10 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class ModEntities {
     public static int entityId = 0;
     public static void init(){
-        registerEntity("cultist_shub", EntityShubCultist.class, 16, 7171193, 3221760);
-        registerEntity("cultist_hastur", EntityHasturCultist.class, 16, 7171193, 13021696);
-        registerEntity("shub_niggurath", EntityShub.class, 64);
-        registerEntity("hastur", EntityHastur.class, 64);
+        registerEntity("cultist_shub", EntityShubCultist.class, 64, 7171193, 3221760);
+        registerEntity("cultist_hastur", EntityHasturCultist.class, 64, 7171193, 13021696);
+        registerEntity("shub_niggurath", EntityShub.class, 128);
+        registerEntity("hastur", EntityHastur.class, 128);
     }
 
     public static void registerRenderers(){

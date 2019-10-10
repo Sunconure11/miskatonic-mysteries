@@ -115,10 +115,10 @@ public class ModelCultistShub extends ModelCultist {
         this.rHoofClaw01a.setRotationPoint(-0.9F, 0.0F, -1.3F);
         this.rHoofClaw01a.addBox(-0.5F, -0.5F, -1.9F, 1, 1, 2, 0.0F);
         this.setRotateAngle(rHoofClaw01a, 0.3490658503988659F, 0.10471975511965977F, 0.0F);
-        this.leftLeg = new ModelRenderer(this, 0, 22);
-        this.leftLeg.mirror = true;
-        this.leftLeg.setRotationPoint(2.0F, 12.0F, 0.0F);
-        this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
+        this.bipedLeftLeg = new ModelRenderer(this, 0, 22);
+        this.bipedLeftLeg.mirror = true;
+        this.bipedLeftLeg.setRotationPoint(2.0F, 12.0F, 0.0F);
+        this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
         this.lGoatHoof = new ModelRenderer(this, 114, 9);
         this.lGoatHoof.setRotationPoint(0.1F, 5.0F, 0.0F);
         this.lGoatHoof.addBox(-1.4F, 0.0F, -2.6F, 3, 1, 3, 0.0F);
@@ -127,9 +127,9 @@ public class ModelCultistShub extends ModelCultist {
         this.hoodRSide02.setRotationPoint(-5.15F, 1.3F, 0.3F);
         this.hoodRSide02.addBox(-0.6F, -0.9F, -5.25F, 6, 2, 10, 0.0F);
         this.setRotateAngle(hoodRSide02, 0.0F, 0.0F, 0.3141592653589793F);
-        this.body = new ModelRenderer(this, 16, 20);
-        this.body.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.body.addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, 0.0F);
+        this.bipedBody = new ModelRenderer(this, 16, 20);
+        this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.bipedBody.addBox(-4.0F, 0.0F, -3.0F, 8, 12, 6, 0.0F);
         this.rHoofClaw02b = new ModelRenderer(this, 121, 14);
         this.rHoofClaw02b.mirror = true;
         this.rHoofClaw02b.setRotationPoint(0.0F, 0.3F, -0.5F);
@@ -180,9 +180,9 @@ public class ModelCultistShub extends ModelCultist {
         this.rightHorn02.setRotationPoint(-0.2F, -2.6F, 0.0F);
         this.rightHorn02.addBox(-0.5F, -2.0F, -0.5F, 1, 2, 1, 0.0F);
         this.setRotateAngle(rightHorn02, 0.0F, 0.0F, -0.3141592653589793F);
-        this.head = new ModelRenderer(this, 0, 0);
-        this.head.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.head.addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, 0.0F);
+        this.bipedHead = new ModelRenderer(this, 0, 0);
+        this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.bipedHead.addBox(-4.0F, -10.0F, -4.0F, 8, 10, 8, 0.0F);
         this.rightMaskPlate = new ModelRenderer(this, 68, 0);
         this.rightMaskPlate.mirror = true;
         this.rightMaskPlate.setRotationPoint(0.0F, -5.0F, -4.9F);
@@ -242,9 +242,9 @@ public class ModelCultistShub extends ModelCultist {
         this.lHoofClaw01b.setRotationPoint(0.0F, 0.3F, -0.5F);
         this.lHoofClaw01b.addBox(-0.5F, -0.5F, -2.2F, 1, 1, 2, 0.0F);
         this.setRotateAngle(lHoofClaw01b, -0.22689280275926282F, 0.22689280275926282F, 0.7853981633974483F);
-        this.rightArm = new ModelRenderer(this, 40, 46);
-        this.rightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-        this.rightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
+        this.bipedRightArm = new ModelRenderer(this, 40, 46);
+        this.bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
+        this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
         this.rGoatHoof = new ModelRenderer(this, 114, 9);
         this.rGoatHoof.mirror = true;
         this.rGoatHoof.setRotationPoint(-0.1F, 5.0F, 0.0F);
@@ -254,10 +254,10 @@ public class ModelCultistShub extends ModelCultist {
         this.rGoatLeg03.setRotationPoint(0.0F, 4.4F, -0.2F);
         this.rGoatLeg03.addBox(-1.6F, -0.4F, -1.0F, 3, 6, 2, 0.0F);
         this.setRotateAngle(rGoatLeg03, -0.6283185307179586F, 0.0F, 0.0F);
-        this.leftArm = new ModelRenderer(this, 40, 46);
-        this.leftArm.mirror = true;
-        this.leftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-        this.leftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
+        this.bipedLeftArm = new ModelRenderer(this, 40, 46);
+        this.bipedLeftArm.mirror = true;
+        this.bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
+        this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F);
         this.robe = new ModelRenderer(this, 0, 38);
         this.robe.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.robe.addBox(-4.0F, 0.0F, -3.0F, 8, 20, 6, 0.5F);
@@ -265,23 +265,23 @@ public class ModelCultistShub extends ModelCultist {
         this.rightHorn01b.mirror = true;
         this.rightHorn01b.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.rightHorn01b.addBox(-0.5F, -3.0F, -0.5F, 1, 3, 1, 0.0F);
-        this.rightLeg = new ModelRenderer(this, 0, 22);
-        this.rightLeg.setRotationPoint(-2.0F, 12.0F, 0.0F);
-        this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
+        this.bipedRightLeg = new ModelRenderer(this, 0, 22);
+        this.bipedRightLeg.setRotationPoint(-2.0F, 12.0F, 0.0F);
+        this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F);
         this.lHoofClaw02a = new ModelRenderer(this, 114, 14);
         this.lHoofClaw02a.setRotationPoint(-0.6F, 0.0F, -1.3F);
         this.lHoofClaw02a.addBox(-0.5F, -0.5F, -1.9F, 1, 1, 2, 0.0F);
         this.setRotateAngle(lHoofClaw02a, 0.3490658503988659F, 0.06981317007977318F, 0.0F);
         this.rGoatHoof.addChild(this.rHoofClaw02a);
         this.hoodPipe01.addChild(this.hoodPipe02);
-        this.head.addChild(this.leftMaskPlate);
+        this.bipedHead.addChild(this.leftMaskPlate);
         this.rightMaskPlate.addChild(this.rightEar);
-        this.leftLeg.addChild(this.lGoatLeg01);
+        this.bipedLeftLeg.addChild(this.lGoatLeg01);
         this.leftHorn01a.addChild(this.leftHorn01b);
         this.leftHorn02.addChild(this.leftHorn03);
         this.rightMaskPlate.addChild(this.rightHorn00);
-        this.rightLeg.addChild(this.rGoatLeg01);
-        this.head.addChild(this.nose);
+        this.bipedRightLeg.addChild(this.rGoatLeg01);
+        this.bipedHead.addChild(this.nose);
         this.rGoatLeg01.addChild(this.rGoatLeg02);
         this.rightHorn00.addChild(this.rightHorn01a);
         this.lGoatLeg02.addChild(this.lGoatLeg03);
@@ -298,9 +298,9 @@ public class ModelCultistShub extends ModelCultist {
         this.leftHorn01a.addChild(this.leftHorn02);
         this.strapL.addChild(this.strapB);
         this.rightHorn01a.addChild(this.rightHorn02);
-        this.head.addChild(this.rightMaskPlate);
+        this.bipedHead.addChild(this.rightMaskPlate);
         this.rightHorn02.addChild(this.rightHorn03);
-        this.head.addChild(this.hood);
+        this.bipedHead.addChild(this.hood);
         this.hood.addChild(this.hoodFringeL01);
         this.lGoatHoof.addChild(this.lHoofClaw01a);
         this.rightMaskPlate.addChild(this.strapR);
@@ -326,51 +326,23 @@ public class ModelCultistShub extends ModelCultist {
                 rGoatLeg01.isHidden = false;
             }
         }
-        this.body.render(f5);
+        this.bipedBody.render(f5);
         if (entity instanceof AbstractCultist && ((AbstractCultist) entity).armsFolded()) {
             this.middleArmFolded.render(f5);
             this.rightArmFolded.render(f5);
         }else{
-            this.rightArm.render(f5);
-            this.leftArm.render(f5);
+            this.bipedRightArm.render(f5);
+            this.bipedLeftArm.render(f5);
         }
-        this.leftLeg.render(f5);
-        this.rightLeg.render(f5);
+        this.bipedLeftLeg.render(f5);
+        this.bipedRightLeg.render(f5);
 
-        this.head.render(f5);
+        this.bipedHead.render(f5);
         this.robe.render(f5);
     }
 
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-        this.setRotateAngle(lHoofClaw02a, 0.3490658503988659F, 0.06981317007977318F, 0.0F);
-        this.setRotateAngle(rGoatLeg03, -0.6283185307179586F, 0.0F, 0.0F);
-        this.setRotateAngle(lHoofClaw01b, -0.22689280275926282F, 0.22689280275926282F, 0.7853981633974483F);
-        this.setRotateAngle(leftEar, 0.3141592653589793F, 0.0F, -0.20943951023931953F);
-        this.setRotateAngle(lGoatLeg02, 1.1693705988362009F, 0.0F, 0.03490658503988659F);
-        this.setRotateAngle(rHoofClaw01b, -0.22689280275926282F, -0.22689280275926282F, -0.7853981633974483F);
-        this.setRotateAngle(leftHorn01a, 0.0F, 0.0F, 0.20943951023931953F);
-        this.setRotateAngle(strapR, 0.12217304763960307F, -0.13962634015954636F, 0.0F);
-        this.setRotateAngle(strapL, 0.12217304763960307F, 0.13962634015954636F, 0.0F);
-        this.setRotateAngle(rHoofClaw02b, -0.22689280275926282F, -0.22689280275926282F, -0.7853981633974483F);
-        this.setRotateAngle(rHoofClaw01a, 0.3490658503988659F, 0.10471975511965977F, 0.0F);
-        this.setRotateAngle(lGoatLeg03, -0.6283185307179586F, 0.0F, 0.0F);
-        this.setRotateAngle(rightHorn01a, 0.0F, 0.0F, -0.20943951023931953F);
-        this.setRotateAngle(rGoatLeg02, 1.1693705988362009F, 0.0F, -0.03490658503988659F);
-        this.setRotateAngle(rGoatLeg01, -0.5235987755982988F, 0.03490658503988659F, 0.03490658503988659F);
-        this.setRotateAngle(rightHorn00, 0.0F, 0.0F, -0.3839724354387525F);
-        this.setRotateAngle(leftHorn03, 0.0F, 0.0F, 0.3141592653589793F);
-        this.setRotateAngle(lGoatLeg01, -0.5235987755982988F, -0.03490658503988659F, -0.03490658503988659F);
-        this.setRotateAngle(rightEar, 0.3141592653589793F, 0.0F, 0.20943951023931953F);
-        this.setRotateAngle(leftMaskPlate, -0.12217304763960307F, -0.13962634015954636F, 0.0F);
-        this.setRotateAngle(rHoofClaw02a, 0.3490658503988659F, -0.06981317007977318F, 0.0F);
-        this.setRotateAngle(lHoofClaw01a, 0.3490658503988659F, -0.10471975511965977F, 0.0F);
-        this.setRotateAngle(rightHorn03, 0.0F, 0.0F, -0.3141592653589793F);
-        this.setRotateAngle(rightMaskPlate, -0.12217304763960307F, 0.13962634015954636F, 0.0F);
-        this.setRotateAngle(rightHorn02, 0.0F, 0.0F, -0.3141592653589793F);
-        this.setRotateAngle(leftHorn02, 0.0F, 0.0F, 0.3141592653589793F);
-        this.setRotateAngle(lHoofClaw02b, -0.22689280275926282F, 0.22689280275926282F, 0.7853981633974483F);
-        this.setRotateAngle(leftHorn00, 0.0F, 0.0F, 0.3839724354387525F);
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
     }
 
