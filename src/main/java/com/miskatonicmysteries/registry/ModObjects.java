@@ -5,6 +5,7 @@ import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.common.block.BlockOctagram;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
 import com.miskatonicmysteries.common.item.consumable.ItemMilkGoat;
@@ -29,17 +30,17 @@ public class ModObjects {
 
     public static Item.ToolMaterial TOOL_CULTIST = EnumHelper.addToolMaterial("cultist", 2, 250, 6, 1.5f, 14);
 
-    public static BlockMural stone_cthulhu_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_cthulhu_mural");
-    public static BlockMural moss_stone_cthulhu_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_cthulhu_mural");
-    public static BlockMural prismarine_cthulhu_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "prismarine_cthulhu_mural");
+    public static BlockMural stone_cthulhu_mural = Util.create(new BlockMural(Material.ROCK, Blessing.CTHULHU), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_cthulhu_mural");
+    public static BlockMural moss_stone_cthulhu_mural = Util.create(new BlockMural(Material.ROCK, Blessing.CTHULHU), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_cthulhu_mural");
+    public static BlockMural prismarine_cthulhu_mural = Util.create(new BlockMural(Material.ROCK, Blessing.CTHULHU), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "prismarine_cthulhu_mural");
 
-    public static BlockMural stone_hastur_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_hastur_mural");
-    public static BlockMural moss_stone_hastur_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_hastur_mural");
-    public static BlockMural terracotta_hastur_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.25f, 21, "pickaxe", 0, "terracotta_hastur_mural");
-    public static BlockMural yellow_terracotta_hastur_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.25f, 21, "pickaxe", 0, "yellow_terracotta_hastur_mural");
+    public static BlockMural stone_hastur_mural = Util.create(new BlockMural(Material.ROCK, Blessing.HASTUR), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_hastur_mural");
+    public static BlockMural moss_stone_hastur_mural = Util.create(new BlockMural(Material.ROCK, Blessing.HASTUR), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_hastur_mural");
+    public static BlockMural terracotta_hastur_mural = Util.create(new BlockMural(Material.ROCK, Blessing.HASTUR), SoundType.STONE, 1.25f, 21, "pickaxe", 0, "terracotta_hastur_mural");
+    public static BlockMural yellow_terracotta_hastur_mural = Util.create(new BlockMural(Material.ROCK, Blessing.HASTUR), SoundType.STONE, 1.25f, 21, "pickaxe", 0, "yellow_terracotta_hastur_mural");
 
-    public static BlockMural stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_shubniggurath_mural");
-    public static BlockMural moss_stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_shubniggurath_mural");
+    public static BlockMural stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK, Blessing.SHUB), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "stone_shubniggurath_mural");
+    public static BlockMural moss_stone_shubniggurath_mural = Util.create(new BlockMural(Material.ROCK, Blessing.SHUB), SoundType.STONE, 1.5f, 30, "pickaxe", 0, "moss_stone_shubniggurath_mural");
 
     public static BlockCandles candles = Util.create(new BlockCandles(), SoundType.CLOTH, 0F, 0.2F, "none", 0, "candles");
 
@@ -55,8 +56,8 @@ public class ModObjects {
     public static BlockAltar altar_stone_enriched = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_stone_enriched");
     public static BlockAltar altar_brick_scorned = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_brick_scorned");
 */
-    public static BlockOctagram octagram_shub = Util.create(null, new BlockOctagram(), SoundType.STONE, 3, 20, "shovel", 0, "octagram_shub");
-    public static BlockOctagram octagram_hastur = Util.create(null, new BlockOctagram(), SoundType.STONE, 3, 20, "shovel", 0, "octagram_hastur");
+    public static BlockOctagram octagram_shub = Util.create(null, new BlockOctagram(Blessing.SHUB), SoundType.STONE, 3, 20, "shovel", 0, "octagram_shub");
+    public static BlockOctagram octagram_hastur = Util.create(null, new BlockOctagram(Blessing.HASTUR), SoundType.STONE, 3, 20, "shovel", 0, "octagram_hastur");
 
     public static ItemChalk chalk_goat = Util.create(new ItemChalk(octagram_shub), "chalk_goat");
     public static ItemChalk chalk_yellowking = Util.create(new ItemChalk(octagram_hastur), "chalk_yellowking");

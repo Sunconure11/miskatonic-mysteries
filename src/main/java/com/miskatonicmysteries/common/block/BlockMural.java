@@ -1,5 +1,7 @@
 package com.miskatonicmysteries.common.block;
 
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -16,11 +18,18 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMural extends Block {
+public class BlockMural extends Block implements IHasAssociatedBlessing{
 	public ItemStack item = ItemStack.EMPTY;
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-	public BlockMural(Material mat) {
+	protected Blessing blessing;
+	public BlockMural(Material mat, Blessing blessing) {
 		super(mat);
+		this.blessing = blessing;
+	}
+
+	@Override
+	public Blessing getAssociatedBlessing() {
+		return blessing;
 	}
 
 	@Override

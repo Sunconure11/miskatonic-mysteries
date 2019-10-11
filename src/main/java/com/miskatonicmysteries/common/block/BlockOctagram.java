@@ -2,6 +2,8 @@ package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.block.Block;
@@ -30,18 +32,14 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
+public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implements IHasAssociatedBlessing {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyEnum<EnumPartType> PART = PropertyEnum.<EnumPartType>create("part", EnumPartType.class); //maybe have many many parts instead, as in 9
     public static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.01, 1);
 
     public static final int[][] PARTS = new int[3][3];
 
-    public BlockOctagram() {
-        super(Material.CIRCUITS);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, EnumFacing.NORTH));
-        setLightOpacity(0);
-
+    static {
         PARTS[2][1] = 1;
         PARTS[2][2] = 2;
         PARTS[1][2] = 3;
@@ -53,11 +51,21 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> {
         PARTS[1][0] = 7;
         PARTS[2][0] = 8;
 
-
         PARTS[1][1] = 0;
     }
+    protected Blessing blessing;
 
+    public BlockOctagram(Blessing blessing) {
+        super(Material.CIRCUITS);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, EnumFacing.NORTH));
+        setLightOpacity(0);
+        this.blessing = blessing;
+    }
 
+    @Override
+    public Blessing getAssociatedBlessing() {
+        return blessing;
+    }
 
     @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {

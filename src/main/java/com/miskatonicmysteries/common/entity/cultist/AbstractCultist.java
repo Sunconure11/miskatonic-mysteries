@@ -56,6 +56,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
     }
 
+    //Todo still somehow set the thing to a blockpos when standing near it
     @Override
     protected void initEntityAI() {
         if (aiSit == null)
@@ -194,19 +195,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
                 dataManager.set(FOLLOW_MODE, dataManager.get(FOLLOW_MODE) > 1 ? 0 : dataManager.get(FOLLOW_MODE) + 1);
                 this.navigator.clearPath();
                 setAttackTarget(null);
-                /*if (isWandering()){
-                setSitting(false);
-                setWandering(false);
-            }else
-            if (isSitting()){
-                setWandering(true);
-            }else{
-                this.navigator.clearPath();
-                this.setAttackTarget((EntityLivingBase)null);
-                setSitting(true);
-            }*/
 
-                System.out.println(dataManager.get(FOLLOW_MODE));
                 this.isJumping = false;
                 return true;
             }
@@ -244,10 +233,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         public boolean shouldContinueExecuting() {
             return false;
         }
-
-        //public void setWandering(boolean wandering) {
-         //   isWandering = wandering;
-        //}
     }
 
     static class EntityCultistAIWander extends EntityAIWander{ //completely set this to AIWander
