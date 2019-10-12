@@ -60,11 +60,18 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
 
     @Override
     public void update() {
-        if (closestAltarPos == null || !(world.getTileEntity(closestAltarPos) instanceof TileEntityAltar)){
+        if (!altarUsable()){
             findNearestAltar();
         }
-        System.out.println(getAltarBlessing());
+        flipAltarPages();
+
         //stuff
+    }
+
+    public void flipAltarPages(){
+        if (altarUsable()){
+            getAltar().flipSpeed = Math.max(getAltar().flipSpeed + 0.1F, 2);
+        }
     }
 
     public void findNearestAltar(){
@@ -76,6 +83,17 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
                 return;
             }
         }
+    }
+
+    public boolean altarUsable(){
+        return closestAltarPos != null && world.getTileEntity(closestAltarPos) instanceof TileEntityAltar;
+    }
+
+    public TileEntityAltar getAltar(){
+        if (altarUsable()) {
+            return (TileEntityAltar) world.getTileEntity(closestAltarPos);
+        }
+        return null;
     }
 
     public Blessing getAltarBlessing(){

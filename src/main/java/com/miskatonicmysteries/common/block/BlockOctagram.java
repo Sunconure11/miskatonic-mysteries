@@ -117,7 +117,6 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
                 int floorHitZ = (int) Math.floor(hitZ);
                 if (!(floorHitX == 0 && floorHitZ == 0)) {
                     int slot = getSlot(floorHitX, floorHitZ);
-                    System.out.println(slot);
                     if (octagram.inventory.getStackInSlot(slot).isEmpty()) {
                         InventoryUtil.insertCurrentItemStack(playerIn, octagram.inventory, slot);
                     }else if (playerIn.isSneaking()){

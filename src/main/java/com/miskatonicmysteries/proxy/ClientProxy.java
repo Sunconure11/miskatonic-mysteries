@@ -7,6 +7,7 @@ import com.miskatonicmysteries.client.render.RenderOctagram;
 import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.handler.EnvironmentHandler;
 import com.miskatonicmysteries.registry.ModEntities;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -30,6 +31,7 @@ public class ClientProxy extends ServerProxy {
 
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new ShaderHandler());
+        MinecraftForge.EVENT_BUS.register(new EnvironmentHandler());
         MinecraftForge.EVENT_BUS.register(new RenderManipulatorHandler());
     }
 
