@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityGolem;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.*;
@@ -25,6 +26,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SPacketAnimation;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
@@ -38,6 +40,7 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -67,6 +70,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     public abstract Blessing getAssociatedBlessing();
 
     public abstract List<ItemStack> getAvailableWeapons();
+
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
@@ -80,6 +84,9 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     public void onLivingUpdate() {
         setArmsFolded((getHeldItemMainhand().isEmpty() && getHeldItemOffhand().isEmpty() && isTamed()));
+        if (!armsFolded()) {
+            this.updateArmSwingProgress();
+        }
         super.onLivingUpdate();
     }
 
@@ -201,7 +208,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     }
 
 
-
     public boolean isNeutral() {
         return isTamed() && getOwnerId() == null;
     }
@@ -260,11 +266,11 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
                 this.navigator.clearPath();
                 setAttackTarget(null);
                 this.isJumping = false;
-                if (world.isRemote){
+                if (world.isRemote) {
                     player.sendStatusMessage(new TextComponentString(I18n.format("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow"))), true);
                 }
                 return true;
-            }else if (isTamed()){
+            } else if (isTamed()) {
                 if (this.buyingList == null) {
                     this.populateBuyingList();
                 }
@@ -286,47 +292,38 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     }
 
 
-    public void populateBuyingList(){
-        if(buyingList == null){
+    public void populateBuyingList() {
+        if (buyingList == null) {
             buyingList = new MerchantRecipeList();
         }
         //add villager profession
         List<EntityVillager.ITradeList> trades = getTradeList();//this.getProfessionForge().getCareer(i).getTrades(j);
 
-        if (trades != null){
-            for (EntityVillager.ITradeList entityvillager$itradelist : trades)
-            {
+        if (trades != null) {
+            for (EntityVillager.ITradeList entityvillager$itradelist : trades) {
                 entityvillager$itradelist.addMerchantRecipe(this, this.buyingList, this.rand);
             }
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleStatusUpdate(byte id)
-    {
-        if (id == 12)
-        {
+    public void handleStatusUpdate(byte id) {
+        if (id == 12) {
             this.spawnParticles(EnumParticleTypes.HEART);
-        }
-        else if (id == 14)
-        {
+        } else if (id == 14) {
             this.spawnParticles(EnumParticleTypes.VILLAGER_HAPPY);
-        }
-        else
-        {
+        } else {
             super.handleStatusUpdate(id);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    private void spawnParticles(EnumParticleTypes particleType)
-    {
-        for (int i = 0; i < 5; ++i)
-        {
+    private void spawnParticles(EnumParticleTypes particleType) {
+        for (int i = 0; i < 5; ++i) {
             double d0 = this.rand.nextGaussian() * 0.02D;
             double d1 = this.rand.nextGaussian() * 0.02D;
             double d2 = this.rand.nextGaussian() * 0.02D;
-            this.world.spawnParticle(particleType, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + 1.0D + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d0, d1, d2);
+            this.world.spawnParticle(particleType, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 1.0D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2);
         }
     }
 
@@ -469,8 +466,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Nullable
     @Override
     public MerchantRecipeList getRecipes(EntityPlayer player) {
-        if (this.buyingList == null)
-        {
+        if (this.buyingList == null) {
             this.populateBuyingList();
         }
         return buyingList;

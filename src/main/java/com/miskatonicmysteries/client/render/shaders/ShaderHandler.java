@@ -7,7 +7,9 @@ import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderGroup;
+import net.minecraft.client.shader.ShaderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,7 +35,9 @@ public class ShaderHandler {
 
     public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/desaturate.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/phosphor.json")};
     //these shaders are temporary, I'm just not good enough to make shaders :(
-    //do fog in shaders? copy that stuff and look
+
+    //basically: somehow pass in a uniform that displays the sanity level (you can get the ShaderManager with a Shader instance)
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void doRender(TickEvent.PlayerTickEvent event) {
@@ -54,14 +58,14 @@ public class ShaderHandler {
     public static void handleShader(boolean condition, int shaderId) {
         if (condition) {
             if (!shaderGroups.containsKey(shaderId)) {
-                setShader(shader_resources[shaderId], shaderId);
+                setShader(shaderId);
             }
         } else if (shaderGroups.containsKey(shaderId)) {
             deactivateShader(shaderId);
         }
     }
 
-    public static void setShader(ResourceLocation shader, int shaderId) {
+    public static void setShader(int shaderId) {
         try {
             ShaderGroup target = new ShaderGroup(Minecraft.getMinecraft().getTextureManager(), Minecraft.getMinecraft().getResourceManager(), Minecraft.getMinecraft().getFramebuffer(), shader_resources[shaderId]);
             if (OpenGlHelper.areShadersSupported()) {
@@ -106,6 +110,7 @@ public class ShaderHandler {
                 updateShaderFrameBuffers(mc);
                 GL11.glMatrixMode(5890);
                 GL11.glLoadIdentity();
+
 
                 for (Iterator var2 = shaderGroups.values().iterator(); var2.hasNext(); GL11.glPopMatrix()) {
                     ShaderGroup sg = (ShaderGroup) var2.next();

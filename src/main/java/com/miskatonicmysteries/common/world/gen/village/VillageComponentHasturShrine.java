@@ -88,7 +88,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
 
     @Override
     protected VillagerRegistry.VillagerProfession chooseForgeProfession(int count, VillagerRegistry.VillagerProfession prof) {
-        return ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation("priest")); //todo might use a cultist villager instead?
+        return ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation("priest"));
     }
 
 }

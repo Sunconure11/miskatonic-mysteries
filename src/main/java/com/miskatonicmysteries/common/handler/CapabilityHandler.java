@@ -10,6 +10,7 @@ import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
 import com.miskatonicmysteries.common.handler.event.InsanityEvent;
 import com.miskatonicmysteries.registry.ModPotions;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,6 +18,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.Sys;
 
 public class CapabilityHandler {
     public static final ResourceLocation SANITY = new ResourceLocation(MiskatonicMysteries.MODID, "sanity");
