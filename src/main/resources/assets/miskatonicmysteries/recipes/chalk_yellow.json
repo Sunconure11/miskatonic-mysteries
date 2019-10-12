@@ -2,15 +2,15 @@
   "type": "forge:ore_shapeless",
   "ingredients": [
     {
-      "type": "minecraft:dye",
+      "item": "minecraft:dye",
       "data": 11
     },
     {
-      "type": "minecraft:dye",
+      "item": "minecraft:dye",
       "data": 11
     },
     {
-      "type": "minecraft:sandstone",
+      "item": "minecraft:sandstone",
       "data": 32767
     },
     {

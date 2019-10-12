@@ -2,10 +2,14 @@ package com.miskatonicmysteries.common.entity.cultist;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.*;
@@ -23,6 +27,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
@@ -35,10 +40,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant {
+public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant, IHasAssociatedBlessing {
     private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.<Boolean>createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.<Integer>createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
     protected EntityCultistAIWander cultistAIWander;
+
+
     public AbstractCultist(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
@@ -51,6 +58,8 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
@@ -66,19 +75,77 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             this.cultistAIWander = new EntityCultistAIWander(this);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);// extend AIWander to also consider a second field: wander
-        //this.tasks.addTask(3, new EntityAIAvoidEntity<EntityIronGolem>());
+        this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
         this.tasks.addTask(5, new EntityAIAttackMelee(this, 1, true));
+        //fix cultists not being able to deal damage
         this.tasks.addTask(6, new EntityAIFollowOwner(this, 1, 4.0F, 8.0F));
         this.tasks.addTask(7, new EntityAIMate(this, 1.0D)); //maybe?
         this.tasks.addTask(8, this.cultistAIWander);
         this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 12.0F));
         this.tasks.addTask(10, new EntityAILookIdle(this));
 
-//        this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
-  //      this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-   //     this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true);
-    //    this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntityLivingBase.class, false, null);
+        this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
+        this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
+        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntityPlayer.class, false, p -> BlessingCapability.Util.getBlessing((EntityPlayer) p) != getAssociatedBlessing()));
+        this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, AbstractCultist.class, false, c -> ((AbstractCultist) c).getAssociatedBlessing() != getAssociatedBlessing()));
+        this.targetTasks.addTask(6, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> l instanceof IHasAssociatedBlessing && ((IHasAssociatedBlessing) l).getAssociatedBlessing() != getAssociatedBlessing()));
+        //will also attack pillagers and their beasts in 1.14
+
         //method to find out if the cultist is friendly to another cultist or player; criteria include common blessing and clothing
+    }
+
+    public boolean attackEntityAsMob(Entity entityIn)
+    {
+        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+        int i = 0;
+
+        if (entityIn instanceof EntityLivingBase)
+        {
+            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase)entityIn).getCreatureAttribute());
+            i += EnchantmentHelper.getKnockbackModifier(this);
+        }
+
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), f);
+
+        if (flag)
+        {
+            if (i > 0 && entityIn instanceof EntityLivingBase)
+            {
+                ((EntityLivingBase)entityIn).knockBack(this, (float)i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(this.rotationYaw * 0.017453292F)));
+                this.motionX *= 0.6D;
+                this.motionZ *= 0.6D;
+            }
+
+            int j = EnchantmentHelper.getFireAspectModifier(this);
+
+            if (j > 0)
+            {
+                entityIn.setFire(j * 4);
+            }
+
+            if (entityIn instanceof EntityPlayer)
+            {
+                EntityPlayer entityplayer = (EntityPlayer)entityIn;
+                ItemStack itemstack = this.getHeldItemMainhand();
+                ItemStack itemstack1 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : ItemStack.EMPTY;
+
+                if (!itemstack.isEmpty() && !itemstack1.isEmpty() && itemstack.getItem().canDisableShield(itemstack, itemstack1, entityplayer, this) && itemstack1.getItem().isShield(itemstack1, entityplayer))
+                {
+                    float f1 = 0.25F + (float)EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
+
+                    if (this.rand.nextFloat() < f1)
+                    {
+                        entityplayer.getCooldownTracker().setCooldown(itemstack1.getItem(), 100);
+                        this.world.setEntityState(entityplayer, (byte)30);
+                    }
+                }
+            }
+
+            this.applyEnchantments(this, entityIn);
+        }
+
+        return flag;
     }
 
     @Override
@@ -125,6 +192,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public void onLivingUpdate() {
+        System.out.println(getAttackTarget());
         setArmsFolded(getHeldItemMainhand().isEmpty() && getHeldItemOffhand().isEmpty());
         super.onLivingUpdate();
     }
@@ -133,7 +201,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         return isTamed() && getOwnerId() == null;
     }
 
-    //these are tests
+   /* //these are tests
     @Nullable
     @Override
     public EntityLivingBase getOwner() {
@@ -143,7 +211,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     public boolean isTamed() {
         return true;
-    }
+    }*/
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
@@ -160,6 +228,8 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (getAvailableWeapons() != null && !getAvailableWeapons().isEmpty()){
             setItemStackToSlot(EntityEquipmentSlot.MAINHAND, getAvailableWeapons().get(rand.nextInt(getAvailableWeapons().size())));
         }
+        if (rand.nextFloat() < 0.3F)
+            setTamed(true);//these are neutral
         cultistAIWander = new EntityCultistAIWander(this);
         cultistAIWander.boundPos = getPos();
         return super.onInitialSpawn(difficulty, livingdata);
@@ -258,7 +328,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             Vec3d pos;
             int i = 0;
             do {
-                pos = RandomPositionGenerator.getLandPos(entity, 10, 7);
+                pos = RandomPositionGenerator.getLandPos(entity, 10, 3);
                 i++;
             }while((pos == null ||
                     pos.distanceTo(new Vec3d(boundPos.getX() + 0.5, boundPos.getY() + 0.5, boundPos.getZ() + 0.5)) > 16)

@@ -137,7 +137,6 @@ public class ModelCultist extends ModelBiped {
         this.bipedHead.render(f5);
         this.robe.render(f5);
         this.bipedRightLeg.render(f5);
-        System.out.println(leftArmPose.name());
     }
 
     @Override

@@ -43,8 +43,4 @@ public class RenderHasturCultist extends RenderBiped<EntityHasturCultist> {
         GlStateManager.scale(f, f, f);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     }
-
-    public ModelCultist getMainModel() {
-        return this.getMainModel();
-    }
 }
