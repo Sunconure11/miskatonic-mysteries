@@ -1,6 +1,8 @@
 package com.miskatonicmysteries.common.item.misc;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -13,11 +15,13 @@ import vazkii.patchouli.common.book.BookRegistry;
 import vazkii.patchouli.common.network.NetworkHandler;
 import vazkii.patchouli.common.network.message.MessageOpenBookGui;
 
-public class ItemMMBook extends Item{
+public class ItemMMBook extends Item implements IHasAssociatedBlessing{
     protected ResourceLocation bookName;
-    public ItemMMBook(String bookName) {
+    protected Blessing blessing;
+    public ItemMMBook(String bookName, Blessing associatedBlessing) {
         super();
         this.bookName = new ResourceLocation(MiskatonicMysteries.MODID, bookName);
+        this.blessing = associatedBlessing;
     }
 
     public Book getBook(){
@@ -39,5 +43,10 @@ public class ItemMMBook extends Item{
 
             return new ActionResult(EnumActionResult.SUCCESS, stack);
         }
+    }
+
+    @Override
+    public Blessing getAssociatedBlessing() {
+        return blessing;
     }
 }

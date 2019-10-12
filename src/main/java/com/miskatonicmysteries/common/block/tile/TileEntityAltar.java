@@ -2,6 +2,9 @@ package com.miskatonicmysteries.common.block.tile;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.render.RenderAltar;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.item.misc.ItemMMBook;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.init.Items;
@@ -17,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.HashMap;
 
-public class TileEntityAltar extends TileEntityMod implements ITickable {
+public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAssociatedBlessing {
     public static final HashMap<Item, ResourceLocation> BOOK_TEXTURES = new HashMap<Item, ResourceLocation>();
 
     static {
@@ -93,5 +96,13 @@ public class TileEntityAltar extends TileEntityMod implements ITickable {
                 bookOpeningProgress -= 0.05;
             }
         }
+    }
+
+    @Override
+    public Blessing getAssociatedBlessing() {
+        if (inventory.getStackInSlot(0).getItem() instanceof ItemMMBook) {
+            return ((ItemMMBook) inventory.getStackInSlot(0).getItem()).getAssociatedBlessing();
+        }
+        return Blessing.NONE;
     }
 }

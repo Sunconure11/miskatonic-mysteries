@@ -45,11 +45,11 @@ public class InsanityHandler {
             }else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent){
                 if (event >= 15 && event <= 70){
                     if ((insanityEvent.getPlayer().getHealth() <= 6 && event >= 20) || event >= 65){
-                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 3600, 1, false, false));
-                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.SPEED, 6000, 1, false, false));
+                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 720, 1, false, false));
+                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 1, false, false));
                     }else
                     if (event >= 60) {
-                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 6000, 2, false, false));
+                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 600, 1, false, false));
                     }
                 }
             }
