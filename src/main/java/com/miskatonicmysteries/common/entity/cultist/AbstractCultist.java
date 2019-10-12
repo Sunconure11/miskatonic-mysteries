@@ -1,20 +1,23 @@
 package com.miskatonicmysteries.common.entity.cultist;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityGolem;
-import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -23,38 +26,47 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableManager;
-import scala.Int;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant, IHasAssociatedBlessing {
     private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.<Boolean>createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.<Integer>createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
     protected EntityCultistAIWander cultistAIWander;
 
+    @Nullable
+    protected EntityPlayer buyingPlayer;
+
+    @Nullable
+    protected MerchantRecipeList buyingList;
 
     public AbstractCultist(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
-        ((PathNavigateGround)this.getNavigator()).setBreakDoors(true);
+        ((PathNavigateGround) this.getNavigator()).setBreakDoors(true);
         this.setCanPickUpLoot(true);
     }
 
+    public abstract List<EntityVillager.ITradeList> getTradeList();
+
     public abstract Blessing getAssociatedBlessing();
 
+    public abstract List<ItemStack> getAvailableWeapons();
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
@@ -65,7 +77,13 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
     }
 
-    //Todo still somehow set the thing to a blockpos when standing near it
+    @Override
+    public void onLivingUpdate() {
+        setArmsFolded((getHeldItemMainhand().isEmpty() && getHeldItemOffhand().isEmpty() && isTamed()));
+        super.onLivingUpdate();
+    }
+
+    //Todo set the thing to a blockpos when standing near it (if it has an associated blessing)
     @Override
     protected void initEntityAI() {
         if (aiSit == null)
@@ -74,6 +92,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (cultistAIWander == null)
             this.cultistAIWander = new EntityCultistAIWander(this);
         this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityCultistAITrade(this));
         this.tasks.addTask(2, this.aiSit);// extend AIWander to also consider a second field: wander
         this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
         this.tasks.addTask(5, new EntityAIAttackMelee(this, 1, true));
@@ -95,54 +114,47 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         //method to find out if the cultist is friendly to another cultist or player; criteria include common blessing and clothing
     }
 
-    public boolean attackEntityAsMob(Entity entityIn)
-    {
-        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+    public boolean attackEntityAsMob(Entity entityIn) {
+        float f = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         int i = 0;
 
-        if (entityIn instanceof EntityLivingBase)
-        {
-            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase)entityIn).getCreatureAttribute());
+        if (entityIn instanceof EntityLivingBase) {
+            f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) entityIn).getCreatureAttribute());
             i += EnchantmentHelper.getKnockbackModifier(this);
         }
 
         boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), f);
 
-        if (flag)
-        {
-            if (i > 0 && entityIn instanceof EntityLivingBase)
-            {
-                ((EntityLivingBase)entityIn).knockBack(this, (float)i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(this.rotationYaw * 0.017453292F)));
+        if (flag) {
+            if (i > 0 && entityIn instanceof EntityLivingBase) {
+                ((EntityLivingBase) entityIn).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));
                 this.motionX *= 0.6D;
                 this.motionZ *= 0.6D;
             }
 
             int j = EnchantmentHelper.getFireAspectModifier(this);
 
-            if (j > 0)
-            {
+            if (j > 0) {
                 entityIn.setFire(j * 4);
             }
 
-            if (entityIn instanceof EntityPlayer)
-            {
-                EntityPlayer entityplayer = (EntityPlayer)entityIn;
+            if (entityIn instanceof EntityPlayer) {
+                EntityPlayer entityplayer = (EntityPlayer) entityIn;
                 ItemStack itemstack = this.getHeldItemMainhand();
                 ItemStack itemstack1 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : ItemStack.EMPTY;
 
-                if (!itemstack.isEmpty() && !itemstack1.isEmpty() && itemstack.getItem().canDisableShield(itemstack, itemstack1, entityplayer, this) && itemstack1.getItem().isShield(itemstack1, entityplayer))
-                {
-                    float f1 = 0.25F + (float)EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
+                if (!itemstack.isEmpty() && !itemstack1.isEmpty() && itemstack.getItem().canDisableShield(itemstack, itemstack1, entityplayer, this) && itemstack1.getItem().isShield(itemstack1, entityplayer)) {
+                    float f1 = 0.25F + (float) EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
 
-                    if (this.rand.nextFloat() < f1)
-                    {
+                    if (this.rand.nextFloat() < f1) {
                         entityplayer.getCooldownTracker().setCooldown(itemstack1.getItem(), 100);
-                        this.world.setEntityState(entityplayer, (byte)30);
+                        this.world.setEntityState(entityplayer, (byte) 30);
                     }
                 }
             }
 
             this.applyEnchantments(this, entityIn);
+            this.setLastAttackedEntity(entityIn);
         }
 
         return flag;
@@ -155,8 +167,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
-    public abstract List<ItemStack> getAvailableWeapons();
-
     @Override
     protected void entityInit() {
         this.dataManager.register(ARMS_FOLDED, true);
@@ -164,19 +174,19 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         super.entityInit();
     }
 
-    public void setArmsFolded(boolean folded){
+    public void setArmsFolded(boolean folded) {
         dataManager.set(ARMS_FOLDED, folded);
     }
 
-    public boolean armsFolded(){
+    public boolean armsFolded() {
         return dataManager.get(ARMS_FOLDED);
     }
 
-    public void setWandering(boolean wandering){
+    public void setWandering(boolean wandering) {
         dataManager.set(FOLLOW_MODE, wandering ? 2 : 1);
     }
 
-    public boolean isWandering(){
+    public boolean isWandering() {
         return dataManager.get(FOLLOW_MODE) > 1;
     }
 
@@ -190,32 +200,15 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         return dataManager.get(FOLLOW_MODE) > 0;
     }
 
-    @Override
-    public void onLivingUpdate() {
-        System.out.println(getAttackTarget());
-        setArmsFolded(getHeldItemMainhand().isEmpty() && getHeldItemOffhand().isEmpty());
-        super.onLivingUpdate();
-    }
 
-    public boolean isNeutral(){
+
+    public boolean isNeutral() {
         return isTamed() && getOwnerId() == null;
     }
 
-   /* //these are tests
-    @Nullable
-    @Override
-    public EntityLivingBase getOwner() {
-        return world.getClosestPlayer(posX, posY, posZ, 20, false);//super.getOwner();
-    }
-
-    @Override
-    public boolean isTamed() {
-        return true;
-    }*/
-
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (this.aiSit != null){
+        if (this.aiSit != null) {
             this.aiSit.setSitting(false);
         }
         return super.attackEntityFrom(source, amount);
@@ -224,12 +217,11 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        setArmsFolded(world.rand.nextBoolean());
-        if (getAvailableWeapons() != null && !getAvailableWeapons().isEmpty()){
-            setItemStackToSlot(EntityEquipmentSlot.MAINHAND, getAvailableWeapons().get(rand.nextInt(getAvailableWeapons().size())));
-        }
         if (rand.nextFloat() < 0.3F)
             setTamed(true);//these are neutral
+        if (!isTamed() && getAvailableWeapons() != null && !getAvailableWeapons().isEmpty()) {
+            setItemStackToSlot(EntityEquipmentSlot.MAINHAND, getAvailableWeapons().get(rand.nextInt(getAvailableWeapons().size())));
+        }
         cultistAIWander = new EntityCultistAIWander(this);
         cultistAIWander.boundPos = getPos();
         return super.onInitialSpawn(difficulty, livingdata);
@@ -242,9 +234,10 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (this.cultistAIWander != null) {
             this.cultistAIWander.setBoundPos(BlockPos.fromLong(compound.getLong("wanderingPos")));
         }
-        if (aiSit instanceof EntityCultistAISit){
+        if (aiSit instanceof EntityCultistAISit) {
             this.setWandering(isWandering());
         }
+        setTamed(compound.getBoolean("tamed"));
         super.readEntityFromNBT(compound);
     }
 
@@ -255,31 +248,96 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (this.cultistAIWander != null && cultistAIWander.getBoundPos() != null) {
             compound.setLong("wanderingPos", cultistAIWander.boundPos.toLong());
         }
+        compound.setBoolean("tamed", isTamed());
         super.writeEntityToNBT(compound);
     }
 
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
         if (hand == EnumHand.MAIN_HAND) {
-            if (this.isOwner(player) && !this.world.isRemote && !this.isBreedingItem(player.getHeldItem(hand))) {
+            if (player.isSneaking() && this.isOwner(player) && !this.world.isRemote && !this.isBreedingItem(player.getHeldItem(hand))) {
                 dataManager.set(FOLLOW_MODE, dataManager.get(FOLLOW_MODE) > 1 ? 0 : dataManager.get(FOLLOW_MODE) + 1);
                 this.navigator.clearPath();
                 setAttackTarget(null);
-
                 this.isJumping = false;
+                if (world.isRemote){
+                    player.sendStatusMessage(new TextComponentString(I18n.format("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow"))), true);
+                }
+                return true;
+            }else if (isTamed()){
+                if (this.buyingList == null) {
+                    this.populateBuyingList();
+                }
+
+                if (hand == EnumHand.MAIN_HAND) {
+                    player.addStat(StatList.TALKED_TO_VILLAGER);
+                }
+
+                if (!this.world.isRemote && !this.buyingList.isEmpty()) {
+                    this.setCustomer(player);
+                    player.displayVillagerTradeGui(this);
+                } else if (this.buyingList.isEmpty()) {
+                    return super.processInteract(player, hand);
+                }
                 return true;
             }
         }
         return super.processInteract(player, hand);
     }
 
-    static class EntityCultistAISit extends EntityAISit{
+
+    public void populateBuyingList(){
+        if(buyingList == null){
+            buyingList = new MerchantRecipeList();
+        }
+        //add villager profession
+        List<EntityVillager.ITradeList> trades = getTradeList();//this.getProfessionForge().getCareer(i).getTrades(j);
+
+        if (trades != null){
+            for (EntityVillager.ITradeList entityvillager$itradelist : trades)
+            {
+                entityvillager$itradelist.addMerchantRecipe(this, this.buyingList, this.rand);
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void handleStatusUpdate(byte id)
+    {
+        if (id == 12)
+        {
+            this.spawnParticles(EnumParticleTypes.HEART);
+        }
+        else if (id == 14)
+        {
+            this.spawnParticles(EnumParticleTypes.VILLAGER_HAPPY);
+        }
+        else
+        {
+            super.handleStatusUpdate(id);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void spawnParticles(EnumParticleTypes particleType)
+    {
+        for (int i = 0; i < 5; ++i)
+        {
+            double d0 = this.rand.nextGaussian() * 0.02D;
+            double d1 = this.rand.nextGaussian() * 0.02D;
+            double d2 = this.rand.nextGaussian() * 0.02D;
+            this.world.spawnParticle(particleType, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + 1.0D + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d0, d1, d2);
+        }
+    }
+
+
+    static class EntityCultistAISit extends EntityAISit {
         //private boolean isWandering;
         private final AbstractCultist cultist;
 
         public EntityCultistAISit(AbstractCultist entityIn) {
             super(entityIn); //120 originally
-          //  isWandering = entityIn.isWandering();
+            //  isWandering = entityIn.isWandering();
             cultist = entityIn;
             setMutexBits(5);
         }
@@ -305,7 +363,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
-    static class EntityCultistAIWander extends EntityAIWander{ //completely set this to AIWander
+    static class EntityCultistAIWander extends EntityAIWander { //completely set this to AIWander
         private BlockPos boundPos;
 
         public EntityCultistAIWander(AbstractCultist entityIn) {
@@ -330,9 +388,9 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             do {
                 pos = RandomPositionGenerator.getLandPos(entity, 10, 3);
                 i++;
-            }while((pos == null ||
+            } while ((pos == null ||
                     pos.distanceTo(new Vec3d(boundPos.getX() + 0.5, boundPos.getY() + 0.5, boundPos.getZ() + 0.5)) > 16)
-                    && i < 10 );
+                    && i < 10);
             return pos;
         }
 
@@ -345,23 +403,77 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
+    static class EntityCultistAITrade extends EntityAIBase { //completely set this to AIWander
+        private final AbstractCultist cultist;
+
+        public EntityCultistAITrade(AbstractCultist villagerIn) {
+            this.cultist = villagerIn;
+            this.setMutexBits(5);
+        }
+
+        /**
+         * Returns whether the EntityAIBase should begin execution.
+         */
+        public boolean shouldExecute() {
+            if (!this.cultist.isEntityAlive()) {
+                return false;
+            } else if (this.cultist.isInWater()) {
+                return false;
+            } else if (!this.cultist.onGround) {
+                return false;
+            } else if (this.cultist.velocityChanged) {
+                return false;
+            } else if (!this.cultist.isNeutral()) {
+                return false;
+            } else {
+                EntityPlayer entityplayer = this.cultist.getCustomer();
+
+                if (entityplayer == null) {
+                    return false;
+                } else if (this.cultist.getDistanceSq(entityplayer) > 16.0D) {
+                    return false;
+                } else {
+                    return entityplayer.openContainer != null;
+                }
+            }
+        }
+
+        /**
+         * Execute a one shot task or start executing a continuous task
+         */
+        public void startExecuting() {
+            this.cultist.getNavigator().clearPath();
+        }
+
+        /**
+         * Reset the task's internal state. Called when this task is interrupted by another one
+         */
+        public void resetTask() {
+            this.cultist.setCustomer((EntityPlayer) null);
+        }
+    }
+
 
     //work on all the trading stuff later
     @Override
     public void setCustomer(@Nullable EntityPlayer player) {
-
+        this.buyingPlayer = player;
     }
 
     @Nullable
     @Override
     public EntityPlayer getCustomer() {
-        return null;
+        return buyingPlayer;
     }
 
     @Nullable
     @Override
     public MerchantRecipeList getRecipes(EntityPlayer player) {
-        return null;
+        if (this.buyingList == null)
+        {
+            this.populateBuyingList();
+        }
+        return buyingList;
     }
 
     @Override
@@ -371,22 +483,38 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public void useRecipe(MerchantRecipe recipe) {
+        recipe.incrementToolUses();
+        this.livingSoundTime = -this.getTalkInterval();
+        this.playSound(SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
+        int i = 3 + this.rand.nextInt(4);
 
+        /*if (recipe.getItemToBuy().getItem() == Items.EMERALD) possibly some sort of wealth equivalent? power?
+        {
+            this.wealth += recipe.getItemToBuy().getCount();
+        }*/
+
+        if (recipe.getRewardsExp()) {
+            this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY + 0.5D, this.posZ, i));
+        }
     }
 
     @Override
     public void verifySellingItem(ItemStack stack) {
-
+        //change the sounds accordingly
+        if (!this.world.isRemote && this.livingSoundTime > -this.getTalkInterval() + 20) {
+            this.livingSoundTime = -this.getTalkInterval();
+            this.playSound(stack.isEmpty() ? SoundEvents.ENTITY_VILLAGER_NO : SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
+        }
     }
 
     @Override
     public World getWorld() {
-        return null;
+        return world;
     }
 
     @Override
     public BlockPos getPos() {
-        return null;
+        return getPosition();
     }
 
 

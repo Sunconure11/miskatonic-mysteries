@@ -7,12 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 
 public class ModelCultist extends ModelBiped {
-    //public ModelRenderer head;
-    //public ModelRenderer rightArm;
-    //public ModelRenderer rightLeg;
-    //public ModelRenderer leftLeg;
-    //public ModelRenderer leftArm;
-    //public ModelRenderer body;
     public ModelRenderer robe;
     public ModelRenderer rightArmFolded;
     public ModelRenderer middleArmFolded;
