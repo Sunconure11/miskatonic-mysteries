@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.network.message.event;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
@@ -46,9 +47,8 @@ public class PacketHandleInsanityClient implements IMessage{
         @Override
         public IMessage onMessage(PacketHandleInsanityClient message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.hasCapability(SanityProvider.SANITY, null)) {
-                    EntityPlayer player = Minecraft.getMinecraft().player;
-                    World world = Minecraft.getMinecraft().player.world;
+                    EntityPlayer player = MiskatonicMysteries.proxy.getPlayer(ctx);
+                    World world = player.world;
                     if (message.event <= 15) {
                        SoundEvent sound = SoundEvents.ENTITY_CREEPER_PRIMED;
                         float pitch = 0.7F;
@@ -85,7 +85,6 @@ public class PacketHandleInsanityClient implements IMessage{
                             }
                         }
                     }
-                }
             });
             return null;
         }

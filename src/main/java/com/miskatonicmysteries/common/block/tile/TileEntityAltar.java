@@ -90,7 +90,7 @@ public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAss
     public void update() {
         if (world.isRemote) {
             if (flipSpeed > 0){
-                flipSpeed -= 0.05;
+             //   flipSpeed -= 0.05;
             }
             if (bookOpen && bookOpeningProgress < 1) {
                 bookOpeningProgress += 0.05;

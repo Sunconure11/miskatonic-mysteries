@@ -63,14 +63,15 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         if (!altarUsable()){
             findNearestAltar();
         }
-        flipAltarPages();
+        //flipAltarPages();
 
         //stuff
     }
 
     public void flipAltarPages(){
         if (altarUsable()){
-            getAltar().flipSpeed = Math.max(getAltar().flipSpeed + 0.1F, 2);
+           getAltar().flipSpeed += 0.1;
+            // getAltar().flipSpeed = Math.max(getAltar().flipSpeed + 0.1F, 2);
         }
     }
 

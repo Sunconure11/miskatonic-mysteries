@@ -1,10 +1,12 @@
 package com.miskatonicmysteries.proxy;
 
-import com.miskatonicmysteries.client.render.ParticleRenderHandler;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
 
 public class ServerProxy {
 	public void preInit(FMLPreInitializationEvent event) {
@@ -20,6 +22,10 @@ public class ServerProxy {
 	}
 
 	public void generateParticle(Particle particle){
-		ParticleRenderHandler.spawnParticle(() -> particle);
+
+	}
+
+	public EntityPlayer getPlayer(MessageContext ctx){
+		return ctx.getServerHandler().player;
 	}
 }

@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.network.message.world;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.world.gen.BiomeManipulator;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -54,7 +55,7 @@ public class PacketChangeBiome implements IMessage {
         @Override
         public IMessage onMessage(PacketChangeBiome message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                WorldClient world = Minecraft.getMinecraft().world;
+                World world = MiskatonicMysteries.proxy.getPlayer(ctx).world;
                 BiomeManipulator.setMultiBiome(world, message.biome, message.positions);
 
                 HashSet<ChunkPos> finishedPos = new HashSet<>();

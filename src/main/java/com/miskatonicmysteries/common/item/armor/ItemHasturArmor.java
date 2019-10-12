@@ -9,6 +9,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
@@ -16,7 +18,8 @@ public class ItemHasturArmor extends ItemArmor {
 	public ItemHasturArmor(EntityEquipmentSlot slot) {
 		super(ModObjects.ARMOR_HASTUR, 0, slot);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	@Nullable
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase living, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {

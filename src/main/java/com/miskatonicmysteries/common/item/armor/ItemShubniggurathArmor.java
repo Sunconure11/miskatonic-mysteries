@@ -9,6 +9,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
@@ -16,7 +18,8 @@ public class ItemShubniggurathArmor extends ItemArmor {
 	public ItemShubniggurathArmor(EntityEquipmentSlot slot) {
 		super(ModObjects.ARMOR_SHUBNIGGURATH, 0, slot);
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	@Nullable
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase living, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default) {

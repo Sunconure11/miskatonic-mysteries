@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
+@Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID, value = Side.CLIENT)
 public class ParticleRenderHandler {
     private static final List<Particle> PARTICLES = new CopyOnWriteArrayList<>();
 
