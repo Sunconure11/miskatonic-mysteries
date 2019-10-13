@@ -4,6 +4,8 @@ import com.google.common.base.Predicate;
 import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenCthulhuShrine;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
+import com.miskatonicmysteries.util.InventoryUtil;
+import com.miskatonicmysteries.util.ListUtil;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -139,7 +141,7 @@ public class ModWorldGen implements IWorldGenerator {
     }
 
     public static boolean growRandomStuff(World world, Iterable<BlockPos.MutableBlockPos> blocks){
-        List<BlockPos.MutableBlockPos> positions = (List<BlockPos.MutableBlockPos>) Util.iterableToShuffledList(blocks);
+        List<BlockPos.MutableBlockPos> positions = (List<BlockPos.MutableBlockPos>) ListUtil.iterableToShuffledList(blocks);
         for (BlockPos pos : positions){
             if (world.getBlockState(pos).getBlock() instanceof IGrowable){
                 IGrowable growable = (IGrowable) world.getBlockState(pos).getBlock();

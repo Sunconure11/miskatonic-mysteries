@@ -8,6 +8,9 @@ import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityStorage;
+import com.miskatonicmysteries.common.capability.spells.ISpellKnowledge;
+import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
+import com.miskatonicmysteries.common.capability.spells.SpellKnowledgeStorage;
 import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
 import com.miskatonicmysteries.common.handler.CapabilityHandler;
 import com.miskatonicmysteries.common.handler.InsanityHandler;
@@ -17,10 +20,7 @@ import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.common.world.gen.village.VillageComponentHasturShrine;
 import com.miskatonicmysteries.common.world.gen.village.VillageHasturShrineHandler;
 import com.miskatonicmysteries.proxy.ServerProxy;
-import com.miskatonicmysteries.registry.ModBiomes;
-import com.miskatonicmysteries.registry.ModEntities;
-import com.miskatonicmysteries.registry.ModObjects;
-import com.miskatonicmysteries.registry.ModPotions;
+import com.miskatonicmysteries.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityVillager;
@@ -32,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -59,7 +60,6 @@ import java.lang.reflect.Field;
 public class MiskatonicMysteries {
     public static final String MODID = "miskatonicmysteries", NAME = "Miskatonic Mysteries", VERSION = "1.0";
 
-
     @Mod.Instance(MODID)
     public static MiskatonicMysteries instance;
 
@@ -73,15 +73,19 @@ public class MiskatonicMysteries {
         }
     };
 
+    public static final DamageSource VORE = new DamageSource(MODID + "_devour").setDamageBypassesArmor().setDamageIsAbsolute();
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
         PacketHandler.init();
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
         CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
+        CapabilityManager.INSTANCE.register(ISpellKnowledge.class, new SpellKnowledgeStorage(), SpellKnowledge.class);
         ModEntities.init();
         ModBiomes.registerBiomes();
         initTileEntities();
+        ModSpells.init();
     }
 
     @EventHandler

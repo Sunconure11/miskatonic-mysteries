@@ -3,6 +3,8 @@ package com.miskatonicmysteries.common.commands;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
+import com.miskatonicmysteries.common.misc.spells.Spell;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -20,6 +22,7 @@ import java.util.List;
 public class CommandMiskatonicMysteries extends CommandBase{
     public static final String COMMAND_SANITY = "setSanity";
     public static final String COMMAND_BLESSING = "setBlessing";
+    public static final String COMMAND_SPELL = "addSpell";
     @Override
     public String getName() {
         return "miskatonicmysteries";
@@ -42,9 +45,9 @@ public class CommandMiskatonicMysteries extends CommandBase{
         if (args.length == 1){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         } else if (args.length == 2){
-            return getListOfStringsMatchingLastWord(args, new String[] {COMMAND_SANITY, COMMAND_BLESSING});
+            return getListOfStringsMatchingLastWord(args, new String[] {COMMAND_SANITY, COMMAND_BLESSING, COMMAND_SPELL});
         } else if (args.length == 3){
-            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) :  args[1].equalsIgnoreCase(COMMAND_BLESSING) ?  getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) : Arrays.asList(new String[]{"false"});
+            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) : args[1].equalsIgnoreCase(COMMAND_BLESSING) ?  getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) : args[1].equalsIgnoreCase(COMMAND_SPELL) ? Arrays.asList(Spell.SPELLS.keySet().toArray(new String[Spell.SPELLS.size()])) :Arrays.asList(new String[]{"false"});
         }
         return super.getTabCompletions(server, sender, args, targetPos);
     }
@@ -83,7 +86,14 @@ public class CommandMiskatonicMysteries extends CommandBase{
             if (BlessingCapability.Util.setBlessing(Blessing.getBlessingWithNull(value), player))
                 sendNotification(sender, player, "commands.miskmyst.blessing.success", player.getDisplayName(), Blessing.getBlessing(blessing).getName());
             else
-                sendNotification(sender, player, "commands.miskmyst.sanity.fail_badblessing", value);
+                sendNotification(sender, player, "commands.miskmyst.blessing.fail_badblessing", value);
+        }else if (mode.equalsIgnoreCase(COMMAND_SPELL)){
+            String spell = value;
+            if (Spell.SPELLS.containsKey(spell)) {
+                SpellKnowledge.Util.addSpell(Spell.SPELLS.get(spell), player);
+                sendNotification(sender, player, "commands.miskmyst.spell.success", player.getDisplayName(), value);
+            }else
+                sendNotification(sender, player, "commands.miskmyst.spell.fail_no_spell", value);
         }else{
             throw new WrongUsageException(getUsage(sender), args[1]);
         }

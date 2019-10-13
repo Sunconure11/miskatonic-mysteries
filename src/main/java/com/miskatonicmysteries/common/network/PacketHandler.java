@@ -3,6 +3,9 @@ package com.miskatonicmysteries.common.network;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncBlessing;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanity;
+import com.miskatonicmysteries.common.network.message.capability.PacketSyncSpellKnowledge;
+import com.miskatonicmysteries.common.network.message.client.PacketCastSpell;
+import com.miskatonicmysteries.common.network.message.client.PacketHandleKey;
 import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
 import com.miskatonicmysteries.common.network.message.world.PacketChangeBiome;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,10 +34,14 @@ public class PacketHandler {
 
         network.registerMessage(new PacketSyncSanity.Handler(), PacketSyncSanity.class, next(), Side.CLIENT);
         network.registerMessage(new PacketSyncBlessing.Handler(), PacketSyncBlessing.class, next(), Side.CLIENT);
+        network.registerMessage(new PacketSyncSpellKnowledge.Handler(), PacketSyncSpellKnowledge.class, next(), Side.CLIENT);
 
         network.registerMessage(new PacketHandleInsanityClient.Handler(), PacketHandleInsanityClient.class, next(), Side.CLIENT);
 
         network.registerMessage(new PacketChangeBiome.Handler(), PacketChangeBiome.class, next(), Side.CLIENT);
+
+        network.registerMessage(new PacketHandleKey.Handler(), PacketHandleKey.class, next(), Side.SERVER);
+        network.registerMessage(new PacketCastSpell.Handler(), PacketCastSpell.class, next(), Side.SERVER);
     }
 
     public static void sendTo(EntityPlayer player, IMessage message) {

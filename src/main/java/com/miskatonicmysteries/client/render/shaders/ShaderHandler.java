@@ -42,7 +42,7 @@ public class ShaderHandler {
     @SubscribeEvent
     public void doRender(TickEvent.PlayerTickEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
-        if (ModConfig.client.useShaders && event.side == Side.CLIENT) {
+        if (event.side == Side.CLIENT) {
             if (event.phase == TickEvent.Phase.START) {
                 handleShaders(event, mc);
             }
@@ -56,7 +56,7 @@ public class ShaderHandler {
     }
 
     public static void handleShader(boolean condition, int shaderId) {
-        if (condition) {
+        if (ModConfig.client.useShaders && condition) {
             if (!shaderGroups.containsKey(shaderId)) {
                 setShader(shaderId);
             }

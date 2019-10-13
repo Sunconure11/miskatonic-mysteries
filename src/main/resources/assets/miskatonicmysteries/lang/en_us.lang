@@ -1,8 +1,14 @@
-temp.1=-0.075
-temp.2=-0.2
-temp.3=0
-temp.4=1.2F
-temp.5=65.0F
+#SETTINGS
+category.miskatonicmysteries=Miskatonic Mysteries
+key.miskmyst_up=Next Spell
+key.miskmyst_down=Previous Spell
+key.miskmyst_cancel=Cancel Spell
+
+#DAMAGE
+death.attack.miskatonicmysteries_devour=%1$s was devoured
+death.attack.miskatonicmysteries_devour.player=%1$s was devoured by %2$s
+death.attack.miskatonicmysteries_devour.item="%1$s was devoured by %2$s using %3$s
+
 #BLOCK
 tile.stone_cthulhu_mural.name=Stone Cthulhu Mural
 tile.moss_stone_cthulhu_mural.name=Moss Stone Cthulhu Mural

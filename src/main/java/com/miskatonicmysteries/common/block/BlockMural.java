@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import com.miskatonicmysteries.util.InventoryUtil;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -72,7 +73,7 @@ public class BlockMural extends Block implements IHasAssociatedBlessing{
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY, float hitZ) {
 		if (player.getHeldItem(hand).getItem() instanceof ItemWritableBook) {
-			if (!world.isRemote) Util.giveAndConsumeItem(player, hand, item);
+			if (!world.isRemote) InventoryUtil.giveAndConsumeItem(player, hand, item);
 			return true;
 		}
 		return super.onBlockActivated(world, pos, state, player, hand, face, hitX, hitY, hitZ);

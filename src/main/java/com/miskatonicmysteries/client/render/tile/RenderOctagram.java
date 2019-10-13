@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.client.render;
+package com.miskatonicmysteries.client.render.tile;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.BlockOctagram;

@@ -1,7 +1,7 @@
 package com.miskatonicmysteries.common.block.tile;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.RenderAltar;
+import com.miskatonicmysteries.client.render.tile.RenderAltar;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.item.misc.ItemMMBook;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;

@@ -1,12 +1,21 @@
 package com.miskatonicmysteries.util;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class InventoryUtil {
     public static void insertCurrentItemStack(EntityPlayer player, ItemStackHandler inventory, int slot, int count){
@@ -59,5 +68,29 @@ public class InventoryUtil {
         for (int i = 0; i < to.getSlots(); i++){
             to.insertItem( i, from.extractItem(i, from.getStackInSlot(i).getCount(), false), false);
         }
+    }
+
+    public static int getArmorPieces(EntityLivingBase living, ItemArmor.ArmorMaterial mat) {
+        int fin = 0;
+        for (ItemStack stack : living.getArmorInventoryList()) if (stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).getArmorMaterial() == mat) fin++;
+        return fin;
+    }
+
+    public static void giveAndConsumeItem(EntityPlayer player, EnumHand hand, ItemStack stack) {
+        if (!player.isCreative()) player.getHeldItem(hand).shrink(1);
+        if (player.getHeldItem(hand).isEmpty()) player.setHeldItem(hand, stack);
+        else giveItem(player, stack);
+    }
+
+    public static void giveItem(EntityPlayer player, ItemStack stack) {
+        if (!player.inventory.addItemStackToInventory(stack)) player.dropItem(stack, false);
+    }
+
+    public static NonNullList<ItemStack> getInventoryList(EntityPlayer player){
+        NonNullList<ItemStack> list = NonNullList.create();
+        list.addAll(player.inventory.mainInventory);
+        list.addAll(player.inventory.offHandInventory);
+        list.addAll(player.inventory.armorInventory);
+        return list;
     }
 }

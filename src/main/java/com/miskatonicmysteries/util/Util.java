@@ -54,36 +54,4 @@ public class Util {
 	public static Item create(String name) {
 		return create(new Item(), name);
 	}
-	
-	public static int getArmorPieces(EntityLivingBase living, ItemArmor.ArmorMaterial mat) {
-		int fin = 0;
-		for (ItemStack stack : living.getArmorInventoryList()) if (stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).getArmorMaterial() == mat) fin++;
-		return fin;
-	}
-	
-	public static void giveAndConsumeItem(EntityPlayer player, EnumHand hand, ItemStack stack) {
-		if (!player.isCreative()) player.getHeldItem(hand).shrink(1);
-		if (player.getHeldItem(hand).isEmpty()) player.setHeldItem(hand, stack);
-		else giveItem(player, stack);
-	}
-	
-	public static void giveItem(EntityPlayer player, ItemStack stack) {
-		if (!player.inventory.addItemStackToInventory(stack)) player.dropItem(stack, false);
-	}
-
-	public static List<?> iterableToShuffledList(Iterable<?> iterable){
-		List<?> list = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
-		Collections.shuffle(list);
-		return list;
-	}
-
-	public static boolean hasStringInOre(String string,ItemStack stack){
-		if(stack.isEmpty()) return false;
-
-		for (int i : OreDictionary.getOreIDs(stack)){
-			if (OreDictionary.getOreName(i).contains(string)) return true;
-		}
-		return false;
-
-	}
 }

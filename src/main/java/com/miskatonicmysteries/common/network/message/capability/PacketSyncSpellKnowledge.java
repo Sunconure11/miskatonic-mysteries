@@ -1,9 +1,9 @@
 package com.miskatonicmysteries.common.network.message.capability;
 
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
-import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
-import com.miskatonicmysteries.common.capability.sanity.SanityStorage;
+import com.miskatonicmysteries.common.capability.spells.ISpellKnowledge;
+import com.miskatonicmysteries.common.capability.spells.SpellKnowledgeProvider;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,15 +12,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketSyncSanity implements IMessage{
+public class PacketSyncSpellKnowledge implements IMessage{
     private NBTTagCompound data;
 
-    public PacketSyncSanity(){
+    public PacketSyncSpellKnowledge(){
 
     }
 
-    public PacketSyncSanity(ISanity cap) {
-        data = (NBTTagCompound) SanityProvider.SANITY.writeNBT(cap, null);
+    public PacketSyncSpellKnowledge(ISpellKnowledge cap) {
+        data = (NBTTagCompound) SpellKnowledgeProvider.SPELL_KNOWLEDGE.writeNBT(cap, null);
     }
 
     @Override
@@ -33,14 +33,14 @@ public class PacketSyncSanity implements IMessage{
         ByteBufUtils.writeTag(buf, data);
     }
 
-    public static class Handler implements IMessageHandler<PacketSyncSanity, IMessage> {
+    public static class Handler implements IMessageHandler<PacketSyncSpellKnowledge, IMessage> {
 
         @Override
-        public IMessage onMessage(PacketSyncSanity message, MessageContext ctx) {
+        public IMessage onMessage(PacketSyncSpellKnowledge message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
-                if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.hasCapability(SanityProvider.SANITY, null)) {
-                    ISanity c = Minecraft.getMinecraft().player.getCapability(SanityProvider.SANITY, null);
-                    SanityProvider.SANITY.readNBT(c, null, message.data);
+                if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.hasCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null)) {
+                    ISpellKnowledge c = Minecraft.getMinecraft().player.getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
+                    SpellKnowledgeProvider.SPELL_KNOWLEDGE.readNBT(c, null, message.data);
                 }
             });
             return null;

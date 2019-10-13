@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.client.render;
+package com.miskatonicmysteries.client.render.tile;
 
 import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;

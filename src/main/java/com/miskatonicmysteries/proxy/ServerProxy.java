@@ -26,6 +26,10 @@ public class ServerProxy {
 	}
 
 	public EntityPlayer getPlayer(MessageContext ctx){
-		return ctx.getServerHandler().player;
+		if (ctx.side.isServer()) {
+			return ctx.getServerHandler().player;
+		} else {
+			throw new RuntimeException("Tried to get the player from a client-side MessageContext on the dedicated server");
+		}
 	}
 }

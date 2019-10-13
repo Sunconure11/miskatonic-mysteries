@@ -1,4 +1,4 @@
-package com.miskatonicmysteries.common.misc.spells;
+package com.miskatonicmysteries.common.misc.rites;
 
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import net.minecraft.entity.player.EntityPlayer;
