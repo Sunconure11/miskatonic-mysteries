@@ -13,6 +13,7 @@ import java.util.*;
 
 public class SpellKnowledge implements ISpellKnowledge {
     //this entire code is a mess and needs to be more efficient, especially in updating (isDirty stuff?)
+    //(basically I wanted the entire spell list to move by one when a new spell is added, so that the last ones get removed or so)
     private int curSpell;
     private int castingProgress = -1; //may be done with the map only? as in, negatives are cool downs, positives are castings
     private final Map<Spell, Integer> COOLDOWNS = new LinkedHashMap<>(); ////Store spells as strings again and oof all that jazz
