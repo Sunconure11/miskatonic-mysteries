@@ -26,6 +26,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 
@@ -44,10 +45,12 @@ public class HUDRenderHandler {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.player;
         ISpellKnowledge knowledge = SpellKnowledge.Util.getKnowledge(player);
-        List<Spell> spells = knowledge.getSpells();
+        Set<Spell> spells = knowledge.getSpells();
+        System.out.println("------");
         if (!spells.isEmpty()){
             for (int i = 0; i < spells.size(); i++) {
-                Spell spellIn = spells.get(i);
+                Spell spellIn = (Spell) spells.toArray()[i];
+                System.out.println(spellIn.name);
                 ResourceLocation tex = spellIn.iconLocation;
                 int posX = event.getResolution().getScaledWidth() - 18;/// 2 - 88; // + 10;
                 int poxY = event.getResolution().getScaledHeight() / 2; //draw these inventory selection slots for the spells, too

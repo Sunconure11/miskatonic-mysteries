@@ -8,13 +8,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class ModSpells {
-    public static Spell heal;
-    public static Spell feast;
-
-
     public static Spell feast1;
     public static Spell feast2;
     public static Spell feast3;
+    public static Spell heal;
+    public static Spell feast;
     public static Spell feast4;
     public static Spell feast5;
     public static Spell feast6;
@@ -25,8 +23,7 @@ public class ModSpells {
 
     public static void init(){
         heal = new SpellHeal();
-        feast = new SpellFeast()
-        ;
+        feast = new SpellFeast();
         feast1 = new Spell(new ResourceLocation(MiskatonicMysteries.MODID, "1")) {
             @Override
             public void cast(EntityPlayer caster) {

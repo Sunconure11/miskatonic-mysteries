@@ -9,31 +9,36 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SpellKnowledge implements ISpellKnowledge {
+    //this entire code is a mess and needs to be more efficient, especially in updating (isDirty stuff?)
     private int curSpell;
-    private int castingProgress = -1;
-    private boolean dirty;
-    private final List<Spell> SPELLS = new ArrayList<>();
-
-    public static final int MAX_SPELLS = 7;
+    private int castingProgress = -1; //may be done with the map only? as in, negatives are cool downs, positives are castings
+    private final Map<Spell, Integer> COOLDOWNS = new LinkedHashMap<>(); ////Store spells as strings again and oof all that jazz
+    public static final int MAX_SPELLS = 7; //also make refreshing stuff more efficient
 
     public SpellKnowledge(){
 
     }
 
     @Override
-    public List<Spell> getSpells() {
-        return new ArrayList<>(SPELLS);
+    public Set<Spell> getSpells() {
+        return COOLDOWNS.keySet();
     }
 
     @Override
-    public List<Spell> setSpells() {
-        setDirty(true);
-        return SPELLS;
+    public Map<Spell, Integer> getSpellCooldowns() {
+        return COOLDOWNS;
+    }
+
+    @Override
+    public boolean addSpell(Spell spell) {
+        COOLDOWNS.put(spell, 0);
+        Map<Spell, Integer> map = rotateSpellMap(COOLDOWNS,1);
+        COOLDOWNS.clear();
+        COOLDOWNS.putAll(map);
+        return true;
     }
 
     @Override
@@ -43,18 +48,7 @@ public class SpellKnowledge implements ISpellKnowledge {
 
     @Override
     public void setCurrentSpell(int num) {
-        setDirty(true);
         this.curSpell = num;
-    }
-
-    @Override
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
-    }
-
-    @Override
-    public boolean isDirty() {
-        return dirty;
     }
 
     @Override
@@ -64,8 +58,17 @@ public class SpellKnowledge implements ISpellKnowledge {
 
     @Override
     public void setCurrentCastingProgress(int progress) {
-        setDirty(true);
         this.castingProgress = progress;
+    }
+
+    private Map<Spell, Integer> rotateSpellMap(Map<Spell, Integer> map, int distance){
+        Map<Spell, Integer> resultMap = new LinkedHashMap<>();
+        List<Spell> keys = new ArrayList(map.keySet());
+        Collections.rotate(keys, distance);
+        for(Spell key : keys) {
+            resultMap.put(key, map.get(key));
+        }
+        return resultMap;
     }
 
     public static class Util {
@@ -77,17 +80,12 @@ public class SpellKnowledge implements ISpellKnowledge {
 
         public static void addSpell(Spell spell, EntityPlayer player) {
             ISpellKnowledge knowledge = getKnowledge(player);
-            if (knowledge.getSpells().size() >= MAX_SPELLS){
-                knowledge.setSpells().remove(MAX_SPELLS - 1);
-                Collections.rotate(knowledge.setSpells(), 1);
-                knowledge.setDirty(true);
-            }
-            knowledge.setSpells().add(0, spell);
+            knowledge.addSpell(spell);
         }
 
         public static Spell getCurrentSpell(EntityPlayer player) {
             if (!player.world.isRemote && isSpellSelected(player)) {
-                return getKnowledge(player).getSpells().get(getKnowledge(player).getCurrentSpell());
+                return (Spell) getKnowledge(player).getSpells().toArray()[getKnowledge(player).getCurrentSpell()];
             }
             return null;
         }

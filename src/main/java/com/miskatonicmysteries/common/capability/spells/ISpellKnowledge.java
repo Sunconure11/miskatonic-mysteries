@@ -4,19 +4,18 @@ import com.miskatonicmysteries.common.misc.spells.Spell;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface ISpellKnowledge {
-    List<Spell> getSpells();
+    Set<Spell> getSpells();
 
-    List<Spell> setSpells();
+    Map<Spell, Integer> getSpellCooldowns();
+
+    boolean addSpell(Spell spell);
 
     int getCurrentSpell();
 
     void setCurrentSpell(int num);
-
-    void setDirty(boolean dirty);
-
-    boolean isDirty();
 
     int getCurrentCastingProgess();
 

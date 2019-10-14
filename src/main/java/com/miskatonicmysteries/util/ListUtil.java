@@ -1,7 +1,8 @@
 package com.miskatonicmysteries.util;
 
-import java.util.Collections;
-import java.util.List;
+import com.miskatonicmysteries.common.misc.spells.Spell;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

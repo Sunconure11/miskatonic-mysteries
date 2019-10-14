@@ -96,10 +96,8 @@ public class CapabilityHandler {
             ISpellKnowledge knowledge = event.getEntityLiving().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
             if (event.getEntityLiving() instanceof EntityPlayer && !event.getEntityLiving().world.isRemote) {
                  SpellHandler.continueCast(knowledge, SpellKnowledge.Util.getCurrentSpell((EntityPlayer) event.getEntityLiving()), (EntityPlayer) event.getEntityLiving());
-                 if (knowledge.isDirty()) {
-                    SpellKnowledge.Util.syncKnowledge((EntityPlayer) event.getEntityLiving(), knowledge);
-                     knowledge.setDirty(false);
-                 }
+                 //update cooldowns
+                 SpellKnowledge.Util.syncKnowledge((EntityPlayer) event.getEntityLiving(), knowledge);
             }
         }
     }

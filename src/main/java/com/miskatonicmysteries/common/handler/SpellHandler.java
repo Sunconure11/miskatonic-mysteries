@@ -8,15 +8,22 @@ import net.minecraft.entity.player.EntityPlayer;
 public class SpellHandler {
 
     public static void continueCast(ISpellKnowledge knowledge, Spell spell, EntityPlayer player) {
-        if (!player.world.isRemote && knowledge.getCurrentCastingProgess() > -1 &&spell != null && SpellKnowledge.Util.isSpellSelected(player)) {
-            if (knowledge.getCurrentCastingProgess() > 0) {
-                spell.whileCasting(player);
-                knowledge.setCurrentCastingProgress(knowledge.getCurrentCastingProgess() - 1);
+        if (!player.world.isRemote) {
+            for (Spell spellIn : knowledge.getSpellCooldowns().keySet()) {
+                int value = knowledge.getSpellCooldowns().get(spellIn);
+                if (value <= 0)
+                    knowledge.getSpellCooldowns().replace(spellIn, value, value - 1);
             }
-            if (knowledge.getCurrentCastingProgess() <= 0) {
-                spell.cast(player);
-                knowledge.setCurrentCastingProgress(-1);
-                knowledge.setCurrentSpell(-1); //reset the selected spell
+            if (knowledge.getCurrentCastingProgess() > -1 && spell != null && SpellKnowledge.Util.isSpellSelected(player)) {
+                if (knowledge.getCurrentCastingProgess() > 0) {
+                    spell.whileCasting(player);
+                    knowledge.setCurrentCastingProgress(knowledge.getCurrentCastingProgess() - 1);
+                }
+                if (knowledge.getCurrentCastingProgess() <= 0) {
+                    spell.cast(player);
+                    knowledge.setCurrentCastingProgress(-1);
+                    knowledge.setCurrentSpell(-1); //reset the selected spell
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ public class SpellKnowledgeStorage implements Capability.IStorage<ISpellKnowledg
         compound.setTag("spells", list);
         instance.getSpells().stream().forEach(s ->{
             if (s != null){
-                list.setString(s.name.toString(), s.name.toString());
+                list.setInteger(s.name.toString(), instance.getSpellCooldowns().containsKey(s.name.toString()) ? instance.getSpellCooldowns().get(s.name.toString()) :0);
             }else{
                 MiskatonicMysteries.LOGGER.error("While wring spells to NBT, an exception occurred; the spell in question will be skipped.");
             }
@@ -32,10 +32,12 @@ public class SpellKnowledgeStorage implements Capability.IStorage<ISpellKnowledg
         final NBTTagCompound compound = (NBTTagCompound) nbt;
         instance.setCurrentSpell(compound.getInteger("curSpell"));
         instance.setCurrentCastingProgress(compound.getInteger("castingProgress"));
-        instance.setSpells().clear();
+        instance.getSpells().clear();
+        instance.getSpellCooldowns().clear();
         ((NBTTagCompound) nbt).getCompoundTag("spells").getKeySet().stream().forEach(s -> {
             if (Spell.SPELLS.containsKey(s)) {
-                instance.setSpells().add(Spell.SPELLS.get(s));
+               // instance.getSpells().add(Spell.SPELLS.get(s));
+                instance.getSpellCooldowns().put(Spell.SPELLS.get(s), ((NBTTagCompound) nbt).getCompoundTag("spells").getInteger("s"));
             }else{
                 MiskatonicMysteries.LOGGER.error("While reading spells from NBT, an exception occurred; the spell in question will be skipped.");
             }

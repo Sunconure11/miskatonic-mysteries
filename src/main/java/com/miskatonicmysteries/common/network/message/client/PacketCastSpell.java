@@ -38,7 +38,6 @@ public class PacketCastSpell implements IMessage{
                 if (knowledge.getCurrentCastingProgess() < 0) {
                     SpellHandler.castSpell(player, knowledge);
                 }
-                knowledge.setDirty(true);
             });
             return null;
         }

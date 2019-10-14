@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class ItemTranquilizer extends ItemFood{
@@ -22,11 +24,13 @@ public class ItemTranquilizer extends ItemFood{
     }
 
     @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        System.out.println(SpellKnowledge.Util.getKnowledge(playerIn).getSpellCooldowns());
+        return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-       // if (entityLiving instanceof EntityPlayer) {
-       //     SpellKnowledge.Util.addSpell(ModSpells.heal, (EntityPlayer) entityLiving);
-       //     SpellKnowledge.Util.addSpell(ModSpells.kill, (EntityPlayer) entityLiving);
-       // }
         entityLiving.addPotionEffect(new PotionEffect(ModPotions.tranquilized, 1000, 0));
         stack.shrink(1);
         return super.onItemUseFinish(stack, worldIn, entityLiving);
