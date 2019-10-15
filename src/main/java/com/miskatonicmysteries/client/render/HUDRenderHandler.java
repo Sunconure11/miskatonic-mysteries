@@ -45,12 +45,10 @@ public class HUDRenderHandler {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.player;
         ISpellKnowledge knowledge = SpellKnowledge.Util.getKnowledge(player);
-        Set<Spell> spells = knowledge.getSpells();
-        System.out.println("------");
-        if (!spells.isEmpty()){
-            for (int i = 0; i < spells.size(); i++) {
-                Spell spellIn = (Spell) spells.toArray()[i];
-                System.out.println(spellIn.name);
+        Spell[] spells = knowledge.getSpells();
+        if (spells.length > 0){
+            for (int i = 0; i < spells.length; i++) {
+                Spell spellIn = spells[i];
                 ResourceLocation tex = spellIn.iconLocation;
                 int posX = event.getResolution().getScaledWidth() - 18;/// 2 - 88; // + 10;
                 int poxY = event.getResolution().getScaledHeight() / 2; //draw these inventory selection slots for the spells, too

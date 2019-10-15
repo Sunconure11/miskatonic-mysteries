@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ISpellKnowledge {
-    Set<Spell> getSpells();
+    Spell[] getSpells();
 
     Map<Spell, Integer> getSpellCooldowns();
 

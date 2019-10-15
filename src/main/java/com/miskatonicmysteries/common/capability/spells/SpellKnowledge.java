@@ -16,29 +16,35 @@ public class SpellKnowledge implements ISpellKnowledge {
     //(basically I wanted the entire spell list to move by one when a new spell is added, so that the last ones get removed or so)
     private int curSpell;
     private int castingProgress = -1; //may be done with the map only? as in, negatives are cool downs, positives are castings
-    private final Map<Spell, Integer> COOLDOWNS = new LinkedHashMap<>(); ////Store spells as strings again and oof all that jazz
+    private final LinkedHashMap<Spell, Integer> COOLDOWNS = new LinkedHashMap<>(); ////Store spells as strings again and oof all that jazz
     public static final int MAX_SPELLS = 7; //also make refreshing stuff more efficient
-
+    //probably add the isDirty part again
     public SpellKnowledge(){
 
     }
 
     @Override
-    public Set<Spell> getSpells() {
-        return COOLDOWNS.keySet();
+    public Spell[] getSpells() {
+        return COOLDOWNS.keySet().toArray(new Spell[COOLDOWNS.keySet().size()]);
     }
 
     @Override
-    public Map<Spell, Integer> getSpellCooldowns() {
+    public LinkedHashMap<Spell, Integer> getSpellCooldowns() {
         return COOLDOWNS;
     }
 
     @Override
     public boolean addSpell(Spell spell) {
+        if (COOLDOWNS.containsKey(spell)) return false;
+
         COOLDOWNS.put(spell, 0);
-        Map<Spell, Integer> map = rotateSpellMap(COOLDOWNS,1);
-        COOLDOWNS.clear();
-        COOLDOWNS.putAll(map);
+        if (COOLDOWNS.size() > MAX_SPELLS) {
+            Map<Spell, Integer> map = rotateSpellMap(COOLDOWNS, 1);
+            COOLDOWNS.clear();
+            COOLDOWNS.putAll(map);
+            COOLDOWNS.remove(getSpells()[MAX_SPELLS]);
+            return false;
+        }
         return true;
     }
 
@@ -73,6 +79,10 @@ public class SpellKnowledge implements ISpellKnowledge {
     }
 
     public static class Util {
+        public static void getCooldownFor(Spell spell, EntityPlayer player){
+
+        }
+
         public static void startCastingProgress(int ticks, EntityPlayer player) {
             if (!player.world.isRemote) {
                 getKnowledge(player).setCurrentCastingProgress(ticks);
@@ -86,13 +96,13 @@ public class SpellKnowledge implements ISpellKnowledge {
 
         public static Spell getCurrentSpell(EntityPlayer player) {
             if (!player.world.isRemote && isSpellSelected(player)) {
-                return (Spell) getKnowledge(player).getSpells().toArray()[getKnowledge(player).getCurrentSpell()];
+                return getKnowledge(player).getSpells()[getKnowledge(player).getCurrentSpell()];
             }
             return null;
         }
 
         public static boolean isSpellSelected(EntityPlayer player){
-            return getKnowledge(player).getCurrentSpell() > -1 && getKnowledge(player).getCurrentSpell() < getKnowledge(player).getSpells().size();
+            return getKnowledge(player).getCurrentSpell() > -1 && getKnowledge(player).getCurrentSpell() < getKnowledge(player).getSpells().length;
         }
 
         public static ISpellKnowledge getKnowledge(EntityPlayer player) {

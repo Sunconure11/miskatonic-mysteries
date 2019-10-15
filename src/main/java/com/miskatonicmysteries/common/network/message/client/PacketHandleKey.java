@@ -71,10 +71,10 @@ public class PacketHandleKey implements IMessage {
                 if (currentInt > 0) {
                     currentInt--;
                 } else {
-                    currentInt = knowledge.getSpells().size() - 1;
+                    currentInt = knowledge.getSpells().length - 1;
                 }
             } else {
-                if (currentInt < knowledge.getSpells().size() - 1) {
+                if (currentInt < knowledge.getSpells().length - 1) {
                     currentInt++;
                 } else {
                     currentInt = 0;
