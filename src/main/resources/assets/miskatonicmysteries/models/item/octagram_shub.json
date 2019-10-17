@@ -1,0 +1,7 @@
+{
+	"model": "cube_all",
+	"textures": {
+		"all": "miskatonicmysteries:blocks/octagram_shub",
+		"particle": "miskatonicmysteries:blocks/octagram_shub"
+	}
+}

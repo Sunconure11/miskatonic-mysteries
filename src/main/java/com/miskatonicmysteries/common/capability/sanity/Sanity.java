@@ -12,6 +12,7 @@ public class Sanity implements ISanity {
     public static final int SANITY_MAX = 150;
     private int sanity;
     private boolean dirty;
+    private int horrifiedCooldown;
     private Map<String, Integer> expansions = new HashMap<>();
 
     public Sanity() {
@@ -61,6 +62,16 @@ public class Sanity implements ISanity {
     public void addExpansion(String id, int value) {
         setDirty(true);
         expansions.put(id, value);
+    }
+
+    @Override
+    public int getHorrifiedCooldown() {
+        return horrifiedCooldown;
+    }
+
+    @Override
+    public void setHorrifiedCooldown(int cooldown) {
+        this.horrifiedCooldown = cooldown;
     }
 
     @Override

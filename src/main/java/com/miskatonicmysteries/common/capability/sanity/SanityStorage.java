@@ -17,6 +17,7 @@ public class SanityStorage implements Capability.IStorage<ISanity> {
         NBTTagList list = new NBTTagList();
         compound.setTag("expansions", list);
         instance.getExpansionMap().entrySet().stream().forEach(entry -> this.addNewCouple(entry, list));
+        compound.setInteger("horrifiedCooldown", instance.getHorrifiedCooldown());
         return compound;
     }
 
@@ -26,6 +27,7 @@ public class SanityStorage implements Capability.IStorage<ISanity> {
         instance.setSanity(compound.getInteger("sanity"));
         instance.getExpansionMap().clear();
         compound.getTagList("expansions", Constants.NBT.TAG_COMPOUND).forEach(s -> this.loadCouple(instance, s));
+        instance.setHorrifiedCooldown(compound.getInteger("horrifiedCooldown"));
     }
 
     private void addNewCouple(Map.Entry<String, Integer> entry, NBTTagList list) {

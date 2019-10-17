@@ -1,0 +1,7 @@
+{
+	"parent": "miskatonicmysteries:altar",
+	"textures": {
+		"all": "miskatonicmysteries:blocks/eldritch_altar_brick_scorned",
+		"particle": "miskatonicmysteries:blocks/eldritch_altar_brick_scorned"
+	}
+}

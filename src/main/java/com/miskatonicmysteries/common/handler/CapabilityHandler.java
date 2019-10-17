@@ -20,13 +20,16 @@ import com.miskatonicmysteries.proxy.ClientProxy;
 import com.miskatonicmysteries.registry.ModPotions;
 import com.miskatonicmysteries.registry.ModSpells;
 import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+import net.minecraft.block.BlockBanner;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemShield;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -35,13 +38,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 
+@Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
 public class CapabilityHandler {
     public static final ResourceLocation SANITY = new ResourceLocation(MiskatonicMysteries.MODID, "sanity");
     public static final ResourceLocation BLESSING = new ResourceLocation(MiskatonicMysteries.MODID, "blessing");
     public static final ResourceLocation SPELLS = new ResourceLocation(MiskatonicMysteries.MODID, "spells");
 
     @SubscribeEvent
-    public void attachCapability(AttachCapabilitiesEvent event) {
+    public static void attachCapability(AttachCapabilitiesEvent event) {
         if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(SANITY, new SanityProvider());
             event.addCapability(BLESSING, new BlessingProvider());
@@ -50,14 +54,14 @@ public class CapabilityHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerClone(PlayerEvent.Clone event) {
+    public static void onPlayerClone(PlayerEvent.Clone event) {
         Sanity.Util.transferToClone(event);
         BlessingCapability.Util.transferToClone(event);
         SpellKnowledge.Util.transferToClone(event);
     }
 
     @SubscribeEvent
-    public void keyInput(TickEvent.PlayerTickEvent event) {
+    public static void keyInput(TickEvent.PlayerTickEvent event) {
         if (event.player.world.isRemote) {
             if (ClientProxy.SPELL_CANCEL.isPressed()) {
                 PacketHandler.network.sendToServer(new PacketHandleKey(2));
@@ -70,49 +74,56 @@ public class CapabilityHandler {
     }
 
     @SubscribeEvent
-    public void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
+    public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving().hasCapability(SanityProvider.SANITY, null)) {
             ISanity sanity = event.getEntityLiving().getCapability(SanityProvider.SANITY, null);
             if (event.getEntityLiving() instanceof EntityPlayer) {
-                if (!event.getEntityLiving().world.isRemote && sanity.isDirty()) {
-                    Sanity.Util.syncSanity((EntityPlayer) event.getEntityLiving(), sanity);
-                    sanity.setDirty(false);
+                if (!event.getEntityLiving().world.isRemote) {
+                    if (sanity.getHorrifiedCooldown() > 0){
+                        sanity.setHorrifiedCooldown(sanity.getHorrifiedCooldown() - 1);
+                    }
+                    if (sanity.isDirty()) {
+                        Sanity.Util.syncSanity((EntityPlayer) event.getEntityLiving(), sanity);
+                        sanity.setDirty(false);
+                    }
                 }
                 if (event.getEntityLiving().ticksExisted > 0 && sanity.getSanity() < 100 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && event.getEntityLiving().ticksExisted % (ModConfig.sanity.insanityInterval - (100 - sanity.getSanity())) == 0) {
                     MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), sanity, event));
                 }
-            }
-        }
 
-        if (event.getEntityLiving().hasCapability(BlessingProvider.BLESSING, null)) {
-            IBlessingCapability blessing = event.getEntityLiving().getCapability(BlessingProvider.BLESSING, null);
-            if (event.getEntityLiving() instanceof EntityPlayer && blessing.isDirty() && !event.getEntityLiving().world.isRemote) {
-                BlessingCapability.Util.syncBlessing((EntityPlayer) event.getEntityLiving(), blessing);
-                blessing.setDirty(false);
-            }
-        }
+                if (event.getEntityLiving().hasCapability(BlessingProvider.BLESSING, null)) {
+                    IBlessingCapability blessing = event.getEntityLiving().getCapability(BlessingProvider.BLESSING, null);
+                    if (blessing.isDirty() && !event.getEntityLiving().world.isRemote) {
+                        BlessingCapability.Util.syncBlessing((EntityPlayer) event.getEntityLiving(), blessing);
+                        blessing.setDirty(false);
+                    }
+                }
 
-        if (event.getEntityLiving().hasCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null)) {
-            ISpellKnowledge knowledge = event.getEntityLiving().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
-            if (event.getEntityLiving() instanceof EntityPlayer && !event.getEntityLiving().world.isRemote) {
-                 SpellHandler.continueCast(knowledge, SpellKnowledge.Util.getCurrentSpell((EntityPlayer) event.getEntityLiving()), (EntityPlayer) event.getEntityLiving());
-                 //update cooldowns
-                 SpellKnowledge.Util.syncKnowledge((EntityPlayer) event.getEntityLiving(), knowledge);
+                if (event.getEntityLiving().hasCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null)) {
+                    ISpellKnowledge knowledge = event.getEntityLiving().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
+                    SpellHandler.continueCast(knowledge, SpellKnowledge.Util.getCurrentSpell((EntityPlayer) event.getEntityLiving()), (EntityPlayer) event.getEntityLiving());
+                    if (!event.getEntityLiving().world.isRemote) {
+                        if (knowledge.isDirty()) {
+                            SpellKnowledge.Util.syncKnowledge((EntityPlayer) event.getEntityLiving(), knowledge);
+                            knowledge.setDirty(false);
+                        }
+                    }
+                }
             }
         }
     }
 
     @SubscribeEvent
-    public void castSpell(PlayerInteractEvent.RightClickEmpty event) {
+    public static void castSpell(PlayerInteractEvent.RightClickEmpty event) {
         if (event.getWorld().isRemote) {
-            PacketHandler.network.sendToServer(new PacketCastSpell());
+            PacketHandler.network.sendToServer(new PacketCastSpell(event.getPos(), event.getFace()));
         }
     }
 
     @SubscribeEvent
-    public void castSpell(PlayerInteractEvent.RightClickBlock event){
+    public static void castSpell(PlayerInteractEvent.RightClickBlock event){
         if (event.getWorld().isRemote) {
-            PacketHandler.network.sendToServer(new PacketCastSpell());
+             PacketHandler.network.sendToServer(new PacketCastSpell(event.getPos(), event.getFace()));
         }
     }
 }

@@ -1,0 +1,7 @@
+{
+	"parent": "miskatonicmysteries:altar",
+	"textures": {
+		"all": "miskatonicmysteries:blocks/eldritch_altar_stone_enriched",
+		"particle": "miskatonicmysteries:blocks/eldritch_altar_stone_enriched"
+	}
+}

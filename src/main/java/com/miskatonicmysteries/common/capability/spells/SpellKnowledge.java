@@ -12,13 +12,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.*;
 
 public class SpellKnowledge implements ISpellKnowledge {
-    //this entire code is a mess and needs to be more efficient, especially in updating (isDirty stuff?)
-    //(basically I wanted the entire spell list to move by one when a new spell is added, so that the last ones get removed or so)
     private int curSpell;
-    private int castingProgress = -1; //may be done with the map only? as in, negatives are cool downs, positives are castings
-    private final LinkedHashMap<Spell, Integer> COOLDOWNS = new LinkedHashMap<>(); ////Store spells as strings again and oof all that jazz
-    public static final int MAX_SPELLS = 7; //also make refreshing stuff more efficient
-    //probably add the isDirty part again
+    private int castingProgress = -1;
+    private final LinkedHashMap<Spell, Integer> COOLDOWNS = new LinkedHashMap<>();
+    public static final int MAX_SPELLS = 7;
+    private boolean isDirty;
     public SpellKnowledge(){
 
     }
@@ -29,14 +27,18 @@ public class SpellKnowledge implements ISpellKnowledge {
     }
 
     @Override
-    public LinkedHashMap<Spell, Integer> getSpellCooldowns() {
-        return COOLDOWNS;
+    public LinkedHashMap<Spell, Integer> getSpellCooldowns(boolean dirty) {
+        if(dirty){
+            setDirty(true);
+            return COOLDOWNS;
+        }
+        return new LinkedHashMap<>(COOLDOWNS);
     }
 
     @Override
     public boolean addSpell(Spell spell) {
         if (COOLDOWNS.containsKey(spell)) return false;
-
+        setDirty(true);
         COOLDOWNS.put(spell, 0);
         if (COOLDOWNS.size() > MAX_SPELLS) {
             Map<Spell, Integer> map = rotateSpellMap(COOLDOWNS, 1);
@@ -55,6 +57,7 @@ public class SpellKnowledge implements ISpellKnowledge {
 
     @Override
     public void setCurrentSpell(int num) {
+        setDirty(true);
         this.curSpell = num;
     }
 
@@ -65,7 +68,18 @@ public class SpellKnowledge implements ISpellKnowledge {
 
     @Override
     public void setCurrentCastingProgress(int progress) {
+        setDirty(true);
         this.castingProgress = progress;
+    }
+
+    @Override
+    public boolean isDirty() {
+        return isDirty;
+    }
+
+    @Override
+    public void setDirty(boolean dirty) {
+        this.isDirty = dirty;
     }
 
     private Map<Spell, Integer> rotateSpellMap(Map<Spell, Integer> map, int distance){
@@ -79,8 +93,14 @@ public class SpellKnowledge implements ISpellKnowledge {
     }
 
     public static class Util {
-        public static void getCooldownFor(Spell spell, EntityPlayer player){
+        public static int getCooldownFor(Spell spell, EntityPlayer player){
+            return getKnowledge(player).getSpellCooldowns(false).getOrDefault(spell, 0);
+        }
 
+        public static void setCooldownFor(Spell spell, int cooldown, EntityPlayer player, boolean ignoreIncrease) {
+            if (cooldown >= getCooldownFor(spell, player) || ignoreIncrease) {
+                getKnowledge(player).getSpellCooldowns(true).replace(spell, getCooldownFor(spell, player), cooldown);
+            }
         }
 
         public static void startCastingProgress(int ticks, EntityPlayer player) {
@@ -111,10 +131,16 @@ public class SpellKnowledge implements ISpellKnowledge {
 
         public static void transferToClone(PlayerEvent.Clone event) {
             if (event.getEntityPlayer().hasCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null)) {
-                ISpellKnowledge sanity = event.getEntityPlayer().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
-                ISpellKnowledge oldSanity = event.getOriginal().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
-                SpellKnowledgeProvider.SPELL_KNOWLEDGE.readNBT(sanity, null, SpellKnowledgeProvider.SPELL_KNOWLEDGE.writeNBT(oldSanity, null));
-                syncKnowledge(event.getEntityPlayer(), sanity);
+                ISpellKnowledge knowledge = event.getEntityPlayer().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
+                ISpellKnowledge oldKnowledge = event.getOriginal().getCapability(SpellKnowledgeProvider.SPELL_KNOWLEDGE, null);
+                oldKnowledge.setCurrentCastingProgress(-1);
+                oldKnowledge.setCurrentSpell(-1);
+                for (Spell spell : oldKnowledge.getSpells()){
+                    setCooldownFor(spell,0, event.getOriginal(), true);
+                }
+                SpellKnowledgeProvider.SPELL_KNOWLEDGE.readNBT(knowledge, null, SpellKnowledgeProvider.SPELL_KNOWLEDGE.writeNBT(oldKnowledge, null));
+
+                syncKnowledge(event.getEntityPlayer(), knowledge);
             }
         }
 

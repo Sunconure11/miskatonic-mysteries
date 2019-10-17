@@ -86,6 +86,7 @@ public class MiskatonicMysteries {
         ModBiomes.registerBiomes();
         initTileEntities();
         ModSpells.init();
+        ModObjects.addBanners();
     }
 
     @EventHandler
@@ -95,8 +96,6 @@ public class MiskatonicMysteries {
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHasturShrineHandler());
         MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
 
-        MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
-        MinecraftForge.EVENT_BUS.register(new InsanityHandler());
         new LootHandler();
 
         registerOreDict();

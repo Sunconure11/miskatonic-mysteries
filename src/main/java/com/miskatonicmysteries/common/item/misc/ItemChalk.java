@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.item.misc;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -70,7 +71,9 @@ public class ItemChalk extends ItemBlock {
         if (block instanceof BlockOctagram) {
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
-                    if (!((BlockOctagram) block).canPlace(worldIn, pos.add(x, 0, z)) || !super.canPlaceBlockOnSide(worldIn, pos.add(x, 0, z), side, player, stack)) {
+                    if(!((BlockOctagram) block).canPlace(worldIn, pos.add(x, 0, z))){
+                        return false;
+                    }else if (!worldIn.mayPlace(this.block, pos, false, side, null)){
                         return false;
                     }
                 }

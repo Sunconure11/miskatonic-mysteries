@@ -18,4 +18,8 @@ public interface ISanity {
     Map<String, Integer> getExpansionMap();
 
     void addExpansion(String id, int value);
+
+    int getHorrifiedCooldown();
+
+    void setHorrifiedCooldown(int cooldown);
 }

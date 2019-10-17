@@ -29,6 +29,12 @@ tile.altar_prismarine.name=Prismarine Altar
 tile.altar_sandstone.name=Sandstone Altar
 tile.altar_purpur.name=Funky Altar
 
+tile.altar_coral_dead.name=Dead Coral Altar
+tile.altar_stone_enriched.name=Enriched Stone Altar
+tile.altar_brick_scorned.name=Scorned Brick Altar
+
+tile.yellow_sign.name=Yellow Sign
+
 tile.candles.name=Candle
 
 tile.octagram_shub.name=Profane Chalk
@@ -67,7 +73,7 @@ item.tallow.name=Tallow
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath
 entity.hastur.name=Hastur
-entity.cultist_hastur.name=Hastur Cultist
+entity.cultist_hastur.name=Yellow King's Vassal
 entity.cultist_shub.name=Cultist of the Goat
 
 #POTIONS
@@ -93,14 +99,23 @@ config.insanity_interval=Insanity Event Interval
 
 #COMMANDS
 commands.miskmyst.usage=miskatonicmysteries <player> <setSanity|setBlessing> <amount>
-command.miskmyst.player_null=Player %s could not be found
+command.miskmyst.player_null=§cPlayer %s could not be found
 command.miskmyst.no_command=%s is not a valid command
 
 commands.miskmyst.sanity.success=Successfully set %s's sanity to %s
 commands.miskmyst.sanity.fail_badnum=%s is not a valid number
 
 commands.miskmyst.blessing.success=Successfully set %s's blessing to %s
-commands.miskmyst.sanity.fail_badblessing=%s is not a valid blessing
+commands.miskmyst.blessing.fail_badblessing=%s is not a valid blessing
+
+commands.miskmyst.spell.success=Successfully added %s to %s's compendium
+commands.miskmyst.spell.fail_no_spell=%s is not a valid spell
+
+commands.miskmyst.reset_cooldown.success=Successfully reset the cooldown of %s spells
+commands.miskmyst.reset_cooldown.fail_no_spells=Spells couldn't be reset, as %s does not have any spells
+
+commands.miskmyst.reset_spells.success=Successfully cleared %s's spell list
+commands.miskmyst.reset_spells.fail_no_spells=%s's spell list could not be cleared, as they don't have one
 
 #BOOK
 info.necronomicon.book.landing=FNORD (this is a placeholder landing text)

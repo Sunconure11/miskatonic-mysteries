@@ -33,7 +33,7 @@ public class ShaderHandler {
     public static final int SHADER_TRANQ = 1; //in the code, instead of making
     public static final int SHADER_MANIA = 2; //separate shaders for each intensity
 
-    public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/desaturate.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/phosphor.json")};
+    public static ResourceLocation[] shader_resources = new ResourceLocation[]{new ResourceLocation("shaders/post/desaturate.json"), new ResourceLocation("shaders/post/antialias.json"), new ResourceLocation("shaders/post/mania_phosphor.json")};
     //these shaders are temporary, I'm just not good enough to make shaders :(
 
     //basically: somehow pass in a uniform that displays the sanity level (you can get the ShaderManager with a Shader instance)
@@ -70,7 +70,7 @@ public class ShaderHandler {
             ShaderGroup target = new ShaderGroup(Minecraft.getMinecraft().getTextureManager(), Minecraft.getMinecraft().getResourceManager(), Minecraft.getMinecraft().getFramebuffer(), shader_resources[shaderId]);
             if (OpenGlHelper.areShadersSupported()) {
                 if (shaderGroups.containsKey(shaderId)) {
-                    ((ShaderGroup) shaderGroups.get(shaderId)).deleteShaderGroup();
+                    shaderGroups.get(shaderId).deleteShaderGroup();
                     shaderGroups.remove(shaderId);
                 }
 

@@ -1,0 +1,6 @@
+{
+  "parent": "miskatonicmysteries:yellow_sign",
+  "textures": {
+    "all": "miskatonicmysteries:blocks/yellow_sign"
+  }
+}

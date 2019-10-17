@@ -25,7 +25,6 @@ public class ItemTranquilizer extends ItemFood{
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        System.out.println(SpellKnowledge.Util.getKnowledge(playerIn).getSpellCooldowns());
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 

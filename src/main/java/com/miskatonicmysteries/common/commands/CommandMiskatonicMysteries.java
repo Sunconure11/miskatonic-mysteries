@@ -5,10 +5,7 @@ import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.common.misc.spells.Spell;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -19,10 +16,13 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+//should probably make the code here nicer to look at
 public class CommandMiskatonicMysteries extends CommandBase{
     public static final String COMMAND_SANITY = "setSanity";
     public static final String COMMAND_BLESSING = "setBlessing";
     public static final String COMMAND_SPELL = "addSpell";
+    public static final String COMMAND_RESET_COOLDOWN = "resetSpellCooldowns";
+    public static final String COMMAND_RESET_SPELLS = "resetSpells";
     @Override
     public String getName() {
         return "miskatonicmysteries";
@@ -45,9 +45,9 @@ public class CommandMiskatonicMysteries extends CommandBase{
         if (args.length == 1){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         } else if (args.length == 2){
-            return getListOfStringsMatchingLastWord(args, new String[] {COMMAND_SANITY, COMMAND_BLESSING, COMMAND_SPELL});
+            return getListOfStringsMatchingLastWord(args, COMMAND_SANITY, COMMAND_BLESSING, COMMAND_SPELL, COMMAND_RESET_COOLDOWN, COMMAND_RESET_SPELLS);
         } else if (args.length == 3){
-            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) : args[1].equalsIgnoreCase(COMMAND_BLESSING) ?  getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) : args[1].equalsIgnoreCase(COMMAND_SPELL) ? Arrays.asList(Spell.SPELLS.keySet().toArray(new String[Spell.SPELLS.size()])) :Arrays.asList(new String[]{"false"});
+            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) : args[1].equalsIgnoreCase(COMMAND_BLESSING) ?  getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) : args[1].equalsIgnoreCase(COMMAND_SPELL) ? Arrays.asList(Spell.SPELLS.keySet().toArray(new String[Spell.SPELLS.size()])) :Arrays.asList(new String[]{});
         }
         return super.getTabCompletions(server, sender, args, targetPos);
     }
@@ -60,19 +60,20 @@ public class CommandMiskatonicMysteries extends CommandBase{
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         String mode;
-        String value;
+        String value = "";
         EntityPlayer player;
 
-        if (args.length >= 3){
+        if (args.length >= 2){
             player = server.getEntityWorld().getPlayerEntityByName(args[0]);
             mode = args[1];
-            value = args[2];
         }else{
-            throw new WrongUsageException(getUsage(sender), new Object[0]); //todo add localization to that later
+            throw new WrongUsageException(getUsage(sender)); //todo add localization to that later
         }
+        if (args.length >= 3)
+            value = args[2];
 
         if (player == null){
-            throw new WrongUsageException("command.miskmyst.player_null", args[0]);
+            throw new SyntaxErrorException("command.miskmyst.player_null", args[0]);
         }
 
         if (mode.equalsIgnoreCase(COMMAND_SANITY)){
@@ -80,21 +81,36 @@ public class CommandMiskatonicMysteries extends CommandBase{
             if (Sanity.Util.setSanity(amount, player))
                 sendNotification(sender, player, "commands.miskmyst.sanity.success", player.getDisplayName(), value);
             else
-                sendNotification(sender, player, "commands.miskmyst.sanity.fail_badnum", value);
+                throw new SyntaxErrorException("commands.miskmyst.sanity.fail_badnum", value);
         }else if (mode.equalsIgnoreCase(COMMAND_BLESSING)){
             String blessing = value;
             if (BlessingCapability.Util.setBlessing(Blessing.getBlessingWithNull(value), player))
                 sendNotification(sender, player, "commands.miskmyst.blessing.success", player.getDisplayName(), Blessing.getBlessing(blessing).getName());
             else
-                sendNotification(sender, player, "commands.miskmyst.blessing.fail_badblessing", value);
+                throw new SyntaxErrorException("commands.miskmyst.blessing.fail_badblessing", value);
         }else if (mode.equalsIgnoreCase(COMMAND_SPELL)){
             String spell = value;
             if (Spell.SPELLS.containsKey(spell)) {
                 SpellKnowledge.Util.addSpell(Spell.SPELLS.get(spell), player);
-                sendNotification(sender, player, "commands.miskmyst.spell.success", player.getDisplayName(), value);
+                sendNotification(sender, player, "commands.miskmyst.spell.success", value, player.getDisplayName());
             }else
-                sendNotification(sender, player, "commands.miskmyst.spell.fail_no_spell", value);
-        }else{
+                throw new SyntaxErrorException("commands.miskmyst.spell.fail_no_spell", value);
+        }else if (mode.equalsIgnoreCase(COMMAND_RESET_COOLDOWN)){
+            if (SpellKnowledge.Util.getKnowledge(player).getSpells().length > 0) {
+                for (Spell spell : SpellKnowledge.Util.getKnowledge(player).getSpells()){
+                    SpellKnowledge.Util.setCooldownFor(spell,0, player, true);
+                }
+                sendNotification(sender, player, "commands.miskmyst.reset_cooldown.success", player.getDisplayName(), SpellKnowledge.Util.getKnowledge(player).getSpells().length);
+            }else
+                throw new SyntaxErrorException("commands.miskmyst.reset_cooldown.fail_no_spells", player.getDisplayName());
+        }else if (mode.equalsIgnoreCase(COMMAND_RESET_SPELLS)){
+            if (SpellKnowledge.Util.getKnowledge(player).getSpells().length > 0) {
+                SpellKnowledge.Util.getKnowledge(player).getSpellCooldowns(true).clear();
+                sendNotification(sender, player, "commands.miskmyst.reset_spells.success", player.getDisplayName());
+            }else
+                throw new SyntaxErrorException("commands.miskmyst.reset_spells.fail_no_spells", player.getDisplayName());
+        }
+        else{
             throw new WrongUsageException(getUsage(sender), args[1]);
         }
     }

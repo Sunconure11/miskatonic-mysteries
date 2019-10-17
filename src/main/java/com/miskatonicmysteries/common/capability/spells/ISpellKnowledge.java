@@ -9,7 +9,7 @@ import java.util.Set;
 public interface ISpellKnowledge {
     Spell[] getSpells();
 
-    Map<Spell, Integer> getSpellCooldowns();
+    Map<Spell, Integer> getSpellCooldowns(boolean dirty);
 
     boolean addSpell(Spell spell);
 
@@ -20,4 +20,8 @@ public interface ISpellKnowledge {
     int getCurrentCastingProgess();
 
     void setCurrentCastingProgress(int progress);
+
+    boolean isDirty();
+
+    void setDirty(boolean dirty);
 }

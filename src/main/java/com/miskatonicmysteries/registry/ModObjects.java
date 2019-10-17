@@ -1,10 +1,7 @@
 package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.block.BlockAltar;
-import com.miskatonicmysteries.common.block.BlockCandles;
-import com.miskatonicmysteries.common.block.BlockMural;
-import com.miskatonicmysteries.common.block.BlockOctagram;
+import com.miskatonicmysteries.common.block.*;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
@@ -22,9 +19,12 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class ModObjects {
+    //todo, add water, but as a finite fluid used in Tide Wave (Spell)
     public static ItemArmor.ArmorMaterial ARMOR_HASTUR = EnumHelper.addArmorMaterial("hastur_cultist", MiskatonicMysteries.MODID + ":hastur_cultist", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0);
     public static ItemArmor.ArmorMaterial ARMOR_SHUBNIGGURATH = EnumHelper.addArmorMaterial("shubniggurath_cultist", MiskatonicMysteries.MODID + ":shubniggurath_cultist", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0);
 
@@ -50,14 +50,16 @@ public class ModObjects {
     public static BlockAltar altar_prismarine = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_prismarine");
     public static BlockAltar altar_sandstone = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_sandstone");
     public static BlockAltar altar_purpur = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_purpur");
-/* TODO, this is for later ;)
+
     public static BlockAltar altar_coral_dead = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_coral_dead");
 
     public static BlockAltar altar_stone_enriched = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_stone_enriched");
     public static BlockAltar altar_brick_scorned = Util.create(new BlockAltar(), SoundType.STONE, 1.5F, 30, "pickaxe", 0,"altar_brick_scorned");
-*/
+
     public static BlockOctagram octagram_shub = Util.create(null, new BlockOctagram(Blessing.SHUB), SoundType.STONE, 3, 20, "shovel", 0, "octagram_shub");
     public static BlockOctagram octagram_hastur = Util.create(null, new BlockOctagram(Blessing.HASTUR), SoundType.STONE, 3, 20, "shovel", 0, "octagram_hastur");
+
+    public static BlockYellowSign yellow_sign = Util.create(new BlockYellowSign(), SoundType.STONE, 3, 20, "shovel", 0, "yellow_sign");
 
     public static ItemChalk chalk_goat = Util.create(new ItemChalk(octagram_shub), "chalk_goat");
     public static ItemChalk chalk_yellowking = Util.create(new ItemChalk(octagram_hastur), "chalk_yellowking");
@@ -89,4 +91,14 @@ public class ModObjects {
 
     public static Item necronomicon = Util.create(new ItemMMBook("necronomicon", Blessing.NONE), "necronomicon");
 
+    public static BannerPattern YELLOW_SIGN_PATTERN = null;
+    public static void addBanners(){
+        addPattern("yellow_sign", "yls", new ItemStack(ModObjects.yellow_sign)); //yellow sign instead
+    }
+
+    private static void addPattern(String name, String id, ItemStack craftingItem) {
+        name = MiskatonicMysteries.MODID + "_" + name;
+        id = "miskmyst_" + id;
+        YELLOW_SIGN_PATTERN = EnumHelper.addEnum(BannerPattern.class, name.toUpperCase(), new Class[] { String.class, String.class, ItemStack.class }, name, id, craftingItem);
+    }
 }

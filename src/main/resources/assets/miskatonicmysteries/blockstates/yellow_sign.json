@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "miskatonicmysteries:yellow_sign",
+    "textures": {
+      "particle": "miskatonicmysteries:blocks/yellow_sign",
+      "all": "miskatonicmysteries:blocks/yellow_sign"
+    }
+  },
+  "variants": {
+    "facing=north,on_wall=false": [{}],
+    "facing=south,on_wall=false": [{"y": 180}],
+    "facing=west,on_wall=false": [{ "y": 270}],
+    "facing=east,on_wall=false": [{ "y": 90}],
+    "facing=up,on_wall=false": [{}],
+    "facing=down,on_wall=false": [{}],
+
+    "facing=north,on_wall=true": [{"x": 90}],
+    "facing=south,on_wall=true": [{"y": 180, "x": 90}],
+    "facing=west,on_wall=true": [{"y": 270, "x": 90}],
+    "facing=east,on_wall=true": [{"y": 90, "x": 90}],
+    "facing=up,on_wall=true": [{}],
+    "facing=down,on_wall=true": [{}],
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

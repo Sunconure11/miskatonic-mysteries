@@ -1,0 +1,6 @@
+{
+  "parent": "miskatonicmysteries:candle",
+  "textures": {
+    "all": "miskatonicmysteries:blocks/candle_unlit"
+  }
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "cube_all",
+	"textures": {
+		"all": "miskatonicmysteries:blocks/octagram_hastur",
+		"particle": "miskatonicmysteries:blocks/octagram_hastur"
+	}
+}

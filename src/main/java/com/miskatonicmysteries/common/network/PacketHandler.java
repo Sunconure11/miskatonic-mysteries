@@ -6,6 +6,7 @@ import com.miskatonicmysteries.common.network.message.capability.PacketSyncSanit
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSpellKnowledge;
 import com.miskatonicmysteries.common.network.message.client.PacketCastSpell;
 import com.miskatonicmysteries.common.network.message.client.PacketHandleKey;
+import com.miskatonicmysteries.common.network.message.client.PacketYellowSign;
 import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
 import com.miskatonicmysteries.common.network.message.world.PacketChangeBiome;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +42,7 @@ public class PacketHandler {
         network.registerMessage(new PacketChangeBiome.Handler(), PacketChangeBiome.class, next(), Side.CLIENT);
 
         network.registerMessage(new PacketHandleKey.Handler(), PacketHandleKey.class, next(), Side.SERVER);
+        network.registerMessage(new PacketYellowSign.Handler(), PacketYellowSign.class, next(), Side.SERVER);
         network.registerMessage(new PacketCastSpell.Handler(), PacketCastSpell.class, next(), Side.SERVER);
     }
 

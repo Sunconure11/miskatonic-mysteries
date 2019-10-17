@@ -20,7 +20,7 @@ public class SpellKnowledgeStorage implements Capability.IStorage<ISpellKnowledg
         compound.setInteger("castingProgress", instance.getCurrentCastingProgess());
         NBTTagList list = new NBTTagList();
         compound.setTag("spells", list);
-        instance.getSpellCooldowns().entrySet().stream().forEach(entry -> this.addNewCouple(entry, list));
+        instance.getSpellCooldowns(false).entrySet().stream().forEach(entry -> this.addNewCouple(entry, list));
         return compound;
     }
 
@@ -29,7 +29,7 @@ public class SpellKnowledgeStorage implements Capability.IStorage<ISpellKnowledg
         final NBTTagCompound compound = (NBTTagCompound) nbt;
         instance.setCurrentSpell(compound.getInteger("curSpell"));
         instance.setCurrentCastingProgress(compound.getInteger("castingProgress"));
-        instance.getSpellCooldowns().clear();
+        instance.getSpellCooldowns(true).clear();
         compound.getTagList("spells", Constants.NBT.TAG_COMPOUND).forEach(s -> this.loadCouple(instance, s));
     }
 
@@ -42,7 +42,8 @@ public class SpellKnowledgeStorage implements Capability.IStorage<ISpellKnowledg
 
     private void loadCouple(ISpellKnowledge sanity, NBTBase s) {
         NBTTagCompound tag = (NBTTagCompound) s;
-        if (Spell.SPELLS.containsKey(tag.getString("spell")))
-            sanity.getSpellCooldowns().put(Spell.SPELLS.get(tag.getString("spell")), tag.getInteger("cooldown"));
+        if (Spell.SPELLS.containsKey(tag.getString("spell"))) {
+            sanity.getSpellCooldowns(true).put(Spell.SPELLS.get(tag.getString("spell")), tag.getInteger("cooldown"));
+        }
     }
 }

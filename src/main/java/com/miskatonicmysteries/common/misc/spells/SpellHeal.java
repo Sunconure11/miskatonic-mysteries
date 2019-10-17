@@ -24,12 +24,13 @@ public class SpellHeal extends Spell {
 
     @Override
     public void cast(EntityPlayer caster) {
-        caster.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 100, 2, false, false));
+        super.cast(caster);
+            caster.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 100, 2, false, false));
     }
 
     @Override
     public void price(EntityPlayer caster) {
-        caster.getFoodStats().addStats(-3, -3);
-        caster.getFoodStats().addExhaustion(1.5F);
+            caster.getFoodStats().addStats(-3, -3);
+            caster.getFoodStats().addExhaustion(1.5F);
     }
 }
