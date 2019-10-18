@@ -41,7 +41,7 @@ public class PacketYellowSign implements IMessage{
                 EntityPlayer player = MiskatonicMysteries.proxy.getPlayer(ctx);
                 if (Sanity.Util.getSanityCapability(player).getHorrifiedCooldown() <= 0 && player.getActivePotionEffect(ModPotions.mania) == null && BlessingCapability.Util.getBlessing(player) != Blessing.HASTUR){
                     player.addPotionEffect(new PotionEffect(ModPotions.mania, 3600, 0, true, true));
-                    Sanity.Util.getSanityCapability(player).setHorrifiedCooldown(1200);
+                    Sanity.Util.getSanityCapability(player).setHorrifiedCooldown(600);
                 }
             });
             return null;

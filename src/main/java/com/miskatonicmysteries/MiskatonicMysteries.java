@@ -12,8 +12,6 @@ import com.miskatonicmysteries.common.capability.spells.ISpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledgeStorage;
 import com.miskatonicmysteries.common.commands.CommandMiskatonicMysteries;
-import com.miskatonicmysteries.common.handler.CapabilityHandler;
-import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.common.handler.LootHandler;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
@@ -36,9 +34,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -74,6 +72,10 @@ public class MiskatonicMysteries {
     };
 
     public static final DamageSource VORE = new DamageSource(MODID + "_devour").setDamageBypassesArmor().setDamageIsAbsolute();
+
+    static {
+         FluidRegistry.enableUniversalBucket();
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {

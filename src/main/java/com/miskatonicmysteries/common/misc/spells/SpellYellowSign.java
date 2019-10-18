@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.misc.spells;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -14,15 +15,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,20 +50,37 @@ public class SpellYellowSign extends Spell {
     @Override
     public void startCasting(EntityPlayer caster, BlockPos pos, EnumFacing facing) {
         World world = caster.world;
-        IBlockState oldState = world.getBlockState(pos);
-        Block block = oldState.getBlock();
+        if(world.getTileEntity(pos) instanceof TileEntityBanner){
+            TileEntityBanner banner = (TileEntityBanner)world.getTileEntity(pos);
+            NBTTagCompound bannerTag = banner.serializeNBT();
+            System.out.println(bannerTag);//Patterns:[{Pattern:"rs",Color:7}], a sub compound
+            if (bannerTag.hasKey("Base")){
+                if (!bannerTag.hasKey("Patterns")){
+                    bannerTag.setTag("Patterns", new NBTTagList());
+                }
+                EnumDyeColor baseColor = EnumDyeColor.byDyeDamage(bannerTag.getInteger("Base"));
+                NBTTagCompound yellowSignPattern = new NBTTagCompound();
+                yellowSignPattern.setString("Pattern", ModObjects.YELLOW_SIGN_PATTERN.getHashname());
+                yellowSignPattern.setInteger("Color", baseColor == EnumDyeColor.YELLOW ? EnumDyeColor.BLACK.getDyeDamage() : EnumDyeColor.YELLOW.getDyeDamage());
+                bannerTag.getTagList("Patterns", Constants.NBT.TAG_COMPOUND).appendTag(yellowSignPattern);
+            }
+            banner.deserializeNBT(bannerTag);
+            PacketHandler.updateTE(banner);
+        }else {
+            IBlockState oldState = world.getBlockState(pos);
+            Block block = oldState.getBlock();
 
-        if (!block.isReplaceable(world, pos))
-        {
-            pos = pos.offset(facing);
-        }
-
-        if (caster.canPlayerEdit(pos, facing, ItemStack.EMPTY) && world.mayPlace(ModObjects.yellow_sign, pos, false, facing, caster)) {
-            IBlockState state = ModObjects.yellow_sign.getStateForPlacement(world, pos, facing, 0.5F, 0.5F, 0.5F, 0, caster, caster.getActiveHand());
-            if (!placeSign(world, pos, caster, state)){
-                onCancelled(caster);
+            if (!block.isReplaceable(world, pos)) {
+                pos = pos.offset(facing);
             }
 
+            if (caster.canPlayerEdit(pos, facing, ItemStack.EMPTY) && world.mayPlace(ModObjects.yellow_sign, pos, false, facing, caster)) {
+                IBlockState state = ModObjects.yellow_sign.getStateForPlacement(world, pos, facing, 0.5F, 0.5F, 0.5F, 0, caster, caster.getActiveHand());
+                if (!placeSign(world, pos, caster, state)) {
+                    onCancelled(caster);
+                }
+
+            }
         }
         super.startCasting(caster, pos, facing);
     }

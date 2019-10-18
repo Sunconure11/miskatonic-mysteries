@@ -111,7 +111,7 @@ commands.miskmyst.blessing.fail_badblessing=%s is not a valid blessing
 commands.miskmyst.spell.success=Successfully added %s to %s's compendium
 commands.miskmyst.spell.fail_no_spell=%s is not a valid spell
 
-commands.miskmyst.reset_cooldown.success=Successfully reset the cooldown of %s spells
+commands.miskmyst.reset_cooldown.success=Successfully reset the cooldown of %s's spells
 commands.miskmyst.reset_cooldown.fail_no_spells=Spells couldn't be reset, as %s does not have any spells
 
 commands.miskmyst.reset_spells.success=Successfully cleared %s's spell list

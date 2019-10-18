@@ -9,6 +9,7 @@ import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.registry.ModEntities;
+import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+import sun.jvm.hotspot.opto.Block;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy {
@@ -34,9 +36,9 @@ public class ClientProxy extends ServerProxy {
     public void preInit(FMLPreInitializationEvent event){
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAltar.class, new RenderAltar());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOctagram.class, new RenderOctagram());
-
         ModEntities.registerRenderers();
         registerKeybinds();
+        ModObjects.block_water_mm.addStateMapper();
     }
 
     public void init(FMLInitializationEvent event) {

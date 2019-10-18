@@ -5,12 +5,16 @@ import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
 import com.miskatonicmysteries.client.render.entity.RenderGoatLegs;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.potion.ModPotion;
+import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,14 +23,47 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class RenderManipulatorHandler {
     public static HashMap<Integer, EntityLivingBase> mobMob = new HashMap<>(); //actual mob - mob displayed
 
+    public static float cameraRoll = 0;
+    public static boolean switchRollDirection = false;
+    public static float cameraYaw = 0;
+    public static boolean switchYawDirection = false;
+    public static float cameraPitch = 0;
+    public static boolean switchPitchDirection = false;
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void maniaSettings(EntityViewRenderEvent.CameraSetup event) {
+            EntityPlayer player = Minecraft.getMinecraft().player;
+            if (player.getActivePotionEffect(ModPotions.mania) != null) {
+                Random rand = player.getRNG();
+                if (!Minecraft.getMinecraft().isGamePaused()) {
+                    cameraRoll += rand.nextFloat() / 3F * (switchRollDirection ? 1 : -1);
+                    if ((cameraRoll >= 1 && switchRollDirection) || (!switchRollDirection && cameraRoll <= -1)) {
+                        switchRollDirection = !switchRollDirection;
+                    }
+                    cameraYaw += rand.nextFloat() / 3F * (switchYawDirection ? 1 : -1);
+                    if ((cameraYaw >= 1 && switchYawDirection) || (!switchYawDirection && cameraYaw <= -1)) {
+                        switchYawDirection = !switchYawDirection;
+                    }
+                    cameraPitch += rand.nextFloat() / 3F * (switchPitchDirection ? 1 : -1);
+                    if ((cameraPitch >= 1 && switchPitchDirection) || (!switchPitchDirection && cameraPitch <= -1)) {
+                        switchPitchDirection = !switchPitchDirection;
+                    }
+                }
+                event.setYaw(event.getYaw() + cameraYaw);
+                event.setPitch(event.getPitch() + cameraPitch);
+                event.setRoll(event.getRoll() + cameraRoll);
+            }
+    }
+
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onRender(RenderLivingEvent.Pre event) {//might remove the ifDirty part
+    public void onRender(RenderLivingEvent.Pre event) {
         if (mobMob.get(event.getEntity().getEntityId()) != null) {
             event.setCanceled(true);
 

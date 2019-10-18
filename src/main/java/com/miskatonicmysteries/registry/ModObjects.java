@@ -61,6 +61,11 @@ public class ModObjects {
 
     public static BlockYellowSign yellow_sign = Util.create(new BlockYellowSign(), SoundType.STONE, 3, 20, "shovel", 0, "yellow_sign");
 
+
+    //ah, yes, the three physical states: block, fluid and item
+
+    public static BlockFluidMMWater block_water_mm = new BlockFluidMMWater();
+
     public static ItemChalk chalk_goat = Util.create(new ItemChalk(octagram_shub), "chalk_goat");
     public static ItemChalk chalk_yellowking = Util.create(new ItemChalk(octagram_hastur), "chalk_yellowking");
 

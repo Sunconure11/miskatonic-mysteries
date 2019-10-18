@@ -39,8 +39,7 @@ import java.util.stream.StreamSupport;
 
 @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
 public class InsanityHandler {
-    //todo, add config to some of this stuff
-    //also todo, change the way the chance is calculated, alSO WORK ON THIS WTH I'VE BEEN LAZY >:(
+
     @SubscribeEvent
     public static void handleInsanity(InsanityEvent insanityEvent) {
         if (!insanityEvent.getPlayer().world.isRemote) {
@@ -109,7 +108,6 @@ public class InsanityHandler {
                 BlockPos pos = mc.getRenderViewEntity().rayTrace(8, (float) event.getRenderPartialTicks()).getBlockPos();
                 if (pos != null) {
                     if (mc.world.getTileEntity(pos) instanceof TileEntityBanner) {
-                        System.out.println(((TileEntityBanner) mc.world.getTileEntity(pos)).getPatternList());
                         if (((TileEntityBanner) mc.world.getTileEntity(pos)).getPatternList().contains(ModObjects.YELLOW_SIGN_PATTERN)) {
                             PacketHandler.network.sendToServer(new PacketYellowSign());
                         }
