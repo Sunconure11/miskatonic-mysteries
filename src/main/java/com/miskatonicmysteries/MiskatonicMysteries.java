@@ -101,6 +101,7 @@ public class MiskatonicMysteries {
 
         registerOreDict();
         registerFurnaceRecipes();
+        ModObjects.addFoci();
     }
 
     @Mod.EventHandler

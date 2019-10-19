@@ -12,14 +12,15 @@ import com.miskatonicmysteries.common.item.misc.ItemMMBook;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
 import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
+import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -105,5 +106,16 @@ public class ModObjects {
         name = MiskatonicMysteries.MODID + "_" + name;
         id = "miskmyst_" + id;
         YELLOW_SIGN_PATTERN = EnumHelper.addEnum(BannerPattern.class, name.toUpperCase(), new Class[] { String.class, String.class, ItemStack.class }, name, id, craftingItem);
+    }
+
+    public static void addFoci(){
+        new RiteFocus(gold_oceanic, 0.2F, 75);
+        new RiteFocus(Items.DIAMOND, 0.2F, 75);
+        new RiteFocus(Items.EMERALD, 0.2F, 75);
+        new RiteFocus(Items.NETHER_STAR, 0.2F, 75);
+        //heart of the sea and compat stuff
+        new RiteFocus(yellow_kings_dagger, 0.2F, 75).addAlternatePredicate(s -> s.getItem() instanceof ItemSword && ((ItemSword) s.getItem()).getToolMaterialName().equals(TOOL_CULTIST.name()));
+        new RiteFocus(Items.ENCHANTED_BOOK, 0.2F, 75).addAlternatePredicate(s -> (s.getItem() instanceof ItemTool || s.getItem() instanceof ItemSword) && !EnchantmentHelper.getEnchantments(s).isEmpty());
+        //add more foci... probably change the way foci work... (basically, they'll check an oreDict entry instead, and the values may be set to depend on other factors (give ItemStack as parameter in this case)
     }
 }
