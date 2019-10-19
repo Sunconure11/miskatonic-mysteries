@@ -43,7 +43,7 @@ public class PacketCastSpell implements IMessage{
 
         @Override
         public IMessage onMessage(PacketCastSpell message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                 EntityPlayer player = MiskatonicMysteries.proxy.getPlayer(ctx);
                 ISpellKnowledge knowledge = SpellKnowledge.Util.getKnowledge(player);
                 if (knowledge.getCurrentCastingProgess() < 0) {

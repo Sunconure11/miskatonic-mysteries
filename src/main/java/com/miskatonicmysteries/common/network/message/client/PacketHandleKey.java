@@ -40,7 +40,7 @@ public class PacketHandleKey implements IMessage {
 
         @Override
         public IMessage onMessage(PacketHandleKey message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                 EntityPlayer player = MiskatonicMysteries.proxy.getPlayer(ctx);
                 ISpellKnowledge knowledge = SpellKnowledge.Util.getKnowledge(player);
                 switch (message.mode) {

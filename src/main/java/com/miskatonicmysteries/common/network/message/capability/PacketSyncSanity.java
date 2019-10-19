@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.network.message.capability;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
@@ -37,7 +38,7 @@ public class PacketSyncSanity implements IMessage{
 
         @Override
         public IMessage onMessage(PacketSyncSanity message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                 if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.hasCapability(SanityProvider.SANITY, null)) {
                     ISanity c = Minecraft.getMinecraft().player.getCapability(SanityProvider.SANITY, null);
                     SanityProvider.SANITY.readNBT(c, null, message.data);

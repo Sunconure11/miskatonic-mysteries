@@ -37,7 +37,7 @@ public class PacketYellowSign implements IMessage{
 
         @Override
         public IMessage onMessage(PacketYellowSign message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                 EntityPlayer player = MiskatonicMysteries.proxy.getPlayer(ctx);
                 if (Sanity.Util.getSanityCapability(player).getHorrifiedCooldown() <= 0 && player.getActivePotionEffect(ModPotions.mania) == null && BlessingCapability.Util.getBlessing(player) != Blessing.HASTUR){
                     player.addPotionEffect(new PotionEffect(ModPotions.mania, 3600, 0, true, true));

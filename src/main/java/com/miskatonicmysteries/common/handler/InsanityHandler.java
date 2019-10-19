@@ -48,10 +48,8 @@ public class InsanityHandler {
         }else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent){
             effect = ModInsanityEffects.getRandomEffect(world, player, insanityEvent.getSanity(), InsanityEffect.EnumTrigger.HIT);
         }
-
-        System.out.println("Selected effect " + effect);
+        
         if (effect != null){
-            System.out.println("uwu effect");
             effect.handle(world, player, insanityEvent.getSanity());
             if (world.isRemote) {
                 PacketHandler.network.sendToServer(new PacketHandleInsanity(effect.getName()));

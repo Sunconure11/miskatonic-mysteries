@@ -36,7 +36,7 @@ public class PacketHandleInsanity implements IMessage{
 
         @Override
         public IMessage onMessage(PacketHandleInsanity message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                 EntityPlayer player = MiskatonicMysteries.proxy.getPlayer(ctx);
                 ModInsanityEffects.INSANITY_EFFECTS.get(message.effect).handle(player.world, player, Sanity.Util.getSanityCapability(player));
             });

@@ -44,7 +44,7 @@ public class PacketSyncSpellKnowledge implements IMessage{
 
         @Override
         public IMessage onMessage(PacketSyncSpellKnowledge message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                     ISpellKnowledge c = SpellKnowledge.Util.getKnowledge(MiskatonicMysteries.proxy.getPlayer(ctx));
                     SpellKnowledgeProvider.SPELL_KNOWLEDGE.getStorage().readNBT(SpellKnowledgeProvider.SPELL_KNOWLEDGE, c, null, message.data);
             });

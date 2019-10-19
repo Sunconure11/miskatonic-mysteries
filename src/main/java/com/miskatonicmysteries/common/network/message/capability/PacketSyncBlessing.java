@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.network.message.capability;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.BlessingProvider;
 import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
@@ -35,7 +36,7 @@ public class PacketSyncBlessing implements IMessage{
 
         @Override
         public IMessage onMessage(PacketSyncBlessing message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            MiskatonicMysteries.proxy.getThreadListener(ctx).addScheduledTask(() -> {
                 if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.hasCapability(SanityProvider.SANITY, null)) {
                     IBlessingCapability c = Minecraft.getMinecraft().player.getCapability(BlessingProvider.BLESSING, null);
                     c.setBlessing(Blessing.getBlessing(message.blessing));

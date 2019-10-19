@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.IThreadListener;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -59,6 +60,16 @@ public class ClientProxy extends ServerProxy {
             return context.getServerHandler().player;
         }
     }
+
+    @Override
+    public IThreadListener getThreadListener(final MessageContext context) {
+        if (context.side.isClient()) {
+            return Minecraft.getMinecraft();
+        } else {
+            return context.getServerHandler().player.mcServer;
+        }
+    }
+
 
     @Override
     public void generateParticle(Particle particle) {
