@@ -98,7 +98,7 @@ config.category_sanity=Sanity
 config.insanity_interval=Insanity Event Interval
 
 #COMMANDS
-commands.miskmyst.usage=miskatonicmysteries <player> <setSanity|setBlessing> <amount>
+commands.miskmyst.usage=miskatonicmysteries <player> <command> <value>
 command.miskmyst.player_null=§cPlayer %s could not be found
 command.miskmyst.no_command=%s is not a valid command
 
@@ -117,6 +117,23 @@ commands.miskmyst.reset_cooldown.fail_no_spells=Spells couldn't be reset, as %s 
 commands.miskmyst.reset_spells.success=Successfully cleared %s's spell list
 commands.miskmyst.reset_spells.fail_no_spells=%s's spell list could not be cleared, as they don't have one
 
+commands.miskmyst.play_insanity_effect.success=Successfully played the insanity effect %s for player %s
+commands.miskmyst.play_insanity_effect.fail=%s is not a valid insanity effect
+
 #BOOK
 info.necronomicon.book.landing=FNORD (this is a placeholder landing text)
 info.miskatonicmysteries.necronomicon.subtitle=FNORD SUBTITLE
+
+#MESSAGES
+message.insanity_concern.0=%s looks rather gaunt today.
+message.insanity_concern.1=%s appears to be paler than normal.
+message.insanity_concern.2=%s seems to be whispering something to themselves.
+message.insanity_concern.3=%s is mumbling in some language you don’t understand.
+message.insanity_concern.4=Something about %s just doesn’t seem... right...
+message.insanity_concern.5=%s seems to be staring off into the nothing.
+message.insanity_concern.6=%s looks spacey today.
+message.insanity_concern.7=Something about %s’s eyes unnerve you...
+message.insanity_concern.8=%s has a demented smile and seems to be giggling about something.
+message.insanity_concern.9=%s is acting paranoid, constantly looking around like something’s following them.
+message.insanity_concern.10=%’s movements are strange and twitchy.
+message.insanity_concern.11=%’s pupils are overly dilated.

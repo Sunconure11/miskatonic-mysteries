@@ -87,7 +87,7 @@ public class CapabilityHandler {
                         sanity.setDirty(false);
                     }
                 }
-                if (event.getEntityLiving().ticksExisted > 0 && sanity.getSanity() < 100 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && event.getEntityLiving().ticksExisted % (ModConfig.sanity.insanityInterval - (100 - sanity.getSanity())) == 0) {
+                if (event.getEntityLiving().ticksExisted > 0 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && event.getEntityLiving().ticksExisted % (ModConfig.sanity.insanityInterval) == 0) {
                     MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), sanity, event));
                 }
 

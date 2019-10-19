@@ -1,23 +1,21 @@
 package com.miskatonicmysteries.common.handler;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.block.BlockYellowSign;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.handler.effects.InsanityEffect;
+import com.miskatonicmysteries.common.handler.effects.InsanityEffectFlux;
 import com.miskatonicmysteries.common.handler.event.InsanityEvent;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.client.PacketYellowSign;
-import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
+import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanity;
+import com.miskatonicmysteries.registry.ModInsanityEffects;
 import com.miskatonicmysteries.registry.ModObjects;
-import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemShield;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.BannerPattern;
 import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -30,7 +28,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -42,41 +40,32 @@ public class InsanityHandler {
 
     @SubscribeEvent
     public static void handleInsanity(InsanityEvent insanityEvent) {
-        if (!insanityEvent.getPlayer().world.isRemote) {
-            int event = insanityEvent.getPlayer().world.rand.nextInt(Math.abs(115 - insanityEvent.getSanity().getSanity())); //max 115
-            if (insanityEvent.getUpcomingEvent() instanceof LivingEvent.LivingUpdateEvent) {
-                if (event <= 15) {
-                    //SoundEvents, which are handled client side
-                    PacketHandler.sendTo(insanityEvent.getPlayer(), new PacketHandleInsanityClient(event));
-                } else if (event <= 20) {
-                    //"Exotic Cravings"
-                    insanityEvent.getPlayer().addPotionEffect(new PotionEffect(ModPotions.hunger_exotic, 4000, 0));
-                    PacketHandler.sendTo(insanityEvent.getPlayer(), new PacketHandleInsanityClient(event));
-                } else if (event <= 25) {
-                    //Entity distortion; this is also handled client side
-                    PacketHandler.sendTo(insanityEvent.getPlayer(), new PacketHandleInsanityClient(event));
-                }
-            } else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent) {
-                if (event >= 15 && event <= 70) {
-                    if ((insanityEvent.getPlayer().getHealth() <= 6 && event >= 20) || event >= 65) {
-                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 720, 1, false, false));
-                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 1, false, false));
-                    } else if (event >= 60) {
-                        insanityEvent.getPlayer().addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 600, 1, false, false));
-                    }
-                }
+        EntityPlayer player = insanityEvent.getPlayer();
+        World world = player.world;
+        InsanityEffect effect = null;
+        if (insanityEvent.getUpcomingEvent() instanceof LivingEvent.LivingUpdateEvent && !world.isRemote) {
+            effect = ModInsanityEffects.getRandomEffect(world, player, insanityEvent.getSanity(), InsanityEffect.EnumTrigger.TICK);
+        }else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent){
+            effect = ModInsanityEffects.getRandomEffect(world, player, insanityEvent.getSanity(), InsanityEffect.EnumTrigger.HIT);
+        }
+
+        System.out.println("Selected effect " + effect);
+        if (effect != null){
+            System.out.println("uwu effect");
+            effect.handle(world, player, insanityEvent.getSanity());
+            if (world.isRemote) {
+                PacketHandler.network.sendToServer(new PacketHandleInsanity(effect.getName()));
+            }else{
+                PacketHandler.sendTo(player, new PacketHandleInsanity(effect.getName()));
             }
         }
     }
 
-    public static void playParanoiaSound(EntityPlayer player, SoundEvent sound, float pitch) {
-        if (player.world.isRemote)
-            player.world.playSound(player, player.getPosition(), sound, SoundCategory.AMBIENT, 1.0F, pitch);
-    }
-
-
     public static EntityLivingBase getFittingMob(World world, BlockPos pos, boolean friendlyOnes) {
-        List<Biome.SpawnListEntry> spawns = world.getBiome(pos).getSpawnableList(friendlyOnes ? EnumCreatureType.CREATURE : EnumCreatureType.MONSTER);
+        List<Biome.SpawnListEntry> spawns = world.getBiome(pos).getSpawnableList(EnumCreatureType.MONSTER);
+        if (friendlyOnes)
+            spawns.addAll(world.getBiome(pos).getSpawnableList(EnumCreatureType.CREATURE));
+
         if (spawns.size() <= 0) {
             return new EntityZombie(world);
         } else {
@@ -90,8 +79,21 @@ public class InsanityHandler {
 
     @SubscribeEvent
     public static void onHurt(LivingAttackEvent event) { // PlayerEvent.ItemCraftedEvent! for enchanting stuff
-        if (event.getEntityLiving() instanceof EntityPlayer && Sanity.Util.getSanity((EntityPlayer) event.getEntityLiving()) < 90) {
+        if (event.getEntityLiving() instanceof EntityPlayer) {
             MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), Sanity.Util.getSanityCapability((EntityPlayer) event.getEntityLiving()), event));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onItemCraft(PlayerEvent.ItemCraftedEvent event){
+        System.out.println("yay?");
+        World world = event.player.world;
+        EntityPlayer player = event.player;
+        if (ModInsanityEffects.isEffectAvailable(ModInsanityEffects.EFFECT_FLUX, world, player, Sanity.Util.getSanityCapability(player)) &&
+                world.rand.nextFloat() < ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player))){
+            if (ModInsanityEffects.EFFECT_FLUX.handle(world, player, Sanity.Util.getSanityCapability(player))){
+                ((InsanityEffectFlux) ModInsanityEffects.EFFECT_FLUX).enchantItem(world, player, Sanity.Util.getSanityCapability(player), event.crafting);
+            }
         }
     }
 

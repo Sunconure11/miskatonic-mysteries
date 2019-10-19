@@ -28,11 +28,16 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         }
     };
 
+    public boolean primed = false;
+    public int tickCount = 0;
+
     public BlockPos closestAltarPos = null;
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("inventory", inventory.serializeNBT());
+        compound.setInteger("tickCount", tickCount);
+        compound.setBoolean("primed", primed);
         return super.writeToNBT(compound);
     }
 
@@ -60,17 +65,17 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
 
     @Override
     public void update() {
-        if (!altarUsable()){
+        if (!altarUsable() && getAltar().bookOpen){
             findNearestAltar();
         }
         //flipAltarPages();
 
         //stuff
     }
-
+//have a start function that opens the book
     public void flipAltarPages(){
         if (altarUsable()){
-           getAltar().flipSpeed += 0.1;
+            getAltar().flipSpeed += 0.1;
             // getAltar().flipSpeed = Math.max(getAltar().flipSpeed + 0.1F, 2);
         }
     }

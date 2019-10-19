@@ -4,10 +4,15 @@ import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
+import com.miskatonicmysteries.common.handler.effects.InsanityEffect;
 import com.miskatonicmysteries.common.misc.spells.Spell;
+import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanity;
+import com.miskatonicmysteries.registry.ModInsanityEffects;
 import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import scala.actors.threadpool.Arrays;
@@ -23,6 +28,7 @@ public class CommandMiskatonicMysteries extends CommandBase{
     public static final String COMMAND_SPELL = "addSpell";
     public static final String COMMAND_RESET_COOLDOWN = "resetSpellCooldowns";
     public static final String COMMAND_RESET_SPELLS = "resetSpells";
+    public static final String COMMAND_PLAY_INSANITY_EFFECT = "playInsanityEffect";
     @Override
     public String getName() {
         return "miskatonicmysteries";
@@ -45,9 +51,12 @@ public class CommandMiskatonicMysteries extends CommandBase{
         if (args.length == 1){
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         } else if (args.length == 2){
-            return getListOfStringsMatchingLastWord(args, COMMAND_SANITY, COMMAND_BLESSING, COMMAND_SPELL, COMMAND_RESET_COOLDOWN, COMMAND_RESET_SPELLS);
+            return getListOfStringsMatchingLastWord(args, COMMAND_SANITY, COMMAND_BLESSING, COMMAND_SPELL, COMMAND_RESET_COOLDOWN, COMMAND_RESET_SPELLS, COMMAND_PLAY_INSANITY_EFFECT);
         } else if (args.length == 3){
-            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) : args[1].equalsIgnoreCase(COMMAND_BLESSING) ?  getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) : args[1].equalsIgnoreCase(COMMAND_SPELL) ? Arrays.asList(Spell.SPELLS.keySet().toArray(new String[Spell.SPELLS.size()])) :Arrays.asList(new String[]{});
+            return args[1].equalsIgnoreCase(COMMAND_SANITY) ? Arrays.asList(new String[]{"150", "50", "1"}) :
+                    args[1].equalsIgnoreCase(COMMAND_BLESSING) ? getListOfStringsMatchingLastWord(args, Blessing.getBlessings()) :
+                            args[1].equalsIgnoreCase(COMMAND_SPELL) ? getListOfStringsMatchingLastWord(args, Spell.SPELLS.keySet().toArray(new String[Spell.SPELLS.size()])) :
+                                    args[1].equalsIgnoreCase(COMMAND_PLAY_INSANITY_EFFECT)? getListOfStringsMatchingLastWord(args, ModInsanityEffects.getInsanityEffectStrings()): Arrays.asList(new String[]{});
         }
         return super.getTabCompletions(server, sender, args, targetPos);
     }
@@ -109,6 +118,16 @@ public class CommandMiskatonicMysteries extends CommandBase{
                 sendNotification(sender, player, "commands.miskmyst.reset_spells.success", player.getDisplayName());
             }else
                 throw new SyntaxErrorException("commands.miskmyst.reset_spells.fail_no_spells", player.getDisplayName());
+        }else if (mode.equalsIgnoreCase(COMMAND_PLAY_INSANITY_EFFECT)){
+            InsanityEffect effect = ModInsanityEffects.INSANITY_EFFECTS.getOrDefault(new ResourceLocation(value), null);
+            if (effect != null){
+                effect.handle(player.world, player, Sanity.Util.getSanityCapability(player));
+                if (!player.world.isRemote){
+                    PacketHandler.sendTo(player, new PacketHandleInsanity(effect.getName()));
+                }
+                sendNotification(sender, player, "commands.miskmyst.play_insanity_effect.success", value, player.getDisplayName());
+            }else
+                throw new SyntaxErrorException("commands.miskmyst.play_insanity_effect.fail", value);
         }
         else{
             throw new WrongUsageException(getUsage(sender), args[1]);

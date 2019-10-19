@@ -7,7 +7,7 @@ import com.miskatonicmysteries.common.network.message.capability.PacketSyncSpell
 import com.miskatonicmysteries.common.network.message.client.PacketCastSpell;
 import com.miskatonicmysteries.common.network.message.client.PacketHandleKey;
 import com.miskatonicmysteries.common.network.message.client.PacketYellowSign;
-import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanityClient;
+import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanity;
 import com.miskatonicmysteries.common.network.message.world.PacketChangeBiome;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -30,6 +30,7 @@ public class PacketHandler {
     public static int next() {
         return nextId++;
     }
+
     public static void init() {
         network = NetworkRegistry.INSTANCE.newSimpleChannel(MiskatonicMysteries.MODID);
 
@@ -37,7 +38,8 @@ public class PacketHandler {
         network.registerMessage(new PacketSyncBlessing.Handler(), PacketSyncBlessing.class, next(), Side.CLIENT);
         network.registerMessage(new PacketSyncSpellKnowledge.Handler(), PacketSyncSpellKnowledge.class, next(), Side.CLIENT);
 
-        network.registerMessage(new PacketHandleInsanityClient.Handler(), PacketHandleInsanityClient.class, next(), Side.CLIENT);
+        network.registerMessage(new PacketHandleInsanity.Handler(), PacketHandleInsanity.class, next(), Side.CLIENT);
+        network.registerMessage(new PacketHandleInsanity.Handler(), PacketHandleInsanity.class, next(), Side.SERVER);
 
         network.registerMessage(new PacketChangeBiome.Handler(), PacketChangeBiome.class, next(), Side.CLIENT);
 
