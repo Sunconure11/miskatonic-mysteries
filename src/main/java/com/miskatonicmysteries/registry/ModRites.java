@@ -12,9 +12,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ModRites {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
 
-    public static final OctagramRite MANIACSMEETING_GOAT  = new OctagramRite(new ResourceLocation(MiskatonicMysteries.MODID, "maniacs_meeting_goat"), 150, 100, OctagramRite.EnumType.FOCUSED, Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK)) {
+    public static final OctagramRite MANIACSMEETING_GOAT = new OctagramRite(new ResourceLocation(MiskatonicMysteries.MODID, "maniacs_meeting_goat"), 150, 100, OctagramRite.EnumType.FOCUSED, Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK)) {
         @Override
         public boolean test(TileEntityOctagram octagram) {
             return true;
@@ -41,16 +46,30 @@ public class ModRites {
         }
     };
 
-    public static OctagramRite getRite(TileEntityOctagram octagram){
+    public static OctagramRite getRite(TileEntityOctagram octagram) {
         //stacks must be empty to return the rite
-        for(OctagramRite rite : RITES.values()){
-            List<Ingredient> ingredients = rite.ingredients;
-            List<ItemStack> stacks = InventoryUtil.getInventoryList(octagram.inventory);
-                ingredients.forEach(stack -> stacks.removeIf(s -> ingredients.removeIf(i -> i.apply(s))));
-            if (ingredients.isEmpty()){
+        for (OctagramRite rite : RITES.values()) {
+            if (matches(rite, octagram.inventory)) {
                 return rite;
             }
         }
         return null;
+    }
+
+
+    public static boolean matches(OctagramRite rite, ItemStackHandler inventory) {
+        CopyOnWriteArrayList<ItemStack> checkStacks = new CopyOnWriteArrayList<>();
+        checkStacks.addAll(InventoryUtil.getInventoryList(inventory));
+        for(Ingredient ingredient : rite.ingredients){
+            for (ItemStack stack : checkStacks){
+                if (ingredient.apply(stack)){
+                    checkStacks.remove(stack);
+                    break;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return checkStacks.isEmpty();
     }
 }

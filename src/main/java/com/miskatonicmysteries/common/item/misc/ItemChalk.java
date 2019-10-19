@@ -75,8 +75,6 @@ public class ItemChalk extends ItemBlock {
                 BlockPos checkPos = pos.add(x, 0, z);
                 if (!world.mayPlace(block, checkPos, true, side, player) || !((BlockOctagram)block).canPlace(world, checkPos)){
                     return false;
-                }else{
-                    System.out.println(x);
                 }
             }
         }
