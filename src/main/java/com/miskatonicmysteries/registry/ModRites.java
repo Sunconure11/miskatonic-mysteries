@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ModRites {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
 
-    public static final OctagramRite MANIACSMEETING_GOAT = new OctagramRite(new ResourceLocation(MiskatonicMysteries.MODID, "maniacs_meeting_goat"), 150, 100, OctagramRite.EnumType.FOCUSED, Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK)) {
+    /*public static final OctagramRite MANIACSMEETING_GOAT = new OctagramRite(new ResourceLocation(MiskatonicMysteries.MODID, "maniacs_meeting_goat"), 150, 100, OctagramRite.EnumType.FOCUSED, Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK)) {
         @Override
         public boolean test(TileEntityOctagram octagram) {
             return true;
@@ -44,10 +44,9 @@ public class ModRites {
         public void effect(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
 
         }
-    };
+    };*/
 
     public static OctagramRite getRite(TileEntityOctagram octagram) {
-        //stacks must be empty to return the rite
         for (OctagramRite rite : RITES.values()) {
             if (matches(rite, octagram.inventory)) {
                 return rite;
