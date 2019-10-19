@@ -34,7 +34,7 @@ import java.util.Random;
 
 public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implements IHasAssociatedBlessing {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    public static final PropertyEnum<EnumPartType> PART = PropertyEnum.<EnumPartType>create("part", EnumPartType.class); //maybe have many many parts instead, as in 9
+    public static final PropertyEnum<EnumPartType> PART = PropertyEnum.create("part", EnumPartType.class); //maybe have many many parts instead, as in 9
     public static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.01, 1);
 
     public static final int[][] PARTS = new int[3][3];
@@ -78,8 +78,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         return null;
     }
 
-
-    public boolean canPlace(IBlockAccess world, BlockPos pos){
+    public boolean canPlace(IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos.down());
         return state.isTopSolid() || state.getBlockFaceShape(world, pos.down(), EnumFacing.UP) == BlockFaceShape.SOLID;
     }
@@ -125,6 +124,8 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
                     }else if (playerIn.isSneaking()){
                         ItemHandlerHelper.giveItemToPlayer(playerIn, octagram.inventory.extractItem(slot, 1, false));
                     }
+                }else{
+                    octagram.interactCenter(worldIn, playerIn);
                 }
 
                 PacketHandler.updateTE(octagram);
@@ -219,7 +220,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
      */
     public int getMetaFromState(IBlockState state) {
         int i = 0;
-        i = i | ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
+        i = i | state.getValue(FACING).getHorizontalIndex();
 
         if (state.getValue(PART) == EnumPartType.CENTER) {
             i |= 8;
@@ -272,7 +273,12 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         return state.getValue(PART) == EnumPartType.CENTER ? new TileEntityOctagram() : null;
     }
 
-    public static enum EnumPartType implements IStringSerializable
+    @Override
+    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
+        return side == EnumFacing.UP && super.canPlaceBlockOnSide(worldIn, pos, side);
+    }
+
+    public enum EnumPartType implements IStringSerializable
     {
         CENTER("center", 0),
         OUTER("outer", 1);
@@ -281,7 +287,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         private final int index;
         private final EnumPartType[] VALUES = new EnumPartType[9];
 
-        private EnumPartType(String name, int index){
+        EnumPartType(String name, int index){
             this.name = name;
             this.index = index;
             VALUES[index] = this;

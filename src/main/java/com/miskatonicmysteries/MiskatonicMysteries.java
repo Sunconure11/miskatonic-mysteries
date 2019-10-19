@@ -87,7 +87,6 @@ public class MiskatonicMysteries {
         ModEntities.init();
         ModBiomes.registerBiomes();
         initTileEntities();
-        ModSpells.init();
         ModObjects.addBanners();
     }
 

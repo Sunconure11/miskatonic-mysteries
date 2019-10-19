@@ -40,42 +40,43 @@ public class ItemChalk extends ItemBlock {
             pos = pos.up();
         }
 
-        if (canPlaceBlockOnSide(worldIn, pos, facing, player, player.getHeldItem(hand))) {
-            IBlockState state = block.getDefaultState().withProperty(BlockOctagram.FACING, EnumFacing.getHorizontal(MathHelper.floor((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3));
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    worldIn.setBlockState(pos.add(x, 0, z), state.withProperty(BlockOctagram.PART, x == 0 && z == 0 ? BlockOctagram.EnumPartType.CENTER : BlockOctagram.EnumPartType.OUTER));
-                }
-            }
-            worldIn.playSound(null, pos, SoundEvents.BLOCK_SNOW_BREAK, SoundCategory.BLOCKS, 0.5F, 2F);
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    worldIn.notifyNeighborsRespectDebug(pos.add(x, 0, z), worldIn.getBlockState(pos.add(x, 0, z)).getBlock(), false);
-                }
-            }
-            if (player instanceof EntityPlayerMP) {
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, player.getHeldItem(hand));
-            }
-            player.getHeldItem(hand).shrink(1);
+        if (checkPlacement(worldIn, pos, facing, player)){//canPlaceBlockOnSide(worldIn, pos, facing, player, player.getHeldItem(hand))) {
+            System.out.println("uwuuwwwwww~");
+            setBlocks(worldIn, pos, player, hand);
             return EnumActionResult.SUCCESS;
-        } else {
-            return EnumActionResult.FAIL;
+       // } else {
+         //   return EnumActionResult.FAIL;
+        }
+        return EnumActionResult.FAIL;
+    }
+
+
+    public void setBlocks(World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand){
+        IBlockState state = block.getDefaultState().withProperty(BlockOctagram.FACING, EnumFacing.getHorizontal(MathHelper.floor((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3));
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                worldIn.setBlockState(pos.add(x, 0, z), state.withProperty(BlockOctagram.PART, x == 0 && z == 0 ? BlockOctagram.EnumPartType.CENTER : BlockOctagram.EnumPartType.OUTER));
+            }
+        }
+        worldIn.playSound(null, pos, SoundEvents.BLOCK_SNOW_BREAK, SoundCategory.BLOCKS, 0.5F, 2F);
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                worldIn.notifyNeighborsRespectDebug(pos.add(x, 0, z), worldIn.getBlockState(pos.add(x, 0, z)).getBlock(), false);
+            }
+        }
+        if (player instanceof EntityPlayerMP) {
+            CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, player.getHeldItem(hand));
         }
     }
 
-    @Override
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
-        if (side != EnumFacing.UP) {
-            return false;
-        }
-        if (block instanceof BlockOctagram) {
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    if(!((BlockOctagram) block).canPlace(worldIn, pos.add(x, 0, z))){
-                        return false;
-                    }else if (!worldIn.mayPlace(this.block, pos, false, side, null)){
-                        return false;
-                    }
+    public boolean checkPlacement(World world, BlockPos pos, EnumFacing side, EntityPlayer player){
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                BlockPos checkPos = pos.add(x, 0, z);
+                if (!world.mayPlace(block, checkPos, true, side, player) || !((BlockOctagram)block).canPlace(world, checkPos)){
+                    return false;
+                }else{
+                    System.out.println(x);
                 }
             }
         }

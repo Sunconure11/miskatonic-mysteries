@@ -2,11 +2,16 @@ package com.miskatonicmysteries.common.block.tile;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.registry.ModRites;
+import net.minecraft.block.BlockFurnace;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -63,10 +68,17 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T) inventory : super.getCapability(capability, facing);
     }
 
+    public void interactCenter(World world, EntityPlayer player){
+        System.out.println(ModRites.getRite(this));
+    }
     @Override
     public void update() {
-        if (!altarUsable() && getAltar().bookOpen){
+        if (!altarUsable()){
             findNearestAltar();
+        }else{
+            if (getAltar().bookOpen){
+                //stuff
+            }
         }
         //flipAltarPages();
 

@@ -3,6 +3,7 @@ package com.miskatonicmysteries.util;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -91,6 +92,14 @@ public class InventoryUtil {
         list.addAll(player.inventory.mainInventory);
         list.addAll(player.inventory.offHandInventory);
         list.addAll(player.inventory.armorInventory);
+        return list;
+    }
+
+    public static NonNullList<ItemStack> getInventoryList(ItemStackHandler inventory){
+        NonNullList<ItemStack> list = NonNullList.create();
+        for (int i = 0; i < inventory.getSlots(); i++){
+            list.add(inventory.getStackInSlot(i));
+        }
         return list;
     }
 }

@@ -48,7 +48,7 @@ public class InsanityHandler {
         }else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent){
             effect = ModInsanityEffects.getRandomEffect(world, player, insanityEvent.getSanity(), InsanityEffect.EnumTrigger.HIT);
         }
-        
+
         if (effect != null){
             effect.handle(world, player, insanityEvent.getSanity());
             if (world.isRemote) {
@@ -84,9 +84,11 @@ public class InsanityHandler {
 
     @SubscribeEvent
     public static void onItemCraft(PlayerEvent.ItemCraftedEvent event){
-        System.out.println("yay?");
         World world = event.player.world;
         EntityPlayer player = event.player;
+
+        System.out.println(ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player)));
+
         if (ModInsanityEffects.isEffectAvailable(ModInsanityEffects.EFFECT_FLUX, world, player, Sanity.Util.getSanityCapability(player)) &&
                 world.rand.nextFloat() < ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player))){
             if (ModInsanityEffects.EFFECT_FLUX.handle(world, player, Sanity.Util.getSanityCapability(player))){

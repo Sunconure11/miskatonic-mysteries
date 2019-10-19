@@ -9,14 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class ModSpells {
-    public static Spell heal;
-    public static Spell feast;
-    public static Spell yellow_sign;
-
-
-    public static void init(){
-        heal = new SpellHeal();
-        feast = new SpellFeast();
-        yellow_sign = new SpellYellowSign();
-    }
+    public static final Spell HEAL = new SpellHeal();
+    public static final Spell FEAST = new SpellFeast();
+    public static final Spell YELLOW_SIGN = new SpellYellowSign();
 }
