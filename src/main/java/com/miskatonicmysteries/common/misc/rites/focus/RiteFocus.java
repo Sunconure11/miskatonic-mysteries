@@ -1,72 +1,46 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class RiteFocus {
-    public static final Map<ItemStack, RiteFocus> FOCUS_MAP = new HashMap<>();
-    public static final RiteFocus DEFAULT_FOCUS = new RiteFocus(0, 0, EnumType.HELD);
-    private float instabilityRate;
-    private int conduitAmount;
-    private EnumType type;
-    private Predicate<ItemStack> alternativePredicate;
+    public static final List<RiteFocus> FOCI = new ArrayList<>();
+    protected float instabilityRate;
+    protected int conduitAmount;
+    protected int maxSameType;
+    protected EnumType type;
+    protected Predicate<Object> selector;
 
-    public RiteFocus(float instabilityRate, int conduitAmount, EnumType type) {
+    public RiteFocus(float instabilityRate, int conduitAmount, int sameTypeMax, EnumType type) {
         this.instabilityRate = instabilityRate;
         this.conduitAmount = conduitAmount;
         this.type = type;
+        this.maxSameType = sameTypeMax;
     }
 
-    public RiteFocus(Item item, float instabilityRate, int conduitAmount) {
-        this(instabilityRate, conduitAmount, EnumType.HELD);
-        addFocus(new ItemStack(item), this);
-    }
-
-    public RiteFocus(Block block, float instabilityRate, int conduitAmount) {
-        this(instabilityRate, conduitAmount, EnumType.PLACED);
-        addFocus(new ItemStack(block), this);
-    }
-
-    public static void addFocus(ItemStack stack, RiteFocus focus){
-        FOCUS_MAP.put(stack, focus);
-    }
-
-    public static RiteFocus getFocusFor(Block block){
-        return getFocusFor(new ItemStack(block));
-    }
-
-    public static RiteFocus getFocusFor(ItemStack stack){
-        if (FOCUS_MAP.containsKey(stack)){
-            return RiteFocus.FOCUS_MAP.getOrDefault(stack, DEFAULT_FOCUS);
-        }
-        List<RiteFocus> foci = FOCUS_MAP.values().stream().filter(f -> f.checkAlternatively(stack)).collect(Collectors.toList());
-        if (foci.isEmpty()) return DEFAULT_FOCUS;
-        return foci.get(0);
-    }
-
-    public RiteFocus addAlternatePredicate(Predicate<ItemStack> predicate){
-        this.alternativePredicate = predicate;
+    public RiteFocus withSelector(Predicate<Object> selector){
+        this.selector = selector;
         return this;
     }
 
-    public boolean checkAlternatively(ItemStack stack){
-        if (alternativePredicate != null){
-            return alternativePredicate.test(stack);
-        }
-        return false;
-    }
 
-    public float getInstabilityRate() {
+    public float getInstabilityRate(@Nullable World world, @Nullable BlockPos pos) {
         return instabilityRate;
     }
 
-    public int getConduitAmount() {
+    public int getConduitAmount(@Nullable World world, @Nullable BlockPos pos) {
         return conduitAmount;
+    }
+
+    public int getMaxSameType( @Nullable World world, @Nullable BlockPos pos) {
+        return maxSameType;
     }
 
     public EnumType getType() {
@@ -76,5 +50,19 @@ public class RiteFocus {
     public enum EnumType {
         HELD,
         PLACED
+    }
+
+    public static void addFocus(RiteFocus focus){
+        FOCI.add(focus);
+    }
+
+    public static List<RiteFocus> getFociFor(Object object, EnumType type){
+        List<RiteFocus> foci = new ArrayList<>();
+        FOCI.forEach(f -> {
+            if (f.type == type && f.selector.test(object)){
+                foci.add(f);
+            }
+        });
+        return foci;
     }
 }

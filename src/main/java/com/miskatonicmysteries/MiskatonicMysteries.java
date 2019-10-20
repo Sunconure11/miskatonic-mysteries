@@ -190,8 +190,22 @@ public class MiskatonicMysteries {
     public void registerOreDict(){
         OreDictionary.registerOre("ingotGold", ModObjects.gold_oceanic);
         OreDictionary.registerOre("oreGold", ModObjects.gold_oceanic);
+        OreDictionary.registerOre("goldOceanic", ModObjects.gold_oceanic);
+
+
+        OreDictionary.registerOre("daggerMM", ModObjects.black_goats_gutting_dagger);
+        OreDictionary.registerOre("daggerMM", ModObjects.black_goats_horned_dagger);
+        OreDictionary.registerOre("daggerMM", ModObjects.yellow_kings_dagger);
 
         OreDictionary.registerOre("wax", ModObjects.tallow);
+
+        OreDictionary.registerOre("skullSkeleton", new ItemStack(Items.SKULL, 1, 0));
+        OreDictionary.registerOre("skullWitherSkeleton", new ItemStack(Items.SKULL, 1, 1));
+        OreDictionary.registerOre("skullZombie", new ItemStack(Items.SKULL, 1, 2));
+        OreDictionary.registerOre("skullPlayer", new ItemStack(Items.SKULL, 1, 3));
+
+        OreDictionary.registerOre("skullDragon", new ItemStack(Items.SKULL, 1, 5));
+
     }
 
     public void registerFurnaceRecipes(){

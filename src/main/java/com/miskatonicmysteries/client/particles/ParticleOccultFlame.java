@@ -50,6 +50,6 @@ public class ParticleOccultFlame extends net.minecraft.client.particle.ParticleF
 
     @Override
     public int getBrightnessForRender(float p_189214_1_) {
-        return super.getBrightnessForRender(p_189214_1_) / 2;
+        return super.getBrightnessForRender(p_189214_1_) / 4;
     }
 }

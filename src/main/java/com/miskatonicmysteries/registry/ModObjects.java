@@ -12,7 +12,7 @@ import com.miskatonicmysteries.common.item.misc.ItemMMBook;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsHornedDagger;
 import com.miskatonicmysteries.common.item.tool.ItemYellowKingsDagger;
-import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
+import com.miskatonicmysteries.common.misc.rites.focus.*;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -109,13 +109,17 @@ public class ModObjects {
     }
 
     public static void addFoci(){
-        new RiteFocus(gold_oceanic, 0.2F, 75);
-        new RiteFocus(Items.DIAMOND, 0.2F, 75);
-        new RiteFocus(Items.EMERALD, 0.2F, 75);
-        new RiteFocus(Items.NETHER_STAR, 0.2F, 75);
-        //heart of the sea and compat stuff
-        new RiteFocus(yellow_kings_dagger, 0.2F, 75).addAlternatePredicate(s -> s.getItem() instanceof ItemSword && ((ItemSword) s.getItem()).getToolMaterialName().equals(TOOL_CULTIST.name()));
-        new RiteFocus(Items.ENCHANTED_BOOK, 0.2F, 75).addAlternatePredicate(s -> (s.getItem() instanceof ItemTool || s.getItem() instanceof ItemSword) && !EnchantmentHelper.getEnchantments(s).isEmpty());
-        //add more foci... probably change the way foci work... (basically, they'll check an oreDict entry instead, and the values may be set to depend on other factors (give ItemStack as parameter in this case)
+        OreDictRiteFocus.create(0.2F, 75, 2, RiteFocus.EnumType.HELD, "goldOceanic");
+        OreDictRiteFocus.create(0.1F, 50, 3, RiteFocus.EnumType.HELD, "gemDiamond", "gemEmerald");
+        OreDictRiteFocus.create(0.15F, 100, 1, RiteFocus.EnumType.HELD, "netherStar");
+        OreDictRiteFocus.create(0.1F, 35, 2, RiteFocus.EnumType.HELD, "daggerMM");
+        RiteFocus.addFocus(new EnchantmentRiteFocus());
+        RiteFocus.addFocus(new CandleRiteFocus());
+        BlockRiteFocus.create(0.15F, 50, 1, BlockAltar.class);
+        OreDictRiteFocus.create(0.1F, 30, 2, RiteFocus.EnumType.PLACED, "skullSkeleton", "skullZombie");
+        OreDictRiteFocus.create(0.15F, 50, 2, RiteFocus.EnumType.PLACED, "skullPlayer", "skullWitherSkeleton");
+        OreDictRiteFocus.create(0.2F, 120, 2, RiteFocus.EnumType.PLACED, "skullDragon");
+
+        //heart of the sea and compat stuff (see doc)
     }
 }
