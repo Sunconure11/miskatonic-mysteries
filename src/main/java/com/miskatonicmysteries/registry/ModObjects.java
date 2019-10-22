@@ -17,6 +17,7 @@ import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -72,7 +73,7 @@ public class ModObjects {
 
     public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
     public static Item research_notes_hastur = Util.create("research_notes_hastur");
-    public static Item research_notes_shubniggurath = Util.create("research_notes_shubniggurath");
+    public static Item research_notes_shubniggurath = Util.create(new ItemMMBook("notes_shub", Blessing.SHUB), "research_notes_shubniggurath");
 
     public static Item hastur_cultist_hood = Util.create(new ItemHasturArmor(EntityEquipmentSlot.HEAD), "hastur_cultist_hood");
     public static Item hastur_cultist_robes = Util.create(new ItemHasturArmor(EntityEquipmentSlot.CHEST), "hastur_cultist_robes");
@@ -116,9 +117,15 @@ public class ModObjects {
         RiteFocus.addFocus(new EnchantmentRiteFocus());
         RiteFocus.addFocus(new CandleRiteFocus());
         BlockRiteFocus.create(0.15F, 50, 1, BlockAltar.class);
-        OreDictRiteFocus.create(0.1F, 30, 2, RiteFocus.EnumType.PLACED, "skullSkeleton", "skullZombie");
-        OreDictRiteFocus.create(0.15F, 50, 2, RiteFocus.EnumType.PLACED, "skullPlayer", "skullWitherSkeleton");
-        OreDictRiteFocus.create(0.2F, 120, 2, RiteFocus.EnumType.PLACED, "skullDragon");
+
+        RiteFocus.addFocus(new SkullRiteFocus(0, 0.1F, 30, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(2, 0.1F, 30, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(1, 0.15F, 50, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(3, 0.15F, 50, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(5, 0.2F, 120, 2));
+
+         // Blocks.DIAMOND_BLOCK
+        OreDictRiteFocus.create(0.2F, 120, 2, RiteFocus.EnumType.PLACED, "blockDiamond"); //see if that works at all... if it doesn't then well shit
 
         //heart of the sea and compat stuff (see doc)
     }

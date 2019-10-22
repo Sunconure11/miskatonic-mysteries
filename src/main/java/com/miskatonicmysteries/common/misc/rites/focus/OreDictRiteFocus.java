@@ -1,5 +1,7 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -9,13 +11,19 @@ public class OreDictRiteFocus extends RiteFocus {
         super(instabilityRate, conduitAmount, sameTypeMax, type);
         this.oreDict = oreDict;
         this.selector = (s -> {
-            if (s instanceof ItemStack) {
-                for (String ore : oreDict) {
-                    if (OreDictionary.containsMatch(false, OreDictionary.getOres(ore), (ItemStack) s)) {
-                        return true;
+                ItemStack stack = null;
+                if (s instanceof ItemStack){
+                    stack = (ItemStack) s;
+                }else if (s instanceof Block){
+                    stack = new ItemStack((Block) s); //do note that this does not work with meta etc.
+                }
+                if (stack != null) {
+                    for (String ore : oreDict) {
+                        if (OreDictionary.containsMatch(false, OreDictionary.getOres(ore), stack)) {
+                            return true;
+                        }
                     }
                 }
-            }
             return false;
         });
     }

@@ -1,30 +1,33 @@
 package com.miskatonicmysteries.common.block.tile;
 
-import com.miskatonicmysteries.common.block.BlockCandles;
+import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
 import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModRites;
+import com.miskatonicmysteries.util.InventoryUtil;
 import javafx.util.Pair;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import scala.collection.mutable.MultiMap;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class TileEntityOctagram extends TileEntityMod implements ITickable {
+public class TileEntityOctagram extends TileEntityMod implements ITickable, IHasAssociatedBlessing {
 
     public ItemStackHandler inventory = new ItemStackHandler(8) {
         @Override
@@ -49,6 +52,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
     public float instability = 0;
     public int focusPower = 0;
 
+    public String currentRite = "";
+
+    public String lastPlayerUUID = "";
+
     public final List<Pair<BlockPos, RiteFocus>> PLACED_FOCI = new ArrayList<>();
     public final List<RiteFocus> HELD_FOCI = new ArrayList<>(); //possibly pass an entity id with that? (for particles, if there should be any)
     public final List<RiteFocus> FOCI = new ArrayList<>();
@@ -63,6 +70,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         compound.setBoolean("primed", primed);
         compound.setFloat("instability", instability);
         compound.setInteger("focusPower", focusPower);
+        compound.setString("currentRite", currentRite);
+        compound.setString("lastPlayerUUID", lastPlayerUUID);
         return super.writeToNBT(compound);
     }
 
@@ -73,6 +82,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         primed = compound.getBoolean("primed");
         instability = compound.getFloat("instability");
         focusPower = compound.getInteger("focusPower");
+        currentRite = compound.getString("currentRite");
+        lastPlayerUUID = compound.getString("lastPlayerUUID");
         super.readFromNBT(compound);
     }
 
@@ -92,63 +103,176 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T) inventory : super.getCapability(capability, facing);
     }
 
-    public void interactCenter(World world, EntityPlayer player){
-        System.out.println(ModRites.getRite(this));
+    public void interactCenter(World world, EntityPlayer player) {
+        if (!world.isRemote) {
+            if (isValid())
+                start();
+            else {
+                world.playSound(player, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.8F, 0.5F);
+            }
+            PacketHandler.updateTE(this);
+            System.out.println(ModRites.getRite(this));
+        }
+    }
+
+    public boolean start() {
+        if (tickCount > 0) return false;
+        tickCount = 1;
+        getAltar().bookOpen = true;
+        PacketHandler.updateTE(getAltar());
+        return true;
+    }
+
+    @Override //todo particles n stuff
+    public void update() {
+        if (!world.isRemote) {
+            updateRiteStats();
+            if (!altarUsable()) {
+                findNearestAltar();
+            } else {
+                if (getAltar().bookOpen && tickCount > 0 && isValid()) {
+                    flipAltarPages();
+                    OctagramRite rite = getCurrentRite();
+                    System.out.println(tickCount);
+                    EntityPlayer caster = getLastPlayer();
+                    if (rite.test(this)) { //bind in instability later
+                        tickCount++;
+                        rite.doRitual(this, caster);
+                        //also do instability check stuff
+                    }else{
+                        //reset? look at the doc
+                    }
+                    if (checkGOOAdressed() && checkFocalPower() && tickCount >= rite.ticksNeeded) {
+                        rite.effect(this, caster);
+                        finish();
+                        //do instability stuff for the last time, maybe also regard it in the focal power part
+                    }
+                } else {
+                    tickCount = 0;
+                }
+            }
+            PacketHandler.updateTE(this);
+        }
+    }
+
+    public boolean checkFocalPower() {
+        return true;
+    }
+
+    public boolean checkGOOAdressed() { //this will handle all the stuff that can go wrong :))) (maybe new classes etc. for this)
+        return true;
+    }
+
+    public void finish() {
+        getAltar().bookOpen = false;
+        getAltar().flipSpeed = 0;
+        PacketHandler.updateTE(getAltar());
+        tickCount = 0;
+        currentRite = "";
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
+        }
+    }
+
+
+    public boolean isValid() {
+        if (getAltarBlessing() != null) {
+            return getCurrentRite() != null && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == Blessing.NONE);// && (getCurrentRite().octagram == getAssociatedBlessing() || getCurrentRite().octagram == Blessing.NONE); //and stuff
+        }
+        return false;
+    }
+
+    public EntityPlayer getLastPlayer(){
+        EntityPlayer player= world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 16, false);
+        if (player == null && !lastPlayerUUID.isEmpty()){
+            player = world.getPlayerEntityByUUID(UUID.fromString(lastPlayerUUID));
+        }
+        return player;
+    }
+
+    public OctagramRite getCurrentRite() {
+        OctagramRite rite = ModRites.getRite(this);
+        if (rite == null && primed && !currentRite.isEmpty()) {
+            rite = ModRites.RITES.get(new ResourceLocation(currentRite));
+        } else if (rite == null) {
+            currentRite = "";
+        }
+        return rite;
+    }
+
+    public void flipAltarPages() {
+        if (altarUsable()) {
+            getAltar().flipSpeed = Math.max(getAltar().flipSpeed + 0.02F, 0.1F);
+            PacketHandler.updateTE(getAltar());
+        }
+    }
+
+    public void findNearestAltar() {
+        Iterator<BlockPos.MutableBlockPos> checkPoses = BlockPos.getAllInBoxMutable(pos.add(-4, -2, -4), pos.add(4, 2, 4)).iterator();
+        while (checkPoses.hasNext()) {
+            BlockPos checkPos = checkPoses.next();
+            if (world.getTileEntity(checkPos) instanceof TileEntityAltar) {
+                closestAltarPos = checkPos;
+                return;
+            }
+        }
+    }
+
+    public boolean altarUsable() {
+        return closestAltarPos != null && world.getTileEntity(closestAltarPos) instanceof TileEntityAltar;
+    }
+
+    public TileEntityAltar getAltar() {
+        if (altarUsable()) {
+            return (TileEntityAltar) world.getTileEntity(closestAltarPos);
+        }
+        return null;
+    }
+
+    public Blessing getAltarBlessing() {
+        if (closestAltarPos != null && world.getTileEntity(closestAltarPos) instanceof TileEntityAltar) {
+            return ((TileEntityAltar) world.getTileEntity(closestAltarPos)).getAssociatedBlessing();
+        }
+        return null;
     }
 
     @Override
-    public void update() {
-        updateRiteStats();
-
-        //System.out.println(getFocusPower(true));
-        if (!altarUsable()){
-            findNearestAltar();
-        }else{
-            if (getAltar().bookOpen && tickCount > 0){
-                OctagramRite rite = getCurrentRite(); //store that in NBT, namely for primed rites
-                if (rite != null){ //also check if it's primed; once it *is* primed and the ticks are matching, the check primed method (which is as of now not existent) will be called
-                    EntityPlayer caster = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 16, false);
-                    if (rite.test(this)){
-                        tickCount++;
-                        rite.doRitual(this, caster);
-                    }
-                    if (tickCount >= rite.ticksNeeded){
-                        rite.effect(this, caster);
-                    }
-                }
-                //stuff
-            }
+    public Blessing getAssociatedBlessing() {
+        if (world.getBlockState(pos).getBlock() instanceof BlockOctagram) {
+            return ((BlockOctagram) world.getBlockState(pos).getBlock()).getAssociatedBlessing();
         }
-        //flipAltarPages();
-
-        //stuff
+        return Blessing.NONE;
     }
 
-    //method to get focus power, method to calculate instability, method to check when it takes effect
-    //a rite will also have a method for determining the effects of instability or when the rite is canceled(see doc)
 
-
-
-    public void updateRiteStats(){
-        focusPower = 0;
+    public void updateRiteStats() {
         getAllFoci(true);
-        HELD_FOCI.forEach(focus -> focusPower += calculatePowerWithModificator(FOCI, focus, pos));
-        PLACED_FOCI.forEach(pair -> focusPower += calculatePowerWithModificator(FOCI, pair.getValue(), pair.getKey()));
-
-        System.out.println(focusPower);
+        focusPower = 0;
+        instability = 0;
+        HELD_FOCI.forEach(focus -> {
+            focusPower += focus.getConduitAmount(world, pos);
+            instability += focus.getInstabilityRate(world, pos);
+        });
+        PLACED_FOCI.forEach(pair -> {
+            focusPower += pair.getValue().getConduitAmount(world, pair.getKey());
+            instability += pair.getValue().getInstabilityRate(world, pair.getKey());
+        });
+        float overhangFactor = calculateOverhangFactor();
+        focusPower /= overhangFactor;
+        instability *= Math.sqrt(overhangFactor);
     }
 
-    public List<Pair<BlockPos, RiteFocus>> getPlacedFoci(boolean refresh){
-        if (refresh){
+    public List<Pair<BlockPos, RiteFocus>> getPlacedFoci(boolean refresh) {
+        if (refresh) {
             PLACED_FOCI.clear();
             BlockPos.getAllInBox(pos.add(-10, -4, -10), pos.add(9, 5, 9)).forEach(blockPos ->
-                RiteFocus.getFociFor(world.getBlockState(blockPos).getBlock(), RiteFocus.EnumType.PLACED).forEach(focus ->
-                        PLACED_FOCI.add(new Pair<>(blockPos, focus))));
+                    RiteFocus.getFociFor(world.getBlockState(blockPos).getBlock(), RiteFocus.EnumType.PLACED).forEach(focus ->
+                            PLACED_FOCI.add(new Pair<>(blockPos, focus))));
         }
         return PLACED_FOCI;
     }
 
-    public List<RiteFocus> getAllFoci(boolean refresh){
+    public List<RiteFocus> getAllFoci(boolean refresh) {
         if (refresh) {
             FOCI.clear();
             FOCI.addAll(getHeldFoci(refresh));
@@ -159,76 +283,29 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable {
         return FOCI;
     }
 
-    public List<RiteFocus> getHeldFoci(boolean refresh){
+    public List<RiteFocus> getHeldFoci(boolean refresh) {
         if (refresh) {
             HELD_FOCI.clear();
             world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos.add(-8, -4, -8), pos.add(7, 4, 7))).forEach(l -> l.getHeldEquipment().forEach(s -> {
-                List<RiteFocus> possibleFoci = RiteFocus.getFociFor(l.getHeldItemMainhand(), RiteFocus.EnumType.HELD);
-                if (!possibleFoci.isEmpty()) {
-                    HELD_FOCI.addAll(possibleFoci);
-                }
+                HELD_FOCI.addAll(RiteFocus.getFociFor(s, RiteFocus.EnumType.HELD));
             }));
         }
         return HELD_FOCI;
     }
 
-    private float calculatePowerWithModificator(List<RiteFocus> focusList, RiteFocus focus, BlockPos checkPos){
-        int frequency = Collections.frequency(focusList, focus);
-        int overhang = Math.max(frequency- focus.getMaxSameType(world, checkPos), 0);
-        //Math.pow()
-      //  float frequencyModifier = Math(float) focus.getMaxSameType(world, pos) / Math.max(frequency - focus.getMaxSameType(world, pos), 0);
-      //  Math.sqrt() so it exponentially increases the decrease
-     //   System.out.println((float) focus.getConduitAmount(world, pos) * frequencyModifier);
-        System.out.println((float) Math.pow(focus.getConduitAmount(world, checkPos), -overhang));
-        return (float) Math.pow(focus.getConduitAmount(world, checkPos), -overhang);// * 1; //replace that with a good modifier
-    }
-
-
-
-    public OctagramRite getCurrentRite(){
-        return ModRites.getRite(this);
-    }
-
-    public boolean start(){
-        if (tickCount > 0) return false;
-        tickCount = 1;
-        getAltar().bookOpen = true;
-        return true;
-    }
-
-    public void flipAltarPages(){
-        if (altarUsable()){
-            getAltar().flipSpeed += 0.1;
-            // getAltar().flipSpeed = Math.max(getAltar().flipSpeed + 0.1F, 2);
+    private float calculateOverhangFactor() {
+        Map<RiteFocus, Integer> overhang_each = new HashMap<>();
+        float totalMax = 0;
+        float totalOverhang = 0;
+        for (RiteFocus focus : FOCI) {
+            int frequency = Collections.frequency(FOCI, focus);
+            overhang_each.put(focus, Math.max(frequency - focus.getMaxSameType(world, pos), 0));
+            totalMax += focus.getMaxSameType(world, pos);
         }
-    }
-
-    public void findNearestAltar(){
-        Iterator<BlockPos.MutableBlockPos> checkPoses = BlockPos.getAllInBoxMutable(pos.add(-4, -2, -4), pos.add(4, 2, 4)).iterator();
-        while (checkPoses.hasNext()){
-            BlockPos checkPos = checkPoses.next();
-            if (world.getTileEntity(checkPos) instanceof TileEntityAltar){
-                closestAltarPos = checkPos;
-                return;
-            }
+        for (Integer i : overhang_each.values()) {
+            totalOverhang += i;
         }
+        return 1 + (totalOverhang / totalMax);
     }
 
-    public boolean altarUsable(){
-        return closestAltarPos != null && world.getTileEntity(closestAltarPos) instanceof TileEntityAltar;
-    }
-
-    public TileEntityAltar getAltar(){
-        if (altarUsable()) {
-            return (TileEntityAltar) world.getTileEntity(closestAltarPos);
-        }
-        return null;
-    }
-
-    public Blessing getAltarBlessing(){
-        if (closestAltarPos != null && world.getTileEntity(closestAltarPos) instanceof TileEntityAltar){
-            return ((TileEntityAltar) world.getTileEntity(closestAltarPos)).getAssociatedBlessing();
-        }
-        return Blessing.NONE; //or null if it's relevant that a book is present?
-    }
 }

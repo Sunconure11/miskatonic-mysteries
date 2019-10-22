@@ -53,20 +53,21 @@ public class PacketHandler {
     }
 
     public static void updateTE(TileEntity tile) {
-        SPacketUpdateTileEntity packet = tile.getUpdatePacket();
+        if (tile != null) {
+            SPacketUpdateTileEntity packet = tile.getUpdatePacket();
 
-        if(packet != null && tile.getWorld() instanceof WorldServer) {
-            PlayerChunkMapEntry chunk = ((WorldServer) tile.getWorld()).getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
-            if(chunk != null) {
-                chunk.sendPacket(packet);
+            if (packet != null && tile.getWorld() instanceof WorldServer) {
+                PlayerChunkMapEntry chunk = ((WorldServer) tile.getWorld()).getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
+                if (chunk != null) {
+                    chunk.sendPacket(packet);
+                }
             }
         }
     }
 
     public static void updateTE(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if(tile != null)
-            updateTE(tile);
+        updateTE(tile);
     }
 
 }

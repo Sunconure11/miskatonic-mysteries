@@ -1,0 +1,15 @@
+{
+  "name": "The Black Goat",
+  "icon": "miskatonicmysteries:textures/gui/icons/shub.png",
+  "category": "goos",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Black Goat of the Woods with a Thousand Young is one of the most widely worshipped of all the Gods. She is hungry, she gives life, and she takes life. Nature is not just about life and peace, nature is also predatory. The Goat’s name is invoked in wild forest rites, in mad incantations into the night."
+    },
+    {
+      "type": "text",
+      "text": "She is next to only the Crawling Chaos in the amount of physical avatars she has, some known ones include Baphomet of the Tempting Flame, Lilith the Mother of Demons, and The Horned Hunter of the Green. She may also appear to cults in a form that is only vaguely expressive of her true form, in order to interact more directly with worshipers."
+    }
+  ]
+}

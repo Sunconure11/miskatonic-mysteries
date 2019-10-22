@@ -88,14 +88,20 @@ public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAss
 
     @Override
     public void update() {
-        if (world.isRemote) {
-            if (flipSpeed > 0){
-             //   flipSpeed -= 0.05;
+        if (inventory.getStackInSlot(0).isEmpty()){
+            bookOpen = false;
+            bookOpeningProgress = 0;
+        }else {
+            if (bookOpen && flipSpeed > 0) {
+                flipSpeed -= 0.01;
             }
             if (bookOpen && bookOpeningProgress < 1) {
                 bookOpeningProgress += 0.05;
             } else if (!bookOpen && bookOpeningProgress > 0) {
                 bookOpeningProgress -= 0.05;
+            }
+            if (!bookOpen){
+                flipSpeed = 0;
             }
         }
     }
@@ -103,7 +109,7 @@ public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAss
     @Override
     public Blessing getAssociatedBlessing() {
         if (inventory.getStackInSlot(0).getItem() instanceof ItemMMBook) {
-            return ((ItemMMBook) inventory.getStackInSlot(0).getItem()).getAssociatedBlessing();
+            return ((IHasAssociatedBlessing) inventory.getStackInSlot(0).getItem()).getAssociatedBlessing();
         }
         return Blessing.NONE;
     }

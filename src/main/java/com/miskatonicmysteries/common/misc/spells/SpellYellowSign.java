@@ -65,7 +65,8 @@ public class SpellYellowSign extends Spell {
                 bannerTag.getTagList("Patterns", Constants.NBT.TAG_COMPOUND).appendTag(yellowSignPattern);
             }
             banner.deserializeNBT(bannerTag);
-            PacketHandler.updateTE(banner);
+            if (!world.isRemote)
+                PacketHandler.updateTE(banner);
         }else {
             IBlockState oldState = world.getBlockState(pos);
             Block block = oldState.getBlock();

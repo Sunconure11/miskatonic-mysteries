@@ -13,19 +13,15 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class CandleRiteFocus extends RiteFocus {
+public class CandleRiteFocus extends BlockRiteFocus {
     public CandleRiteFocus() {
-        super(0.1F, 10, 8, EnumType.PLACED);
-        this.selector = (s -> s instanceof Block && s instanceof BlockCandles);
+        super(0.1F, 10, 8, BlockCandles.class);
     }
 
     @Override
     public int getConduitAmount(@Nullable World world, @Nullable BlockPos pos) {
-        System.out.println("check pos " + pos);
         if (world != null && pos != null){
-            System.out.println("check first");
             if (world.getBlockState(pos).getBlock() instanceof BlockCandles){
-                System.out.println("test then and see " + world.getBlockState(pos).getValue(BlockCandles.CANDLES));
                 return super.getConduitAmount(world, pos) * world.getBlockState(pos).getValue(BlockCandles.CANDLES);
             }
         }

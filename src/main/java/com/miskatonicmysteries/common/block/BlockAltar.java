@@ -42,6 +42,7 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntityAltar altar = getTileEntity(worldIn, pos);
+        if (worldIn.isRemote) return true;
         if (playerIn.isSneaking()){
            if (!altar.inventory.getStackInSlot(0).isEmpty()){
                ItemHandlerHelper.giveItemToPlayer(playerIn, altar.inventory.extractItem(0, 1, false));
@@ -50,7 +51,7 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
             if (altar.inventory.getStackInSlot(0).isEmpty() && TileEntityAltar.BOOK_TEXTURES.containsKey(playerIn.inventory.getCurrentItem().getItem())){
                 InventoryUtil.insertCurrentItemStack(playerIn, altar.inventory, 0);
             }else
-            if (playerIn.getHeldItem(hand).isEmpty() && !worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
+            if (playerIn.getHeldItem(hand).isEmpty() && hand == EnumHand.MAIN_HAND) {
                 altar.bookOpen = !altar.bookOpen;
                 altar.markDirty();
                 worldIn.updateComparatorOutputLevel(pos, worldIn.getBlockState(pos).getBlock());
@@ -58,7 +59,6 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
                 return true;
             }
         }
-        PacketHandler.updateTE(altar);
         return false;
     }
 
@@ -67,12 +67,11 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
     @Override
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (this != ModObjects.altar_prismarine) {
-            float halfBlockBit = 1F / 16F; //particle type changes depending on the type of altar
+            float halfBlockBit = 1F / 16F;
             EnumFacing facing = stateIn.getValue(FACING);
             boolean reverse = facing == EnumFacing.WEST || facing == EnumFacing.EAST;
             int mult = facing == EnumFacing.SOUTH || facing == EnumFacing.WEST ? -1 : 1;
             int type = this == ModObjects.altar_purpur ? 1 : 0;
-            //check altar type, too
             generateParticle(type, worldIn, pos, reverse, mult, 15 * halfBlockBit, 5.5 * halfBlockBit, 15 * halfBlockBit, 0.2F, rand);
             generateParticle(type, worldIn, pos, reverse, mult, 12 * halfBlockBit, 5.5 * halfBlockBit, 15 * halfBlockBit, 0.2F, rand);
             generateParticle(type, worldIn, pos, reverse, mult, 13.5 * halfBlockBit, 6.5 * halfBlockBit, 13 * halfBlockBit, 0.2F, rand);

@@ -24,7 +24,7 @@ public class TileEntityMod extends TileEntity {
 
     @Override
     public NBTTagCompound getUpdateTag() {
-        return serializeNBT();
+        return writeToNBT(new NBTTagCompound());
     }
 
     @Override

@@ -115,7 +115,7 @@ public class EntityShub extends AbstractOldOne {
 
     @Override
     protected void doBlockCollisions() {
-        AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
+       /* AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
         BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain(axisalignedbb.minX + 0.001D, axisalignedbb.minY + 0.001D, axisalignedbb.minZ + 0.001D);
         BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos1 = BlockPos.PooledMutableBlockPos.retain(axisalignedbb.maxX - 0.001D, axisalignedbb.maxY - 0.001D, axisalignedbb.maxZ - 0.001D);
         BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos2 = BlockPos.PooledMutableBlockPos.retain();
@@ -144,7 +144,7 @@ public class EntityShub extends AbstractOldOne {
 
         blockpos$pooledmutableblockpos.release();
         blockpos$pooledmutableblockpos1.release();
-        blockpos$pooledmutableblockpos2.release();
+        blockpos$pooledmutableblockpos2.release();*/
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.common.misc.rites;
 
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.registry.ModRites;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,14 +17,30 @@ public abstract class OctagramRite {
     public ResourceLocation name;
     public NonNullList<Ingredient> ingredients;
     public int focusPower;
+    public int overflowTolerance;
     public EnumType type;
     public int ticksNeeded;
+    public Blessing octagram, unlockBook;
 
-    public OctagramRite(ResourceLocation name, int focusPower, int ticksNeeded, EnumType type, Ingredient... reagents) {
+    /**
+     *
+     * @param name The Rite's name
+     * @param focusPower The Focal Power needed for the rite to run
+     * @param ticksNeeded The amount of ticks needed till the rite is complete
+     * @param type The type of the rite
+     * @param octagram The type of octagram needed to perform this rite
+     * @param unlockBook The type of book needed to be present
+     * @param reagents Required items
+     */
+    public OctagramRite(ResourceLocation name, int focusPower, int overflowTolerance, int ticksNeeded, EnumType type, Blessing octagram, Blessing unlockBook, Ingredient... reagents) {
         this.name = name;
         this.focusPower = focusPower;
+        this.overflowTolerance = overflowTolerance;
         this.ticksNeeded = ticksNeeded;
         this.ingredients = NonNullList.create();
+        this.type = type;
+        this.octagram = octagram;
+        this.unlockBook = unlockBook;
         ingredients.addAll(Arrays.asList(reagents));
         ModRites.RITES.put(name, this);
     }
@@ -34,7 +51,7 @@ public abstract class OctagramRite {
 
     public abstract void effect(TileEntityOctagram octagram, @Nullable EntityPlayer caster); //There is always a price to be paid...
 
-    //(effect methods will only exist in extended classes? not sure...)
+    public abstract boolean checkShouldTrigger(TileEntityOctagram octagram, @Nullable EntityPlayer closest);
 
     public enum EnumType {
         FOCUSED, //cast the rite, then have the effect

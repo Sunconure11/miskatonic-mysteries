@@ -2,7 +2,9 @@ package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
+import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
 import com.miskatonicmysteries.common.misc.spells.Spell;
 import com.miskatonicmysteries.common.misc.spells.SpellFeast;
 import com.miskatonicmysteries.common.misc.spells.SpellHeal;
@@ -29,22 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ModRites {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
 
-    /*public static final OctagramRite MANIACSMEETING_GOAT = new OctagramRite(new ResourceLocation(MiskatonicMysteries.MODID, "maniacs_meeting_goat"), 150, 100, OctagramRite.EnumType.FOCUSED, Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK), Ingredient.fromItem(Items.BOOK)) {
-        @Override
-        public boolean test(TileEntityOctagram octagram) {
-            return true;
-        }
-
-        @Override
-        public void doRitual(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
-
-        }
-
-        @Override
-        public void effect(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
-
-        }
-    };*/
+    public static OctagramRite MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
 
     public static OctagramRite getRite(TileEntityOctagram octagram) {
         for (OctagramRite rite : RITES.values()) {

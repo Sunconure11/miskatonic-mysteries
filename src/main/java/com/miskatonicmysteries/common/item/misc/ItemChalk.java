@@ -41,11 +41,8 @@ public class ItemChalk extends ItemBlock {
         }
 
         if (checkPlacement(worldIn, pos, facing, player)){//canPlaceBlockOnSide(worldIn, pos, facing, player, player.getHeldItem(hand))) {
-            System.out.println("uwuuwwwwww~");
             setBlocks(worldIn, pos, player, hand);
             return EnumActionResult.SUCCESS;
-       // } else {
-         //   return EnumActionResult.FAIL;
         }
         return EnumActionResult.FAIL;
     }

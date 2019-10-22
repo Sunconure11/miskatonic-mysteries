@@ -1,0 +1,16 @@
+{
+  "name": "Introduction",
+  "icon": "miskatonicmysteries:necronomicon",
+  "category": "world",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Many have tried to harness, or at the very least understand, the nature and powers of the things which lurk beyond the Threshold, namely the Great Old Ones. The Great Old Ones are known to associate with mortals for reasons unknown. Those who practice the arts of the aether are known as “Entheators”, those of divine, or rather profane, inspiration."
+    },
+    {
+      "type": "text",
+      "text": "Though those who oppose and simply fear Entheators often refer to them as “cultists” or similar. However, the Great Old Ones are not the only thing that fringes on the limit of one’s rationality. Many other lesser creatures of this nature exists as well, some of when are known to interact with humans."
+    }
+  ]
+}
