@@ -4,10 +4,10 @@ import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
+import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
 import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.common.network.PacketHandler;
-import com.miskatonicmysteries.registry.ModRites;
-import com.miskatonicmysteries.util.InventoryUtil;
+import com.miskatonicmysteries.registry.ModRegistries;
 import javafx.util.Pair;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -111,7 +111,6 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 world.playSound(player, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.8F, 0.5F);
             }
             PacketHandler.updateTE(this);
-            System.out.println(ModRites.getRite(this));
         }
     }
 
@@ -145,6 +144,11 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     if (checkGOOAdressed() && checkFocalPower() && tickCount >= rite.ticksNeeded) {
                         rite.effect(this, caster);
                         finish();
+                        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+                        RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.RITE_EXECUTED);
+                        if (effect != null){
+                            effect.execute(this, RiteEffect.EnumTrigger.RITE_EXECUTED);
+                        }
                         //do instability stuff for the last time, maybe also regard it in the focal power part
                     }
                 } else {
@@ -156,10 +160,22 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public boolean checkFocalPower() {
+        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+        RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.POWER_CHECK);
+        if (effect != null){
+            effect.execute(this, RiteEffect.EnumTrigger.POWER_CHECK);
+            return false;
+        }
         return true;
     }
 
-    public boolean checkGOOAdressed() { //this will handle all the stuff that can go wrong :))) (maybe new classes etc. for this)
+    public boolean checkGOOAdressed() {
+        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+        RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.GOO_CHECK);
+        if (effect != null){
+            effect.execute(this, RiteEffect.EnumTrigger.GOO_CHECK);
+            return false;
+        }
         return true;
     }
 
@@ -191,9 +207,9 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public OctagramRite getCurrentRite() {
-        OctagramRite rite = ModRites.getRite(this);
+        OctagramRite rite = ModRegistries.Util.getRite(this);
         if (rite == null && primed && !currentRite.isEmpty()) {
-            rite = ModRites.RITES.get(new ResourceLocation(currentRite));
+            rite = ModRegistries.RITES.get(new ResourceLocation(currentRite));
         } else if (rite == null) {
             currentRite = "";
         }
@@ -260,6 +276,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         float overhangFactor = calculateOverhangFactor();
         focusPower /= overhangFactor;
         instability *= Math.sqrt(overhangFactor);
+        focusPower = Math.max(focusPower, 0);
+        instability = Math.max(instability, 0);
     }
 
     public List<Pair<BlockPos, RiteFocus>> getPlacedFoci(boolean refresh) {

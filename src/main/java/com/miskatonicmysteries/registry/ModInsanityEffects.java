@@ -60,7 +60,6 @@ public class ModInsanityEffects {
         return sanity.getSanity() <= effect.getLevel(world, player, sanity);
     }
 
-    //for command completition
     public static String[] getInsanityEffectStrings(){
         List<String> strings = new ArrayList<>();
         for (ResourceLocation loc : INSANITY_EFFECTS.keySet()){
