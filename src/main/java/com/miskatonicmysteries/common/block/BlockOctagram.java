@@ -53,6 +53,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
 
         PARTS[1][1] = 0;
     }
+
     protected Blessing blessing;
 
     public BlockOctagram(Blessing blessing) {
@@ -69,7 +70,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
 
     @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
-        return new AxisAlignedBB(0, 0, 0, 0,0,0);
+        return new AxisAlignedBB(0, 0, 0, 0, 0, 0);
     }
 
     @Nullable
@@ -85,7 +86,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        if (!canPlace(worldIn, pos)){
+        if (!canPlace(worldIn, pos)) {
             worldIn.setBlockToAir(pos);
         }
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
@@ -95,60 +96,53 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
      * Called when the block is right clicked by a player.
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote) {
-            return true;
-        }
-        else {
-            if (state.getValue(PART) != EnumPartType.CENTER) {
-                BlockPos centerPos = getCenterPos(worldIn, pos);
-                if (centerPos != null) {
-                    state = worldIn.getBlockState(centerPos);
-                    if (state.getBlock() != this) {
-                        return true;
-                    }
-                    int distanceX = pos.getX() - centerPos.getX();
-                    int distanceZ = pos.getZ() - centerPos.getZ();
-                    this.onBlockActivated(worldIn, centerPos, state, playerIn, hand, facing, hitX + distanceX, hitY, hitZ + distanceZ);
+        if (state.getValue(PART) != EnumPartType.CENTER) {
+            BlockPos centerPos = getCenterPos(worldIn, pos);
+            if (centerPos != null) {
+                state = worldIn.getBlockState(centerPos);
+                if (state.getBlock() != this) {
+                    return true;
                 }
-            }else{
-                TileEntityOctagram octagram = getTileEntity(worldIn, pos);
-                int floorHitX = (int) Math.floor(hitX);
-                int floorHitZ = (int) Math.floor(hitZ);
-                if (!(floorHitX == 0 && floorHitZ == 0)) {
+                int distanceX = pos.getX() - centerPos.getX();
+                int distanceZ = pos.getZ() - centerPos.getZ();
+                this.onBlockActivated(worldIn, centerPos, state, playerIn, hand, facing, hitX + distanceX, hitY, hitZ + distanceZ);
+            }
+        } else {
+            TileEntityOctagram octagram = getTileEntity(worldIn, pos);
+            int floorHitX = (int) Math.floor(hitX);
+            int floorHitZ = (int) Math.floor(hitZ);
+            if (!(floorHitX == 0 && floorHitZ == 0)) {
+                if (!worldIn.isRemote) {
                     int slot = getSlot(floorHitX, floorHitZ);
                     if (octagram.inventory.getStackInSlot(slot).isEmpty()) {
                         InventoryUtil.insertCurrentItemStack(playerIn, octagram.inventory, slot);
-                    }else if (playerIn.isSneaking()){
+                    } else if (playerIn.isSneaking()) {
                         ItemHandlerHelper.giveItemToPlayer(playerIn, octagram.inventory.extractItem(slot, 1, false));
                     }
-                }else{
-                    octagram.interactCenter(worldIn, playerIn);
                 }
-
-                PacketHandler.updateTE(octagram);
+            } else {
+                octagram.interactCenter(worldIn, playerIn);
             }
+            PacketHandler.updateTE(octagram);
         }
+        return true;
+    }
+
+    public static int getSlot(int floorHitX, int floorHitZ) {
+
+        return PARTS[1 - floorHitX][1 - floorHitZ] - 1;
+    }
+
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    public static int getSlot(int floorHitX, int floorHitZ){
-
-        return PARTS[1 - floorHitX] [1 - floorHitZ] -  1;
-    }
-
-    public boolean isFullCube(IBlockState state)
-    {
-        return false;
-    }
-
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
 
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
 
@@ -157,14 +151,12 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         return true;
     }
 
-    public EnumPushReaction getMobilityFlag(IBlockState state)
-    {
+    public EnumPushReaction getMobilityFlag(IBlockState state) {
         return EnumPushReaction.DESTROY;
     }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
@@ -182,7 +174,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (worldIn.getTileEntity(pos) instanceof TileEntityOctagram){
+        if (worldIn.getTileEntity(pos) instanceof TileEntityOctagram) {
             InventoryUtil.dropAllItems(worldIn, getTileEntity(worldIn, pos).inventory, pos);
         }
         super.breakBlock(worldIn, pos, state);
@@ -209,7 +201,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
      */
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing enumfacing = EnumFacing.getHorizontal(meta);
-        return  (meta & 8) > 0 ? this.getDefaultState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, enumfacing) : this.getDefaultState().withProperty(PART, EnumPartType.OUTER).withProperty(FACING, enumfacing);//this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 6)).withProperty(PART, EnumPartType.CENTER.fromIndex(meta & 15));//(meta & 8) > 0 ? this.getDefaultState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, enumfacing) : this.getDefaultState().withProperty(PART, EnumPartType.OUTER).withProperty(FACING, enumfacing);
+        return (meta & 8) > 0 ? this.getDefaultState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, enumfacing) : this.getDefaultState().withProperty(PART, EnumPartType.OUTER).withProperty(FACING, enumfacing);//this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 6)).withProperty(PART, EnumPartType.CENTER.fromIndex(meta & 15));//(meta & 8) > 0 ? this.getDefaultState().withProperty(PART, EnumPartType.CENTER).withProperty(FACING, enumfacing) : this.getDefaultState().withProperty(PART, EnumPartType.OUTER).withProperty(FACING, enumfacing);
     }
 
     /**
@@ -234,8 +226,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
      *
      * @return an approximation of the form of the given face
      */
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-    {
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
 
@@ -243,10 +234,10 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         return new BlockStateContainer(this, FACING, PART);
     }
 
-    public BlockPos getCenterPos(World world, BlockPos pos){
-        for (int x = -1; x <= 1; x++){
-            for (int z = -1; z <= 1; z++){
-                if (world.getBlockState(pos.add(x, 0, z)).getBlock().equals(this) && world.getBlockState(pos.add(x, 0, z)).getValue(PART).equals(EnumPartType.CENTER)){
+    public BlockPos getCenterPos(World world, BlockPos pos) {
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (world.getBlockState(pos.add(x, 0, z)).getBlock().equals(this) && world.getBlockState(pos.add(x, 0, z)).getValue(PART).equals(EnumPartType.CENTER)) {
                     return pos.add(x, 0, z);
                 }
             }
@@ -275,8 +266,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         return side == EnumFacing.UP && super.canPlaceBlockOnSide(worldIn, pos, side);
     }
 
-    public enum EnumPartType implements IStringSerializable
-    {
+    public enum EnumPartType implements IStringSerializable {
         CENTER("center", 0),
         OUTER("outer", 1);
 
@@ -284,19 +274,17 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         private final int index;
         private final EnumPartType[] VALUES = new EnumPartType[9];
 
-        EnumPartType(String name, int index){
+        EnumPartType(String name, int index) {
             this.name = name;
             this.index = index;
             VALUES[index] = this;
         }
 
-        public String toString()
-        {
+        public String toString() {
             return this.name;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return this.name;
         }
 
@@ -304,7 +292,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
             return index;
         }
 
-        public EnumPartType fromIndex(int index){
+        public EnumPartType fromIndex(int index) {
             return VALUES[index];
         }
     }

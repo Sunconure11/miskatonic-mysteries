@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.world.gen.processor;
 
+import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.registry.ModObjects;
@@ -24,9 +25,18 @@ public class ShubStructureProcessor extends OldStructureProcessor {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.moss_stone_shubniggurath_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
             }
         }else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
-            switch (worldIn.rand.nextInt(2)){
-                case 0: return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//decorative statue
-                case 1: return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//actual statue
+            float r = worldIn.rand.nextFloat();
+            if (r <= 50){
+                return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
+            }else if (r <= 20){
+                switch (worldIn.rand.nextInt(2)) {
+                    case 0:
+                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//decorative statue
+                    case 1:
+                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//actual statue
+                }
+            }else{
+                return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));
             }
         }
         if (!blockInfoIn.blockState.getBlock().equals(Blocks.AIR) && pos.getY() <= groundY){

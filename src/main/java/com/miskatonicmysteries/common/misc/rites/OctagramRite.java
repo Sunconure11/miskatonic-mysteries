@@ -2,16 +2,14 @@ package com.miskatonicmysteries.common.misc.rites;
 
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
-import com.miskatonicmysteries.registry.ModRites;
+import com.miskatonicmysteries.registry.ModRegistries;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class OctagramRite {
     public ResourceLocation name;
@@ -42,7 +40,7 @@ public abstract class OctagramRite {
         this.octagram = octagram;
         this.unlockBook = unlockBook;
         ingredients.addAll(Arrays.asList(reagents));
-        ModRites.RITES.put(name, this);
+        ModRegistries.RITES.put(name, this);
     }
 
     public abstract boolean test(TileEntityOctagram octagram);

@@ -14,14 +14,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -56,6 +55,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public String lastPlayerUUID = "";
 
+    public final List<BlockPos> PARTICLE_EMMITTERS = new ArrayList<>();
     public final List<Pair<BlockPos, RiteFocus>> PLACED_FOCI = new ArrayList<>();
     public final List<RiteFocus> HELD_FOCI = new ArrayList<>(); //possibly pass an entity id with that? (for particles, if there should be any)
     public final List<RiteFocus> FOCI = new ArrayList<>();
@@ -104,18 +104,22 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public void interactCenter(World world, EntityPlayer player) {
-        if (!world.isRemote) {
-            if (isValid())
+        if (isValid()) {
+            if (!world.isRemote)
                 start();
-            else {
-                world.playSound(player, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 0.8F, 0.5F);
-            }
-            PacketHandler.updateTE(this);
+        } else if (world.isRemote && isFilled()) {
+            doFailingEffects(8);
         }
     }
 
     public boolean start() {
         if (tickCount > 0) return false;
+        if (!isValid()) {
+            if (world.isRemote) {
+                doFailingEffects(20);
+            }
+            return false;
+        }
         tickCount = 1;
         getAltar().bookOpen = true;
         PacketHandler.updateTE(getAltar());
@@ -124,59 +128,77 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     @Override //todo particles n stuff
     public void update() {
-        if (!world.isRemote) {
+        if (world.getTotalWorldTime() % 60 == 0)
             updateRiteStats();
-            if (!altarUsable()) {
-                findNearestAltar();
-            } else {
-                if (getAltar().bookOpen && tickCount > 0 && isValid()) {
-                    flipAltarPages();
-                    OctagramRite rite = getCurrentRite();
-                    System.out.println(tickCount);
-                    EntityPlayer caster = getLastPlayer();
-                    if (rite.test(this)) { //bind in instability later
-                        tickCount++;
-                        rite.doRitual(this, caster);
-                        //also do instability check stuff
-                    }else{
-                        //reset? look at the doc
-                    }
-                    if (checkGOOAdressed() && checkFocalPower() && tickCount >= rite.ticksNeeded) {
-                        rite.effect(this, caster);
-                        finish();
-                        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
-                        RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.RITE_EXECUTED);
-                        if (effect != null){
-                            effect.execute(this, RiteEffect.EnumTrigger.RITE_EXECUTED);
-                        }
-                        //do instability stuff for the last time, maybe also regard it in the focal power part
-                    }
+        if (!altarUsable()) {
+            findNearestAltar();
+        } else {
+            if (getAltar().bookOpen && tickCount > 0 && isValid()) {
+                flipAltarPages();
+                OctagramRite rite = getCurrentRite();
+                System.out.println(tickCount);
+                EntityPlayer caster = getLastPlayer();
+                if (rite.test(this)) { //bind in instability later
+                    tickCount++;
+                    rite.doRitual(this, caster);
+                    if (world.rand.nextFloat() < 0.05F)
+                    world.playSound(null, pos, SoundEvents.ENTITY_ILLAGER_CAST_SPELL, SoundCategory.BLOCKS, 0.05F, 0.2F + world.rand.nextFloat());
+                    //also do instability check stuff
+                    //also add passive casting sounds
+                    //and particle emitters
                 } else {
                     tickCount = 0;
+                    doFailingEffects(12);
+                    currentRite = "";
+                    PacketHandler.updateTE(this);
+                    return;
                 }
+                if (tickCount >= rite.ticksNeeded) {
+                    updateRiteStats();
+                    if (checkGOOAdressed() && checkFocalPower()) {
+                        rite.effect(this, caster);
+                        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+                        RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.RITE_EXECUTED);
+                        if (effect != null) {
+                            effect.execute(this, RiteEffect.EnumTrigger.RITE_EXECUTED);
+                        }
+                    } else {
+                        doFailingEffects(20);
+                    }
+                    finish();
+                    //do instability stuff for the last time, maybe also regard it in the focal power part
+                }
+            } else {
+                if (tickCount > 0) doFailingEffects(20);
+
+                tickCount = 0;
             }
-            PacketHandler.updateTE(this);
         }
+        if (world.rand.nextFloat() < (tickCount > 0 ? 0.3F : 0.05F)){ //maybe just handle particles there
+            handleParticles();
+        }
+
+        PacketHandler.updateTE(this);
     }
 
     public boolean checkFocalPower() {
         int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
         RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.POWER_CHECK);
-        if (effect != null){
+        if (effect != null) {
             effect.execute(this, RiteEffect.EnumTrigger.POWER_CHECK);
             return false;
         }
-        return true;
+        return focusPower >= getCurrentRite().focusPower;
     }
 
     public boolean checkGOOAdressed() {
         int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
         RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.GOO_CHECK);
-        if (effect != null){
+        if (effect != null) {
             effect.execute(this, RiteEffect.EnumTrigger.GOO_CHECK);
             return false;
         }
-        return true;
+        return getCurrentRite().octagram == Blessing.NONE || getAssociatedBlessing() == getCurrentRite().octagram;
     }
 
     public void finish() {
@@ -198,9 +220,9 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         return false;
     }
 
-    public EntityPlayer getLastPlayer(){
-        EntityPlayer player= world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 16, false);
-        if (player == null && !lastPlayerUUID.isEmpty()){
+    public EntityPlayer getLastPlayer() {
+        EntityPlayer player = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 16, false);
+        if (player == null && !lastPlayerUUID.isEmpty()) {
             player = world.getPlayerEntityByUUID(UUID.fromString(lastPlayerUUID));
         }
         return player;
@@ -283,9 +305,12 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     public List<Pair<BlockPos, RiteFocus>> getPlacedFoci(boolean refresh) {
         if (refresh) {
             PLACED_FOCI.clear();
+            PARTICLE_EMMITTERS.clear();
             BlockPos.getAllInBox(pos.add(-10, -4, -10), pos.add(9, 5, 9)).forEach(blockPos ->
-                    RiteFocus.getFociFor(world.getBlockState(blockPos).getBlock(), RiteFocus.EnumType.PLACED).forEach(focus ->
-                            PLACED_FOCI.add(new Pair<>(blockPos, focus))));
+                    RiteFocus.getFociFor(world.getBlockState(blockPos).getBlock(), RiteFocus.EnumType.PLACED).forEach(focus -> {
+                        PARTICLE_EMMITTERS.add(blockPos);
+                        PLACED_FOCI.add(new Pair<>(blockPos, focus));
+                    }));
         }
         return PLACED_FOCI;
     }
@@ -326,4 +351,34 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         return 1 + (totalOverhang / totalMax);
     }
 
+
+    public void doFailingEffects(int strength) {
+        world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.PLAYERS, 1F, 1F);
+        if (world.isRemote) {
+            for (int i = 0; i < strength; i++) {
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5F + world.rand.nextGaussian() / 3, pos.getY(), pos.getZ() + 0.5F + world.rand.nextGaussian() / 3, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 20, world.rand.nextGaussian() / 10);
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void handleParticles(){
+        for (BlockPos particlePos : PARTICLE_EMMITTERS) { //to do: make custom enchatning table particle that goes in the direction of the altar / a bound pos
+            if (world.rand.nextFloat() < 0.4) {
+                AxisAlignedBB box = world.getBlockState(particlePos).getBoundingBox(world, particlePos);
+                world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, box.minX + particlePos.getX() + world.rand.nextFloat() * box.maxX, box.minY + particlePos.getY() + world.rand.nextFloat() * box.maxY, box.minZ + particlePos.getZ() + world.rand.nextFloat() * box.maxZ, 0, 0, 0);
+            }
+        }
+        //more particles
+    }
+
+
+    public boolean isFilled(){
+        for (int i = 0; i < inventory.getSlots(); i++){
+            if (inventory.getStackInSlot(i).isEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
 }

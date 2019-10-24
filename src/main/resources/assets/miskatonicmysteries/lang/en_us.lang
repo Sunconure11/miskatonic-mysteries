@@ -139,3 +139,21 @@ message.insanity_concern.8=%s has a demented smile and seems to be giggling abou
 message.insanity_concern.9=%s is acting paranoid, constantly looking around like something’s following them.
 message.insanity_concern.10=%’s movements are strange and twitchy.
 message.insanity_concern.11=%’s pupils are overly dilated.
+
+#MISC
+item.banner.miskatonicmysteries_yellow_sign.yellow=Truly Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.black=Black Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.red=Red Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.green=Green Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.brown=Brown Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.lightBlue=Light Blue Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.lime=Lime Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.orange=Orange Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.pink=Pink Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.purple=Purple Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.white=White Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.blue=Blue Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.cyan=Cyan Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.gray=Gray Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.silver=Light Gray Yellow Sign
+item.banner.miskatonicmysteries_yellow_sign.magenta=Magenta Yellow Sign
