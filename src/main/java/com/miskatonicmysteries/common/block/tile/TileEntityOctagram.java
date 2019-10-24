@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.block.tile;
 
+import com.miskatonicmysteries.client.particles.ParticleOccultEnchant;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
@@ -9,6 +10,7 @@ import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModRegistries;
 import javafx.util.Pair;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -144,8 +146,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     if (world.rand.nextFloat() < 0.05F)
                     world.playSound(null, pos, SoundEvents.ENTITY_ILLAGER_CAST_SPELL, SoundCategory.BLOCKS, 0.05F, 0.2F + world.rand.nextFloat());
                     //also do instability check stuff
-                    //also add passive casting sounds
-                    //and particle emitters
+
+                    if (world.rand.nextFloat() < 0.2){
+                        spawnParticlesOnItems(false);
+                    }
                 } else {
                     tickCount = 0;
                     doFailingEffects(12);
@@ -167,6 +171,11 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     }
                     finish();
                     //do instability stuff for the last time, maybe also regard it in the focal power part
+                    if (world.isRemote){
+                        int amount = 6 + world.rand.nextInt(15);
+                        for (int i = 0; i < amount; i++)
+                            spawnParticlesOnItems(true);
+                    }
                 }
             } else {
                 if (tickCount > 0) doFailingEffects(20);
@@ -174,7 +183,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 tickCount = 0;
             }
         }
-        if (world.rand.nextFloat() < (tickCount > 0 ? 0.3F : 0.05F)){ //maybe just handle particles there
+        if (world.rand.nextFloat() < (tickCount > 0 ? 0.08F : 0.02F)){ //maybe just handle particles there
             handleParticles();
         }
 
@@ -364,14 +373,24 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     @SideOnly(Side.CLIENT)
     public void handleParticles(){
         for (BlockPos particlePos : PARTICLE_EMMITTERS) { //to do: make custom enchatning table particle that goes in the direction of the altar / a bound pos
-            if (world.rand.nextFloat() < 0.4) {
+            if (world.rand.nextFloat() < 0.1) {
                 AxisAlignedBB box = world.getBlockState(particlePos).getBoundingBox(world, particlePos);
-                world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, box.minX + particlePos.getX() + world.rand.nextFloat() * box.maxX, box.minY + particlePos.getY() + world.rand.nextFloat() * box.maxY, box.minZ + particlePos.getZ() + world.rand.nextFloat() * box.maxZ, 0, 0, 0);
+                Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleOccultEnchant(world,box.minX + particlePos.getX() + world.rand.nextFloat() * box.maxX, box.minY + particlePos.getY() + world.rand.nextFloat() * box.maxY, box.minZ + particlePos.getZ() + world.rand.nextFloat() * box.maxZ, 0, 0, 0, pos.getX() + world.rand.nextFloat(), pos.getY(), pos.getZ() + world.rand.nextFloat()));
             }
         }
-        //more particles
     }
 
+    @SideOnly(Side.CLIENT)
+    public void spawnParticlesOnItems(boolean finale){
+        for (int xP = -1; xP <= 1; xP++){
+            for (int zP = -1; zP <= 1; zP++) {
+                boolean corners = Math.abs(xP) == 1 && Math.abs(zP) == 1;
+                if (world.rand.nextFloat() < 0.3F) {
+                    Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleOccultEnchant(world, pos.getX() + 0.5 + xP * (corners ? 0.8F : 1) + world.rand.nextGaussian() / 5, 0.05 + pos.getY() + world.rand.nextFloat() / 10, pos.getZ() + 0.5 + zP * (corners ? 0.8F : 1) + world.rand.nextGaussian() / 5, finale ? world.rand.nextGaussian() / 10 : 0, finale ? world.rand.nextFloat() / 3 : 0, finale ? world.rand.nextGaussian() / 10 :  0));
+                }
+            }
+        }
+    }
 
     public boolean isFilled(){
         for (int i = 0; i < inventory.getSlots(); i++){
