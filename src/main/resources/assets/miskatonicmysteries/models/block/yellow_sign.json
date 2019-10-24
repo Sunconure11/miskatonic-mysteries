@@ -11,5 +11,15 @@
 				"east":  { "uv": [ 0, 0, 0, 0 ], "texture": "#all", "cullface": "east" }
 			}
 		}
-	]
+	],
+	"display": {
+		"gui": {
+			"rotation": [-93.5, 0, 180],
+			"scale": [0.95, 0.95, 0.95]
+		},
+        "fixed": {
+			"rotation": [90, 0, 180],
+			"translation": [0, 0, -8]
+      }
+	}
 }
