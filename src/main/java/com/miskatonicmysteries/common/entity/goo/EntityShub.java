@@ -113,39 +113,7 @@ public class EntityShub extends AbstractOldOne {
         return 1;
     }
 
-    @Override
-    protected void doBlockCollisions() {
-       /* AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
-        BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain(axisalignedbb.minX + 0.001D, axisalignedbb.minY + 0.001D, axisalignedbb.minZ + 0.001D);
-        BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos1 = BlockPos.PooledMutableBlockPos.retain(axisalignedbb.maxX - 0.001D, axisalignedbb.maxY - 0.001D, axisalignedbb.maxZ - 0.001D);
-        BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos2 = BlockPos.PooledMutableBlockPos.retain();
 
-        if (this.world.isAreaLoaded(blockpos$pooledmutableblockpos, blockpos$pooledmutableblockpos1)) {
-            for (int i = blockpos$pooledmutableblockpos.getX(); i <= blockpos$pooledmutableblockpos1.getX(); ++i) {
-                for (int j = blockpos$pooledmutableblockpos.getY(); j <= blockpos$pooledmutableblockpos1.getY(); ++j) {
-                    for (int k = blockpos$pooledmutableblockpos.getZ(); k <= blockpos$pooledmutableblockpos1.getZ(); ++k) {
-                        blockpos$pooledmutableblockpos2.setPos(i, j, k);
-                        IBlockState iblockstate = this.world.getBlockState(blockpos$pooledmutableblockpos2);
-                        if (!(iblockstate instanceof BlockLog || iblockstate instanceof BlockLeaves)) {
-                            try {
-                                iblockstate.getBlock().onEntityCollidedWithBlock(this.world, blockpos$pooledmutableblockpos2, iblockstate, this);
-                                this.onInsideBlock(iblockstate);
-                            } catch (Throwable throwable) {
-                                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Colliding entity with block");
-                                CrashReportCategory crashreportcategory = crashreport.makeCategory("Block being collided with");
-                                CrashReportCategory.addBlockInfo(crashreportcategory, blockpos$pooledmutableblockpos2, iblockstate);
-                                throw new ReportedException(crashreport);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        blockpos$pooledmutableblockpos.release();
-        blockpos$pooledmutableblockpos1.release();
-        blockpos$pooledmutableblockpos2.release();*/
-    }
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {

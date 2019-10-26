@@ -1,7 +1,4 @@
-temp.1=0.7
-temp.2=0
-temp.3=0
-temp.4=0
+
 #SETTINGS
 category.miskatonicmysteries=Miskatonic Mysteries
 key.miskmyst_up=Next Spell
@@ -79,6 +76,7 @@ entity.shub_niggurath.name=Shub-Niggurath
 entity.hastur.name=Hastur
 entity.cultist_hastur.name=Yellow King's Vassal
 entity.cultist_shub.name=Cultist of the Goat
+entity.dark_young.name=Dark Young
 
 #POTIONS
 miskatonicmysteries.tranquilized=Tranquilized
