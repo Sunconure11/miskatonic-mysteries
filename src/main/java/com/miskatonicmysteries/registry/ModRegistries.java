@@ -8,10 +8,7 @@ import com.miskatonicmysteries.common.misc.rites.OctagramRite;
 import com.miskatonicmysteries.common.misc.rites.RiteEldritchTrap;
 import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
 import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
-import com.miskatonicmysteries.common.misc.spells.Spell;
-import com.miskatonicmysteries.common.misc.spells.SpellFeast;
-import com.miskatonicmysteries.common.misc.spells.SpellHeal;
-import com.miskatonicmysteries.common.misc.spells.SpellYellowSign;
+import com.miskatonicmysteries.common.misc.spells.*;
 import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -34,9 +31,10 @@ public class ModRegistries {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
     public static final Map<ResourceLocation, RiteEffect> RITE_EFFECTS = new ConcurrentHashMap<>();
 
-    public static Spell HEAL;// = new SpellHeal();
-    public static Spell FEAST;// = new SpellFeast();
-    public static Spell YELLOW_SIGN;// = new SpellYellowSign();
+    public static Spell HEAL;
+    public static Spell FEAST;
+    public static Spell YELLOW_SIGN;
+    public static Spell TIDE_WAVE;
 
 
     public static OctagramRite MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
@@ -47,6 +45,7 @@ public class ModRegistries {
         HEAL = new SpellHeal();
         FEAST = new SpellFeast();
         YELLOW_SIGN = new SpellYellowSign();
+        TIDE_WAVE = new SpellTideWave();
     }
 
     public static class Util {

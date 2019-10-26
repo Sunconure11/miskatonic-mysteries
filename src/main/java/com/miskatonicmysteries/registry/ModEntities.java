@@ -7,6 +7,7 @@ import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import com.miskatonicmysteries.common.entity.goo.EntityHastur;
 import com.miskatonicmysteries.common.entity.goo.EntityShub;
+import com.miskatonicmysteries.common.entity.projectile.EntityWaterProjectile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -22,6 +23,9 @@ public class ModEntities {
         registerEntity("cultist_hastur", EntityHasturCultist.class, 64, 7171193, 13021696);
         registerEntity("shub_niggurath", EntityShub.class, 128);
         registerEntity("hastur", EntityHastur.class, 128);
+
+
+        registerEntity("projectile_water", EntityWaterProjectile.class, 16);
     }
 
     public static void registerRenderers(){
