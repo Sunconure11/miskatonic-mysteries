@@ -1,10 +1,8 @@
 package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.entity.RenderHastur;
-import com.miskatonicmysteries.client.render.entity.RenderHasturCultist;
-import com.miskatonicmysteries.client.render.entity.RenderShub;
-import com.miskatonicmysteries.client.render.entity.RenderShubCultist;
+import com.miskatonicmysteries.client.render.entity.*;
+import com.miskatonicmysteries.common.entity.EntityDarkYoung;
 import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import com.miskatonicmysteries.common.entity.goo.EntityHastur;
@@ -19,6 +17,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class ModEntities {
     public static int entityId = 0;
     public static void init(){
+        registerEntity("dark_young", EntityDarkYoung.class, 64, 458752, 4794624);
         registerEntity("cultist_shub", EntityShubCultist.class, 64, 7171193, 3221760);
         registerEntity("cultist_hastur", EntityHasturCultist.class, 64, 7171193, 13021696);
         registerEntity("shub_niggurath", EntityShub.class, 128);
@@ -26,7 +25,7 @@ public class ModEntities {
     }
 
     public static void registerRenderers(){
-        //add render for shub cultist, add field for when it's U P G R A D E D or not; this will also be relevant in the model
+        RenderingRegistry.registerEntityRenderingHandler(EntityDarkYoung.class, RenderDarkYoung::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityShubCultist.class, RenderShubCultist::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityHasturCultist.class, RenderHasturCultist::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityShub.class, RenderShub::new);

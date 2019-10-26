@@ -107,8 +107,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public void interactCenter(World world, EntityPlayer player) {
         if (isValid()) {
-            if (!world.isRemote)
-                start();
+            start();
         } else if (world.isRemote && isFilled()) {
             doFailingEffects(8);
         }
@@ -122,6 +121,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             }
             return false;
         }
+        primed = false;
         tickCount = 1;
         getAltar().bookOpen = true;
         PacketHandler.updateTE(getAltar());
@@ -145,7 +145,6 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     rite.doRitual(this, caster);
                     if (world.rand.nextFloat() < 0.05F)
                     world.playSound(null, pos, SoundEvents.ENTITY_ILLAGER_CAST_SPELL, SoundCategory.BLOCKS, 0.05F, 0.2F + world.rand.nextFloat());
-                    //also do instability check stuff
 
                     if (world.rand.nextFloat() < 0.2){
                         spawnParticlesOnItems(false);
@@ -160,8 +159,13 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 if (tickCount >= rite.ticksNeeded) {
                     updateRiteStats();
                     if (checkGOOAdressed() && checkFocalPower()) {
-                        rite.effect(this, caster);
-                        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+                        if (rite.type == OctagramRite.EnumType.PRIMED){
+                            primed = true;
+                        }else{
+                            System.out.println("when");
+                            rite.effect(this, caster);
+                        }
+                        int checks = (int) Math.max(instability + world.rand.nextDouble() - 1, 0) * 4; //let this depend on the instability, maybe like 10 * instability + 1 or so
                         RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.RITE_EXECUTED);
                         if (effect != null) {
                             effect.execute(this, RiteEffect.EnumTrigger.RITE_EXECUTED);
@@ -170,7 +174,6 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                         doFailingEffects(20);
                     }
                     finish();
-                    //do instability stuff for the last time, maybe also regard it in the focal power part
                     if (world.isRemote){
                         int amount = 6 + world.rand.nextInt(15);
                         for (int i = 0; i < amount; i++)
@@ -183,6 +186,18 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 tickCount = 0;
             }
         }
+        if (primed){
+            System.out.println(getCurrentRite());
+            if (getCurrentRite() != null){
+                OctagramRite activeRite = getCurrentRite();
+                if (activeRite.checkShouldTrigger(this, world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false))){
+                    activeRite.effect(this, world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false));
+                    primed = false;
+                    tickCount = 0;
+                    currentRite = "";
+                }
+            }
+        }
         if (world.rand.nextFloat() < (tickCount > 0 ? 0.08F : 0.02F)){ //maybe just handle particles there
             handleParticles();
         }
@@ -191,22 +206,26 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public boolean checkFocalPower() {
-        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+        int checks = 1 + (int) (instability * 10); //let this depend on the instability, maybe like 10 * instability + 1 or so
         RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.POWER_CHECK);
         if (effect != null) {
             effect.execute(this, RiteEffect.EnumTrigger.POWER_CHECK);
+            System.out.println("when...");
             return false;
         }
+        System.out.println("success?");
         return focusPower >= getCurrentRite().focusPower;
     }
 
     public boolean checkGOOAdressed() {
-        int checks = 5; //let this depend on the instability, maybe like 10 * instability + 1 or so
+        int checks = 1 + (int) (instability * 10); //let this depend on the instability, maybe like 10 * instability + 1 or so
         RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.GOO_CHECK);
         if (effect != null) {
             effect.execute(this, RiteEffect.EnumTrigger.GOO_CHECK);
+            System.out.println("when");
             return false;
         }
+        System.out.println("success==?");
         return getCurrentRite().octagram == Blessing.NONE || getAssociatedBlessing() == getCurrentRite().octagram;
     }
 
@@ -214,8 +233,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         getAltar().bookOpen = false;
         getAltar().flipSpeed = 0;
         PacketHandler.updateTE(getAltar());
-        tickCount = 0;
-        currentRite = "";
+        if (!primed) {
+            tickCount = 0;
+            currentRite = "";
+        }
         for (int i = 0; i < inventory.getSlots(); i++) {
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
@@ -224,7 +245,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public boolean isValid() {
         if (getAltarBlessing() != null) {
-            return getCurrentRite() != null && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == Blessing.NONE);// && (getCurrentRite().octagram == getAssociatedBlessing() || getCurrentRite().octagram == Blessing.NONE); //and stuff
+            return getCurrentRite() != null && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == Blessing.NONE);
         }
         return false;
     }
@@ -238,11 +259,14 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public OctagramRite getCurrentRite() {
-        OctagramRite rite = ModRegistries.Util.getRite(this);
+        OctagramRite rite = isFilled() ? ModRegistries.Util.getRite(this) : null;
         if (rite == null && primed && !currentRite.isEmpty()) {
             rite = ModRegistries.RITES.get(new ResourceLocation(currentRite));
-        } else if (rite == null) {
+        } else if (rite == null && !primed) {
             currentRite = "";
+        }
+        if (rite != null){
+            currentRite = rite.toString();
         }
         return rite;
     }

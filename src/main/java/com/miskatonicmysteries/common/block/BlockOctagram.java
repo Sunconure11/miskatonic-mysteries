@@ -123,7 +123,6 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
             } else {
                 octagram.interactCenter(worldIn, playerIn);
             }
-            PacketHandler.updateTE(octagram);
         }
         return true;
     }
@@ -258,7 +257,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
 
     @Override
     public TileEntityOctagram createTileEntity(World world, IBlockState state) {
-        return state.getValue(PART) == EnumPartType.CENTER ? new TileEntityOctagram() : null;
+        return new TileEntityOctagram();//state.getValue(PART) == EnumPartType.CENTER ? new TileEntityOctagram() : null;
     }
 
     @Override

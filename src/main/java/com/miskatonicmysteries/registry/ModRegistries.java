@@ -5,6 +5,7 @@ import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.common.handler.effects.InsanityEffect;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
+import com.miskatonicmysteries.common.misc.rites.RiteEldritchTrap;
 import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
 import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
 import com.miskatonicmysteries.common.misc.spells.Spell;
@@ -33,13 +34,20 @@ public class ModRegistries {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
     public static final Map<ResourceLocation, RiteEffect> RITE_EFFECTS = new ConcurrentHashMap<>();
 
-    public static final Spell HEAL = new SpellHeal();
-    public static final Spell FEAST = new SpellFeast();
-    public static final Spell YELLOW_SIGN = new SpellYellowSign();
+    public static Spell HEAL;// = new SpellHeal();
+    public static Spell FEAST;// = new SpellFeast();
+    public static Spell YELLOW_SIGN;// = new SpellYellowSign();
 
 
-    public static OctagramRite MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
+    public static OctagramRite MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
+    public static OctagramRite ELDRITCH_TRAP = new RiteEldritchTrap();
 
+
+    public static void init(){
+        HEAL = new SpellHeal();
+        FEAST = new SpellFeast();
+        YELLOW_SIGN = new SpellYellowSign();
+    }
 
     public static class Util {
 
@@ -83,9 +91,12 @@ public class ModRegistries {
         public static boolean matches(OctagramRite rite, ItemStackHandler inventory) {
             CopyOnWriteArrayList<ItemStack> checkStacks = new CopyOnWriteArrayList<>();
             checkStacks.addAll(InventoryUtil.getInventoryList(inventory));
+            System.out.println(checkStacks);
+            int i = 0;
             for (Ingredient ingredient : rite.ingredients) {
                 for (ItemStack stack : checkStacks) {
                     if (ingredient.apply(stack)) {
+                        System.out.println(i++);
                         checkStacks.remove(stack);
                         break;
                     } else {
