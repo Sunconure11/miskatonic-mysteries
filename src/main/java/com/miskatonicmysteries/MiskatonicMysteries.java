@@ -87,7 +87,7 @@ public class MiskatonicMysteries {
         ModEntities.init();
         ModBiomes.registerBiomes();
         initTileEntities();
-        ModObjects.addBanners();
+        ModObjects.addBanners(); //todo, add the rest of the recipes
     }
 
     @EventHandler
@@ -103,6 +103,7 @@ public class MiskatonicMysteries {
         registerFurnaceRecipes();
         ModObjects.addFoci();
         ModRegistries.init();
+
     }
 
     @Mod.EventHandler

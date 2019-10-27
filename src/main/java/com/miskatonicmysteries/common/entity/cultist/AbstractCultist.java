@@ -3,7 +3,6 @@ package com.miskatonicmysteries.common.entity.cultist;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -11,13 +10,9 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityGolem;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -26,7 +21,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketAnimation;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
@@ -40,7 +34,6 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,8 +41,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant, IHasAssociatedBlessing {
-    private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.<Boolean>createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.<Integer>createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
+    private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
     protected EntityCultistAIWander cultistAIWander;
 
     @Nullable
@@ -244,6 +237,9 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             this.setWandering(isWandering());
         }
         setTamed(compound.getBoolean("tamed"));
+
+        if (compound.hasKey("recipes"))
+            buyingList = new MerchantRecipeList(compound.getCompoundTag("recipes"));
         super.readEntityFromNBT(compound);
     }
 
@@ -255,6 +251,8 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             compound.setLong("wanderingPos", cultistAIWander.boundPos.toLong());
         }
         compound.setBoolean("tamed", isTamed());
+        if (buyingList != null)
+            compound.setTag("recipes", buyingList.getRecipiesAsTags());
         super.writeEntityToNBT(compound);
     }
 
@@ -270,7 +268,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
                     player.sendStatusMessage(new TextComponentString(I18n.format("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow"))), true);
                 }
                 return true;
-            } else if (isTamed()) {
+            } else if (!player.isSneaking() && isTamed()) {
                 if (this.buyingList == null) {
                     this.populateBuyingList();
                 }
@@ -329,12 +327,10 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
 
     static class EntityCultistAISit extends EntityAISit {
-        //private boolean isWandering;
         private final AbstractCultist cultist;
 
         public EntityCultistAISit(AbstractCultist entityIn) {
-            super(entityIn); //120 originally
-            //  isWandering = entityIn.isWandering();
+            super(entityIn);
             cultist = entityIn;
             setMutexBits(5);
         }
@@ -360,11 +356,11 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
-    static class EntityCultistAIWander extends EntityAIWander { //completely set this to AIWander
+    static class EntityCultistAIWander extends EntityAIWander {
         private BlockPos boundPos;
 
         public EntityCultistAIWander(AbstractCultist entityIn) {
-            super(entityIn, 1.0D, 2); //120 originally
+            super(entityIn, 1.0D, 2);
             setMutexBits(1);
         }
 
@@ -400,7 +396,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
-    static class EntityCultistAITrade extends EntityAIBase { //completely set this to AIWander
+    static class EntityCultistAITrade extends EntityAIBase {
         private final AbstractCultist cultist;
 
         public EntityCultistAITrade(AbstractCultist villagerIn) {
@@ -446,7 +442,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
          * Reset the task's internal state. Called when this task is interrupted by another one
          */
         public void resetTask() {
-            this.cultist.setCustomer((EntityPlayer) null);
+            this.cultist.setCustomer(null);
         }
     }
 
@@ -483,11 +479,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.livingSoundTime = -this.getTalkInterval();
         this.playSound(SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
         int i = 3 + this.rand.nextInt(4);
-
-        /*if (recipe.getItemToBuy().getItem() == Items.EMERALD) possibly some sort of wealth equivalent? power?
-        {
-            this.wealth += recipe.getItemToBuy().getCount();
-        }*/
 
         if (recipe.getRewardsExp()) {
             this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY + 0.5D, this.posZ, i));

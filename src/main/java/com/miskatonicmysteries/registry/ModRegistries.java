@@ -39,6 +39,8 @@ public class ModRegistries {
         initRites();
         initRiteEffects();
         initSpells();
+
+        initRecipes();
     }
 
     private static void initRites() {
@@ -58,6 +60,10 @@ public class ModRegistries {
         FEAST = new SpellFeast();
         YELLOW_SIGN = new SpellYellowSign();
         TIDE_WAVE = new SpellTideWave();
+    }
+
+    private static void initRecipes() {
+
     }
 
     public static class Util {

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSC",
+    "MGM",
+    "MGM"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "S": {
+      "item": "minecraft:prismarine",
+      "data": 0
+    },
+    "M": {
+      "item": "minecraft:prismarine",
+      "data": 1
+    },
+    "G": {
+      "item": "miskatonicmysteries:gold_oceanic",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "miskatonicmysteries:altar_prismarine",
+    "count": 1
+  }
+}

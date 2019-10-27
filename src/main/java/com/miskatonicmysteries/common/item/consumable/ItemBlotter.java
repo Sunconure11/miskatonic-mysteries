@@ -23,11 +23,9 @@ public class ItemBlotter extends Item {
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
         if (target instanceof EntityVillager && target.isEntityAlive()) {
-            if (!playerIn.world.isRemote) {
-                target.addPotionEffect(new PotionEffect(ModPotions.mania, 3600, 0));
-                stack.shrink(1);
-                return true;
-            }
+            target.addPotionEffect(new PotionEffect(ModPotions.mania, 3600, 0));
+            stack.shrink(1);
+            return true;
         }
         return super.itemInteractionForEntity(stack, playerIn, target, hand);
     }

@@ -30,12 +30,11 @@ public class RiteManiacsMeeting extends OctagramRite {
 
     @Override
     public boolean test(TileEntityOctagram octagram) {
-        return octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(5, 2, 5).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null).isEmpty();
+        return octagram.getWorld().isRemote || (!octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(5, 2, 5).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null).isEmpty());
     }
 
     @Override
     public void doRitual(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
-        System.out.println(octagram.getWorld().isRemote);
         if (octagram.getWorld().isRemote)
             spawnParticles(octagram);
     }

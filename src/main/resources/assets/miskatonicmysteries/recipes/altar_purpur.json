@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSC",
+    "MGM",
+    "MGM"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:end_rod"
+    },
+    "S": {
+      "item": "minecraft:purpur_slab",
+      "data": 0
+    },
+    "M": {
+      "item": "minecraft:purpur_block"
+    },
+    "G": {
+      "item": "miskatonicmysteries:gold_oceanic",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "miskatonicmysteries:altar_purpur",
+    "count": 1
+  }
+}

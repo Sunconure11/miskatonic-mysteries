@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSC",
+    "MGM",
+    "MGM"
+  ],
+  "key": {
+    "C": {
+      "item": "miskatonicmysteries:candles"
+    },
+    "S": {
+      "item": "minecraft:stone_slab",
+      "data": 3
+    },
+    "M": {
+      "item": "minecraft:mossy_cobblestone"
+    },
+    "G": {
+      "item": "miskatonicmysteries:gold_oceanic",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "miskatonicmysteries:altar_stone_mossy",
+    "count": 1
+  }
+}

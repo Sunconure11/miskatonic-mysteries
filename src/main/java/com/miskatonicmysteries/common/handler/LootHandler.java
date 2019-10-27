@@ -3,11 +3,12 @@ package com.miskatonicmysteries.common.handler;
 import com.google.common.collect.ImmutableList;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.registry.ModObjects;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.monster.EntityGuardian;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
@@ -42,35 +43,34 @@ public class LootHandler {
     }
 
     @SubscribeEvent
-    public void replaceLoot(LootTableLoadEvent event){
+    public void replaceLoot(LootTableLoadEvent event) {
         String prefix = "minecraft:chests/";
         String name = event.getName().toString();
 
         if (name.startsWith(prefix)) {
             String file = name.substring(name.indexOf(prefix) + prefix.length());
-            if (TABLES.contains(file)){
+            if (TABLES.contains(file)) {
                 event.getTable().addPool(new LootPool(new LootEntry[]{getLootTable("oceanic_gold")},
                         new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "oceanic_gold_inject"));
             }
         }
     }
 
-    public static LootEntryTable getLootTable(String name){
+    public static LootEntryTable getLootTable(String name) {
         return new LootEntryTable(new ResourceLocation(MiskatonicMysteries.MODID, name), 1, 0, new LootCondition[0], name + "_entry");
     }
 
     /**
-     *
-     * @param event The LivingDropsEvent
+     * @param event     The LivingDropsEvent
      * @param predicate The Condition
-     * @param drop The ItemStack dropped
+     * @param drop      The ItemStack dropped
      * @param perChance The chance (out of 100) for the item drop count to increase by one (for each)
-     * @param maxDrops the maximum amount of items that drop
+     * @param maxDrops  the maximum amount of items that drop
      */
-    public static void addDrop(LivingDropsEvent event, Predicate<EntityLivingBase> predicate, ItemStack drop, int perChance, int maxDrops){
-        if (predicate.test(event.getEntityLiving())){
+    public static void addDrop(LivingDropsEvent event, Predicate<EntityLivingBase> predicate, ItemStack drop, int perChance, int maxDrops) {
+        if (predicate.test(event.getEntityLiving())) {
             int count = drop.getCount();
-            if(count < maxDrops && event.getEntityLiving().world.rand.nextInt(100) <= perChance + event.getLootingLevel() * 10){
+            if (count < maxDrops && event.getEntityLiving().world.rand.nextInt(100) <= perChance + event.getLootingLevel() * 10) {
                 count++;
             }
             drop.setCount(count);
@@ -80,9 +80,11 @@ public class LootHandler {
 
     @SubscribeEvent
     public void dropInfestedWheat(BlockEvent.HarvestDropsEvent breakEvent) {
-        if (breakEvent.getDrops().contains(new ItemStack(Items.WHEAT))) {
-            breakEvent.getDrops().remove(new ItemStack(Items.WHEAT));
-            breakEvent.getDrops().add(new ItemStack(ModObjects.infested_wheat));
+        if (breakEvent.getState() != null && breakEvent.getHarvester() != null) {
+            if (breakEvent.getHarvester().world.rand.nextInt(40) == 0 && breakEvent.getState().getBlock() == Blocks.WHEAT && ((BlockCrops) Blocks.WHEAT).isMaxAge(breakEvent.getState())) {
+                breakEvent.getDrops().clear();
+                breakEvent.getDrops().add(new ItemStack(ModObjects.infested_wheat));
+            }
         }
     }
 }

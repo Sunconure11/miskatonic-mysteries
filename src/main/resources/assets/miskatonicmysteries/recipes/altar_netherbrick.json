@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSC",
+    "MGM",
+    "MGM"
+  ],
+  "key": {
+    "C": {
+      "item": "miskatonicmysteries:candles"
+    },
+    "S": {
+      "item": "minecraft:stone_slab",
+      "data": 6
+    },
+    "M": {
+      "item": "minecraft:nether_brick"
+    },
+    "G": {
+      "item": "miskatonicmysteries:gold_oceanic",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "miskatonicmysteries:altar_netherbrick",
+    "count": 1
+  }
+}
