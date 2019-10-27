@@ -2,10 +2,10 @@ package com.miskatonicmysteries.proxy;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.render.ParticleRenderHandler;
-import com.miskatonicmysteries.client.render.tile.RenderAltar;
 import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
-import com.miskatonicmysteries.client.render.tile.RenderOctagram;
 import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
+import com.miskatonicmysteries.client.render.tile.RenderAltar;
+import com.miskatonicmysteries.client.render.tile.RenderOctagram;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.registry.ModEntities;
@@ -26,7 +26,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import sun.jvm.hotspot.opto.Block;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy {

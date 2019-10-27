@@ -1,13 +1,10 @@
 package com.miskatonicmysteries.common.capability.spells;
 
-import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.misc.spells.Spell;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncSpellKnowledge;
-import com.miskatonicmysteries.registry.ModSpells;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
 
