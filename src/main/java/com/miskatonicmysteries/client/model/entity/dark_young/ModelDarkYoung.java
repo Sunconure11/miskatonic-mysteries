@@ -74,6 +74,7 @@ public class ModelDarkYoung extends ModelBase {
 
     public ModelRenderer[][] tentacles = {tentacle01, tentacle02, tentacle03, tentacle04, tentacle05,tentacle06, tentacle07, tentacle08, tentacle09, tentacle10};
 
+    //todo, adjust these values, probably via tabula
     //[cycle] [angle]
     private static float[][] tentacle01Anims = {
             {0.1F, 0.4F, 0.3F},
