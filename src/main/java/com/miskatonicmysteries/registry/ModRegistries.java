@@ -2,20 +2,16 @@ package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
-import com.miskatonicmysteries.common.capability.sanity.ISanity;
-import com.miskatonicmysteries.common.handler.effects.InsanityEffect;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
 import com.miskatonicmysteries.common.misc.rites.RiteEldritchTrap;
 import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
 import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
 import com.miskatonicmysteries.common.misc.spells.*;
 import com.miskatonicmysteries.util.InventoryUtil;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
@@ -90,12 +86,10 @@ public class ModRegistries {
         public static boolean matches(OctagramRite rite, ItemStackHandler inventory) {
             CopyOnWriteArrayList<ItemStack> checkStacks = new CopyOnWriteArrayList<>();
             checkStacks.addAll(InventoryUtil.getInventoryList(inventory));
-            System.out.println(checkStacks);
             int i = 0;
             for (Ingredient ingredient : rite.ingredients) {
                 for (ItemStack stack : checkStacks) {
                     if (ingredient.apply(stack)) {
-                        System.out.println(i++);
                         checkStacks.remove(stack);
                         break;
                     } else {

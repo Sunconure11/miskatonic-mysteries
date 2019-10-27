@@ -111,6 +111,6 @@ public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAss
         if (inventory.getStackInSlot(0).getItem() instanceof ItemMMBook) {
             return ((IHasAssociatedBlessing) inventory.getStackInSlot(0).getItem()).getAssociatedBlessing();
         }
-        return Blessing.NONE;
+        return null;
     }
 }

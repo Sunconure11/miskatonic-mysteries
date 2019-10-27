@@ -4,7 +4,6 @@ import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
-import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -257,7 +256,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
 
     @Override
     public TileEntityOctagram createTileEntity(World world, IBlockState state) {
-        return new TileEntityOctagram();//state.getValue(PART) == EnumPartType.CENTER ? new TileEntityOctagram() : null;
+        return state.getValue(PART) == EnumPartType.CENTER ? new TileEntityOctagram() : null;
     }
 
     @Override

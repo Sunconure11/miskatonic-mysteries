@@ -3,12 +3,8 @@ package com.miskatonicmysteries.client.model.entity.dark_young;
 import com.miskatonicmysteries.common.entity.EntityDarkYoung;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.model.ModelZombie;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
 
 /**
@@ -800,7 +796,7 @@ public class ModelDarkYoung extends ModelBase {
     }
 
     private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        float progress = 1 - (float) (Math.abs(0.5 - swingProgress) *2);
+        float progress = swingProgress; //1 - (float) (Math.abs(0.5 - swingProgress) *2);
         this.setRotateAngle(lJaw, -0.5759586531581287F, -0.6981317007977318F, 0.3490658503988659F, progress);
         this.setRotateAngle(lJawB, 0.7853981633974483F, 0.0F, 0.0F, progress);
         this.setRotateAngle(lJawC, -0.7853981633974483F, 0.0F, 0.0F, progress);

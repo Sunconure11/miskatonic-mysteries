@@ -108,7 +108,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     public void interactCenter(World world, EntityPlayer player) {
         if (isValid()) {
             start();
-        } else if (world.isRemote && isFilled()) {
+        } else if (isFilled()) {
             doFailingEffects(8);
         }
     }
@@ -116,9 +116,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     public boolean start() {
         if (tickCount > 0) return false;
         if (!isValid()) {
-            if (world.isRemote) {
-                doFailingEffects(20);
-            }
+            doFailingEffects(20);
             return false;
         }
         primed = false;
@@ -130,15 +128,14 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     @Override //todo particles n stuff
     public void update() {
-        if (world.getTotalWorldTime() % 60 == 0)
-            updateRiteStats();
         if (!altarUsable()) {
             findNearestAltar();
         } else {
             if (getAltar().bookOpen && tickCount > 0 && isValid()) {
+                updateRiteStats();
                 flipAltarPages();
                 OctagramRite rite = getCurrentRite();
-                System.out.println(tickCount);
+                System.out.println(rite.name);
                 EntityPlayer caster = getLastPlayer();
                 if (rite.test(this)) { //bind in instability later
                     tickCount++;
@@ -162,7 +159,6 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                         if (rite.type == OctagramRite.EnumType.PRIMED){
                             primed = true;
                         }else{
-                            System.out.println("when");
                             rite.effect(this, caster);
                         }
                         int checks = (int) Math.max(instability + world.rand.nextDouble() - 1, 0) * 4; //let this depend on the instability, maybe like 10 * instability + 1 or so
@@ -191,6 +187,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             if (getCurrentRite() != null){
                 OctagramRite activeRite = getCurrentRite();
                 if (activeRite.checkShouldTrigger(this, world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false))){
+                    System.out.println("hoes mad");
                     activeRite.effect(this, world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false));
                     primed = false;
                     tickCount = 0;
@@ -213,7 +210,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             System.out.println("when...");
             return false;
         }
-        System.out.println("success?");
+        System.out.println("success?" + (focusPower >= getCurrentRite().focusPower));
         return focusPower >= getCurrentRite().focusPower;
     }
 

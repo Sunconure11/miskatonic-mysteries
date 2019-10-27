@@ -3,27 +3,9 @@ package com.miskatonicmysteries.common.misc.spells;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
-import com.miskatonicmysteries.common.entity.projectile.EntityWaterProjectile;
-import com.miskatonicmysteries.common.network.PacketHandler;
-import com.miskatonicmysteries.registry.ModObjects;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntityBanner;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 
 public class SpellTideWave extends Spell {
     public SpellTideWave() {
@@ -45,10 +27,10 @@ public class SpellTideWave extends Spell {
         System.out.println("pitch: " + caster.rotationPitch);
         System.out.println("yaw: " + caster.rotationYaw);
         for (int i = 0; i < 360; i += 6){
-            System.out.println("AAAAAA");
-            EntityWaterProjectile projectile = new EntityWaterProjectile(caster.world);
+            System.out.println(caster.world.isRemote);
+            EntitySnowball projectile = new EntitySnowball(caster.world, caster);
+            // EntityWaterProjectile projectile = new EntityWaterProjectile(caster.world);
             projectile.shoot(caster, 0, i, 0, 2F, 0F);
-            projectile.setDamage(5);
            // if (!caster.world.isRemote)
                 caster.world.spawnEntity(projectile);
         }
