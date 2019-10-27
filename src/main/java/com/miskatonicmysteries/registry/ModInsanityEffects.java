@@ -1,8 +1,10 @@
 package com.miskatonicmysteries.registry;
 
+import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.handler.effects.*;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -57,7 +59,7 @@ public class ModInsanityEffects {
     }
 
     public static boolean isEffectAvailable(InsanityEffect effect, World world, EntityPlayer player, ISanity sanity){
-        return sanity.getSanity() <= effect.getLevel(world, player, sanity);
+        return Math.max(sanity.getSanity() - getManiaInsanityPenalty(player), 1) <= effect.getLevel(world, player, sanity);
     }
 
     public static String[] getInsanityEffectStrings(){
@@ -71,5 +73,14 @@ public class ModInsanityEffects {
     public static float getExponentialSanityFactor(ISanity sanity){
         float factor = sanity.getSanity() / (float) Sanity.SANITY_MAX;
         return factor * factor;
+    }
+
+    public static int getInsanityInterval(EntityLivingBase livingBase) {
+        float maniaMultiplier = livingBase.getActivePotionEffect(ModPotions.mania) != null ? (float) 1 / ((livingBase.getActivePotionEffect(ModPotions.mania).getAmplifier() + 2F) * 3) : 1F;
+        return (int) (livingBase.ticksExisted % (ModConfig.sanity.insanityInterval * maniaMultiplier));
+    }
+
+    public static int getManiaInsanityPenalty(EntityLivingBase livingBase) {
+        return livingBase.getActivePotionEffect(ModPotions.mania) != null ? (livingBase.getActivePotionEffect(ModPotions.mania).getAmplifier() + 1) * 20 : 0;
     }
 }

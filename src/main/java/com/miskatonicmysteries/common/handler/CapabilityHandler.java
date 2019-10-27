@@ -1,7 +1,6 @@
 package com.miskatonicmysteries.common.handler;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.BlessingProvider;
 import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
@@ -12,17 +11,13 @@ import com.miskatonicmysteries.common.capability.spells.ISpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledgeProvider;
 import com.miskatonicmysteries.common.handler.event.InsanityEvent;
-import com.miskatonicmysteries.common.misc.spells.Spell;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.client.PacketCastSpell;
 import com.miskatonicmysteries.common.network.message.client.PacketHandleKey;
 import com.miskatonicmysteries.proxy.ClientProxy;
+import com.miskatonicmysteries.registry.ModInsanityEffects;
 import com.miskatonicmysteries.registry.ModPotions;
-import com.miskatonicmysteries.registry.ModSpells;
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
-import net.minecraft.block.BlockBanner;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemShield;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -31,12 +26,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
 
 @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)
 public class CapabilityHandler {
@@ -87,7 +77,7 @@ public class CapabilityHandler {
                         sanity.setDirty(false);
                     }
                 }
-                if (event.getEntityLiving().ticksExisted > 0 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && event.getEntityLiving().ticksExisted % (ModConfig.sanity.insanityInterval) == 0) {
+                if (event.getEntityLiving().ticksExisted > 0 && event.getEntityLiving().getActivePotionEffect(ModPotions.tranquilized) == null && ModInsanityEffects.getInsanityInterval(event.getEntityLiving()) == 0) {
                     MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), sanity, event));
                 }
 

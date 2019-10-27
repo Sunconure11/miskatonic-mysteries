@@ -3,8 +3,8 @@ package com.miskatonicmysteries.common.misc.spells;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.entity.projectile.EntityWaterProjectile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.util.ResourceLocation;
 
 public class SpellTideWave extends Spell {
@@ -24,14 +24,10 @@ public class SpellTideWave extends Spell {
 
     @Override
     public void cast(EntityPlayer caster) {
-        System.out.println("pitch: " + caster.rotationPitch);
-        System.out.println("yaw: " + caster.rotationYaw);
         for (int i = 0; i < 360; i += 6){
-            System.out.println(caster.world.isRemote);
-            EntitySnowball projectile = new EntitySnowball(caster.world, caster);
-            // EntityWaterProjectile projectile = new EntityWaterProjectile(caster.world);
-            projectile.shoot(caster, 0, i, 0, 2F, 0F);
-           // if (!caster.world.isRemote)
+            EntityWaterProjectile projectile = new EntityWaterProjectile(caster.world, caster);
+            projectile.shoot(caster, 0, i, -0.5F, 2F, 0F);
+            if (!caster.world.isRemote)
                 caster.world.spawnEntity(projectile);
         }
         super.cast(caster);

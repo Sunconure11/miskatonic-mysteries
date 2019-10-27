@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.client.model.entity.dark_young;
 
 import com.miskatonicmysteries.common.entity.EntityDarkYoung;
+import com.miskatonicmysteries.util.ModelAnimUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -796,7 +797,7 @@ public class ModelDarkYoung extends ModelBase {
     }
 
     private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        float progress = swingProgress; //1 - (float) (Math.abs(0.5 - swingProgress) *2);
+        float progress = swingProgress;
         this.setRotateAngle(lJaw, -0.5759586531581287F, -0.6981317007977318F, 0.3490658503988659F, progress);
         this.setRotateAngle(lJawB, 0.7853981633974483F, 0.0F, 0.0F, progress);
         this.setRotateAngle(lJawC, -0.7853981633974483F, 0.0F, 0.0F, progress);
@@ -835,46 +836,37 @@ public class ModelDarkYoung extends ModelBase {
         addRotateAngles(tentacle09[1], tentacle09Anims[cycle][0], tentacle09Anims[cycle][1], tentacle09Anims[cycle][2], progress);
         addRotateAngles(tentacle10[1], tentacle10Anims[cycle][0], tentacle10Anims[cycle][1], tentacle10Anims[cycle][2], progress);
 
-        waveTentacle(tentacle01, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle02, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle03, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle04, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle05, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle06, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle07, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle08, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle09, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        waveTentacle(tentacle10, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle01, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle02, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle03, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle04, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle05, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle06, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle07, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle08, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle09, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle10, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
     }
 
     private void doHurtAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
         float hurtProgress = 0;
         if (entityIn.maxHurtTime > 0 && entityIn.hurtTime > 0){
             hurtProgress = (entityIn.maxHurtTime - entityIn.hurtTime + Minecraft.getMinecraft().getRenderPartialTicks()) / (float)entityIn.maxHurtTime;
-            System.out.println(hurtProgress);
         }
-        waveTentacle(tentacle01, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle02, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle03, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle04, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle05, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle06, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle07, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle08, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle09, 1.5F, hurtProgress, true);
-        waveTentacle(tentacle10, 1.5F, hurtProgress, true);
-    }
-
-    private void waveTentacle(ModelRenderer[] tentacle, float strength, float progress, boolean reset){
-        if (reset)
-            progress = (0.5F - Math.abs(0.5F - progress)) * 2F;
-        for (int i = 0; i < tentacle.length - 1; i++) {
-            tentacle[i + 1].rotateAngleX += MathHelper.sin(progress * i * strength) * (i % 2 == 0 ? -1 : 1);
-       }
+        ModelAnimUtil.waveTentacle(tentacle01, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle02, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle03, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle04, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle05, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle06, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle07, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle08, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle09, 1.5F, hurtProgress, true);
+        ModelAnimUtil.waveTentacle(tentacle10, 1.5F, hurtProgress, true);
     }
 
     private float calculateTentacleProgress(int tickSequence, float ageInTicks){
-        return (ageInTicks % tickSequence) / (float) tickSequence;//1 - (Math.abs(tickSequence / 2F - ageInTicks % tickSequence)) / (tickSequence / 2F);
+        return (ageInTicks % tickSequence) / (float) tickSequence;
     }
 
     @Override

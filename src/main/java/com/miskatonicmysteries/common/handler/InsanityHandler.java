@@ -17,8 +17,6 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemShield;
 import net.minecraft.tileentity.TileEntityBanner;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -45,15 +43,15 @@ public class InsanityHandler {
         InsanityEffect effect = null;
         if (insanityEvent.getUpcomingEvent() instanceof LivingEvent.LivingUpdateEvent && !world.isRemote) {
             effect = ModInsanityEffects.getRandomEffect(world, player, insanityEvent.getSanity(), InsanityEffect.EnumTrigger.TICK);
-        }else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent){
+        } else if (insanityEvent.getUpcomingEvent() instanceof LivingAttackEvent) {
             effect = ModInsanityEffects.getRandomEffect(world, player, insanityEvent.getSanity(), InsanityEffect.EnumTrigger.HIT);
         }
 
-        if (effect != null){
+        if (effect != null) {
             effect.handle(world, player, insanityEvent.getSanity());
             if (world.isRemote) {
                 PacketHandler.network.sendToServer(new PacketHandleInsanity(effect.getName()));
-            }else{
+            } else {
                 PacketHandler.sendTo(player, new PacketHandleInsanity(effect.getName()));
             }
         }
@@ -76,22 +74,22 @@ public class InsanityHandler {
     }
 
     @SubscribeEvent
-    public static void onHurt(LivingAttackEvent event) { // PlayerEvent.ItemCraftedEvent! for enchanting stuff
-        if (event.getEntityLiving() instanceof EntityPlayer) {
+    public static void onHurt(LivingAttackEvent event) {
+        if (event.getEntityLiving() instanceof EntityPlayer && !event.getSource().isDamageAbsolute()) {
             MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), Sanity.Util.getSanityCapability((EntityPlayer) event.getEntityLiving()), event));
         }
     }
 
     @SubscribeEvent
-    public static void onItemCraft(PlayerEvent.ItemCraftedEvent event){
+    public static void onItemCraft(PlayerEvent.ItemCraftedEvent event) {
         World world = event.player.world;
         EntityPlayer player = event.player;
 
         System.out.println(ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player)));
 
         if (ModInsanityEffects.isEffectAvailable(ModInsanityEffects.EFFECT_FLUX, world, player, Sanity.Util.getSanityCapability(player)) &&
-                world.rand.nextFloat() < ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player))){
-            if (ModInsanityEffects.EFFECT_FLUX.handle(world, player, Sanity.Util.getSanityCapability(player))){
+                world.rand.nextFloat() < ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player))) {
+            if (ModInsanityEffects.EFFECT_FLUX.handle(world, player, Sanity.Util.getSanityCapability(player))) {
                 ((InsanityEffectFlux) ModInsanityEffects.EFFECT_FLUX).enchantItem(world, player, Sanity.Util.getSanityCapability(player), event.crafting);
             }
         }

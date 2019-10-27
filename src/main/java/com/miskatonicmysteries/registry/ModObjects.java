@@ -5,6 +5,8 @@ import com.miskatonicmysteries.common.block.*;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
+import com.miskatonicmysteries.common.item.consumable.ItemBlotter;
+import com.miskatonicmysteries.common.item.consumable.ItemFleshDarkYoung;
 import com.miskatonicmysteries.common.item.consumable.ItemMilkGoat;
 import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
 import com.miskatonicmysteries.common.item.misc.ItemChalk;
@@ -16,12 +18,11 @@ import com.miskatonicmysteries.common.misc.rites.focus.*;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -91,6 +92,12 @@ public class ModObjects {
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 
     public static Item tallow = Util.create(new Item(), "tallow");
+
+    public static Item flesh_dark_young = Util.create(new ItemFleshDarkYoung(), "flesh_dark_young");
+
+    public static Item blotter = Util.create(new ItemBlotter(), "blotter");
+
+    public static Item infested_wheat = Util.create(new Item(), "infested_wheat");
 
     public static Item milk_black_goat = Util.create(new ItemMilkGoat(), "milk_black_goat");
 

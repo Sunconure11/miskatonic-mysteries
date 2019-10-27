@@ -3,13 +3,10 @@ package com.miskatonicmysteries.client.render.shaders;
 import com.google.gson.JsonSyntaxException;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.ModConfig;
-import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderGroup;
-import net.minecraft.client.shader.ShaderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -50,7 +47,7 @@ public class ShaderHandler {
     }
 
     public void handleShaders(TickEvent.PlayerTickEvent event, Minecraft mc) {
-        handleShader(Sanity.Util.getSanity(event.player) < 100, SHADER_INSANITY); //just an example
+        //   handleShader(Sanity.Util.getSanity(event.player) < 100, SHADER_INSANITY); //just an example
         handleShader(event.player.getActivePotionEffect(ModPotions.tranquilized) != null, SHADER_TRANQ);
         handleShader(event.player.getActivePotionEffect(ModPotions.mania) != null, SHADER_MANIA);
     }

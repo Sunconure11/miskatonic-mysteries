@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
@@ -14,6 +15,7 @@ import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
@@ -73,6 +75,14 @@ public class LootHandler {
             }
             drop.setCount(count);
             event.getDrops().add(new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, drop));
+        }
+    }
+
+    @SubscribeEvent
+    public void dropInfestedWheat(BlockEvent.HarvestDropsEvent breakEvent) {
+        if (breakEvent.getDrops().contains(new ItemStack(Items.WHEAT))) {
+            breakEvent.getDrops().remove(new ItemStack(Items.WHEAT));
+            breakEvent.getDrops().add(new ItemStack(ModObjects.infested_wheat));
         }
     }
 }

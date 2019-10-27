@@ -3,12 +3,10 @@ package com.miskatonicmysteries.common.item.misc;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -42,6 +40,7 @@ public class ItemChalk extends ItemBlock {
 
         if (checkPlacement(worldIn, pos, facing, player)){//canPlaceBlockOnSide(worldIn, pos, facing, player, player.getHeldItem(hand))) {
             setBlocks(worldIn, pos, player, hand);
+            player.getHeldItem(hand).shrink(1);
             return EnumActionResult.SUCCESS;
         }
         return EnumActionResult.FAIL;

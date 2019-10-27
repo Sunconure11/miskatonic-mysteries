@@ -88,6 +88,7 @@ public class BlockOctagram extends BlockTileEntity<TileEntityOctagram> implement
         if (!canPlace(worldIn, pos)) {
             worldIn.setBlockToAir(pos);
         }
+        getCenterPos(worldIn, pos);
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     }
 

@@ -73,6 +73,10 @@ item.necronomicon.name=Necronomicon
 
 item.tallow.name=Tallow
 
+item.flesh_dark_young.name=Dark Young Flesh
+item.blotter.name=Blotter
+
+item.infested_wheat.name=Infested Wheat
 
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath

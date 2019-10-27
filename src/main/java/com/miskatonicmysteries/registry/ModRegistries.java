@@ -1,18 +1,17 @@
 package com.miskatonicmysteries.registry;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
 import com.miskatonicmysteries.common.misc.rites.RiteEldritchTrap;
 import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
-import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
+import com.miskatonicmysteries.common.misc.rites.effect.*;
 import com.miskatonicmysteries.common.misc.spells.*;
 import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class ModRegistries {
@@ -33,11 +31,29 @@ public class ModRegistries {
     public static Spell TIDE_WAVE;
 
 
-    public static OctagramRite MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
-    public static OctagramRite ELDRITCH_TRAP = new RiteEldritchTrap();
+    public static OctagramRite MANIACS_MEETING_GOAT;
+    public static OctagramRite ELDRITCH_TRAP;
 
 
     public static void init(){
+        initRites();
+        initRiteEffects();
+        initSpells();
+    }
+
+    private static void initRites() {
+        MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
+        ELDRITCH_TRAP = new RiteEldritchTrap();
+    }
+
+    private static void initRiteEffects() {
+        new RiteEffectOverload(new ResourceLocation(MiskatonicMysteries.MODID, "rite_effect_overload_basic"), 0);
+        new RiteEffectYellowSign();
+        new RiteEffectPush();
+        new RiteEffectWeakness();
+    }
+
+    private static void initSpells() {
         HEAL = new SpellHeal();
         FEAST = new SpellFeast();
         YELLOW_SIGN = new SpellYellowSign();
@@ -74,30 +90,7 @@ public class ModRegistries {
         }
 
         public static OctagramRite getRite(TileEntityOctagram octagram) {
-            for (OctagramRite rite : RITES.values()) {
-                if (matches(rite, octagram.inventory)) {
-                    return rite;
-                }
-            }
-            return null;
-        }
-
-
-        public static boolean matches(OctagramRite rite, ItemStackHandler inventory) {
-            CopyOnWriteArrayList<ItemStack> checkStacks = new CopyOnWriteArrayList<>();
-            checkStacks.addAll(InventoryUtil.getInventoryList(inventory));
-            int i = 0;
-            for (Ingredient ingredient : rite.ingredients) {
-                for (ItemStack stack : checkStacks) {
-                    if (ingredient.apply(stack)) {
-                        checkStacks.remove(stack);
-                        break;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-            return checkStacks.isEmpty();
+            return RITES.values().stream().filter(r -> InventoryUtil.areItemStackListsEqual(r.ingredients, octagram.inventory)).findFirst().orElse(null);
         }
     }
 }

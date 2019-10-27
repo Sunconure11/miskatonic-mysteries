@@ -40,9 +40,9 @@ public class HasturStructureProcessor extends OldStructureProcessor {
             }
         } else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)) {
             float r = worldIn.rand.nextFloat();
-            if (r <= 50){
+            if (r <= 0.5) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
-            }else if (r <= 20){
+            } else if (r <= 0.2) {
                 switch (worldIn.rand.nextInt(2)) {
                     case 0:
                         return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//decorative statue

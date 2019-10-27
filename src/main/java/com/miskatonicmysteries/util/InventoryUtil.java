@@ -3,9 +3,9 @@ package com.miskatonicmysteries.util;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -13,12 +13,32 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class InventoryUtil {
+
+    public static boolean areItemStackListsEqual(List<Ingredient> ings, ItemStackHandler handler) {
+        List<ItemStack> checklist = new ArrayList<>();
+        for (int i = 0; i < handler.getSlots(); i++) {
+            ItemStack stack = handler.getStackInSlot(i);
+            if (!stack.isEmpty()) checklist.add(stack);
+        }
+        if (ings.size() != checklist.size()) return false;
+        for (Ingredient ing : ings) {
+            boolean found = false;
+            for (ItemStack stack : checklist) {
+                if (ing.apply(stack)) {
+                    found = true;
+                    checklist.remove(stack);
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
+    }
+
     public static void insertCurrentItemStack(EntityPlayer player, ItemStackHandler inventory, int slot, int count){
         ItemStack stack = player.inventory.decrStackSize(player.inventory.currentItem, count);
         player.inventory.addItemStackToInventory(inventory.insertItem(slot, stack, false));

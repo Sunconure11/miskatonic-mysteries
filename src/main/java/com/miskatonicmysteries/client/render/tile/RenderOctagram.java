@@ -27,7 +27,9 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
         EnumFacing facing = getWorld().getBlockState(te.getPos()).getValue(BlockOctagram.FACING);
         GlStateManager.rotate(facing == EnumFacing.WEST ? 90 : facing == EnumFacing.SOUTH ? 180 : facing == EnumFacing.EAST ? 270 : 0, 0, 1, 0);
         if (te.primed){
-            GlStateManager.color(1, 1, 0.9F, 0.8F);
+            float state = (te.getWorld().getTotalWorldTime() % 100) / 100F;
+            state = 0.5F - Math.abs(0.5F - state);
+            GlStateManager.color(1, 1, 0.5F + state, 0.5F + (0.5F * state * 2));
         }
         drawOctagram();
         GlStateManager.popMatrix();

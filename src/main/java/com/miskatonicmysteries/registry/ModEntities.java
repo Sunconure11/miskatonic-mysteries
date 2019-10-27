@@ -8,12 +8,13 @@ import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import com.miskatonicmysteries.common.entity.goo.EntityHastur;
 import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import com.miskatonicmysteries.common.entity.projectile.EntityWaterProjectile;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+
+import javax.annotation.Nullable;
 
 public class ModEntities {
     public static int entityId = 0;
@@ -34,6 +35,15 @@ public class ModEntities {
         RenderingRegistry.registerEntityRenderingHandler(EntityHasturCultist.class, RenderHasturCultist::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityShub.class, RenderShub::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityHastur.class, RenderHastur::new);
+
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityWaterProjectile.class, manager -> new Render<EntityWaterProjectile>(manager) {
+            @Nullable
+            @Override
+            protected ResourceLocation getEntityTexture(EntityWaterProjectile entity) {
+                return null;
+            }
+        });
     }
 
     private static void registerEntity(String name, Class<? extends Entity> entity, int range, int color1, int color2) {

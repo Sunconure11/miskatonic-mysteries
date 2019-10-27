@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.entity;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MultiPartEntityPart;
@@ -28,6 +29,7 @@ public class EntityDarkYoung extends EntityMob implements IEntityMultiPart{
     public EntityDarkYoung(World worldIn) {
         super(worldIn);
         setSize(1.3F, 2.5F);
+        experienceValue = 12;
     }
 
     @Override
@@ -83,11 +85,16 @@ public class EntityDarkYoung extends EntityMob implements IEntityMultiPart{
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
+    @Override
+    protected int getExperiencePoints(EntityPlayer player) {
+        return super.getExperiencePoints(player) * 2;
+    }
+
     @Nullable
     @Override
     protected ResourceLocation getLootTable() {
-        return super.getLootTable();
-    } //add the matching loot table later
+        return new ResourceLocation(MiskatonicMysteries.MODID, "dark_young");
+    }
 
     @Override
     public World getWorld() {

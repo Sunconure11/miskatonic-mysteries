@@ -45,7 +45,7 @@ public class ModConfig {
     public static class SanitySettings{
         @Config.Comment("Sets the insanity event interval.\n\nSometimes it is hard to stay sane inside insanity.")
         @Config.LangKey("config.insanity_interval")
-        public int insanityInterval = 1977;
+        public int insanityInterval = 2000;
     }
 
     public static class WorldGen{

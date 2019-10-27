@@ -9,4 +9,13 @@ public class ModelAnimUtil {
             tentacle[i].rotateAngleX += MathHelper.cos(progress);
         }
     }
+
+
+    public static void waveTentacle(ModelRenderer[] tentacle, float strength, float progress, boolean reset) {
+        if (reset)
+            progress = (0.5F - Math.abs(0.5F - progress)) * 2F;
+        for (int i = 0; i < tentacle.length - 1; i++) {
+            tentacle[i + 1].rotateAngleX += MathHelper.sin(progress * i * strength) * (i % 2 == 0 ? -1 : 1);
+        }
+    }
 }
