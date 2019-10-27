@@ -78,21 +78,21 @@ public class ModelDarkYoung extends ModelBase {
     private static float[][] tentacle01Anims = {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
+            {-0.15F, 0.6F, 0.25F},
             {0.12F, 0.1F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle02Anims = {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
+            {0.15F, -0.3F, -0.25F},
             {0.12F, 0.1F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle03Anims = {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
+            {-0.15F, -0.2F, 0.25F},
             {0.12F, 0.1F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
@@ -100,13 +100,13 @@ public class ModelDarkYoung extends ModelBase {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
             {0.15F, 0.6F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
+            {0.12F, 0.1F, -0.17F},
+            {-0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle05Anims = {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
+            {0.15F, -0.15F, 0.25F},
             {0.12F, 0.1F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
@@ -114,36 +114,36 @@ public class ModelDarkYoung extends ModelBase {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
             {0.15F, 0.6F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
+            {-0.12F, 0.5F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle07Anims = {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
+            {0.15F, 0.1F, 0.25F},
+            {0.12F, 0.15F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle08Anims = {
             {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
+            {0.2F, 0.2F, -0.1F},
+            {0.25F, 0.2F, 0.21F},
             {0.12F, 0.1F, 0.17F},
             {0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle09Anims = {
             {0.1F, 0.4F, 0.3F},
             {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
+            {0.15F, -0.6F, 0.25F},
+            {0.12F, 0.12F, 0.17F},
+            {-0.5F, 0.2F, 0.19F}
     };
     private static float[][] tentacle10Anims = {
             {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
+            {0.25F, 0.2F, 0.1F},
+            {0.15F, 0.3F, 0.25F},
             {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
+            {0.5F, -0.2F, 0.19F}
     };
 
     public ModelRenderer fur01;
