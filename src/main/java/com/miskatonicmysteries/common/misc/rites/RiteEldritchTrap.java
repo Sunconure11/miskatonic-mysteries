@@ -3,11 +3,8 @@ package com.miskatonicmysteries.common.misc.rites;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumDifficulty;
@@ -38,7 +35,6 @@ public class RiteEldritchTrap extends OctagramRite {
 
     @Override
     public boolean checkShouldTrigger(TileEntityOctagram octagram, @Nullable EntityPlayer closest) {
-        System.out.println(closest);
-        return closest != null;
+        return closest != null && closest.getDistanceSqToCenter(octagram.getPos()) < 2;
     }
 }

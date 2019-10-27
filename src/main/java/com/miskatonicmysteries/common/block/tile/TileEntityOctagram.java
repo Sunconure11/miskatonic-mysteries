@@ -193,6 +193,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     tickCount = 0;
                     currentRite = "";
                 }
+            } else {
+                tickCount = 0;
+                primed = false;
+                currentRite = "";
             }
         }
         if (world.rand.nextFloat() < (tickCount > 0 ? 0.08F : 0.02F)){ //maybe just handle particles there
@@ -257,13 +261,13 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public OctagramRite getCurrentRite() {
         OctagramRite rite = isFilled() ? ModRegistries.Util.getRite(this) : null;
-        if (rite == null && primed && !currentRite.isEmpty()) {
+        if (rite == null && primed) {
             rite = ModRegistries.RITES.get(new ResourceLocation(currentRite));
-        } else if (rite == null && !primed) {
+        } else if (rite == null) {
             currentRite = "";
         }
         if (rite != null){
-            currentRite = rite.toString();
+            currentRite = rite.name.toString();
         }
         return rite;
     }
