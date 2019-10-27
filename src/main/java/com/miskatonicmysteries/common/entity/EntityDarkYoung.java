@@ -1,10 +1,7 @@
 package com.miskatonicmysteries.common.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.IEntityMultiPart;
-import net.minecraft.entity.MultiPartEntityPart;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
@@ -28,7 +25,7 @@ public class EntityDarkYoung extends EntityMob implements IEntityMultiPart{
 
     public EntityDarkYoung(World worldIn) {
         super(worldIn);
-        setSize(1.3F, 2.5F);
+        setSize(2.5F, 4.5F);
         experienceValue = 12;
     }
 
@@ -51,7 +48,7 @@ public class EntityDarkYoung extends EntityMob implements IEntityMultiPart{
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIAttackMelee(this, 1, true));
+        this.tasks.addTask(1, new EntityDarkYoungAIAttackMelee(this, 1, true));
         this.tasks.addTask(2, new EntityAIWanderAvoidWater(this, 1.0D));
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(4, new EntityAILookIdle(this));
@@ -77,6 +74,13 @@ public class EntityDarkYoung extends EntityMob implements IEntityMultiPart{
     }
 
 
+    @Override
+    public boolean getCanSpawnHere() {
+        if (super.getCanSpawnHere() && world.canSeeSky(getPosition().up())) {
+            return world.rand.nextFloat() < world.getCurrentMoonPhaseFactor() + 0.02F;
+        }
+        return false;
+    }
 
     @Nullable
     @Override
@@ -104,5 +108,21 @@ public class EntityDarkYoung extends EntityMob implements IEntityMultiPart{
     @Override
     public boolean attackEntityFromPart(MultiPartEntityPart partEntityPart, DamageSource source, float damage) {
         return false;
+    }
+
+    @Override
+    public float getEyeHeight() {
+        return this.height * 0.5F;
+    }
+
+    public static class EntityDarkYoungAIAttackMelee extends EntityAIAttackMelee {
+        public EntityDarkYoungAIAttackMelee(EntityCreature creature, double speedIn, boolean useLongMemory) {
+            super(creature, speedIn, useLongMemory);
+        }
+
+        @Override
+        protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+            return Math.sqrt(super.getAttackReachSqr(attackTarget)) + 1.5F; //what a joke
+        }
     }
 }

@@ -4,9 +4,7 @@ import com.google.common.base.Predicate;
 import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenCthulhuShrine;
 import com.miskatonicmysteries.common.world.gen.structures.WorldGenShubShrine;
-import com.miskatonicmysteries.util.InventoryUtil;
 import com.miskatonicmysteries.util.ListUtil;
-import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -36,7 +34,6 @@ public class ModWorldGen implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         generateStructure(shubShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
-
         //add this to also generate the shrines in the depths of the ocean and not only in caves generateOceanStructure(luluShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
         generateCaveStuff(luluShrine, world, random, ModConfig.worldGen.chanceCthulhuShrines, chunkX, chunkZ, 1, 1, b -> StructureOceanMonument.WATER_BIOMES.contains(b) || BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
 
@@ -116,9 +113,7 @@ public class ModWorldGen implements IWorldGenerator {
             if(Arrays.asList(whitelistBlock).contains(block)){
                 return true;
             }
-            if(block != null && (block.isAir(state, world, pos) || block.getHarvestLevel(state) >= 0F)){
-                return false;
-            }
+            return block == null || (!block.isAir(state, world, pos) && !(block.getHarvestLevel(state) >= 0F));
         }
         return true;
     }

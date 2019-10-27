@@ -9,7 +9,7 @@ import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
 import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModRegistries;
-import javafx.util.Pair;
+import com.mojang.realmsclient.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -317,8 +317,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             instability += focus.getInstabilityRate(world, pos);
         });
         PLACED_FOCI.forEach(pair -> {
-            focusPower += pair.getValue().getConduitAmount(world, pair.getKey());
-            instability += pair.getValue().getInstabilityRate(world, pair.getKey());
+            focusPower += pair.second().getConduitAmount(world, pair.first());
+            instability += pair.second().getInstabilityRate(world, pair.first());
         });
         float overhangFactor = calculateOverhangFactor();
         focusPower /= overhangFactor;
@@ -334,7 +334,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             BlockPos.getAllInBox(pos.add(-10, -4, -10), pos.add(9, 5, 9)).forEach(blockPos ->
                     RiteFocus.getFociFor(world.getBlockState(blockPos).getBlock(), RiteFocus.EnumType.PLACED).forEach(focus -> {
                         PARTICLE_EMMITTERS.add(blockPos);
-                        PLACED_FOCI.add(new Pair<>(blockPos, focus));
+                        PLACED_FOCI.add(Pair.of(blockPos, focus));
                     }));
         }
         return PLACED_FOCI;
@@ -345,7 +345,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             FOCI.clear();
             FOCI.addAll(getHeldFoci(refresh));
             for (Pair<BlockPos, RiteFocus> focus : getPlacedFoci(refresh)) {
-                FOCI.add(focus.getValue());
+                FOCI.add(focus.second());
             }
         }
         return FOCI;

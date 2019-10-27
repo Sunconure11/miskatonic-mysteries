@@ -1,5 +1,6 @@
 package com.miskatonicmysteries;
 
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -21,6 +22,11 @@ public class ModConfig {
     @Config.LangKey("config.category_sanity")
     @Config.Comment("Config settings on this mod's sanity system.")
     public static final SanitySettings sanity = new SanitySettings();
+
+    @Config.LangKey("config.category_entities")
+    @Config.Comment("Config settings on this mod's entities.")
+    public static final EntitySettings entities = new EntitySettings();
+
 
     public static class Client{
         @Config.Comment("Set this to false to disable the shaders in this mod.")
@@ -65,6 +71,32 @@ public class ModConfig {
         @Config.LangKey("config.chanceCthulhuShrines")
         @Config.RangeDouble(min = 0, max = 1)
         public float chanceCthulhuShrines = 0.05F;
+    }
+
+    public static class EntitySettings {
+
+        @Config.RequiresMcRestart
+        @Config.Comment("Determines the spawning rate of Dark Young to spawn in appropriate biomes. Set to 0 to disable.")
+        @Config.LangKey("config.darkYoungSpawnRate")
+        public int darkYoungSpawnRate = 3;
+
+
+        @Config.RequiresMcRestart
+        @Config.Comment("Determines the maximum of Dark Young to spawn in a group.")
+        @Config.LangKey("config.darkYoungGroupMax")
+        public int darkYoungGroupMax = 3;
+
+
+        @Config.RequiresMcRestart
+        @Config.Comment("Determines the minimum of Dark Young to spawn in a group.")
+        @Config.LangKey("config.darkYoungGroupMin")
+        public int darkYoungGroupMin = 1;
+
+        @Config.RequiresMcRestart
+        @Config.Comment("Determines the biome types Dark Young can spawn in.")
+        @Config.LangKey("config.darkYoungBiomes")
+        public String[] darkYoungBiomes = {BiomeDictionary.Type.FOREST.getName(), BiomeDictionary.Type.SPOOKY.getName()};
+
     }
 
     @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)

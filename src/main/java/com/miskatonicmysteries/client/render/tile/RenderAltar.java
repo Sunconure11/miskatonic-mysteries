@@ -30,7 +30,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileEntityAltar> {
 
     public void doStandardTransformations(TileEntityAltar te, double x, double y, double z){
         GlStateManager.translate(x + 0.5F, y + 1.5F, z + 0.5F);
-        EnumFacing facing = te.getWorld().getBlockState(te.getPos()).getValue(BlockAltar.FACING); //south had west, check, west had south, check
+        EnumFacing facing = te.getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockAltar ? te.getWorld().getBlockState(te.getPos()).getValue(BlockAltar.FACING) : EnumFacing.NORTH; //south had west, check, west had south, check
         GlStateManager.rotate(90 * (facing == EnumFacing.NORTH ? 1 : facing == EnumFacing.EAST ? 0 : facing == EnumFacing.SOUTH ? 3 : 2), 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(67.5F, 0.0F, 0.0F, 1.0F); //0-22.5
         GlStateManager.translate(-0.05 * (te.bookOpeningProgress * te.bookOpeningProgress) - 0.025, -0.2, 0);

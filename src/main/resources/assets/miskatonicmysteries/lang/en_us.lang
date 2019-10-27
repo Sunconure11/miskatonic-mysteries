@@ -106,6 +106,11 @@ config.chanceCthulhuShrines=Chance for Cthulhu Shrines
 config.category_sanity=Sanity
 config.insanity_interval=Insanity Event Interval
 
+config.darkYoungSpawnRate=Dark Young Spawn Rate
+config.darkYoungGroupMax=Dark Young Group Maximum
+config.darkYoungGroupMin=Dark Young Group Minimum
+config.darkYoungBiomes=Dark Young Biomes
+
 #COMMANDS
 commands.miskmyst.usage=miskatonicmysteries <player> <command> <value>
 command.miskmyst.player_null=§cPlayer %s could not be found
