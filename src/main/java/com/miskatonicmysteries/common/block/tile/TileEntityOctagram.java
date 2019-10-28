@@ -237,7 +237,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public boolean isValid() {
         if (getAltarBlessing() != null) {
-            return getCurrentRite() != null && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == null);
+            return getCurrentRite() != null && getCurrentRite().test(this) && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == null);
         }
         return false;
     }

@@ -154,6 +154,10 @@ message.insanity_concern.9=%s is acting paranoid, constantly looking around like
 message.insanity_concern.10=%’s movements are strange and twitchy.
 message.insanity_concern.11=%’s pupils are overly dilated.
 
+message.cultist.sit=The Cultist will remain here
+message.cultist.wander=The Cultist will wander around here
+message.cultist.follow=The Cultist will follow you
+
 #MISC
 item.banner.miskatonicmysteries_yellow_sign.yellow=Truly Yellow Sign
 item.banner.miskatonicmysteries_yellow_sign.black=Black Yellow Sign

@@ -1,7 +1,9 @@
 package com.miskatonicmysteries.common.world.gen.village;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
 import com.miskatonicmysteries.common.world.gen.processor.HasturStructureProcessor;
+import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
@@ -11,6 +13,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
@@ -25,7 +28,9 @@ import java.util.List;
 import java.util.Random;
 
 public class VillageComponentHasturShrine extends StructureVillagePieces.Village {
-    public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12;
+    public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12; //probably make one for each different type
+    private static final Biome.SpawnListEntry ENTRY_CULTISTS_HASTUR = new Biome.SpawnListEntry(EntityHasturCultist.class, 5, 1, 4);
+
     public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5){
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;
@@ -45,14 +50,15 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
             }
             this.boundingBox.offset(0, this.averageGroundLvl-this.boundingBox.maxY+MAX_Y-2, 0);
         }
+        BlockPos position = new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0));
         WorldServer worldServer = (WorldServer) worldIn;
         MinecraftServer minecraftServer = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldServer.getStructureTemplateManager();
         Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/hastur/shrine_hastur_" + (1 + worldIn.rand.nextInt(2)))); //replace with plains
-        if (BiomeDictionary.hasType(worldIn.getBiome(new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0))), BiomeDictionary.Type.SAVANNA)) {
+        if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SAVANNA)) {
             template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
         }
-        if (BiomeDictionary.hasType(worldIn.getBiome(new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0))), BiomeDictionary.Type.SANDY)){
+        if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SANDY)) {
             return true;
         }
         EnumFacing facing = this.getCoordBaseMode();
@@ -82,7 +88,8 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
             }
         }
         PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(mirror);
-        template.addBlocksToWorld(worldIn, new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0)), new HasturStructureProcessor(averageGroundLvl), settings, 2);
+        template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl), settings, 2);
+        WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, Math.round(position.getX() - template.getSize().getX() / 2F), Math.round(position.getZ() - template.getSize().getZ() / 2F), 7, 7, randomIn);
         return true;
     }
 

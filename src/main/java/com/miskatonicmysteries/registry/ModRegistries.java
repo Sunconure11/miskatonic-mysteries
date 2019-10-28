@@ -9,7 +9,9 @@ import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
 import com.miskatonicmysteries.common.misc.rites.effect.*;
 import com.miskatonicmysteries.common.misc.spells.*;
 import com.miskatonicmysteries.util.InventoryUtil;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,6 +34,7 @@ public class ModRegistries {
 
 
     public static OctagramRite MANIACS_MEETING_GOAT;
+    public static OctagramRite MANIACS_MEETING_YELLOW_KING;
     public static OctagramRite ELDRITCH_TRAP;
 
 
@@ -43,8 +46,10 @@ public class ModRegistries {
         initRecipes();
     }
 
-    private static void initRites() {
-        MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND), Ingredient.fromItem(Items.DIAMOND));
+    private static void initRites() { //replace the last two emeralds with the matching wool types
+        MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(ModObjects.flesh_dark_young), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(ModObjects.gold_oceanic), Ingredient.fromItem(ModObjects.blotter), Ingredient.fromItems(ModObjects.black_goats_gutting_dagger, ModObjects.black_goats_horned_dagger), Ingredient.fromItems(ModObjects.shubniggurath_cultist_mask, ModObjects.shubniggurath_cultist_hoodmask), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));//Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));
+        MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.HASTUR, Ingredient.fromStacks(new ItemStack(Blocks.GOLD_BLOCK)), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(ModObjects.gold_oceanic), Ingredient.fromItem(ModObjects.blotter), Ingredient.fromItems(ModObjects.yellow_kings_dagger), Ingredient.fromItems(ModObjects.hastur_cultist_hood), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 4)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 4)));//Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));
+
         ELDRITCH_TRAP = new RiteEldritchTrap();
     }
 

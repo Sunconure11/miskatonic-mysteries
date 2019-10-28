@@ -4,7 +4,6 @@ import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.registry.ModObjects;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
@@ -30,8 +29,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
@@ -47,6 +45,7 @@ import java.util.List;
 public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant, IHasAssociatedBlessing {
     private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
+
     protected EntityCultistAIWander cultistAIWander;
 
     @Nullable
@@ -111,7 +110,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
         this.tasks.addTask(5, new EntityAIAttackMelee(this, 1, true));
         //fix cultists not being able to deal damage
-        this.tasks.addTask(6, new EntityAIFollowOwner(this, 1, 4.0F, 8.0F));
+        this.tasks.addTask(6, new EntityAIFollowOwner(this, 1.5F, 4.0F, 8.0F));
         this.tasks.addTask(7, new EntityAIMate(this, 1.0D)); //maybe?
         this.tasks.addTask(8, this.cultistAIWander);
         this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 12.0F));
@@ -124,8 +123,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, AbstractCultist.class, false, c -> ((AbstractCultist) c).getAssociatedBlessing() != getAssociatedBlessing()));
         this.targetTasks.addTask(6, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> l instanceof IHasAssociatedBlessing && ((IHasAssociatedBlessing) l).getAssociatedBlessing() != getAssociatedBlessing()));
         //will also attack pillagers and their beasts in 1.14
-
-        //method to find out if the cultist is friendly to another cultist or player; criteria include common blessing and clothing
     }
 
     public boolean attackEntityAsMob(Entity entityIn) {
@@ -204,6 +201,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         return dataManager.get(FOLLOW_MODE) > 1;
     }
 
+
     @Override
     public void setSitting(boolean sitting) {
         dataManager.set(FOLLOW_MODE, sitting ? 1 : 0);
@@ -211,9 +209,8 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public boolean isSitting() {
-        return dataManager.get(FOLLOW_MODE) > 0;
+        return dataManager.get(FOLLOW_MODE) == 1;
     }
-
 
     public boolean isNeutral() {
         return isTamed() && getOwnerId() == null;
@@ -236,7 +233,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             setItemStackToSlot(EntityEquipmentSlot.MAINHAND, getAvailableWeapons().get(rand.nextInt(getAvailableWeapons().size())));
         }
         cultistAIWander = new EntityCultistAIWander(this);
-        cultistAIWander.boundPos = getPos();
+        setHomePosAndDistance(getPosition(), 20);
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
@@ -244,9 +241,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     public void readEntityFromNBT(NBTTagCompound compound) {
         setArmsFolded(compound.getBoolean("armsFolded"));
         setWandering(compound.getBoolean("wandering"));
-        if (this.cultistAIWander != null) {
-            this.cultistAIWander.setBoundPos(BlockPos.fromLong(compound.getLong("wanderingPos")));
-        }
         if (aiSit instanceof EntityCultistAISit) {
             this.setWandering(isWandering());
         }
@@ -261,9 +255,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     public void writeEntityToNBT(NBTTagCompound compound) {
         compound.setBoolean("armsFolded", armsFolded());
         compound.setBoolean("wandering", isWandering());
-        if (this.cultistAIWander != null && cultistAIWander.getBoundPos() != null) {
-            compound.setLong("wanderingPos", cultistAIWander.boundPos.toLong());
-        }
         compound.setBoolean("tamed", isTamed());
         if (buyingList != null)
             compound.setTag("recipes", buyingList.getRecipiesAsTags());
@@ -275,12 +266,17 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (hand == EnumHand.MAIN_HAND) {
             if (player.isSneaking() && this.isOwner(player) && !this.world.isRemote && !this.isBreedingItem(player.getHeldItem(hand))) {
                 dataManager.set(FOLLOW_MODE, dataManager.get(FOLLOW_MODE) > 1 ? 0 : dataManager.get(FOLLOW_MODE) + 1);
+                if (isWandering()) {
+                    //scan for murals later on, for now just set the current position to the bound one
+                    setHomePosAndDistance(getPosition(), 20);
+                }
+                player.sendStatusMessage(new TextComponentTranslation("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow")), true);
                 this.navigator.clearPath();
                 setAttackTarget(null);
                 this.isJumping = false;
-                if (world.isRemote) {
+               /*if (world.isRemote) {
                     player.sendStatusMessage(new TextComponentString(I18n.format("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow"))), true);
-                }
+                }*/
                 return true;
             } else if (!player.isSneaking() && isTamed()) {
                 if (this.buyingList == null) {
@@ -390,43 +386,17 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         }
     }
 
-    static class EntityCultistAIWander extends EntityAIWander {
-        private BlockPos boundPos;
+    static class EntityCultistAIWander extends EntityAIMoveTowardsRestriction {
+        protected AbstractCultist cultist;
 
         public EntityCultistAIWander(AbstractCultist entityIn) {
-            super(entityIn, 1.0D, 2);
-            setMutexBits(1);
+            super(entityIn, 1.0D);
+            this.cultist = entityIn;
         }
 
         @Override
         public boolean shouldExecute() {
-            return boundPos != null && isWandering() && super.shouldExecute();
-        }
-
-        public boolean isWandering() {
-            return ((AbstractCultist) entity).isWandering();
-        }
-
-        @Nullable
-        @Override
-        protected Vec3d getPosition() {
-            Vec3d pos;
-            int i = 0;
-            do {
-                pos = RandomPositionGenerator.getLandPos(entity, 10, 3);
-                i++;
-            } while ((pos == null ||
-                    pos.distanceTo(new Vec3d(boundPos.getX() + 0.5, boundPos.getY() + 0.5, boundPos.getZ() + 0.5)) > 16)
-                    && i < 10);
-            return pos;
-        }
-
-        public BlockPos getBoundPos() {
-            return boundPos;
-        }
-
-        public void setBoundPos(BlockPos boundPos) {
-            this.boundPos = boundPos;
+            return cultist.isWandering() && super.shouldExecute();
         }
     }
 
@@ -510,6 +480,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     public void useRecipe(MerchantRecipe recipe) {
         //recipe.incrementToolUses(); so the recipe never gets exhausted; might work on that later
+        recipe.increaseMaxTradeUses(1);
         this.livingSoundTime = -this.getTalkInterval();
         this.playSound(SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
         int i = 3 + this.rand.nextInt(4);
