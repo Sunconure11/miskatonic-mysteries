@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.entity.cultist;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -13,6 +14,7 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -38,6 +40,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractCultist extends EntityTameable implements INpc, IMerchant, IHasAssociatedBlessing {
@@ -58,7 +62,17 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.setCanPickUpLoot(true);
     }
 
-    public abstract List<EntityVillager.ITradeList> getTradeList();
+    public List<EntityVillager.ITradeList> getCurrencyTradeList() {
+        List<EntityVillager.ITradeList> trades = new ArrayList<>();
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 3 + random.nextInt(2)), new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.GOLD_INGOT, 4 + random.nextInt(2)), new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)), new ItemStack(ModObjects.candles, 4 + random.nextInt(3)))));
+        return trades;
+    }
+
+    public abstract List<EntityVillager.ITradeList> getEquipmentTradeList();
+
+    public abstract List<EntityVillager.ITradeList> getMiscTradeList();
 
     public abstract Blessing getAssociatedBlessing();
 
@@ -294,12 +308,32 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (buyingList == null) {
             buyingList = new MerchantRecipeList();
         }
-        //add villager profession
-        List<EntityVillager.ITradeList> trades = getTradeList();//this.getProfessionForge().getCareer(i).getTrades(j);
+        List<EntityVillager.ITradeList> currencyTrades = this.getCurrencyTradeList();
+        //pick 1 currency trade
+        if (currencyTrades != null && !currencyTrades.isEmpty()) {
+            Collections.shuffle(currencyTrades);
+            currencyTrades.get(0).addMerchantRecipe(this, this.buyingList, this.rand);
+        }
 
-        if (trades != null) {
-            for (EntityVillager.ITradeList entityvillager$itradelist : trades) {
-                entityvillager$itradelist.addMerchantRecipe(this, this.buyingList, this.rand);
+        List<EntityVillager.ITradeList> equipmentTrades = this.getEquipmentTradeList();
+        //pick up to 2 random equipment trades
+        if (equipmentTrades != null) {
+            Collections.shuffle(equipmentTrades);
+            int amount = 1 + world.rand.nextInt(2);
+            for (int i = 0; i < amount; i++) {
+                if (i < equipmentTrades.size())
+                    equipmentTrades.get(i).addMerchantRecipe(this, this.buyingList, this.rand);
+            }
+        }
+
+        List<EntityVillager.ITradeList> miscTrades = this.getMiscTradeList();
+        //pick up to one random misc trade
+        if (miscTrades != null) {
+            Collections.shuffle(miscTrades);
+            int amount = world.rand.nextInt(2);
+            for (int i = 0; i < amount; i++) {
+                if (i < miscTrades.size())
+                    miscTrades.get(i).addMerchantRecipe(this, this.buyingList, this.rand);
             }
         }
     }
@@ -475,7 +509,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public void useRecipe(MerchantRecipe recipe) {
-        recipe.incrementToolUses();
+        //recipe.incrementToolUses(); so the recipe never gets exhausted; might work on that later
         this.livingSoundTime = -this.getTalkInterval();
         this.playSound(SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
         int i = 3 + this.rand.nextInt(4);
