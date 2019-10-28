@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -95,7 +96,7 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
 
     @Override
     public boolean getCanSpawnHere() {
-        if (super.getCanSpawnHere() && world.canSeeSky(getPosition().up())) {
+        if (!world.isDaytime() && super.getCanSpawnHere() && world.canSeeSky(getPosition().up()) && world.getDifficulty() != EnumDifficulty.PEACEFUL) {
             return world.rand.nextFloat() < world.getCurrentMoonPhaseFactor() + 0.02F;
         }
         return false;

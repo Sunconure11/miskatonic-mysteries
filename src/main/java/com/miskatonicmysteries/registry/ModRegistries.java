@@ -5,6 +5,7 @@ import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
 import com.miskatonicmysteries.common.misc.rites.RiteEldritchTrap;
+import com.miskatonicmysteries.common.misc.rites.RiteHysteria;
 import com.miskatonicmysteries.common.misc.rites.RiteManiacsMeeting;
 import com.miskatonicmysteries.common.misc.rites.effect.*;
 import com.miskatonicmysteries.common.misc.spells.*;
@@ -35,22 +36,30 @@ public class ModRegistries {
 
     public static OctagramRite MANIACS_MEETING_GOAT;
     public static OctagramRite MANIACS_MEETING_YELLOW_KING;
+
     public static OctagramRite ELDRITCH_TRAP;
+    public static OctagramRite HYSTERIA;
 
 
     public static void init(){
+        initOctagramTypes();
         initRites();
         initRiteEffects();
         initSpells();
-
         initRecipes();
     }
 
+    private static void initOctagramTypes() {
+        MiskatonicMysteries.proxy.addOctagramTexture(Blessing.SHUB, new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/octagram_shub.png"));
+        MiskatonicMysteries.proxy.addOctagramTexture(Blessing.HASTUR, new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/octagram_hastur.png"));
+
+    }
     private static void initRites() { //replace the last two emeralds with the matching wool types
         MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.SHUB, Ingredient.fromItem(ModObjects.flesh_dark_young), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(ModObjects.gold_oceanic), Ingredient.fromItem(ModObjects.blotter), Ingredient.fromItems(ModObjects.black_goats_gutting_dagger, ModObjects.black_goats_horned_dagger), Ingredient.fromItems(ModObjects.shubniggurath_cultist_mask, ModObjects.shubniggurath_cultist_hoodmask), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));//Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));
-        MANIACS_MEETING_GOAT = new RiteManiacsMeeting(Blessing.HASTUR, Ingredient.fromStacks(new ItemStack(Blocks.GOLD_BLOCK)), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(ModObjects.gold_oceanic), Ingredient.fromItem(ModObjects.blotter), Ingredient.fromItems(ModObjects.yellow_kings_dagger), Ingredient.fromItems(ModObjects.hastur_cultist_hood), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 4)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 4)));//Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));
+        MANIACS_MEETING_YELLOW_KING = new RiteManiacsMeeting(Blessing.HASTUR, Ingredient.fromStacks(new ItemStack(Blocks.GOLD_BLOCK)), Ingredient.fromItem(Items.EMERALD), Ingredient.fromItem(ModObjects.gold_oceanic), Ingredient.fromItem(ModObjects.blotter), Ingredient.fromItems(ModObjects.yellow_kings_dagger), Ingredient.fromItems(ModObjects.hastur_cultist_hood), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 4)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 4)));//Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, 15)));
 
         ELDRITCH_TRAP = new RiteEldritchTrap();
+        HYSTERIA = new RiteHysteria();
     }
 
     private static void initRiteEffects() {

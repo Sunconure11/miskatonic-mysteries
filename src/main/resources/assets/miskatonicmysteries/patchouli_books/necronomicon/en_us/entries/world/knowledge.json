@@ -1,0 +1,16 @@
+{
+  "name": "Knowledge",
+  "icon": "minecraft:writable_book",
+  "category": "world",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "While this book entails the essentials of the Entheator's journey, each individual must find their own way, of sorts. So it happens that the knowledge must be known and the words must be read, not told.$(br)To accomplish this, one must seek relics from older times or other minds, so called $(l:world/shrines)$(marked)Shrines$()."
+    },
+    {
+      "type": "text",
+      "text": "All shrines contain at least one $(marked)Mural$(), which is dedicated to a Great Old One.$(br)Murals contain precious knowledge, which may be contained with a $(marked)Book and Quill$().$(br)The knowledge contained within this written book can now be used for a number of things and is essential for an Entheator's research; with the appropriation of such books, a important step is made each time."
+    }
+  ]
+}

@@ -19,6 +19,13 @@ public class RenderDarkYoung extends RenderLiving<EntityDarkYoung> {
     }
 
     @Override
+    public void doRender(EntityDarkYoung entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        GlStateManager.pushMatrix();
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+        GlStateManager.popMatrix();
+    }
+
+    @Override
     protected void preRenderCallback(EntityDarkYoung entitylivingbaseIn, float partialTickTime) {
         GlStateManager.scale(1.5, 1.5, 1.5);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);

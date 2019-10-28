@@ -38,11 +38,12 @@ public class BlockFluidMMWater extends BlockFluidFinite {
 
     @Override
     public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
-        super.updateTick(world, pos, state, rand);
         if (state.getValue(LEVEL) <= 0) {
             world.setBlockToAir(pos);
+            return;
         } else {
             world.setBlockState(pos, state.withProperty(LEVEL, state.getValue(LEVEL) - 1));
         }
+        super.updateTick(world, pos, state, rand);
     }
 }

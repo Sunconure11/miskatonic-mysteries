@@ -24,9 +24,9 @@ public class SpellTideWave extends Spell {
 
     @Override
     public void cast(EntityPlayer caster) {
-        for (int i = 0; i < 360; i += 6){
+        for (int i = 0; i < 360; i += 36) {
             EntityWaterProjectile projectile = new EntityWaterProjectile(caster.world, caster);
-            projectile.shoot(caster, 0, i, -0.5F, 2F, 0F);
+            projectile.shoot(caster, 0, i, -1.5F, 2F, 0F);
             if (!caster.world.isRemote)
                 caster.world.spawnEntity(projectile);
         }

@@ -22,6 +22,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.common.util.EnumHelper;
@@ -91,7 +92,7 @@ public class ModObjects {
 
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 
-    public static Item tallow = Util.create(new Item(), "tallow");
+    public static Item tallow = Util.create(new ItemFood(4, 6, false), "tallow");
 
     public static Item flesh_dark_young = Util.create(new ItemFleshDarkYoung(), "flesh_dark_young");
 

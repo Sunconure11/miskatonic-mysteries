@@ -82,7 +82,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         super.applyEntityAttributes();
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(6.0D);
     }
@@ -104,17 +104,17 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
         if (cultistAIWander == null)
             this.cultistAIWander = new EntityCultistAIWander(this);
-        this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityCultistAITrade(this));
-        this.tasks.addTask(2, this.aiSit);// extend AIWander to also consider a second field: wander
-        this.tasks.addTask(3, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
+        this.tasks.addTask(2, new EntityAISwimming(this));
+        this.tasks.addTask(3, this.aiSit);// extend AIWander to also consider a second field: wander
+        this.tasks.addTask(4, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
         this.tasks.addTask(5, new EntityAIAttackMelee(this, 1, true));
         //fix cultists not being able to deal damage
         this.tasks.addTask(6, new EntityAIFollowOwner(this, 1.5F, 4.0F, 8.0F));
         this.tasks.addTask(7, new EntityAIMate(this, 1.0D)); //maybe?
         this.tasks.addTask(8, this.cultistAIWander);
         this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 12.0F));
-        this.tasks.addTask(10, new EntityAILookIdle(this));
+        this.tasks.addTask(11, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
@@ -259,6 +259,11 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (buyingList != null)
             compound.setTag("recipes", buyingList.getRecipiesAsTags());
         super.writeEntityToNBT(compound);
+    }
+
+    @Override
+    protected boolean canDespawn() {
+        return false;
     }
 
     @Override

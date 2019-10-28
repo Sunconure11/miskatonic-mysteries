@@ -11,7 +11,10 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.loot.ILootContainer;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +63,52 @@ public class WorldGenUtil {
                 }
             }
         }
+    }
+
+    public static void spawnEntity(EntityLiving entityliving, World world, BlockPos origPos, int attempts, float maxDistance) {
+        float posX = origPos.getX();
+        float posZ = origPos.getZ();
+        float posXOrig = posX;
+        float posZOrig = posZ;
+        for (int j1 = 0; j1 < attempts; ++j1) {
+            boolean flag = false;
+
+            for (int k1 = 0; !flag && k1 < 4; ++k1) {
+                BlockPos blockpos = getTopSolidOrLiquidBlock(world, new BlockPos(posX, origPos.getY(), posZ));
+
+                if (canCreatureTypeSpawnAtLocation(EntityLiving.SpawnPlacementType.ON_GROUND, world, blockpos)) {
+                    if (ForgeEventFactory.canEntitySpawn(entityliving, world, posX + 0.5f, (float) blockpos.getY(), posZ + 0.5f, false) == Event.Result.DENY)
+                        continue;
+                    entityliving.setLocationAndAngles((double) (posX + 0.5F), (double) blockpos.getY(), (double) (posZ + 0.5F), world.rand.nextFloat() * 360.0F, 0.0F);
+                    world.spawnEntity(entityliving);
+                    entityliving.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entityliving)), null);
+                    return;
+                }
+
+                posX += world.rand.nextInt(5) - world.rand.nextInt(5);
+
+                for (posZ += world.rand.nextInt(5) - world.rand.nextInt(5); posX < origPos.getX() || posX >= origPos.getX() + maxDistance || posZ < origPos.getZ() || posZ >= origPos.getZ() + maxDistance; posZ = posZOrig + world.rand.nextInt(5) - world.rand.nextInt(5)) {
+                    posX = posXOrig + world.rand.nextInt(5) - world.rand.nextInt(5);
+                }
+            }
+        }
+    }
+
+    public static BlockPos getTopSolidOrLiquidBlock(World world, BlockPos pos) {
+        Chunk chunk = world.getChunkFromBlockCoords(pos);
+        BlockPos blockpos;
+        BlockPos blockpos1;
+
+        for (blockpos = new BlockPos(pos.getX(), pos.getY() + 5, pos.getZ()); blockpos.getY() >= 0; blockpos = blockpos1) {
+            blockpos1 = blockpos.down();
+            IBlockState state = chunk.getBlockState(blockpos1);
+
+            if (state.getMaterial().blocksMovement() && !state.getBlock().isLeaves(state, world, blockpos1) && !state.getBlock().isFoliage(world, blockpos1)) {
+                break;
+            }
+        }
+
+        return blockpos;
     }
 
     public static int getGround(World world, int x, int z) {

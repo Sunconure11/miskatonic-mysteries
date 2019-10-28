@@ -1,6 +1,6 @@
 {
   "name": "The World",
-  "description": "The world is vast, but the universe is vaster. Many things influence the inner mechanisms of the world, but in a way no mere human can understand. However this will try to clarify it in a way that is at least somewhat rational.",
-  "icon": "miskatonicmysteries:textures/gui/icons/world.png",
+  "description": "Many things influence the inner mechanisms of the World, but in a way no mere human can understand. However this will try to clarify it in a way that is at least somewhat rational.",
+  "icon": "minecraft:diamond",
   "sortnum": 1
 }

@@ -1,0 +1,29 @@
+{
+  "name": "Items",
+  "icon": "miskatonicmysteries:tallow",
+  "category": "world",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "miskatonicmysteries:gold_oceanic",
+      "text": "Oceanic Gold has a pearlescent shimmer, and is engraved with aquatic images, from sea creatures to other images evocative of the sea. It may be found in lost treasure chests, or may be acquired by trading with $(marked)Cultists$()."
+    },
+    {
+      "type": "spotlight",
+      "item": "miskatonicmysteries:tallow",
+      "text": "Tallow is rendered fat from animals, commonly pigs, but other less-than-saviour sources are known. In order to acquire tallow, one must burn the animal and let it die to the flames, thus boiling its fat and separating it. Tallow may be used in rites as well as eaten in an emergency, but is most commonly used to make Candles."
+    },
+    {
+      "type": "text",
+      "text": "Profane Chalk is used to draw so called $(l:world/rites)$(marked)Octagrams$(). These are used to channel focal energy to a specific Great Old One in $(l:world/rites)$(marked)rites$(). Further information may be found in the according entry.",
+      "title": "Profane Chalk"
+    },
+    {
+      "type": "crafting",
+      "title": "Profane Chalk",
+      "recipe": "miskatonicmysteries:chalk_goat",
+      "recipe2": "miskatonicmysteries:chalk_yellow"
+    }
+  ]
+}

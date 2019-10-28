@@ -1,0 +1,12 @@
+{
+  "name": "Foci",
+  "icon": "minecraft:emerald",
+  "category": "world",
+  "sortnum": 6,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Foci are the source of power in $(l:world/rites_intro)$(marked)Rites$()"
+    }
+  ]
+}

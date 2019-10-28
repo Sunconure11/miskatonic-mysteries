@@ -8,6 +8,7 @@ import com.miskatonicmysteries.client.render.tile.RenderAltar;
 import com.miskatonicmysteries.client.render.tile.RenderOctagram;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.registry.ModEntities;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -27,11 +29,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy {
     public static KeyBinding SPELL_UP;
     public static KeyBinding SPELL_DOWN;
     public static KeyBinding SPELL_CANCEL;
+
+    public static Map<Blessing, ResourceLocation> OCTAGRAM_TEXTURES = new HashMap<Blessing, ResourceLocation>();
 
     public void preInit(FMLPreInitializationEvent event){
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAltar.class, new RenderAltar());
@@ -49,6 +56,10 @@ public class ClientProxy extends ServerProxy {
     @Override
     public void registerTexture(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MiskatonicMysteries.MODID + ":" + id, "inventory"));
+    }
+
+    public void addOctagramTexture(Blessing associatedBlessing, ResourceLocation tex) {
+        OCTAGRAM_TEXTURES.put(associatedBlessing, tex);
     }
 
     @Override

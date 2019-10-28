@@ -1,0 +1,76 @@
+{
+  "name": "Rites",
+  "icon": "miskatonicmysteries:chalk_goat",
+  "category": "world",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Of course, one of the primary things an Entheator would be inclined to do is Rites. Rites are composed of four vital parts: the Octagram, the Knowledge, the Reagents, and the Foci. Rites are a delicate balance of power and stability, and even those experienced in other magics have difficulties in Rites of this unnature."
+    },
+    {
+      "type": "text",
+      "text": "To cast a Rite, several things are needed:$(li)The reagents needed for the Rite desired must be placed on an $(o)Octagram$(), $(li)The knowledge needed must be present, usually in the form of Research Notes or this book,$(li)The right amount of focal power must be present and $(li)The correct Great Old One must be addressed.$(br2)If all these cRiteria are met, the Rite will be cast more or less successfully."
+    },
+    {
+      "type": "text",
+      "text": "Logically, if a Rite is not vaguely successful, it will fail. The consequences of both success and failure are determined by a special factor -instability-, which will be elucidated later.$(br)In order for the focal power to be right, not too little nor too much should be present. If there is too little focal power, usually nothing will happen; however, if there is too much, the Rite will overload. This will also be elucidated later."
+    },
+    {
+      "type": "text",
+      "title": "Octagrams",
+      "text": "Octagrams are a 3x3 meter wide 8-pointed star, with the sigil of a Great Old One drawn in the middle, often with other arcane symbols around it, to help focus energies. Octagrams are the centerpiece of Rites, as they channel the focal energy around them, sending them to their associated Great Old One to achieve the desired effects. For some Rites, the octagram is irrelevant; for other Rites, not using the correct octagram is lethal."
+    },
+    {
+      "type": "image",
+      "images": [
+        "miskatonicmysteries:textures/gui/images/octagram.png"
+      ],
+      "border": true,
+      "text": "To draw an Octagram, simply craft the matching $(l:world/items)$(marked)chalk$()."
+    },
+    {
+      "type": "text",
+      "title": "Reagents",
+      "text": "If the Octagram is the heart of a Rite, the Reagents are its veins, pumping the blood through the skin of the world through their special constellation. The Reagents used determine the Rite that the caster attempts to perform, and reagents will be consumed if the rite is successful or overloads in some way.$(br)Usually, they don't contribute to the rite in any other way."
+    },
+    {
+      "type": "text",
+      "title": "The Knowledge",
+      "text": "While Reagents are essential to determine the Rite cast, the fundamental Knowledge must of course be present, too. In order to contribute to a Rite with Knowledge, an $(l:world/blocks)$(marked)Altar$() must be placed nearby. The container of the Knowledge must then be placed on the Altar, and never be removed or closed while the Rite is cast, otherwise the Rite will be canceled. Do note that each Rite will automagically open the book when started."
+    },
+    {
+      "type": "text",
+      "title": "Focal Power",
+      "text": "Focal Power is the strength with which the Rite will channel its Reagents towards the addressed Great Old One; too little will cause nothing to happen, too much will cause the Rite to overload and fail, consuming all Reagents in the process. To increase the Focal Power of a Rite, $(l:world/foci)$(marked)Foci$() must be held or placed nearby. Due to the complexity in Foci, these are elucidated in another entry."
+    },
+    {
+      "type": "text",
+      "title": "Success",
+      "text": "If, as said, all criteria are met, the Rite will be cast successfully, consuming the Reagents and performing the desired effect, ideally. Additionally, some Rites may include an effect as they are cast. One thing however is important: finishing a Rite never eliminates side effects caused from too much instability."
+    },
+    {
+      "type": "text",
+      "title": "Primed Rites",
+      "text": "Usually, a rite ends with it being cast; however, there are of course exceptions. These exceptions are called Primed Rites. Once the actual casting is complete, they will prime the Octagram to them. Once the Octagram is primed, the Rite may be released under the matching circumstances, like a player stepping on the octagram. "
+    },
+    {
+      "type": "text",
+      "text": "A primed Octagram will faintly glow and must not be sustained by any Foci et cetera. So it happens that Primed Rites are commonly used as traps, like one can see with the $(marked)Eldritch Trap$() and it's hellish equivalent."
+    },
+    {
+      "type": "text",
+      "title": "Malign Effects",
+      "text": "A Rite can indeed go wrong in many many ways. As example, addressing the wrong Great Old One when the Great Old One addressed is relevant will possibly cause greater harm to the caster. Overloading the Rite will also contribute to similar effects. Instability will always increase the possible severity of the effects, in addition to the possibility of after-effects on success."
+    },
+    {
+      "type": "text",
+      "title": "An Example",
+      "text": "As this explanation of rites has been long and weary, an example on how to do it right -and one on how to do it wrong- will be given. In both examples the Primed Rite $(l:world/rites/rite_hysteria)$(marked)Hysteria$() will be performed, and the used setups will be shown."
+    },
+    {
+      "type": "text",
+      "text": "First, the needed reagents are added to the Octagram. In this case it does not matter what Octagram is used; this example uses an Octagram to the Yellow King."
+    }
+  ]
+}

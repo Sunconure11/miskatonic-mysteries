@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.common.world.gen.village;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
 import com.miskatonicmysteries.common.world.gen.processor.HasturStructureProcessor;
 import com.miskatonicmysteries.util.WorldGenUtil;
@@ -27,13 +28,13 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import java.util.List;
 import java.util.Random;
 
-public class VillageComponentHasturShrine extends StructureVillagePieces.Village {
+public class VillageComponentHasturShrine extends StructureVillagePieces.House1 {
     public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12; //probably make one for each different type
     private static final Biome.SpawnListEntry ENTRY_CULTISTS_HASTUR = new Biome.SpawnListEntry(EntityHasturCultist.class, 5, 1, 4);
 
     public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5){
         this.setCoordBaseMode(par5);
-        this.boundingBox = boundingBox;
+        this.boundingBox = boundingBox; //add biome n' stuff
     }
 
     public static VillageComponentHasturShrine createPiece(StructureVillagePieces.Start start, List<StructureComponent> p_175854_1_, Random rand, int p1, int p2, int p3, EnumFacing p4, int p5){//List pieces, int p1, int p2, int p3, EnumFacing p4){
@@ -43,54 +44,56 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
 
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
-        if(this.averageGroundLvl < 0){
-            this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
-            if(this.averageGroundLvl < 0){
-                return true;
+        if (randomIn.nextDouble() < ModConfig.worldGen.chanceHasturShrines) {
+            if (this.averageGroundLvl < 0) {
+                this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
+                if (this.averageGroundLvl < 0) {
+                    return false; //it is indeed well possible that the bug is just in the structure
+                }
+                this.boundingBox.offset(0, this.averageGroundLvl - this.boundingBox.maxY + MAX_Y - 2, 0);
             }
-            this.boundingBox.offset(0, this.averageGroundLvl-this.boundingBox.maxY+MAX_Y-2, 0);
-        }
-        BlockPos position = new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0));
-        WorldServer worldServer = (WorldServer) worldIn;
-        MinecraftServer minecraftServer = worldIn.getMinecraftServer();
-        TemplateManager templateManager = worldServer.getStructureTemplateManager();
-        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/hastur/shrine_hastur_" + (1 + worldIn.rand.nextInt(2)))); //replace with plains
-        if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SAVANNA)) {
-            template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
-        }
-        if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SANDY)) {
+            BlockPos position = new BlockPos(getXWithOffset(0, 0), averageGroundLvl, getZWithOffset(0, 0));
+            WorldServer worldServer = (WorldServer) worldIn;
+            MinecraftServer minecraftServer = worldIn.getMinecraftServer();
+            TemplateManager templateManager = worldServer.getStructureTemplateManager();
+            Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_" + (1 + worldIn.rand.nextInt(2)))); //replace with plains
+            if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SAVANNA)) {
+                template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
+            }
+            if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SANDY)) {
+                return false;
+            }
+            if (worldIn.isRemote) return true;
+            EnumFacing facing = this.getCoordBaseMode();
+
+            Mirror mirror;
+            Rotation rotation;
+            if (facing == EnumFacing.SOUTH) {
+                mirror = Mirror.NONE;
+                rotation = Rotation.NONE;
+            } else if (facing == EnumFacing.WEST) {
+                mirror = Mirror.NONE;
+                rotation = Rotation.CLOCKWISE_90;
+            } else if (facing == EnumFacing.EAST) {
+                mirror = Mirror.LEFT_RIGHT;
+                rotation = Rotation.CLOCKWISE_90;
+            } else {
+                mirror = Mirror.LEFT_RIGHT;
+                rotation = Rotation.NONE;
+            }
+            PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(mirror);
+            for (int x = 0; x < template.getSize().getX(); x++) {
+                for (int z = 0; z < template.getSize().getZ(); z++) {
+                    this.clearCurrentPositionBlocksUpwards(worldIn, x, 0, z, boundingBox);
+                    this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, 0, z, boundingBox);
+                }
+            }
+
+            template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl), settings, 2);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX() - 5, position.getZ() - 5, 7, 7, randomIn);
             return true;
         }
-        EnumFacing facing = this.getCoordBaseMode();
-
-        Mirror mirror;
-        Rotation rotation;
-        if(facing == EnumFacing.SOUTH){
-            mirror = Mirror.NONE;
-            rotation = Rotation.NONE;
-        }
-        else if(facing == EnumFacing.WEST){
-            mirror = Mirror.NONE;
-            rotation = Rotation.CLOCKWISE_90;
-        }
-        else if(facing == EnumFacing.EAST){
-            mirror = Mirror.LEFT_RIGHT;
-            rotation = Rotation.CLOCKWISE_90;
-        }
-        else{
-            mirror = Mirror.LEFT_RIGHT;
-            rotation = Rotation.NONE;
-        }
-        for(int x = 0; x < template.getSize().getX(); x++){
-            for(int z = 0; z < template.getSize().getZ(); z++){
-                this.clearCurrentPositionBlocksUpwards(worldIn, x, 0, z, boundingBox);
-                this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, 0, z, boundingBox);
-            }
-        }
-        PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(mirror);
-        template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl), settings, 2);
-        WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX(), position.getZ(), 7, 7, randomIn);
-        return true;
+        return false;
     }
 
     @Override

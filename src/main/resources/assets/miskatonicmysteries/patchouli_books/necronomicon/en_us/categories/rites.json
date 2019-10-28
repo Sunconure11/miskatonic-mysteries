@@ -1,0 +1,7 @@
+{
+  "name": "Rites",
+  "description": "A collection of basic rites and their effects.",
+  "icon": "miskatonicmysteries:chalk_yellowking",
+  "parent": "world",
+  "sortnum": 1
+}

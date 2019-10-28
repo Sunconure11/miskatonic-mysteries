@@ -419,10 +419,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public boolean isFilled() {
         for (int i = 0; i < inventory.getSlots(); i++) {
-            if (inventory.getStackInSlot(i).isEmpty()) {
-                return false;
+            if (!inventory.getStackInSlot(i).isEmpty()) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
