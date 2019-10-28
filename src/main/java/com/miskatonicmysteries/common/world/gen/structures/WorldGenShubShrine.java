@@ -37,7 +37,7 @@ public class WorldGenShubShrine extends WorldGenerator {
             worldIn.notifyBlockUpdate(position, iBlockState, iBlockState, 3);
             PlacementSettings placementsettings = (new PlacementSettings()).setRotation(Rotation.NONE).setIntegrity(1).setBoundingBox(new StructureBoundingBox(position, position.add(template.getSize())));
             template.addBlocksToWorld(worldIn, position, new ShubStructureProcessor(position.getY(), worldIn.getBiome(position).isSnowyBiome()), placementsettings, 2);
-            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_SHUB, worldIn, Math.round(position.getX() - template.getSize().getX() / 2F), Math.round(position.getZ() - template.getSize().getZ() / 2F), 7, 7, rand);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_SHUB, worldIn, Math.round(position.getX() + template.getSize().getX() / 2F), Math.round(position.getZ() + template.getSize().getZ() / 2F), 7, 7, rand);
             return true;
         }
 

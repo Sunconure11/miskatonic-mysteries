@@ -89,7 +89,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.Village
         }
         PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(mirror);
         template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl), settings, 2);
-        WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, Math.round(position.getX() - template.getSize().getX() / 2F), Math.round(position.getZ() - template.getSize().getZ() / 2F), 7, 7, randomIn);
+        WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX(), position.getZ(), 7, 7, randomIn);
         return true;
     }
 

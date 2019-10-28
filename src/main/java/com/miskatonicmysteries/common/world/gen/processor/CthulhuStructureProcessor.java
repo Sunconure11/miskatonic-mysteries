@@ -4,6 +4,7 @@ import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.WorldGenUtil;
+import net.minecraft.block.BlockStone;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -53,9 +54,10 @@ public class CthulhuStructureProcessor extends OldStructureProcessor {
                 if (WorldGenUtil.isBlockSolid(worldIn, pos.add(0, -i, 0))) {
                     flag = false;
                 }else{
-                    if (blockInfoIn.blockState.isFullBlock() || blockInfoIn.blockState.isFullCube()){
+                    worldIn.setBlockState(pos.add(0, -i, 0), Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.STONE));
+                    /*if (blockInfoIn.blockState.isFullBlock() || blockInfoIn.blockState.isFullCube()){
                         worldIn.setBlockState(pos.add(0, -i, 0), blockInfoIn.blockState);
-                    }
+                    }*/
                 }
             }
         }

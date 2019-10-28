@@ -480,7 +480,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     public void useRecipe(MerchantRecipe recipe) {
         //recipe.incrementToolUses(); so the recipe never gets exhausted; might work on that later
-        recipe.increaseMaxTradeUses(1);
+        //recipe.increaseMaxTradeUses(1);
         this.livingSoundTime = -this.getTalkInterval();
         this.playSound(SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
         int i = 3 + this.rand.nextInt(4);
