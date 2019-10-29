@@ -30,7 +30,9 @@ public class PotionHungerExotic extends ModPotion {
             "groundedplayerheart",
 
             "heart_human",
-            "heart"
+            "heart",
+
+            "validCursedFlesh"
     );
     public PotionHungerExotic() {
         super("hunger_exotic", true, 8001024);
@@ -55,7 +57,14 @@ public class PotionHungerExotic extends ModPotion {
                 }
             }
             if (flag || validFoods.contains(stack.getItem().getRegistryName().getResourcePath())) {
-               event.getEntityLiving().removeActivePotionEffect(ModPotions.hunger_exotic);
+                PotionEffect effect = event.getEntityLiving().getActivePotionEffect(ModPotions.hunger_exotic);
+                int duration = effect.getDuration();
+                int amplifier = effect.getAmplifier();
+                boolean ambient = effect.getIsAmbient();
+                boolean showParticles = effect.doesShowParticles();
+                event.getEntityLiving().removeActivePotionEffect(ModPotions.hunger_exotic);
+                if (duration > 400)
+                    event.getEntityLiving().addPotionEffect(new PotionEffect(ModPotions.hunger_exotic, duration - 400, amplifier, ambient, showParticles));
             }
         }
     }

@@ -4,9 +4,13 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PotionTranquilized extends ModPotion {
     public PotionTranquilized() {
@@ -32,5 +36,10 @@ public class PotionTranquilized extends ModPotion {
             }
             event.getEntityPlayer().removePotionEffect(this);
         }
+    }
+
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        return new ArrayList<>();
     }
 }
