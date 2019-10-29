@@ -1,0 +1,15 @@
+{
+  "name": "The Great Dreamer",
+  "icon": "miskatonicmysteries:research_notes_cthulhu",
+  "category": "goos",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Perhaps one of the best known of all the Great Old Ones is the Dreamer, who rests in a forgotten city under the sea, waiting for the right time to awaken, to bring forth a new era of madness upon the world, and to execute the control of the other Great Old Ones upon the surface."
+    },
+    {
+      "type": "text",
+      "text": "It is possible the Dreamer’s sleepwalking is what inspired stories of great ocean beasts such as the leviathan in ancient times, and that the Dream’s latent aura is responsible for mankind’s anxiety of the deep and what hides within. The Dreamer has no avatars and does not appear to his followers in the flesh, but rather communicates to them through dreams to plant the seeds of his grand plan in their minds."
+    }
+  ]
+}

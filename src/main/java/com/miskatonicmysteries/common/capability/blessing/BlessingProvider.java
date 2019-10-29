@@ -19,7 +19,7 @@ public class BlessingProvider implements ICapabilitySerializable<NBTBase> {
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        return capability == BLESSING ? BLESSING.<T>cast(this.instance) : null;
+        return capability == BLESSING ? BLESSING.cast(this.instance) : null;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class SanityProvider implements ICapabilitySerializable<NBTBase> {
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        return capability == SANITY ? SANITY.<T>cast(this.instance) : null;
+        return capability == SANITY ? SANITY.cast(this.instance) : null;
     }
 
     @Override

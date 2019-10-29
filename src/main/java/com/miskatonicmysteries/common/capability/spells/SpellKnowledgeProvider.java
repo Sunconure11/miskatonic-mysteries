@@ -19,7 +19,7 @@ public class SpellKnowledgeProvider implements ICapabilitySerializable<NBTBase> 
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        return capability == SPELL_KNOWLEDGE ? SPELL_KNOWLEDGE.<T>cast(this.instance) : null;
+        return capability == SPELL_KNOWLEDGE ? SPELL_KNOWLEDGE.cast(this.instance) : null;
     }
 
     @Override

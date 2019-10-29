@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class AbstractOldOne extends EntityLiving implements IEntityOwnable {
-    protected static final DataParameter<Optional<UUID>> SUMMONER = EntityDataManager.<Optional<UUID>>createKey(AbstractOldOne.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    protected static final DataParameter<Optional<UUID>> SUMMONER = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
     public AbstractOldOne(World worldIn) {
         super(worldIn);
