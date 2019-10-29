@@ -1,0 +1,41 @@
+{
+  "name": "Shrines",
+  "icon": "miskatonicmysteries:stone_shubniggurath_mural",
+  "category": "world",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(o)The Great Old Ones$() themselves have each planted their seed in the World to build the foundation for these. As Shrines contain essential knowledge within their murals, they are a point of interest for each Entheator. Shrines may be found anywhere in the World, along with their frequent visitors. "
+    },
+    {
+      "type": "empty"
+    },
+    {
+      "type": "text",
+      "title": "The Goat's Shrines",
+      "text": "The Black Goat in the Woods let her old worshippers build stone monuments in the depths of forests. The buildings come in many different sizes, reaching from small circles of broken columns to greater altars where sacrifices once took place. Despite the absence of their original creators, these buildings still commonly feature groups of Entheators who are usually ready to defend themselves."
+    },
+    {
+      "type": "image",
+      "images": [
+        "miskatonicmysteries:textures/gui/images/shub_1.png"
+      ],
+      "border": true,
+      "text": "$(l)Shrines to the Goat in the Woods$()"
+    },
+    {
+      "type": "text",
+      "title": "The King's Shrines",
+      "text": "Sometimes, servants of the Yellow King search villages and construct shrines to their lord. These Entheators usually don't attack their fellow villagers, they will however attack strangers. The appearance of these shrines will vary depending on the environment they were built in; some may be formed out of yellow terracotta, others may be made out of simple wood."
+    },
+    {
+      "type": "image",
+      "images": [
+        "miskatonicmysteries:textures/gui/images/hastur_1.png"
+      ],
+      "border": true,
+      "text": "$(l)Shrines to the Yellow King$()"
+    }
+  ]
+}

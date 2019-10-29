@@ -44,12 +44,13 @@ public class EntityWaterProjectile extends EntityThrowable {
 
     @Override
     public void onUpdate() {
-        ticksExisted++;
-        if (ticksExisted > 20) {
+        ++ticksExisted;
+        System.out.println(ticksExisted);
+        if (ticksExisted > 10) {
             setDead();
         } else {
-            if (ticksExisted < 10 && world.isAirBlock(getPosition()) || world.getBlockState(getPosition()).getBlock().isReplaceable(world, getPosition())) {
-                if (world.rand.nextBoolean())
+            if (ticksExisted < 2 && world.isAirBlock(getPosition()) || world.getBlockState(getPosition()).getBlock().isReplaceable(world, getPosition())) {
+                if (world.rand.nextFloat() < 0.2F)
                     world.setBlockState(getPosition(), ModObjects.block_water_mm.getDefaultState().withProperty(BlockFluidMMWater.LEVEL, 2));
             }
             if (world.isRemote) {

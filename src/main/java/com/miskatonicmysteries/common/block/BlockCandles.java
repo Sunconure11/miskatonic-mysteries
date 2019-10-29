@@ -161,17 +161,22 @@ public class BlockCandles extends Block {
 				if (state.getValue(CANDLES) < 4) {
 					worldIn.setBlockState(pos, state.withProperty(CANDLES, state.getValue(CANDLES) + 1), 3);
 					if (!playerIn.isCreative()) playerIn.getHeldItem(hand).shrink(1);
+                    return true;
 				}
 			} else if (playerIn.getHeldItem(hand).getItem() instanceof ItemFlintAndSteel) {
 				if (!state.getValue(LIT)) {
 					playerIn.world.playSound(playerIn, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 0.5F, 1.0F);
 					worldIn.setBlockState(pos, state.withProperty(LIT, true), 3);
-				}
-			}
-			return true;
+                    return true;
+                }
+            } else if (state.getValue(LIT)) {
+                worldIn.setBlockState(pos, state.withProperty(LIT, false), 3);
+                return true;
+            }
 		}else{
 			return true;
 		}
+        return false;
 	}
 
 	@Override

@@ -1,0 +1,16 @@
+{
+  "name": "Hysteria",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:hysteria",
+      "text": "Hysteria is a classical $(marked)Primed$() Rite which will release a mania-inducing wave once triggered."
+    },
+    {
+      "type": "text",
+      "text": "The caster should try to stay at a distance, unless they want to risk a short rush of madness.$(br)Any Great Old One may be addressed. Any villager or player will activate this. $(br2)$(o)Hysteria requires a lesser amount of focal power; the power within the Altar and a few candles should be enough.$()"
+    }
+  ]
+}

@@ -1,6 +1,5 @@
 package com.miskatonicmysteries.common.world.gen.village;
 
-import com.miskatonicmysteries.ModConfig;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
@@ -13,7 +12,7 @@ public class VillageHasturShrineHandler implements VillagerRegistry.IVillageCrea
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i) {
-        return new StructureVillagePieces.PieceWeight(VillageComponentHasturShrine.class, 6, random.nextDouble() < ModConfig.worldGen.chanceHasturShrines ? 1 : 0);
+        return new StructureVillagePieces.PieceWeight(VillageComponentHasturShrine.class, 5, 1);
     }
 
     @Override

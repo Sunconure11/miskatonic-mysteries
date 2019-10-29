@@ -1,8 +1,8 @@
 package com.miskatonicmysteries.client.render.tile;
 
-import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.proxy.ClientProxy;
 import com.miskatonicmysteries.util.RenderUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -74,6 +74,6 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
 
 
     public ResourceLocation getTexture(TileEntityOctagram te){
-        return new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/" + te.getBlockType().getRegistryName().getResourcePath() + ".png");
+        return ClientProxy.OCTAGRAM_TEXTURES.get(te.getAssociatedBlessing());
     }
 }

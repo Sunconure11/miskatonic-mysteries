@@ -23,6 +23,7 @@ import java.util.List;
 
 public class RiteManiacsMeeting extends OctagramRite {
     protected Blessing associatedGOO;
+
     public RiteManiacsMeeting(Blessing associatedGOO, Ingredient... reagents) {
         super(new ResourceLocation(MiskatonicMysteries.MODID, "maniacs_meeting_" + associatedGOO.getName()), 250, 50, 200, EnumType.FOCUSED, associatedGOO, associatedGOO, reagents);
         this.associatedGOO = associatedGOO;
@@ -30,7 +31,7 @@ public class RiteManiacsMeeting extends OctagramRite {
 
     @Override
     public boolean test(TileEntityOctagram octagram) {
-        return octagram.getWorld().isRemote || (!octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(5, 2, 5).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null).isEmpty());
+        return !octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(5, 2, 5).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null).isEmpty();
     }
 
     @Override
@@ -48,10 +49,10 @@ public class RiteManiacsMeeting extends OctagramRite {
 
     @Override
     public void effect(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
-        if (caster != null) {
+        if (!octagram.getWorld().isRemote && caster != null) {
             List<EntityVillager> villagers = octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(5, 2, 5).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null);
             villagers.forEach(v -> {
-                if (octagram.getWorld().rand.nextFloat() < 0.33F) {
+                if (octagram.getWorld().rand.nextBoolean()) {
                     AbstractCultist cultist = new EntityHasturCultist(octagram.getWorld());
                     if (associatedGOO == Blessing.SHUB) {
                         cultist = new EntityShubCultist(octagram.getWorld());

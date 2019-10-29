@@ -88,6 +88,7 @@ public class ShaderHandler {
         } catch (IOException exception) {
             MiskatonicMysteries.LOGGER.fatal("Shader file was not found!");
             exception.printStackTrace();
+        } catch (Exception ignore) {
         }
     }
 

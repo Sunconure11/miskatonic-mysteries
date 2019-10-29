@@ -1,11 +1,9 @@
 package com.miskatonicmysteries.common.entity.cultist;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
-import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,17 +13,15 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.MerchantRecipe;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class EntityShubCultist extends AbstractCultist {
-    private static final DataParameter<Boolean> GOAT = EntityDataManager.<Boolean>createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> GOAT = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
 
     public EntityShubCultist(World worldIn) {
         super(worldIn);
@@ -69,7 +65,7 @@ public class EntityShubCultist extends AbstractCultist {
     @Override
     public EntityAgeable createChild(EntityAgeable ageable) {
         EntityShubCultist cultist = new EntityShubCultist(this.world);
-        cultist.onInitialSpawn(this.world.getDifficultyForLocation(new BlockPos(cultist)), (IEntityLivingData) null);
+        cultist.onInitialSpawn(this.world.getDifficultyForLocation(new BlockPos(cultist)), null);
         return cultist;
     }
 
@@ -90,14 +86,23 @@ public class EntityShubCultist extends AbstractCultist {
     }
 
     @Override
-    public List<EntityVillager.ITradeList> getTradeList() {
+    public List<EntityVillager.ITradeList> getEquipmentTradeList() {
         List<EntityVillager.ITradeList> trades = new ArrayList<>();
-        trades.add(new EntityVillager.ITradeList() {
-            @Override
-            public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
-                recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic), new ItemStack(ModObjects.necronomicon)));
-            }
-        });
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(3)), new ItemStack(ModObjects.blotter, 1 + random.nextInt(3)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 3 + random.nextInt(3)), new ItemStack(ModObjects.tranquilizer, 1 + random.nextInt(2)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 4 + random.nextInt(3)), new ItemStack(random.nextBoolean() ? ModObjects.black_goats_horned_dagger : ModObjects.black_goats_gutting_dagger, 1))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 4 + random.nextInt(3)), new ItemStack(random.nextBoolean() ? ModObjects.shubniggurath_cultist_hoodmask : ModObjects.shubniggurath_cultist_mask, 1))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 4 + random.nextInt(3)), new ItemStack(ModObjects.shubniggurath_cultist_robes, 1))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 4 + random.nextInt(3)), new ItemStack(ModObjects.shubniggurath_cultist_pants, 1))));
+        return trades;
+    }
+
+    @Override
+    public List<EntityVillager.ITradeList> getMiscTradeList() {
+        List<EntityVillager.ITradeList> trades = new ArrayList<>();
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 5 + random.nextInt(4)), new ItemStack(ModObjects.flesh_dark_young, 1 + random.nextInt(3)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 8 + random.nextInt(5)), new ItemStack(ModObjects.necronomicon, 1))));
+        //trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 8 + random.nextInt(5)), new ItemStack(ModObjects.tranquilizer, 1)))); todo add goat idol
         return trades;
     }
 }

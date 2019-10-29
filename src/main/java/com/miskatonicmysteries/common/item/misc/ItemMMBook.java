@@ -22,6 +22,7 @@ public class ItemMMBook extends Item implements IHasAssociatedBlessing{
         super();
         this.bookName = new ResourceLocation(MiskatonicMysteries.MODID, bookName);
         this.blessing = associatedBlessing;
+        this.maxStackSize = 1;
     }
 
     public Book getBook(){

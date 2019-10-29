@@ -1,0 +1,16 @@
+{
+  "name": "Eldritch Trap",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:eldritch_trap",
+      "text": "This $(marked)Primed$() Rite will release a horde of monsters when triggered. The caster should stay at a distance when preparing the Rite."
+    },
+    {
+      "type": "text",
+      "text": "The Eldritch Trap requires a lesser amount of focal power; the monsters created are determined by the Octagram's environment. Any mob or player will activate this."
+    }
+  ]
+}

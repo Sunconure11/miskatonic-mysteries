@@ -10,6 +10,7 @@
   "filler_texture": "patchouli:textures/gui/page_filler.png",
   "progress_bar_background": "990000",
   "progress_bar_color": "060000",
+  "show_progress": false,
   "model": "miskatonicmysteries:research_notes_shubniggurath",
   "subtitle": "info.miskatonicmysteries.notes_shub.subtitle",
   "macros": {

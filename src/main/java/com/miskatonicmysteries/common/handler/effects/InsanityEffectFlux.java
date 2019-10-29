@@ -4,9 +4,7 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.registry.ModInsanityEffects;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -26,7 +24,7 @@ public class InsanityEffectFlux extends InsanityEffect {
     }
 
     public boolean enchantItem(World world, EntityPlayer player, ISanity sanity, ItemStack stack){
-        System.out.println("enchanted stack");
+        System.out.println("enchanted stack"); //need to handle that
         return true;
     }
 }

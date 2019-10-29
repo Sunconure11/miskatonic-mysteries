@@ -67,7 +67,7 @@ public class MiskatonicMysteries {
     public static CreativeTabs tab = new CreativeTabs(MODID) {
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(ModObjects.milk_black_goat);
+            return new ItemStack(ModObjects.yellow_sign);
         }
     };
 
@@ -95,15 +95,13 @@ public class MiskatonicMysteries {
         proxy.init(event);
         GameRegistry.registerWorldGenerator(new ModWorldGen(), 0);//set to max int value if stuff gets shitty
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageHasturShrineHandler());
-        MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID+":hasturShrineStructure");
-
+        MapGenStructureIO.registerStructureComponent(VillageComponentHasturShrine.class, MiskatonicMysteries.MODID + ":shrine_hastur");
         new LootHandler();
 
         registerOreDict();
         registerFurnaceRecipes();
         ModObjects.addFoci();
         ModRegistries.init();
-
     }
 
     @Mod.EventHandler

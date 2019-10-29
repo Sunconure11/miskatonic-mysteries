@@ -51,6 +51,10 @@ public abstract class OctagramRite {
 
     public abstract boolean checkShouldTrigger(TileEntityOctagram octagram, @Nullable EntityPlayer closest);
 
+    public String getUnlocalizedName() {
+        return "rite." + name.getResourcePath() + ".name";
+    }
+
     public enum EnumType {
         FOCUSED, //cast the rite, then have the effect
         PRIMED //cast the rite, then have it take effect after a condition is met
