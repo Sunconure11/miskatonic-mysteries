@@ -1,7 +1,5 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
-import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -39,9 +37,10 @@ public class RiteFocus {
         return conduitAmount;
     }
 
-    public int getMaxSameType( @Nullable World world, @Nullable BlockPos pos) {
+    public int getMaxSameType(@Nullable World world, @Nullable BlockPos pos) {
         return maxSameType;
     }
+
 
     public EnumType getType() {
         return type;

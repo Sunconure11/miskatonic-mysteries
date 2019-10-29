@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.client.render.tile;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.proxy.ClientProxy;
@@ -74,6 +75,6 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
 
 
     public ResourceLocation getTexture(TileEntityOctagram te){
-        return ClientProxy.OCTAGRAM_TEXTURES.get(te.getAssociatedBlessing());
+        return ClientProxy.OCTAGRAM_TEXTURES.getOrDefault(te.getAssociatedBlessing(), new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/octagram_generic.png"));
     }
 }

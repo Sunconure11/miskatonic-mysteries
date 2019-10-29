@@ -23,7 +23,7 @@ public class ProcessorRites implements IComponentProcessor {
     public String process(String s) {
         switch (s) {
             case "octagram":
-                return ClientProxy.OCTAGRAM_TEXTURES.getOrDefault(rite.octagram, new ResourceLocation(MiskatonicMysteries.MODID, "textures/block/octagram_default.png")).toString();
+                return ClientProxy.OCTAGRAM_TEXTURES.getOrDefault(rite.octagram, new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/octagram_generic.png")).toString();
             case "power":
                 return String.valueOf(rite.focusPower);
             case "overflow_tolerance":

@@ -181,3 +181,19 @@ rite.eldritch_trap.name=Eldritch Trap
 rite.hysteria.name=Hysteria
 rite.maniacs_meeting_goat.name=Maniac's Meeting
 rite.maniacs_meeting_hastur.name=Maniac's Meeting
+
+#TOOLTIPS
+tooltip.focus=Focus Stats:
+tooltip.focus.power.immense=Grants immense amounts of Focal Power
+tooltip.focus.power.greater=Grants greater amounts of Focal Power
+tooltip.focus.power.mediocre=Grants mediocre amounts of Focal Power
+tooltip.focus.power.little=Grants unimpressive amounts of Focal Power
+
+tooltip.focus.instability.low=Low Instability
+tooltip.focus.instability.normal=Normal Instability
+tooltip.focus.instability.high=High Instability
+tooltip.focus.instability.immense=Immense Instability
+
+tooltip.focus.use.little=May be used in tiny amounts
+tooltip.focus.use.normal=May be used in normal amounts
+tooltip.focus.use.often=May be used in high amounts

@@ -19,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,7 +32,7 @@ public class RiteHysteria extends OctagramRite {
 
     @Override
     public boolean test(TileEntityOctagram octagram) {
-        return octagram.getWorld().getWorldInfo().getDifficulty() != EnumDifficulty.PEACEFUL;
+        return true;
     }
 
     @Override

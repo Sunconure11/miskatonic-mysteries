@@ -6,20 +6,21 @@ import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
 public class SpellDefyDeath extends Spell{
     public SpellDefyDeath() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "defy_death"));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "defy_death"), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromStacks(new ItemStack(Items.ROTTEN_FLESH, 16)));
         this.castTime = 600;
     }
 
     @Override
     public boolean check(EntityPlayer caster) {
-        //Requires Max health and hunger in order to survive the cast
-        if (caster.getHealth() >= 20.0f && caster.getFoodStats().getFoodLevel() >= 20) {
+        if (caster.experienceLevel >= 10 && caster.getHealth() >= 20.0f && caster.getFoodStats().getFoodLevel() >= 20) {
             return super.check(caster);
         }
         return false;
@@ -38,7 +39,7 @@ public class SpellDefyDeath extends Spell{
     @Override
     public void cast(EntityPlayer caster) {
         caster.world.playSound(null, caster.getPosition(), SoundEvents.BLOCK_PORTAL_TRIGGER, SoundCategory.PLAYERS, 1, 0.8F);
-        caster.addPotionEffect(new PotionEffect(ModPotions.defy_death, 20*60*30, 0));
+        caster.addPotionEffect(new PotionEffect(ModPotions.defy_death, 20 * 60 * 20, 0));
     }
 
     @Override

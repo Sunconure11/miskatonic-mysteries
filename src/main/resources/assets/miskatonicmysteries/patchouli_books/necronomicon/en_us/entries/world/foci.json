@@ -6,7 +6,40 @@
   "pages": [
     {
       "type": "text",
-      "text": "Foci are the source of power in $(l:world/rites_intro)$(marked)Rites$()"
+      "text": "Foci are the source of power in $(l:world/rites_intro)$(marked)Rites$(). They are as essential to them as anything else; however, they are sometimes also a bit trickier to handle.$(br2)First of all, one must understand what a Focus in the World is:$(br)In the World, Foci are commonly material objects, like a unnatural sword or $(marked)Candles$()."
+    },
+    {
+      "type": "text",
+      "text": "Both are Foci; however, they are used in different manners. This is why Foci are classified as either $(l)Held$() Foci or $(l)Placed$() Foci. In the example of the sword and the Candles, the sword is a Held Focus, meaning that a caster must hold it in order to contribute to a Rite. The Candles however are Placed Foci; they may be placed close to the Rite in order to achieve the intended effect. This is the only way in which Foci practically differ."
+    },
+    {
+      "type": "text",
+      "text": "When used, a Focus will, as mentioned before, contribute $(marked)Focal Power$() to a Rite. Additionally, each Focus will add $(marked)Instability$(), which is relevant when trying to avoid side effects.$(br)The amount of Focal Power and the amount of Instability added varies with each Focus.$(br)In addition to that, each type of Focus has a limit to how much it may be used."
+    },
+    {
+      "type": "text",
+      "text": "Once this limit is reached, all Foci will contribute less Focal Power and more Instability; as example, using four skulls of the same type in a Rite already exceeds the limit of that Focus. This could be avoided by using different skulls.$(br)For the new Entheator, it is generally hard to know what things even have properties of Foci, and how strong they are if they do; however, this book provides help in such cases."
+    },
+    {
+      "type": "text",
+      "text": "First of all, while there are still plenty of Foci to discover, this book contains a list of various $(o)known$() Foci. This list may be found on the last few pages of this entry.$(br2)Additionally, we wrote a guide to identify Foci, and vaguely determine their Focal Power, Instability and Usage Limit.$(br2)In order to take advantage of this, simply $(t:Do this by hovering over the item while pressing Shift)$(marked)inspect$() $(t:Do this by hovering over the item while pressing Shift)Held Foci in your inventory while holding this book.$()"
+    },
+    {
+      "type": "text",
+      "text": "In order to inspect Placed Foci, the Focus in question must be placed and $(t:Hold the book while pressing shift)inspected with this book$().$(br2)Still, the information given is extremely vague, so each Entheator must in the end develop some sort of feeling for Focal Power et cetera. "
+    },
+    {
+      "type": "text",
+      "title": "List of Known Foci",
+      "text": "$(li)$(l)Candles$()$(br)Candles will provide low amounts of Focal Power; however, they can be stacked, and that without increasing instability or counting to the usage limit.$(li)$(l)Skulls$()$(br)Skulls will provide greater amount of Focal Power, though the amount will vary depending on the skull used. Each skull type is a different Focus."
+    },
+    {
+      "type": "text",
+      "text": "$(li)$(l)Gems$()$(br)Gems count as the same type of Focus; $(marked)Oceanic Gold$() however does not.$(li)$(l)Cultist Weapons$()$(br)Special Daggers worn by Cultist have the same inherent power; they do however all count as the same type of Focus.$(li)$(l)Artifacts$()$(br)Artifacts like the Star of Hell are immensely strong Foci; however, they usually have extremely low usage limits. "
+    },
+    {
+      "type": "text",
+      "text": "$(li)$(l)Altars$()$(br)Altars all count as the same type of Focus; they will provide greater amounts of power and usually form the base of Rites."
     }
   ]
 }

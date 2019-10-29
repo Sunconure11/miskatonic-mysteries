@@ -119,9 +119,9 @@ public class ModObjects {
 
     public static void addFoci(){
         OreDictRiteFocus.create(0.2F, 75, 2, RiteFocus.EnumType.HELD, "goldOceanic");
-        OreDictRiteFocus.create(0.1F, 50, 3, RiteFocus.EnumType.HELD, "gemDiamond", "gemEmerald");
+        OreDictRiteFocus.create(0.1F, 50, 3, RiteFocus.EnumType.HELD, "gemDiamond", "gemEmerald", "gem");
         OreDictRiteFocus.create(0.15F, 100, 1, RiteFocus.EnumType.HELD, "netherStar");
-        OreDictRiteFocus.create(0.1F, 35, 2, RiteFocus.EnumType.HELD, "daggerMM");
+        OreDictRiteFocus.create(0.1F, 35, 2, RiteFocus.EnumType.HELD, "daggerMM", "daggerMagic");
         RiteFocus.addFocus(new EnchantmentRiteFocus());
         RiteFocus.addFocus(new CandleRiteFocus());
         BlockRiteFocus.create(0.15F, 50, 1, BlockAltar.class);

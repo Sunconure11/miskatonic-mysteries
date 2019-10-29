@@ -10,11 +10,11 @@
     },
     {
       "type": "text",
-      "text": "To cast a Rite, several things are needed:$(li)The reagents needed for the Rite desired must be placed on an $(o)Octagram$(), $(li)The knowledge needed must be present, usually in the form of Research Notes or this book,$(li)The right amount of focal power must be present and $(li)The correct Great Old One must be addressed.$(br2)If all these cRiteria are met, the Rite will be cast more or less successfully."
+      "text": "To cast a Rite, several things are needed:$(li)The reagents needed for the Rite desired must be placed on an $(o)Octagram$(), $(li)The knowledge needed must be present, usually in the form of Research Notes or this book,$(li)The right amount of Focal Power must be present and $(li)The correct Great Old One must be addressed.$(br2)If all these cRiteria are met, the Rite will be cast more or less successfully."
     },
     {
       "type": "text",
-      "text": "Logically, if a Rite is not vaguely successful, it will fail. The consequences of both success and failure are determined by a special factor -instability-, which will be elucidated later.$(br)In order for the focal power to be right, not too little nor too much should be present. If there is too little focal power, usually nothing will happen; however, if there is too much, the Rite will overload. This will also be elucidated later."
+      "text": "Logically, if a Rite is not vaguely successful, it will fail. The consequences of both success and failure are determined by a special factor -instability-, which will be elucidated later.$(br)In order for the Focal Power to be right, not too little nor too much should be present. If there is too little Focal Power, usually nothing will happen; however, if there is too much, the Rite will overload. This will also be elucidated later."
     },
     {
       "type": "text",
@@ -61,7 +61,7 @@
     {
       "type": "text",
       "title": "Malign Effects",
-      "text": "A Rite can indeed go wrong in many many ways. As example, addressing the wrong Great Old One when the Great Old One addressed is relevant will possibly cause greater harm to the caster. Overloading the Rite will also contribute to similar effects. Instability will always increase the possible severity of the effects, in addition to the possibility of after-effects on success."
+      "text": "A Rite can indeed go wrong in many many ways. As example, addressing the wrong Great Old One when the Great Old One addressed is relevant will possibly cause greater harm to the caster. Overloading the Rite will also contribute to similar effects and will consume all Reagents. Instability will always increase the possible severity of the effects, in addition to the possibility of after-effects on success."
     },
     {
       "type": "text",
@@ -70,7 +70,54 @@
     },
     {
       "type": "text",
-      "text": "First, the needed reagents are added to the Octagram. In this case it does not matter what Octagram is used; this example uses an Octagram to the Yellow King."
+      "text": "First, the needed reagents are added to the Octagram. In this case it does not matter what Octagram is used; this example uses an Octagram to the Black Goat.$(br)Then, the Altar is placed, along with the Necronomicon, as this is the book in which the information for the Hysteria Rite is contained. Additionally, Foci should be placed before the Rite is started; however, the descriptions of the Foci used will appear later in this example."
+    },
+    {
+      "type": "text",
+      "text": "If Reagents are missing or the wrong book is used, the Rite may not be started; instead, the Octagram will emit black smoke, as seen in the third picture.$(br)If the setup is valid, like the one in the first picture, more magic particles will appear.$(br)Do note that specifically the Hysteria Rite spawns the red swirls seen in picture two. Additionally, it should be remarked that some Rites have $(marked)special conditions$() in order to be started and cast; these are specified in the Rite's entry."
+    },
+    {
+      "type": "image",
+      "images": [
+        "miskatonicmysteries:textures/gui/images/setup_valid.png",
+        "miskatonicmysteries:textures/gui/images/setup_valid_active.png",
+        "miskatonicmysteries:textures/gui/images/setup_invalid.png"
+      ],
+      "border": true,
+      "text": "Setups for the Hysteria Rite. The setup in the third image is invalid."
+    },
+    {
+      "type": "text",
+      "text": "In order for the Rite to be successful, the right amount of Focal Power must be present. In the case of the Hysteria Rite, which only needs a lesser amount of Focal Power, the power of at least five candles and the Altar should be enough; however, many different setups are possible, like the one in picture two, where the caster placed a wither skull and holds an emerald (though the skull would probably be enough already)."
+    },
+    {
+      "type": "image",
+      "images": [
+        "miskatonicmysteries:textures/gui/images/focus_enough_1.png",
+        "miskatonicmysteries:textures/gui/images/focus_enough_2.png",
+        "miskatonicmysteries:textures/gui/images/focus_not_enough.png",
+        "miskatonicmysteries:textures/gui/images/focus_too_much.png"
+      ],
+      "border": true,
+      "text": "Different Focus setups, from which only two are valid."
+    },
+    {
+      "type": "text",
+      "text": "As said before, too little Focal Power, like in picture three, will cause the Rite to fail without many side effects.$(br)While the setup in picture four probably holds almost enough power to call the fragment of a Great Old One, it is certainly too much for the Hysteria Rite. This would cause an overload.$(br)If the Focal Power is just right and the right amount of time elapsed - the amount of time may vary with each rite - the Rite will take effect."
+    },
+    {
+      "type": "image",
+      "images": [
+        "miskatonicmysteries:textures/gui/images/rite_success.png",
+        "miskatonicmysteries:textures/gui/images/rite_success_finish.png",
+        "miskatonicmysteries:textures/gui/images/rite_fail.png"
+      ],
+      "border": true,
+      "text": "Finished Rites; the first and second are a success the third one is an overload."
+    },
+    {
+      "type": "text",
+      "text": "In the special case of Primed Rites, like the Hysteria Rite, the effect will express in the Octagram glowing. Now, once someone steps on it, a mania-inducing wave will be released. $(br2)We hope that this example was enlightening."
     }
   ]
 }
