@@ -1,9 +1,9 @@
 {
-  "name": "item.notes_shub.book.name",
+  "name": "item.notes_hastur.book.name",
   "advancement_namespaces": [
     "miskatonicmysteries"
   ],
-  "landing_text": "info.notes_shub.book.landing",
+  "landing_text": "info.notes_hastur.book.landing",
   "creative_tab": "miskatonicmysteries",
   "advancements_tab": "miskatonicmysteries",
   "book_texture": "patchouli:textures/gui/book_blue.png",
@@ -11,12 +11,12 @@
   "progress_bar_background": "990000",
   "progress_bar_color": "060000",
   "show_progress": false,
-  "model": "miskatonicmysteries:research_notes_shubniggurath",
-  "subtitle": "info.miskatonicmysteries.notes_shub.subtitle",
+  "model": "miskatonicmysteries:research_notes_hastur",
+  "subtitle": "info.miskatonicmysteries.notes_hastur.subtitle",
   "macros": {
     "$(marked)": "$(#840A00)",
     "$(item)": "$(#230A47)"
   },
   "dont_generate_book": true,
-  "custom_book_item": "miskatonicmysteries:research_notes_shubniggurath"
+  "custom_book_item": "miskatonicmysteries:research_notes_hastur"
 }

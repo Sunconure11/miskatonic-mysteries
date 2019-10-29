@@ -145,8 +145,9 @@ info.necronomicon.book.landing=FNORD (this is a placeholder landing text)
 info.miskatonicmysteries.necronomicon.subtitle=1st Edition
 
 info.miskatonicmysteries.notes_shub.subtitle=Shub-Niggurath
-info.notes_shub.book.landing=In the depths of the Woods, the Black Goat awaits, and this book holds a fraction of her power.
+info.notes_shub.book.landing=In the depths of the Woods, the Black Goat awaits, and this book holds a fraction of her power, and a much greater potential within.
 info.miskatonicmysteries.notes_hastur.subtitle=Hastur
+info.notes_hastur.book.landing=The Yellow King bears great knowledge; it is hard to record all of it in a book. Still, I have been blessed with a fraction of it.
 info.miskatonicmysteries.notes_cthulhu.subtitle=Cthulhu
 
 #MESSAGES
@@ -195,6 +196,8 @@ rite.blank_slate.name=Blank Slate
 
 rite.learn_spell_regeneration.name=Learn Regeneration
 rite.learn_spell_feast.name=Learn Internal Feasting
+
+rite.learn_spell_growth.name=Learn Growth
 
 rite.maniacs_meeting_shub.name=Maniac's Meeting
 

@@ -17,19 +17,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class SpellGrowth extends Spell {
-    //nom nom nom my own human flesh
     public SpellGrowth() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "growth"), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getMetadata())));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "growth"), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())));
         this.castTime = 0;
         this.cooldownTime = 20;
     }
 
     @Override
     public boolean check(EntityPlayer caster) {
-        if (caster.getFoodStats().needFood()) {
-            return super.check(caster);
-        }
-        return false;
+        return super.check(caster);
     }
 
     @Override
@@ -37,7 +33,7 @@ public class SpellGrowth extends Spell {
         Iterable<BlockPos> posList = BlockPos.getAllInBox(pos.add(1, 1, 1), pos.add(-1, -1, -1));
         posList.forEach(posIn -> {
             if (caster.getRNG().nextBoolean()){
-                ItemDye.applyBonemeal(ItemStack.EMPTY, caster.world, pos);
+                ItemDye.applyBonemeal(ItemStack.EMPTY, caster.world, posIn);
             }
         });
         super.startCasting(caster, pos, facing);

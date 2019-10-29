@@ -1,0 +1,16 @@
+{
+  "name": "The Maniac's Meeting",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:maniacs_meeting_hastur",
+      "text": "Strangers will see more than I ever will."
+    },
+    {
+      "type": "text",
+      "text": "The Yellow King showed me the way to this Rite; if I call upon him with a greater amount of Focal Power, I may show strangers the ways of him; though only if their minds are prepared, namely under the effect of $(marked)Mania$(). Another one of my Rites should help me with that. Still, success is not guaranteed."
+    }
+  ]
+}

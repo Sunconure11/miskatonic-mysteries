@@ -1,0 +1,12 @@
+{
+  "name": "Our King in Yellow",
+  "icon": "miskatonicmysteries:research_notes_hastur",
+  "sortnum": 1,
+  "category": "knowledge",
+  "pages": [
+    {
+      "type": "text",
+      "text": "On another planet, in the Yellow Palace, Hastur resides. Behind a mask, he hides his face. He protects his people and the shepherds; now it is my turn to plead to him for greater power.$(br2)"
+    }
+  ]
+}

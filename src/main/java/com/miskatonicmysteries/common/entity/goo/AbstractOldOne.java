@@ -52,6 +52,11 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
         //    BiomeManipulator.setMultiBiome(world, getDistortionBiome(), Iterables.toArray(BlockPos.getAllInBox(getPosition().add(-10, -10, -10), getPosition().add(10, 10, 10)), BlockPos.class));
     }
 
+    @Override
+    public void onKillCommand() {
+        setDead();
+    }
+
     public Biome getDistortionBiome() {
         return null;
     }
