@@ -1,7 +1,7 @@
 {
   "name": "Internal Feasting",
   "category": "spells",
-  "icon": "",
+  "icon": "miskatonicmysteries:textures/misc/spell/feast.png",
   "pages": [
     {
       "type": "miskatonicmysteries:rite",

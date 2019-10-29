@@ -1,0 +1,16 @@
+{
+  "name": "Mania",
+  "category": "spells",
+  "icon": "miskatonicmysteries:textures/misc/spell/spell_mania.png",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:learn_spell_spell_mania",
+      "text": "This Rite will engrave the $(marked)Mania$() Spell into the caster's mind."
+    },
+    {
+      "type": "text",
+      "text": "The Rite for learning this spell requires a lesser amount of Focal Power; the Mania Spell will apply the according effect on any living beings nearby, unless they are able to resist. The effect lasts around twenty seconds, it is however very potent."
+    }
+  ]
+}

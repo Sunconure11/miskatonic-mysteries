@@ -190,16 +190,17 @@ item.banner.miskatonicmysteries_yellow_sign.magenta=Magenta Yellow Sign
 rite.eldritch_trap.name=Eldritch Trap
 rite.hellfire_eldritch_trap.name=Hellfire Trap
 rite.hysteria.name=Hysteria
-rite.maniacs_meeting_goat.name=Maniac's Meeting
+rite.maniacs_meeting_shub.name=Maniac's Meeting
 rite.maniacs_meeting_hastur.name=Maniac's Meeting
 rite.blank_slate.name=Blank Slate
 
 rite.learn_spell_regeneration.name=Learn Regeneration
 rite.learn_spell_feast.name=Learn Internal Feasting
+rite.learn_spell_mania.name=Learn Mania
 
 rite.learn_spell_growth.name=Learn Growth
 
-rite.maniacs_meeting_shub.name=Maniac's Meeting
+rite.learn_spell_yellow_sign.name=Learn Yellow Sign
 
 #TOOLTIPS
 tooltip.notes_shub=Shub-Niggurath

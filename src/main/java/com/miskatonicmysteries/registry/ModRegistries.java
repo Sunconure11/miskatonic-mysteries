@@ -5,10 +5,7 @@ import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.rites.*;
 import com.miskatonicmysteries.common.misc.rites.effect.*;
-import com.miskatonicmysteries.common.misc.spells.Spell;
-import com.miskatonicmysteries.common.misc.spells.SpellFeast;
-import com.miskatonicmysteries.common.misc.spells.SpellGrowth;
-import com.miskatonicmysteries.common.misc.spells.SpellHeal;
+import com.miskatonicmysteries.common.misc.spells.*;
 import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -34,11 +31,13 @@ public class ModRegistries {
 
     public static Spell REGENERATION;
     public static Spell FEAST;
+    public static Spell SPELL_MANIA;
 
     //Shub-Spells
     public static Spell GROWTH;
 
-  //  public static Spell YELLOW_SIGN;
+    //Hastur-Spells
+    public static Spell YELLOW_SIGN;
  //   public static Spell TIDE_WAVE;
  //   public static Spell DEFY_DEATH;
 
@@ -53,8 +52,10 @@ public class ModRegistries {
 
     public static OctagramRite LEARN_SPELL_REGENERATION;
     public static OctagramRite LEARN_SPELL_FEAST;
+    public static OctagramRite LEARN_SPELL_MANIA;
 
     public static OctagramRite LEARN_SPELL_GROWTH;
+    public static OctagramRite LEARN_SPELL_YELLOW_SIGN;
 
     public static void init(){
         initSpells();
@@ -80,8 +81,10 @@ public class ModRegistries {
 
         LEARN_SPELL_REGENERATION = new RiteLearnSpell(REGENERATION, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.HEALING)), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromItem(Items.GHAST_TEAR), Ingredient.fromItem(Items.GHAST_TEAR));
         LEARN_SPELL_FEAST = new RiteLearnSpell(FEAST, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(OreDictionary.getOres("meatRaw").toArray(new ItemStack[]{})), Ingredient.fromStacks(OreDictionary.getOres("meatRaw").toArray(new ItemStack[]{})), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromStacks(new ItemStack(Items.CAKE)), Ingredient.fromStacks(new ItemStack(Items.CAKE)));
+        LEARN_SPELL_MANIA = new RiteLearnSpell(SPELL_MANIA, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)), Ingredient.fromItem(Items.REDSTONE), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(ModObjects.flesh_dark_young), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.HEALING)), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.blotter));
 
         LEARN_SPELL_GROWTH = new RiteLearnSpell(GROWTH, 150, 20, 100, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Blocks.DIRT, 1, 1)), Ingredient.fromStacks(new ItemStack(Items.WHEAT)), Ingredient.fromStacks(new ItemStack(Items.CARROT)), Ingredient.fromStacks(new ItemStack(Items.POTATO)));
+        LEARN_SPELL_YELLOW_SIGN = new RiteLearnSpell(YELLOW_SIGN, 250, 10, 300, Blessing.HASTUR, Blessing.HASTUR, Ingredient.fromItem(Items.GOLD_INGOT), Ingredient.fromItem(Items.GOLD_INGOT), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage())), Ingredient.fromItem(Items.DIAMOND));
     }
 
     private static void initRiteEffects() {
@@ -94,9 +97,10 @@ public class ModRegistries {
     private static void initSpells() {
         REGENERATION = new SpellHeal();
         FEAST = new SpellFeast();
+        SPELL_MANIA = new SpellMania();
 
         GROWTH = new SpellGrowth();
-        //YELLOW_SIGN = new SpellYellowSign();
+        YELLOW_SIGN = new SpellYellowSign();
         //  TIDE_WAVE = new SpellTideWave();
         // DEFY_DEATH = new SpellDefyDeath();
     }

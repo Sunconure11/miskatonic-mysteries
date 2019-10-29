@@ -1,7 +1,7 @@
 {
   "name": "Regeneration",
   "category": "spells",
-  "icon": "",
+  "icon": "miskatonicmysteries:textures/misc/spell/regeneration.png",
   "pages": [
     {
       "type": "miskatonicmysteries:rite",

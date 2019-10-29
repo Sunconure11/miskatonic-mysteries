@@ -1,0 +1,20 @@
+{
+  "name": "Yellow Sign",
+  "category": "spells",
+  "icon": "miskatonicmysteries:textures/misc/spell/yellow_sign.png",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:learn_spell_yellow_sign",
+      "text": "This Rite will engrave the $(marked)Yellow Sign$() Spell into my mind."
+    },
+    {
+      "type": "text",
+      "text": "This magnificent Spell will grant me the ability to place Yellow Signs in the World. The Rite will require a greater amount of Focal Power -I should be really careful with the amounts of Focal Power in this one. The Spell will require three experience levels and Yellow Dye.$(br)I should still be extremely careful with this spell; it may fail easily if I am not blessed by the Yellow King, and Yellow Signs will equally affect me if I am not directly affiliated."
+    },
+    {
+      "type": "text",
+      "text": "Yellow Signs may be placed on any solid block; I can probably even apply them to $(marked)Banners$()."
+    }
+  ]
+}

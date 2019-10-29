@@ -4,7 +4,9 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.common.potion.ModPotion;
 import com.miskatonicmysteries.registry.ModObjects;
+import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +35,7 @@ public class SpellYellowSign extends Spell {
 
     @Override
     public boolean check(EntityPlayer caster) {
-        if (caster.experienceLevel >= 3 && BlessingCapability.Util.getBlessing(caster) == Blessing.HASTUR) {
+        if (caster.experienceLevel >= 3) {
             return super.check(caster);
         }
         return false;
@@ -41,6 +44,10 @@ public class SpellYellowSign extends Spell {
     @Override
     public void startCasting(EntityPlayer caster, BlockPos pos, EnumFacing facing) {
         World world = caster.world;
+        if (BlessingCapability.Util.getBlessing(caster) != Blessing.HASTUR && caster.getRNG().nextBoolean()) {
+            caster.addPotionEffect(new PotionEffect(ModPotions.mania, 200, 0, false, false));
+            return;
+        }
         if(world.getTileEntity(pos) instanceof TileEntityBanner){
             TileEntityBanner banner = (TileEntityBanner)world.getTileEntity(pos);
             NBTTagCompound bannerTag = banner.serializeNBT();

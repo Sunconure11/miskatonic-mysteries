@@ -106,14 +106,14 @@ public class CapabilityHandler {
     @SubscribeEvent
     public static void castSpell(PlayerInteractEvent.RightClickEmpty event) {
         if (event.getWorld().isRemote) {
-            PacketHandler.network.sendToServer(new PacketCastSpell(event.getPos(), event.getFace()));
+            PacketHandler.network.sendToServer(new PacketCastSpell(0, event.getPos(), event.getFace()));
         }
     }
 
     @SubscribeEvent
     public static void castSpell(PlayerInteractEvent.RightClickBlock event){
         if (event.getWorld().isRemote) {
-             PacketHandler.network.sendToServer(new PacketCastSpell(event.getPos(), event.getFace()));
+             PacketHandler.network.sendToServer(new PacketCastSpell(0, event.getPos(), event.getFace()));
         }
     }
 }

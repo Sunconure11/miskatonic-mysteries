@@ -34,10 +34,11 @@ public class SpellMania extends Spell {
     public void cast(EntityPlayer caster) {
         if (caster.world.isRemote)
             spawnParticles(caster);
-        caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(5, 1, 5).offset(caster.posX, caster.posY, caster.posZ), l -> !l.isEntityEqual(caster)).forEach(
+
+        caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(5, 1, 5), l -> l != caster).forEach(
                 e -> {
                     if (e.getRNG().nextBoolean()) {
-                        e.addPotionEffect(new PotionEffect(ModPotions.mania, 400));
+                        e.addPotionEffect(new PotionEffect(ModPotions.mania, 400, 2));
                     }
                 }
         );
@@ -46,9 +47,11 @@ public class SpellMania extends Spell {
 
     @SideOnly(Side.CLIENT)
     private void spawnParticles(EntityPlayer caster) {
-        Particle p = new ParticleSpell.MobFactory().createParticle(0, caster.world, caster.posX, caster.posY + caster.getEyeHeight(), caster.posZ, caster.getRNG().nextGaussian(), 0, caster.getRNG().nextGaussian());
-        p.setRBGColorF(0.7F, 0.05F, 0);
-        Minecraft.getMinecraft().effectRenderer.addEffect(p);
+        for (int i = 0; i < 60; i++) {
+            Particle p = new ParticleSpell.MobFactory().createParticle(0, caster.world, caster.posX, caster.posY + caster.getEyeHeight(), caster.posZ, caster.getRNG().nextGaussian(), 0, caster.getRNG().nextGaussian());
+            p.setRBGColorF(0.7F, 0.05F, 0);
+            Minecraft.getMinecraft().effectRenderer.addEffect(p);
+        }
     }
 
 

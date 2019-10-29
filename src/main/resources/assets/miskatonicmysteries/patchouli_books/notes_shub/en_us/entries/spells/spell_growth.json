@@ -1,7 +1,7 @@
 {
   "name": "Growth",
   "category": "spells",
-  "icon": "",
+  "icon": "miskatonicmysteries:textures/misc/spell/growth.png",
   "pages": [
     {
       "type": "miskatonicmysteries:rite",

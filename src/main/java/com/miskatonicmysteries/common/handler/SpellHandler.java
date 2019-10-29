@@ -3,6 +3,8 @@ package com.miskatonicmysteries.common.handler;
 import com.miskatonicmysteries.common.capability.spells.ISpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.common.misc.spells.Spell;
+import com.miskatonicmysteries.common.network.PacketHandler;
+import com.miskatonicmysteries.common.network.message.client.PacketCastSpell;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -20,10 +22,12 @@ public class SpellHandler {
             }
             if (knowledge.getCurrentCastingProgess() > -1 && spell != null && SpellKnowledge.Util.isSpellSelected(player)) {
                 if (knowledge.getCurrentCastingProgess() > 0) {
+                    PacketHandler.sendTo(player, new PacketCastSpell(1, spell.name.toString()));
                     spell.whileCasting(player);
                     knowledge.setCurrentCastingProgress(knowledge.getCurrentCastingProgess() - 1);
                 }
                 if (knowledge.getCurrentCastingProgess() <= 0) {
+                    PacketHandler.sendTo(player, new PacketCastSpell(2, spell.name.toString()));
                     spell.cast(player);
                     SpellKnowledge.Util.setCooldownFor(spell, spell.getCooldownTime(), player, false);
                     knowledge.setCurrentCastingProgress(-1);

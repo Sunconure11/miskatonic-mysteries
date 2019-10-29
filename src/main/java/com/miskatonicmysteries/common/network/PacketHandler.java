@@ -45,7 +45,9 @@ public class PacketHandler {
 
         network.registerMessage(new PacketHandleKey.Handler(), PacketHandleKey.class, next(), Side.SERVER);
         network.registerMessage(new PacketYellowSign.Handler(), PacketYellowSign.class, next(), Side.SERVER);
+
         network.registerMessage(new PacketCastSpell.Handler(), PacketCastSpell.class, next(), Side.SERVER);
+        network.registerMessage(new PacketCastSpell.Handler(), PacketCastSpell.class, next(), Side.CLIENT);
     }
 
     public static void sendTo(EntityPlayer player, IMessage message) {
