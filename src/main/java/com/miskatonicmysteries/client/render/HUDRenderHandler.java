@@ -108,8 +108,8 @@ public class HUDRenderHandler {
                         maxUse = Math.min(maxUse, focus.getMaxSameType(Minecraft.getMinecraft().world, pos));
                         instability += focus.getInstabilityRate(Minecraft.getMinecraft().world, pos);
                     }
-                    double posX = 0; //event.getResolution().getScaledHeight_double() / 2F;
-                    double posY = 0;//event.getResolution().getScaledHeight_double() / 2F;
+                    double posX = 5; //event.getResolution().getScaledHeight_double() / 2F;
+                    double posY = 5;//event.getResolution().getScaledHeight_double() / 2F;
                     minecraft.ingameGUI.drawString(minecraft.fontRenderer, TextFormatting.ITALIC + I18n.format("tooltip.focus"), (int) posX, (int) posY, Color.WHITE.getRGB());
                     minecraft.ingameGUI.drawString(minecraft.fontRenderer, TextFormatting.ITALIC + I18n.format("tooltip.focus.power." + (totalFocusPower >= 90 ? "immense" : totalFocusPower >= 50 ? "greater" : totalFocusPower >= 20 ? "mediocre" : "little")), (int) posX, (int) posY + 10, Color.WHITE.getRGB());
                     minecraft.ingameGUI.drawString(minecraft.fontRenderer, TextFormatting.ITALIC + I18n.format("tooltip.focus.instability." + (instability <= 0.1F ? "low" : instability <= 0.2 ? "normal" : instability <= 0.4 ? "high" : "immense")), (int) posX, (int) posY + 20, Color.WHITE.getRGB());

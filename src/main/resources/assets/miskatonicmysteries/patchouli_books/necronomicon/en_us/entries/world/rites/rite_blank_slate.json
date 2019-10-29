@@ -1,0 +1,16 @@
+{
+  "name": "Blank Slate",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:hysteria",
+      "text": "Blank Slate is a $(marked)Focused$() Rite, which will clear the caster's mind from occult scars."
+    },
+    {
+      "type": "text",
+      "text": "The Rite will remove all Spells the caster knows from their mind, leaving them nauseated for some time. This Rite will require a greater amount of Focal Power, any Great Old One may be addressed."
+    }
+  ]
+}

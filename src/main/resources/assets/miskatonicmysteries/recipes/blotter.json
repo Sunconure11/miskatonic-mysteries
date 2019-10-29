@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:dye",
+      "data": 11
+    },
+    {
+      "item": "minecraft:dye",
+      "data": 11
+    },
+    {
+      "item": "minecraft:sand",
+      "data": 32767
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "nuggetGold"
+    }
+  ],
+  "result": {
+    "item": "miskatonicmysteries:blotter",
+    "count": 1
+  }
+}

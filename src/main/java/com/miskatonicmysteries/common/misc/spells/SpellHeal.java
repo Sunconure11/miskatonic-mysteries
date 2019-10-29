@@ -10,8 +10,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class SpellHeal extends Spell {
     public SpellHeal() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "heal"));
-        this.castTime = 120;
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "regeneration"));
+        this.castTime = 60;
     }
 
     @Override

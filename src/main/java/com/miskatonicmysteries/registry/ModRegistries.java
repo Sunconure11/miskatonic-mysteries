@@ -28,7 +28,7 @@ public class ModRegistries {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
     public static final Map<ResourceLocation, RiteEffect> RITE_EFFECTS = new ConcurrentHashMap<>();
 
-    public static Spell HEAL;
+    public static Spell REGENERATION;
     public static Spell FEAST;
     public static Spell YELLOW_SIGN;
     public static Spell TIDE_WAVE;
@@ -71,7 +71,7 @@ public class ModRegistries {
     }
 
     private static void initSpells() {
-        HEAL = new SpellHeal();
+        REGENERATION = new SpellHeal();
         FEAST = new SpellFeast();
         YELLOW_SIGN = new SpellYellowSign();
         TIDE_WAVE = new SpellTideWave();

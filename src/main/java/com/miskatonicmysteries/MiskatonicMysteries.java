@@ -72,6 +72,7 @@ public class MiskatonicMysteries {
     };
 
     public static final DamageSource VORE = new DamageSource(MODID + "_devour").setDamageBypassesArmor().setDamageIsAbsolute();
+    public static final DamageSource SLEEP = new DamageSource(MODID + "_sleep").setDamageBypassesArmor().setDamageIsAbsolute();
 
     static {
          FluidRegistry.enableUniversalBucket();

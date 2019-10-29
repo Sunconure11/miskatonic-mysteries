@@ -1,0 +1,33 @@
+{
+  "name": "Sanity",
+  "icon": "miskatonicmysteries:tranquilizer",
+  "category": "world",
+  "sortnum": 8,
+  "pages": [
+    {
+      "type": "text",
+      "text": "To many, Sanity is a vital part of a healthy life, keeping the individual grounded and mentally stable.$(br)However, messing with powers beyond your comprehension is very damaging to Sanity, though some groups believe that Sanity is a wall that holds the mind back from unlocking its full potential, both mentally and sensually."
+    },
+    {
+      "type": "text",
+      "text": "Regardless, Insanity often comes with many less than pleasant side effects.$(br2)Insanity comes with many effects. Those affected report seeing and hearing things that may not exist, at least not in this plane, having the world around them distorted, to bursts of inhuman strength, as well as craving less than savoury foods. The lower a person’s Sanity is, the more intense and more frequent these effects will be."
+    },
+    {
+      "type": "text",
+      "text": "If a player wants to learn a Spell despite having reached their limit of seven spells, they will die in agony. If one wants to prevent this, it is best to first perform the Rite of the $(l:world/rites/rite_blank_slate)$(marked)Blank Slate$() to clear the mind.$(br)Once at least one Spell is known, spells can be selected by pressing $(l)$(k:miskmyst_up)$() or $(l)$(k:miskmyst_down)$(). This selection can be cancelled by pressing $(l)$(k:miskmyst_cancel)$()."
+    },
+    {
+      "type": "text",
+      "title": "Casting Spells",
+      "text": "The selected spell can then be cast by pressing $(l)$(k:use)$(); this will start the $(marked)casting progress$(), which can be seen by the increasing saturation of the spell's icon; however, for the starting progress to begin, certain conditions will always be checked.$(br)These conditions differ with each Spell and are usually specified in the according entry."
+    },
+    {
+      "type": "text",
+      "text": "Some spells will even do things as they are cast.$(br2)Additionally, whenever a caster starts casting a spell, the $(marked)price$() for casting that spell is immediately paid. This price is also usually specified in the according entry.$(br)Once the casting is finished, the Spell will take effect; however, if the Spell is canceled before by pressing $(l)$(k:miskmyst_cancel)$(), bad things, or nothing, may happen, depending on the Spell in question."
+    },
+    {
+      "type": "text",
+      "text": "Similarly, bad-things-or-nothing may happen if the conditions for casting the spell - this includes material reagents - are not met.$(br2)Finally, once the Spell successfully takes effect, a cooldown will be applied, greying out the Spell's icon. The Spell may not be cast until this cooldown runs out."
+    }
+  ]
+}

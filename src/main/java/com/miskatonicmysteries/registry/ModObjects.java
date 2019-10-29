@@ -5,10 +5,7 @@ import com.miskatonicmysteries.common.block.*;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.item.armor.ItemHasturArmor;
 import com.miskatonicmysteries.common.item.armor.ItemShubniggurathArmor;
-import com.miskatonicmysteries.common.item.consumable.ItemBlotter;
-import com.miskatonicmysteries.common.item.consumable.ItemFleshDarkYoung;
-import com.miskatonicmysteries.common.item.consumable.ItemMilkGoat;
-import com.miskatonicmysteries.common.item.consumable.ItemTranquilizer;
+import com.miskatonicmysteries.common.item.consumable.*;
 import com.miskatonicmysteries.common.item.misc.ItemChalk;
 import com.miskatonicmysteries.common.item.misc.ItemMMBook;
 import com.miskatonicmysteries.common.item.tool.ItemBlackGoatsGuttingDagger;
@@ -91,6 +88,8 @@ public class ModObjects {
     public static Item black_goats_horned_dagger = Util.create(new ItemBlackGoatsHornedDagger(), "black_goats_horned_dagger");
 
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
+
+    public static Item laudanum = Util.create(new ItemLaudanum(), "laudanum");
 
     public static Item tallow = Util.create(new ItemFood(4, 6, false), "tallow");
 

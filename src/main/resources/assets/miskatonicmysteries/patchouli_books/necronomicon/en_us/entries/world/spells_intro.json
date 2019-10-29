@@ -1,0 +1,33 @@
+{
+  "name": "Spells",
+  "icon": "minecraft:prismarine_crystals",
+  "category": "world",
+  "sortnum": 7,
+  "pages": [
+    {
+      "type": "text",
+      "text": "To the foolish Entheator, Spells are among the most precious types knowledge; and they're not all wrong.$(br)Spells are indeed quite valuable, given the right chance. However, one must always be ready to accept the cost of such knowledge.$(br)In order to learn a Spell, a $(marked)Rite$() must be performed, usually. The Rite needed will differ from Spell to Spell."
+    },
+    {
+      "type": "text",
+      "text": "The simple Spells known to us are recorded in this book, along with the Rite required to learn them.$(br)Learning a Spell will always scar the mind, though it's best to imagine those scars like engraved runes. This also makes forgetting a spell relatively difficult.$(br)There is a limit to how many spells the human mind can hold, which is why one should generally carefully select the spells they want to learn. $(br)The limit is generally described as seven Spells."
+    },
+    {
+      "type": "text",
+      "text": "If a player wants to learn a Spell despite having reached their limit of seven spells, they will die in agony. If one wants to prevent this, it is best to first perform the Rite of the $(l:world/rites/rite_blank_slate)$(marked)Blank Slate$() to clear the mind.$(br)Once at least one Spell is known, spells can be selected by pressing $(l)$(k:miskmyst_up)$() or $(l)$(k:miskmyst_down)$(). This selection can be cancelled by pressing $(l)$(k:miskmyst_cancel)$()."
+    },
+    {
+      "type": "text",
+      "title": "Casting Spells",
+      "text": "The selected spell can then be cast by pressing $(l)$(k:use)$(); this will start the $(marked)casting progress$(), which can be seen by the increasing saturation of the spell's icon; however, for the starting progress to begin, certain conditions will always be checked.$(br)These conditions differ with each Spell and are usually specified in the according entry."
+    },
+    {
+      "type": "text",
+      "text": "Some spells will even do things as they are cast.$(br2)Additionally, whenever a caster starts casting a spell, the $(marked)price$() for casting that spell is immediately paid. This price is also usually specified in the according entry.$(br)Once the casting is finished, the Spell will take effect; however, if the Spell is canceled before by pressing $(l)$(k:miskmyst_cancel)$(), bad things, or nothing, may happen, depending on the Spell in question."
+    },
+    {
+      "type": "text",
+      "text": "Similarly, bad-things-or-nothing may happen if the conditions for casting the spell - this includes material reagents - are not met.$(br2)Finally, once the Spell successfully takes effect, a cooldown will be applied, greying out the Spell's icon. The Spell may not be cast until this cooldown runs out."
+    }
+  ]
+}

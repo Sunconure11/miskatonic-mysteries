@@ -11,7 +11,11 @@ key.miskmyst_cancel=Cancel Spell
 #DAMAGE
 death.attack.miskatonicmysteries_devour=%1$s was devoured
 death.attack.miskatonicmysteries_devour.player=%1$s was devoured by %2$s
-death.attack.miskatonicmysteries_devour.item="%1$s was devoured by %2$s using %3$s
+death.attack.miskatonicmysteries_devour.item=%1$s was devoured by %2$s using %3$s
+
+death.attack.miskatonicmysteries_devour=%1$s did not wake up
+death.attack.miskatonicmysteries_devour.player=%1$s did not wake up
+death.attack.miskatonicmysteries_devour.item=%1$s did not wake up
 
 #BLOCK
 tile.stone_cthulhu_mural.name=Stone Cthulhu Mural

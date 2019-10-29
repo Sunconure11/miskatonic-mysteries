@@ -1,7 +1,7 @@
 {
   "name": "Spells",
   "description": "A brief collection of spells, and how they are to be acquired.",
-  "icon": "minecraft:prismarine_crystals",
+  "icon": "minecraft:nether_star",
   "parent": "world",
   "sortnum": 1
 }

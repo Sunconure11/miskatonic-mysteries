@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.potion;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,7 +25,11 @@ public class PotionTranquilized extends ModPotion {
     @SubscribeEvent
     public void onSleep(PlayerWakeUpEvent event){
         if (event.getEntityPlayer().getActivePotionEffect(this) != null){
-            Sanity.Util.setSanity(Sanity.Util.getSanity(event.getEntityPlayer()) + 10, event.getEntityPlayer()); //todo work on this more later
+            if(event.getEntityPlayer().getHealth() < 6){
+                event.getEntityPlayer().attackEntityFrom(MiskatonicMysteries.SLEEP, 20);
+            }else {
+                Sanity.Util.setSanity(Sanity.Util.getSanity(event.getEntityPlayer()) + 10 + event.getEntityPlayer().getRNG().nextInt(4), event.getEntityPlayer());
+            }
             event.getEntityPlayer().removePotionEffect(this);
         }
     }

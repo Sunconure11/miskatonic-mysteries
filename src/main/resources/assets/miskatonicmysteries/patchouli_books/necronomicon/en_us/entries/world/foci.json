@@ -39,7 +39,7 @@
     },
     {
       "type": "text",
-      "text": "$(li)$(l)Altars$()$(br)Altars all count as the same type of Focus; they will provide greater amounts of power and usually form the base of Rites."
+      "text": "$(li)$(l)Altars$()$(br)Altars all count as the same type of Focus; they will provide greater amounts of power and usually form the base of Rites.$(li)$(l)Enchanted Items$()$(br)Any enchanted item may be used as Held Focus; this stacks with inherent Focal Properties. All enchanted items are considered the same type of focus."
     }
   ]
 }
