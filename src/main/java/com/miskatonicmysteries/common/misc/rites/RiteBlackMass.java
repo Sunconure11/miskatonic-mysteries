@@ -25,6 +25,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,8 +34,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RiteBlackMass extends OctagramRite {
+    private static final Biome.SpawnListEntry DARK_YOUNG_SPAWN = new Biome.SpawnListEntry(EntityDarkYoung.class, 1, 1, 2);
     public RiteBlackMass() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "black_mass"), 200, 50, 600, EnumType.FOCUSED, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getDyeDamage())));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "black_mass"), 200, 50, 600, EnumType.FOCUSED, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata())), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata())));
     }
 
     @Override
@@ -61,9 +63,8 @@ public class RiteBlackMass extends OctagramRite {
     public void effect(TileEntityOctagram octagram, @Nullable EntityPlayer trigger) {
         World world = octagram.getWorld();
 
-        for (int i = 0; i < 1 + world.rand.nextInt(2); i++) {
-            EntityLiving entity = new EntityDarkYoung(world);
-                WorldGenUtil.spawnEntity(entity, world, octagram.getPos().up(), 16, 16);
+        if (!world.isRemote) {
+            WorldGenUtil.spawnEntities(DARK_YOUNG_SPAWN, world, octagram.getPos().getX(), octagram.getPos().getZ(), 16, 16, octagram.getWorld().rand);
         }
     }
 
