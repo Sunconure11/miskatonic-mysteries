@@ -10,7 +10,7 @@
     },
     {
       "type": "text",
-      "text": "The Regeneration Spell will quickly regenerate failed flesh after three seconds of preparation; however, this will exhaust the caster. $(br)This Spell cannot be cast when there is nothing to regenerate."
+      "text": "The Rite for learning this spell requires a lesser amount of Focal Power; the Regeneration Spell will quickly regenerate failed flesh after three seconds of preparation; however, this will exhaust the caster. $(br)This Spell cannot be cast when there is nothing to regenerate."
     }
   ]
 }

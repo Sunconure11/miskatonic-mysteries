@@ -1,0 +1,16 @@
+{
+  "name": "Growth",
+  "category": "spells",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:learn_spell_growth",
+      "text": "This Rite will engrave the $(marked)Growth$() Spell into my mind."
+    },
+    {
+      "type": "text",
+      "text": "This simple Spell will permit me to harness the Goat's powers to enhance the growth of plants. It will simply require Bone Meal to affect a slightly greater area. To learn it, I will need to perform $(o)this$() Rite with a slightly greater amount of Focal Power."
+    }
+  ]
+}
