@@ -15,7 +15,6 @@ public class PotionDefyDeath extends ModPotion {
         if (event.getEntityLiving().getActivePotionEffect(this) != null && event.getEntityLiving().getHealth() - event.getAmount() <= 0.0f && !(event.getSource().getDamageType() == "magic" || event.getSource().getDamageType() == "outOfWorld")){
             event.getEntityLiving().setHealth(10.0f);
             event.setAmount(0.0f);
-            System.out.println(event.getSource().getDamageType());
         }
     }
 }

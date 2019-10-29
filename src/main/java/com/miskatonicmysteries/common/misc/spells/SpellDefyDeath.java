@@ -2,9 +2,11 @@ package com.miskatonicmysteries.common.misc.spells;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
+import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
@@ -17,7 +19,7 @@ public class SpellDefyDeath extends Spell{
     @Override
     public boolean check(EntityPlayer caster) {
         //Requires Max health and hunger in order to survive the cast
-        if (caster.getHealth() >= 20.0f && caster.getFoodStats().getFoodLevel() >= 20 && caster.getFoodStats().getSaturationLevel() >5.0f ) {
+        if (caster.getHealth() >= 20.0f && caster.getFoodStats().getFoodLevel() >= 20) {
             return super.check(caster);
         }
         return false;
@@ -36,6 +38,7 @@ public class SpellDefyDeath extends Spell{
     @Override
     public void cast(EntityPlayer caster) {
         caster.world.playSound(null, caster.getPosition(), SoundEvents.BLOCK_PORTAL_TRIGGER, SoundCategory.PLAYERS, 1, 0.8F);
+        caster.addPotionEffect(new PotionEffect(ModPotions.defy_death, 20*60*30, 0));
     }
 
     @Override
