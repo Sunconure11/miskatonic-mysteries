@@ -34,7 +34,7 @@ import java.util.List;
 
 public class RiteBlackMass extends OctagramRite {
     public RiteBlackMass() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "eldritch_trap"), 100, 50, 200, EnumType.FOCUSED, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getDyeDamage())));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "black_mass"), 200, 50, 600, EnumType.FOCUSED, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getDyeDamage())));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class RiteBlackMass extends OctagramRite {
     public void effect(TileEntityOctagram octagram, @Nullable EntityPlayer trigger) {
         World world = octagram.getWorld();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1 + world.rand.nextInt(2); i++) {
             EntityLiving entity = new EntityDarkYoung(world);
                 WorldGenUtil.spawnEntity(entity, world, octagram.getPos().up(), 16, 16);
         }

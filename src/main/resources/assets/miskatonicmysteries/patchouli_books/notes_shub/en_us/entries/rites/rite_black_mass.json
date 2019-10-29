@@ -1,0 +1,16 @@
+{
+  "name": "Black Mass",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:black_mass",
+      "text": "This Rite will summon up to two Faceless Lambs; I should be careful."
+    },
+    {
+      "type": "text",
+      "text": "This Rite will require a greater amount of Focal Power; however, I should not have to be too careful with the Foci... though it does not do to underestimate them.$(br)The deformed goats should spawn somewhere near the Octagram."
+    }
+  ]
+}

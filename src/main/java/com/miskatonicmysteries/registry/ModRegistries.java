@@ -49,6 +49,7 @@ public class ModRegistries {
     public static OctagramRite HELLFIRE_ELDRITCH_TRAP;
     public static OctagramRite HYSTERIA;
     public static OctagramRite BLANK_SLATE;
+    public static OctagramRite BLACK_MASS;
 
     public static OctagramRite LEARN_SPELL_REGENERATION;
     public static OctagramRite LEARN_SPELL_FEAST;
@@ -78,10 +79,11 @@ public class ModRegistries {
         HELLFIRE_ELDRITCH_TRAP = new RiteEldritchTrapHellfire();
         HYSTERIA = new RiteHysteria();
         BLANK_SLATE = new RiteBlankSlate();
+        BLACK_MASS = new RiteBlackMass();
 
         LEARN_SPELL_REGENERATION = new RiteLearnSpell(REGENERATION, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.HEALING)), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromItem(Items.GHAST_TEAR), Ingredient.fromItem(Items.GHAST_TEAR));
         LEARN_SPELL_FEAST = new RiteLearnSpell(FEAST, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(OreDictionary.getOres("meatRaw").toArray(new ItemStack[]{})), Ingredient.fromStacks(OreDictionary.getOres("meatRaw").toArray(new ItemStack[]{})), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromItem(Items.GOLDEN_APPLE), Ingredient.fromStacks(new ItemStack(Items.CAKE)), Ingredient.fromStacks(new ItemStack(Items.CAKE)));
-        LEARN_SPELL_MANIA = new RiteLearnSpell(SPELL_MANIA, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)), Ingredient.fromItem(Items.REDSTONE), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(ModObjects.flesh_dark_young), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.HEALING)), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.blotter));
+        LEARN_SPELL_MANIA = new RiteLearnSpell(SPELL_MANIA, 100, 40, 200, Blessing.NONE, Blessing.NONE, Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)), Ingredient.fromItem(Items.REDSTONE), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(ModObjects.flesh_dark_young), Ingredient.fromStacks(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.HARMING)), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.blotter));
 
         LEARN_SPELL_GROWTH = new RiteLearnSpell(GROWTH, 150, 20, 100, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Blocks.DIRT, 1, 1)), Ingredient.fromStacks(new ItemStack(Items.WHEAT)), Ingredient.fromStacks(new ItemStack(Items.CARROT)), Ingredient.fromStacks(new ItemStack(Items.POTATO)));
         LEARN_SPELL_YELLOW_SIGN = new RiteLearnSpell(YELLOW_SIGN, 250, 10, 300, Blessing.HASTUR, Blessing.HASTUR, Ingredient.fromItem(Items.GOLD_INGOT), Ingredient.fromItem(Items.GOLD_INGOT), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage())), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage())), Ingredient.fromItem(Items.DIAMOND));

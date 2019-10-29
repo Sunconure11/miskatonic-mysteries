@@ -16,6 +16,7 @@
     },
     {
       "type": "spotlight",
+      "title": "Murals",
       "item": "miskatonicmysteries:stone_hastur_mural",
       "text": "On ancient Shrines one may find Murals dedicated to a specific Great Old One. They contain information not even this book includes, perhaps intentionally. Use a $(marked)Book and Quill$() in order to record what rites or other info is detailed there."
     }

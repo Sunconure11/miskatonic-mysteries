@@ -193,10 +193,11 @@ rite.hysteria.name=Hysteria
 rite.maniacs_meeting_shub.name=Maniac's Meeting
 rite.maniacs_meeting_hastur.name=Maniac's Meeting
 rite.blank_slate.name=Blank Slate
+rite.black_mass.name=Black Mass
 
 rite.learn_spell_regeneration.name=Learn Regeneration
 rite.learn_spell_feast.name=Learn Internal Feasting
-rite.learn_spell_mania.name=Learn Mania
+rite.learn_spell_spell_mania.name=Learn Mania
 
 rite.learn_spell_growth.name=Learn Growth
 
