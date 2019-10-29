@@ -29,6 +29,7 @@ public class ModRegistries {
     public static Spell FEAST;
     public static Spell YELLOW_SIGN;
     public static Spell TIDE_WAVE;
+    public static Spell DEFY_DEATH;
 
 
     public static OctagramRite MANIACS_MEETING_GOAT;
@@ -60,6 +61,7 @@ public class ModRegistries {
         FEAST = new SpellFeast();
         YELLOW_SIGN = new SpellYellowSign();
         TIDE_WAVE = new SpellTideWave();
+        DEFY_DEATH = new SpellDefyDeath();
     }
 
     private static void initRecipes() {

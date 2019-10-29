@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.misc.spells;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -39,7 +40,10 @@ public class SpellDefyDeath extends Spell{
 
     @Override
     public void price(EntityPlayer caster) {
-        caster.attackEntityFrom(MiskatonicMysteries.VORE, 2);
+        caster.inventory.clearMatchingItems(Items.GOLDEN_APPLE, 0, 1, null);
+        caster.inventory.clearMatchingItems(Items.ROTTEN_FLESH, 0, 16, null);
+        caster.addExperienceLevel(-10);
+
     }
 
     @Override
