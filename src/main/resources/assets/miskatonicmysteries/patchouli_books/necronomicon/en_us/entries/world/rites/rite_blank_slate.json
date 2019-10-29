@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "miskatonicmysteries:rite",
-      "rite": "miskatonicmysteries:hysteria",
+      "rite": "miskatonicmysteries:blank_slate",
       "text": "Blank Slate is a $(marked)Focused$() Rite, which will clear the caster's mind from occult scars."
     },
     {

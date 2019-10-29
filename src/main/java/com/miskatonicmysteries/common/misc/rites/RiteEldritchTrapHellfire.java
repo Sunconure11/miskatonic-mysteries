@@ -10,6 +10,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSpell;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -28,9 +29,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RiteEldritchTrap extends OctagramRite {
-    public RiteEldritchTrap() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "eldritch_trap"), 100, 50, 200, EnumType.PRIMED, Blessing.NONE, Blessing.NONE, Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.SPIDER_EYE), Ingredient.fromItem(Items.SPIDER_EYE), Ingredient.fromItem(Items.GOLD_NUGGET), Ingredient.fromItem(Items.GOLD_NUGGET), Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)), Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)));
+public class RiteEldritchTrapHellfire extends OctagramRite {
+    public RiteEldritchTrapHellfire() {
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "hellfire_eldritch_trap"), 175, 20, 260, EnumType.PRIMED, Blessing.NONE, Blessing.NONE, Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.BLAZE_POWDER), Ingredient.fromItem(Items.BLAZE_POWDER), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromStacks(new ItemStack(Blocks.SOUL_SAND)), Ingredient.fromStacks(new ItemStack(Blocks.SOUL_SAND)));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class RiteEldritchTrap extends OctagramRite {
     @SideOnly(Side.CLIENT)
     private void spawnSpawnParticles(TileEntityOctagram octagram) { //nice name lol
         Particle p = new ParticleSpell.MobFactory().createParticle(0, octagram.getWorld(), octagram.getPos().getX() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 2), octagram.getPos().getY(), octagram.getPos().getZ() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 2), octagram.getWorld().rand.nextGaussian(), 0, octagram.getWorld().rand.nextGaussian());
-        p.setRBGColorF(0.05F, 0.5F, 0.4F);
+        p.setRBGColorF(0.5F, 0.3F, 0.0F);
         Minecraft.getMinecraft().effectRenderer.addEffect(p);
     }
 
@@ -70,18 +71,23 @@ public class RiteEldritchTrap extends OctagramRite {
         List<EntityLivingBase> triggers = octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(2, 0, 2).offset(octagram.getPos()), l -> l instanceof IMob || l instanceof EntityPlayer);
         for (int i = 0; i < 4 + world.rand.nextInt(4) + triggers.size(); i++) {
             EntityLiving entity = null;
-            switch (world.rand.nextInt(2)) {
+            switch (world.rand.nextInt(3)) {
                 case 0: {
-                    entity = new EntityZombie(world);
-                    if (BiomeDictionary.hasType(world.getBiome(octagram.getPos()), BiomeDictionary.Type.SANDY)) {
-                        entity = new EntityHusk(world);
-                    }//spawn Drowned in 1.14
+                    entity = new EntityPigZombie(world);
+                    entity.setRevengeTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
                     break;
                 }
                 case 1: {
-                    entity = new EntitySpider(world);
+                    entity = new EntityBlaze(world);
                     if (world.rand.nextInt(3) == 0) {
                         entity = new EntityCaveSpider(world);
+                    }
+                    break;
+                }
+                case 2: {
+                    entity = new EntityMagmaCube(world);
+                    if (world.rand.nextInt(8) == 0) {
+                        entity = new EntityGhast(world);
                     }
                     break;
                 }
@@ -89,8 +95,6 @@ public class RiteEldritchTrap extends OctagramRite {
 
             if (entity != null) {
                 entity.setDropItemsWhenDead(false);
-                if (!entity.isImmuneToFire())
-                    entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 1000, 0));
                 entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1000, 0));
                 entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 1000, 0));
                 entity.setAttackTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));

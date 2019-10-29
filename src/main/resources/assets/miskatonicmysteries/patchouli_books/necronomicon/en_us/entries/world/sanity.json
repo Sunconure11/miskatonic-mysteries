@@ -14,12 +14,7 @@
     },
     {
       "type": "text",
-      "text": "Curing Insanity is by no means an easy task.$(br)The most common way to do so is to take heavy sedatives such as Tranquilizers, acquired through trade, or to take Laudanum, oftentimes made by hand by the user. While Laudanum is easier to make, its effects are less powerful and the crude nature of it has a higher change to injure the user.  "
-    },
-    {
-      "type": "crafting",
-      "recipe": "miskatonicmysteries:laudanum",
-      "text": "Tranquilizers, on the other hand, are more stable and must be taken before bed, though taking too strong a dose at too little of life can induce a sleep that one cannot wake from."
+      "text": "Curing Insanity is by no means an easy task.$(br)The most common way to do so is to take heavy sedatives such as Tranquilizers, acquired through trade. Tranquilizers must be taken before bed, though taking too strong a dose at too little of life can induce a sleep that one cannot wake from."
     },
     {
       "type": "text",

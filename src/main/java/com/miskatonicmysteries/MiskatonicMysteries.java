@@ -207,6 +207,12 @@ public class MiskatonicMysteries {
 
         OreDictionary.registerOre("skullDragon", new ItemStack(Items.SKULL, 1, 5));
 
+
+        OreDictionary.registerOre("meatRaw", Items.BEEF);
+        OreDictionary.registerOre("meatRaw", Items.PORKCHOP);
+        OreDictionary.registerOre("meatRaw", Items.MUTTON);
+        OreDictionary.registerOre("meatRaw", ModObjects.flesh_dark_young);
+
     }
 
     public void registerFurnaceRecipes(){

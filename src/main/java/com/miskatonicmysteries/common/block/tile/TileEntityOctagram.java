@@ -100,7 +100,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public void interactCenter(World world, EntityPlayer player) {
-        if (isValid() && start()) {
+        if (isValid()) {
+             start();
             world.playSound(player, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 0.7F, 0.8F);
         } else if (isFilled()) {
             doFailingEffects(8);
@@ -241,7 +242,6 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public boolean isValid() {
         if (getAltarBlessing() != null) {
-            System.out.println(getCurrentRite() != null && getCurrentRite().test(this) && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == null));
             return getCurrentRite() != null && getCurrentRite().test(this) && (getCurrentRite().unlockBook == getAltarBlessing() || getCurrentRite().unlockBook == null);
         }
         return false;

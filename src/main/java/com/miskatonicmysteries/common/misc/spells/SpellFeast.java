@@ -27,18 +27,18 @@ public class SpellFeast extends Spell {
 
     @Override
     public void whileCasting(EntityPlayer caster) {
-            if (caster.ticksExisted % 20 == 0) {
-                caster.attackEntityFrom(MiskatonicMysteries.VORE, 1);
-                caster.getFoodStats().addStats(2, 1);
-                caster.world.playSound(null, caster.getPosition(), SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 1, 0.8F);
-            }
+        if (caster.ticksExisted % 20 == 0) {
+            caster.attackEntityFrom(MiskatonicMysteries.VORE, 1);
+            caster.getFoodStats().addStats(2, 1);
+            caster.world.playSound(null, caster.getPosition(), SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 1, 0.8F);
+        }
         super.whileCasting(caster);
     }
 
     @Override
     public void cast(EntityPlayer caster) {
-            caster.getFoodStats().addStats(1, 3);
-            caster.world.playSound(null, caster.getPosition(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1, 0.8F);
+        caster.getFoodStats().addStats(1, 3);
+        caster.world.playSound(null, caster.getPosition(), SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1, 0.8F);
     }
 
     @Override

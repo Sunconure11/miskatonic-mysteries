@@ -3,6 +3,8 @@ package com.miskatonicmysteries.common.item.misc;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -15,18 +17,31 @@ import vazkii.patchouli.common.book.BookRegistry;
 import vazkii.patchouli.common.network.NetworkHandler;
 import vazkii.patchouli.common.network.message.MessageOpenBookGui;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ItemMMBook extends Item implements IHasAssociatedBlessing{
     protected ResourceLocation bookName;
     protected Blessing blessing;
-    public ItemMMBook(String bookName, Blessing associatedBlessing) {
+    protected List<String> tooltip = new ArrayList<>();
+    public ItemMMBook(String bookName, Blessing associatedBlessing, String... tooltip) {
         super();
         this.bookName = new ResourceLocation(MiskatonicMysteries.MODID, bookName);
         this.blessing = associatedBlessing;
         this.maxStackSize = 1;
+        this.tooltip.addAll(Arrays.asList(tooltip));
     }
 
     public Book getBook(){
         return BookRegistry.INSTANCE.books.get(bookName);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        this.tooltip.forEach(t -> tooltip.add(I18n.format(t)));
+        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     @Override

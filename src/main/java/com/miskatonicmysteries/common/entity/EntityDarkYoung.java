@@ -8,6 +8,7 @@ import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
+import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,6 +36,12 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         super(worldIn);
         setSize(2.5F, 4.5F);
         experienceValue = 12;
+    }
+
+    @Override
+    public void move(MoverType type, double x, double y, double z) {
+        super.move(type, x, y, z);
+        doBlockCollisions();
     }
 
     @Nullable

@@ -89,7 +89,7 @@ public class ModObjects {
 
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 
-    public static Item laudanum = Util.create(new ItemLaudanum(), "laudanum");
+    //public static Item laudanum = Util.create(new ItemLaudanum(), "laudanum");
 
     public static Item tallow = Util.create(new ItemFood(4, 6, false), "tallow");
 

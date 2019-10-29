@@ -2,20 +2,19 @@
   "type": "forge:ore_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:dye",
-      "data": 11
+      "item": "miskatonicmysteries:infested_wheat"
     },
     {
-      "item": "minecraft:dye",
-      "data": 11
+      "item": "miskatonicmysteries:infested_wheat"
     },
     {
-      "item": "minecraft:sand",
-      "data": 32767
+      "item": "minecraft:red_mushroom"
     },
     {
-      "type": "forge:ore_dict",
-      "ore": "nuggetGold"
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "minecraft:paper"
     }
   ],
   "result": {

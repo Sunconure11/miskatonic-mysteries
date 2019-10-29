@@ -1,0 +1,16 @@
+{
+  "name": "Hellfire Trap",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:hellfire_eldritch_trap",
+      "text": "This $(marked)Primed$() Rite will release a horde of hellish monsters when triggered. The caster should stay at a distance when preparing the Rite."
+    },
+    {
+      "type": "text",
+      "text": "The Eldritch Trap requires a slightly greater amount of focal power; the caster should be careful, as some of the creatures can cause a lot of damage. Any mob or player will activate this. This Rite cannot be cast in a peaceful world."
+    }
+  ]
+}

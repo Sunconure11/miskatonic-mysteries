@@ -1,0 +1,16 @@
+{
+  "name": "Regeneration",
+  "category": "spells",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:learn_spell_regeneration",
+      "text": "This Rite will engrave the $(marked)Regeneration$() Spell into the caster's mind."
+    },
+    {
+      "type": "text",
+      "text": "The Regeneration Spell will quickly regenerate failed flesh after three seconds of preparation; however, this will exhaust the caster. $(br)This Spell cannot be cast when there is nothing to regenerate."
+    }
+  ]
+}

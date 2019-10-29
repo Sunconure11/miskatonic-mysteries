@@ -85,7 +85,7 @@ item.infested_wheat.name=Infested Wheat
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath
 entity.hastur.name=Hastur
-entity.cultist_hastur.name=Yellow King's Vassal
+entity.cultist_hastur.name=Serf of the Yellow King
 entity.cultist_shub.name=Cultist of the Goat
 entity.dark_young.name=Dark Young
 
@@ -182,9 +182,14 @@ item.banner.miskatonicmysteries_yellow_sign.magenta=Magenta Yellow Sign
 
 #RITES
 rite.eldritch_trap.name=Eldritch Trap
+rite.hellfire_eldritch_trap.name=Hellfire Trap
 rite.hysteria.name=Hysteria
 rite.maniacs_meeting_goat.name=Maniac's Meeting
 rite.maniacs_meeting_hastur.name=Maniac's Meeting
+rite.blank_slate.name=Blank Slate
+
+rite.learn_spell_regeneration.name=Learn Regeneration
+rite.learn_spell_feast.name=Learn Internal Feasting
 
 #TOOLTIPS
 tooltip.focus=Focus Stats:

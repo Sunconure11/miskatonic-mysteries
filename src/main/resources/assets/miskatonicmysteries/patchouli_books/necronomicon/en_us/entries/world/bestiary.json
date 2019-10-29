@@ -23,7 +23,7 @@
       "type": "entity",
       "entity": "miskatonicmysteries:cultist_hastur",
       "offset": 0.1,
-      "text": "$(l)A Vassal of the Yellow King$()"
+      "text": "$(l)A Serf of the Yellow King$()"
     },
     {
       "type": "text",
