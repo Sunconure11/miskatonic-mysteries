@@ -14,20 +14,27 @@
     },
     {
       "type": "text",
-      "text": "If a player wants to learn a Spell despite having reached their limit of seven spells, they will die in agony. If one wants to prevent this, it is best to first perform the Rite of the $(l:world/rites/rite_blank_slate)$(marked)Blank Slate$() to clear the mind.$(br)Once at least one Spell is known, spells can be selected by pressing $(l)$(k:miskmyst_up)$() or $(l)$(k:miskmyst_down)$(). This selection can be cancelled by pressing $(l)$(k:miskmyst_cancel)$()."
+      "text": "Curing Insanity is by no means an easy task.$(br)The most common way to do so is to take heavy sedatives such as Tranquilizers, acquired through trade, or to take Laudanum, oftentimes made by hand by the user. While Laudanum is easier to make, its effects are less powerful and the crude nature of it has a higher change to injure the user.  "
+    },
+    {
+      "type": "crafting",
+      "recipe": "miskatonicmysteries:laudanum",
+      "text": "Tranquilizers, on the other hand, are more stable and must be taken before bed, though taking too strong a dose at too little of life can induce a sleep that one cannot wake from."
     },
     {
       "type": "text",
-      "title": "Casting Spells",
-      "text": "The selected spell can then be cast by pressing $(l)$(k:use)$(); this will start the $(marked)casting progress$(), which can be seen by the increasing saturation of the spell's icon; however, for the starting progress to begin, certain conditions will always be checked.$(br)These conditions differ with each Spell and are usually specified in the according entry."
+      "title": "Mania",
+      "text": "Mania in many ways is a form of temporary, but extremely intense, insanity. As Mania originates from the mind rather than the body, milk cannot cure it, and the only known ways to cure it is using heavy sedatives or embracing it and letting it run its course."
     },
     {
       "type": "text",
-      "text": "Some spells will even do things as they are cast.$(br2)Additionally, whenever a caster starts casting a spell, the $(marked)price$() for casting that spell is immediately paid. This price is also usually specified in the according entry.$(br)Once the casting is finished, the Spell will take effect; however, if the Spell is canceled before by pressing $(l)$(k:miskmyst_cancel)$(), bad things, or nothing, may happen, depending on the Spell in question."
+      "title": "Exotic Substances",
+      "text": "Some may wish to open their mind in other, safer ways. The safest way to do this is to take Blotters, produced as follows. However, some prefer the use of other substances, from concoctions of Belladonna and Mandrake and other foul ingredients, to Tinctures of an Arcane nature, and to burning a specific combination of Herbs."
     },
     {
-      "type": "text",
-      "text": "Similarly, bad-things-or-nothing may happen if the conditions for casting the spell - this includes material reagents - are not met.$(br2)Finally, once the Spell successfully takes effect, a cooldown will be applied, greying out the Spell's icon. The Spell may not be cast until this cooldown runs out."
+      "type": "crafting",
+      "recipe": "miskatonicmysteries:blotter",
+      "text": "Taking any of these substances will induce Mania and may lower Sanity as a result. Other substances are also known, such as Flesh from the offspring of the Goat."
     }
   ]
 }

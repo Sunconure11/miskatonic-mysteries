@@ -1,0 +1,48 @@
+{
+  "name": "Bestiary",
+  "icon": "miskatonicmysteries:flesh_dark_young",
+  "category": "world",
+  "sortnum": 9,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Of course, the Great Old Ones have numerous offspring and followers who prowl the lands, lurking in the shadows. Unlike their parents, they are physical in nature, and largely must abide by the laws of physics, most of the time. Other such Outer Creatures are also included. "
+    },
+    {
+      "type": "text",
+      "title": "Cultists",
+      "text": "While often times congregating in dark unseen places, occasionally cultists will hold masses near Shrines or may be found in ancient libraries, trying to absorb any and all info on their chosen God they can. Cultists are often hostile to those who are not initiated, but a few are willing to spread their word and are neutral to the unaffiliated. Still, they are not exactly Entheators."
+    },
+    {
+      "type": "entity",
+      "entity": "miskatonicmysteries:cultist_shub",
+      "offset": 0.1,
+      "text": "$(l)A Cultist to the Goat$()"
+    },
+    {
+      "type": "entity",
+      "entity": "miskatonicmysteries:cultist_hastur",
+      "offset": 0.1,
+      "text": "$(l)A Vassal of the Yellow King$()"
+    },
+    {
+      "type": "text",
+      "title": "Gof'nn hupadgh",
+      "text": "Gof'nn hupadgh Shub-Niggurath are the once-human worshipers of the Black Goat, and often lord over masses dedicated to the Goat. They often have goatish features, including satyr-like legs, though some more extreme cases have been reported. These individuals enjoy a greater connection to the wilds, along with a semi-immortal life."
+    },
+    {
+      "type": "text",
+      "title": "Dreamer's Seeds",
+      "text": "Unlike the other noted Great Old Ones, the Dreamer rests in his house, and does not interact with worshipers in any way other than through dreams; however, he may plant a fragment of himself in worshippers. These often have tentacles erupt from their orifices, commonly the mouth and eyes."
+    },
+    {
+      "type": "text",
+      "title": "The Headless Lambs",
+      "text": "The Headless Lambs are the children of the Goat, produced by fission. While most are consumed by their mother shortly after their birth, a few are allowed to roam the darkest forests of the world, and often spread their mother’s message and assist her worshippers in rites. When encountered, they seem to pass through the trees almost as if liquid, and attack prey with their multiple hooves and dendritic tentacles."
+    },
+    {
+      "type": "text",
+      "text": "One should not make longer eye contact with them than needed. If you can see them, they can certainly see you."
+    }
+  ]
+}
