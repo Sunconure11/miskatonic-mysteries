@@ -1,16 +1,7 @@
 package com.miskatonicmysteries.client.particles;
 
-import com.miskatonicmysteries.MiskatonicMysteries;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEnchantmentTable;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
 
 public class ParticleOccultEnchant extends ParticleEnchantmentTable{
     protected double xTo, yTo, zTo;

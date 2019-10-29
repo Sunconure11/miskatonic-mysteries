@@ -1,6 +1,5 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
-import com.miskatonicmysteries.common.block.BlockCandles;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.math.BlockPos;

@@ -4,7 +4,6 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModInsanityEffects;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.ByteBufUtils;

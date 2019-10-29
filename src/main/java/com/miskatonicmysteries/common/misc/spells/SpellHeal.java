@@ -1,10 +1,8 @@
 package com.miskatonicmysteries.common.misc.spells;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 

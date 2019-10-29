@@ -3,7 +3,6 @@ package com.miskatonicmysteries.common.misc.rites.focus;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class EnchantmentRiteFocus extends RiteFocus {
     public EnchantmentRiteFocus() {

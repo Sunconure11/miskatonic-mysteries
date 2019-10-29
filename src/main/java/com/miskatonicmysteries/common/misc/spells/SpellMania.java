@@ -1,29 +1,16 @@
 package com.miskatonicmysteries.common.misc.spells;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
-import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSpell;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemDye;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.village.Village;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

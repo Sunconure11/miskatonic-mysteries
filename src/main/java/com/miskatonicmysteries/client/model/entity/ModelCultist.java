@@ -1,10 +1,9 @@
 package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
-import net.minecraft.client.model.*;
-import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Items;
 
 public class ModelCultist extends ModelBiped {
     public ModelRenderer robe;

@@ -2,9 +2,7 @@ package com.miskatonicmysteries.common.capability.spells;
 
 import com.miskatonicmysteries.common.misc.spells.Spell;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface ISpellKnowledge {
     Spell[] getSpells();

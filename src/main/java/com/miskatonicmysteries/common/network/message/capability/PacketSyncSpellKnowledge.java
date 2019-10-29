@@ -1,22 +1,15 @@
 package com.miskatonicmysteries.common.network.message.capability;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.capability.sanity.ISanity;
-import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
 import com.miskatonicmysteries.common.capability.spells.ISpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledgeProvider;
-import com.miskatonicmysteries.common.capability.spells.SpellKnowledgeStorage;
-import com.miskatonicmysteries.common.misc.spells.Spell;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-import java.util.LinkedHashMap;
 
 public class PacketSyncSpellKnowledge implements IMessage{
     private NBTTagCompound data;

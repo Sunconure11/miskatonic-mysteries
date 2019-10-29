@@ -4,7 +4,6 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.world.gen.BiomeManipulator;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;

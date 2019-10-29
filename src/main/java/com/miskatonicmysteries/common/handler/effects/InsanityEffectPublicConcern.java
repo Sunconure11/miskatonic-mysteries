@@ -1,18 +1,11 @@
 package com.miskatonicmysteries.common.handler.effects;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
-import com.miskatonicmysteries.common.capability.sanity.Sanity;
-import com.miskatonicmysteries.common.handler.InsanityHandler;
 import com.miskatonicmysteries.registry.ModInsanityEffects;
-import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;

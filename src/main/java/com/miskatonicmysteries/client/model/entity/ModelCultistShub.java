@@ -2,12 +2,8 @@ package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.model.ModelVillager;
-import net.minecraft.client.renderer.entity.RenderVillager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityVillager;
 
 /**
  * ModelCultistShub - cybercat5555

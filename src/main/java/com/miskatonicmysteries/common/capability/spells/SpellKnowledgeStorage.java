@@ -1,7 +1,5 @@
 package com.miskatonicmysteries.common.capability.spells;
 
-import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.common.misc.spells.Spell;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;

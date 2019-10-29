@@ -1,7 +1,6 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 

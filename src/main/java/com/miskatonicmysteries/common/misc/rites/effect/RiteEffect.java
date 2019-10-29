@@ -1,12 +1,8 @@
 package com.miskatonicmysteries.common.misc.rites.effect;
 
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
-import com.miskatonicmysteries.common.capability.sanity.ISanity;
-import com.miskatonicmysteries.registry.ModInsanityEffects;
 import com.miskatonicmysteries.registry.ModRegistries;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 public abstract class RiteEffect {
     protected ResourceLocation name;

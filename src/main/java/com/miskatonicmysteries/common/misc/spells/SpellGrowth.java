@@ -13,9 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 public class SpellGrowth extends Spell {
     public SpellGrowth() {
         super(new ResourceLocation(MiskatonicMysteries.MODID, "growth"), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())));

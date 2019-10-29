@@ -3,7 +3,6 @@ package com.miskatonicmysteries.common.block;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.util.InventoryUtil;
-import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

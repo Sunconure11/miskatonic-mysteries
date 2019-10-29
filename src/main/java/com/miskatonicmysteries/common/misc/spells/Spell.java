@@ -2,10 +2,8 @@ package com.miskatonicmysteries.common.misc.spells;
 
 import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.util.InventoryUtil;
-import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;

@@ -5,7 +5,6 @@ import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
 import com.miskatonicmysteries.client.render.entity.RenderGoatLegs;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
-import com.miskatonicmysteries.common.potion.ModPotion;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;

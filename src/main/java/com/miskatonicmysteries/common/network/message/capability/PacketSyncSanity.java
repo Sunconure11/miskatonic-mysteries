@@ -2,9 +2,7 @@ package com.miskatonicmysteries.common.network.message.capability;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
-import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityProvider;
-import com.miskatonicmysteries.common.capability.sanity.SanityStorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;

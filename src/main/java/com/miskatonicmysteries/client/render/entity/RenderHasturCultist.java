@@ -3,16 +3,9 @@ package com.miskatonicmysteries.client.render.entity;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.model.entity.ModelCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EnumPlayerModelParts;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHandSide;
+import net.minecraft.client.renderer.entity.RenderBiped;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;

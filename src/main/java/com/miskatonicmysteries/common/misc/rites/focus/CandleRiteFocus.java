@@ -1,13 +1,6 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
 import com.miskatonicmysteries.common.block.BlockCandles;
-import com.miskatonicmysteries.registry.ModObjects;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

@@ -5,9 +5,7 @@ import com.miskatonicmysteries.client.model.entity.ModelCultistShub;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
