@@ -53,7 +53,6 @@ public class RiteBlackMass extends OctagramRite {
     @SideOnly(Side.CLIENT)
     private void spawnParticles(TileEntityOctagram octagram) {
         Particle p = new ParticleSmokeLarge.Factory().createParticle(0, octagram.getWorld(), octagram.getPos().getX() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 4), octagram.getPos().getY(), octagram.getPos().getZ() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 4), 0, octagram.getWorld().rand.nextFloat() / 10F, 0);
-        p.setRBGColorF(0.05F, 0.5F, 0.4F);
         Minecraft.getMinecraft().effectRenderer.addEffect(p);
     }
 
