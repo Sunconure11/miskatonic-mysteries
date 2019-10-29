@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.handler.effects;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.registry.ModInsanityEffects;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +25,7 @@ public class InsanityEffectFlux extends InsanityEffect {
     }
 
     public boolean enchantItem(World world, EntityPlayer player, ISanity sanity, ItemStack stack){
-        System.out.println("enchanted stack"); //need to handle that
+        EnchantmentHelper.addRandomEnchantment(player.getRNG(), stack, 2, false);
         return true;
     }
 }

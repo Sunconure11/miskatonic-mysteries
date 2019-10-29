@@ -85,8 +85,6 @@ public class InsanityHandler {
         World world = event.player.world;
         EntityPlayer player = event.player;
 
-        System.out.println(ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player)));
-
         if (ModInsanityEffects.isEffectAvailable(ModInsanityEffects.EFFECT_FLUX, world, player, Sanity.Util.getSanityCapability(player)) &&
                 world.rand.nextFloat() < ModInsanityEffects.EFFECT_FLUX.getChance(world, player, Sanity.Util.getSanityCapability(player))) {
             if (ModInsanityEffects.EFFECT_FLUX.handle(world, player, Sanity.Util.getSanityCapability(player))) {

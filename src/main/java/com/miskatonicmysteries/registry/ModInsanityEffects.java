@@ -72,7 +72,7 @@ public class ModInsanityEffects {
 
     public static float getExponentialSanityFactor(ISanity sanity){
         float factor = sanity.getSanity() / (float) Sanity.SANITY_MAX;
-        return factor * factor;
+        return 1 - factor * factor;
     }
 
     public static int getInsanityInterval(EntityLivingBase livingBase) {
