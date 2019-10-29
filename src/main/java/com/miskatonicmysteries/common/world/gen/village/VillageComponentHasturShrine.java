@@ -30,7 +30,7 @@ import java.util.Random;
 
 public class VillageComponentHasturShrine extends StructureVillagePieces.House1 {
     public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12; //probably make one for each different type
-    private static final Biome.SpawnListEntry ENTRY_CULTISTS_HASTUR = new Biome.SpawnListEntry(EntityHasturCultist.class, 5, 1, 4);
+    private static final Biome.SpawnListEntry ENTRY_CULTISTS_HASTUR = new Biome.SpawnListEntry(EntityHasturCultist.class, 1, 1, 4);
 
     public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5){
         this.setCoordBaseMode(par5);
@@ -63,7 +63,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
             if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SANDY)) {
                 return false;
             }
-            if (worldIn.isRemote) return true;
+            if (worldIn.isRemote) return false;
             EnumFacing facing = this.getCoordBaseMode();
 
             Mirror mirror;
@@ -90,7 +90,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
             }
 
             template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl), settings, 2);
-            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX() - 5, position.getZ() - 5, 7, 7, randomIn);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX(), position.getZ() - 5, 7, 7, randomIn);
             return true;
         }
         return false;

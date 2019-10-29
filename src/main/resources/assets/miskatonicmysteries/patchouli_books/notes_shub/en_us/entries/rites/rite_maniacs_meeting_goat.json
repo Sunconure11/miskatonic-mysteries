@@ -1,0 +1,16 @@
+{
+  "name": "The Maniac's Meeting",
+  "category": "rites",
+  "icon": "",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:maniacs_meeting_shub",
+      "text": "We are not alone; or at least we don't have to be."
+    },
+    {
+      "type": "text",
+      "text": "If I arrange my Reagents correct - I will need a greater amount of Focal Power for this - and call upon the Black Goat, I could - possibly - enlighten other fools; however, I should get them under the effect of $(marked)Mania$() first, though I already know a Rite that may help me with that. Still, success is not guaranteed."
+    }
+  ]
+}

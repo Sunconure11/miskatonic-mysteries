@@ -70,9 +70,9 @@ public class ModObjects {
     public static ItemChalk chalk_goat = Util.create(new ItemChalk(octagram_shub), "chalk_goat");
     public static ItemChalk chalk_yellowking = Util.create(new ItemChalk(octagram_hastur), "chalk_yellowking");
 
-    public static Item research_notes_cthulhu = Util.create("research_notes_cthulhu");
-    public static Item research_notes_hastur = Util.create("research_notes_hastur");
-    public static Item research_notes_shubniggurath = Util.create(new ItemMMBook("notes_shub", Blessing.SHUB), "research_notes_shubniggurath");
+    public static Item research_notes_cthulhu = Util.create(new ItemMMBook("notes_cthulhu", Blessing.CTHULHU, "tooltip.notes_cthulhu"), "research_notes_cthulhu");
+    public static Item research_notes_hastur = Util.create(new ItemMMBook("notes_hastur", Blessing.HASTUR, "tooltip.notes_hastur"), "research_notes_hastur");
+    public static Item research_notes_shubniggurath = Util.create(new ItemMMBook("notes_shub", Blessing.SHUB, "tooltip.notes_shub"), "research_notes_shubniggurath");
 
     public static Item hastur_cultist_hood = Util.create(new ItemHasturArmor(EntityEquipmentSlot.HEAD), "hastur_cultist_hood");
     public static Item hastur_cultist_robes = Util.create(new ItemHasturArmor(EntityEquipmentSlot.CHEST), "hastur_cultist_robes");

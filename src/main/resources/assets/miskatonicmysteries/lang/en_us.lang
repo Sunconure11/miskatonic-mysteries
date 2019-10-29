@@ -50,9 +50,9 @@ tile.octagram_hastur.name=Yellow King's Chalk
 item.chalk.name=Profane Chalk
 
 #ITEM
-item.research_notes_cthulhu.name=Research Notes - Cthluhu
-item.research_notes_hastur.name=Research Notes - Hastur
-item.research_notes_shubniggurath.name=Research Notes - Shub-Niggurath
+item.research_notes_cthulhu.name=Research Notes
+item.research_notes_hastur.name=Research Notes
+item.research_notes_shubniggurath.name=Research Notes
 
 item.hastur_cultist_hood.name=Hastur Cultist Hood
 item.hastur_cultist_robes.name=Hastur Cultist Robes
@@ -144,6 +144,11 @@ commands.miskmyst.play_insanity_effect.fail=%s is not a valid insanity effect
 info.necronomicon.book.landing=FNORD (this is a placeholder landing text)
 info.miskatonicmysteries.necronomicon.subtitle=1st Edition
 
+info.miskatonicmysteries.notes_shub.subtitle=Shub-Niggurath
+info.notes_shub.book.landing=In the depths of the Woods, the Black Goat awaits, and this book holds a fraction of her power.
+info.miskatonicmysteries.notes_hastur.subtitle=Hastur
+info.miskatonicmysteries.notes_cthulhu.subtitle=Cthulhu
+
 #MESSAGES
 message.insanity_concern.0=%s looks rather gaunt today.
 message.insanity_concern.1=%s appears to be paler than normal.
@@ -191,7 +196,13 @@ rite.blank_slate.name=Blank Slate
 rite.learn_spell_regeneration.name=Learn Regeneration
 rite.learn_spell_feast.name=Learn Internal Feasting
 
+rite.maniacs_meeting_shub.name=Maniac's Meeting
+
 #TOOLTIPS
+tooltip.notes_shub=Shub-Niggurath
+tooltip.notes_hastur=Hastur
+tooltip.notes_cthulhu=Cthulhu
+
 tooltip.focus=Focus Stats:
 tooltip.focus.power.immense=Grants immense amounts of Focal Power
 tooltip.focus.power.greater=Grants greater amounts of Focal Power

@@ -21,7 +21,7 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 import java.util.Random;
 
 public class WorldGenShubShrine extends WorldGenerator {
-    private static final Biome.SpawnListEntry ENTRY_CULTISTS_SHUB = new Biome.SpawnListEntry(EntityShubCultist.class, 5, 2, 5);
+    private static final Biome.SpawnListEntry ENTRY_CULTISTS_SHUB = new Biome.SpawnListEntry(EntityShubCultist.class, 1, 2, 5);
     public WorldGenShubShrine() {
         super(true);
     }

@@ -1,11 +1,12 @@
 {
-  "name": "The Black Goat",
-  "icon": "miskatonicmysteries:textures/gui/icons/shub.png",
-  "category": "goos",
+  "name": "What is she?",
+  "icon": "miskatonicmysteries:research_notes_shubniggurath",
+  "sortnum": 1,
+  "category": "knowledge",
   "pages": [
     {
       "type": "text",
-      "text": "The Black Goat of the Woods with a Thousand Young is one of the most widely worshipped of all the Gods. She is hungry, she gives life, and she takes life. Nature is not just about life and peace, nature is also predatory. The Goat’s name is invoked in wild forest rites, in mad incantations into the night."
+      "text": "Who is the Black Goat in the Woods? Is she really just an entity somewhere beyond this plane? Probably not; the Murals tell another tale, a tale of two Goats, one Truth and, of course, Thousand Young."
     },
     {
       "type": "text",

@@ -29,7 +29,7 @@
     {
       "type": "crafting",
       "recipe": "miskatonicmysteries:blotter",
-      "text": "Taking any of these substances will induce Mania and may lower Sanity as a result. Other substances are also known, such as Flesh from the offspring of the Goat."
+      "text": "Taking any of these substances will induce Mania and may lower Sanity as a result. Other substances are also known, such as Flesh from the offspring of the Goat; however, only $(marked)Blotter$() may be used to get Villagers under the same effect."
     }
   ]
 }
