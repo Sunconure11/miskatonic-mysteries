@@ -23,6 +23,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -41,7 +42,6 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         super(worldIn);
         setSize(2.5F, 4.5F);
         experienceValue = 12;
-        //noClip...
     }
 
     @Nullable
@@ -143,6 +143,11 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
     }
 
     @Override
+    public boolean canEntityBeSeen(Entity entityIn) { //Eye see all
+        return world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().grow(15, 5, 15)).contains(entityIn);
+    }
+
+    @Override
     public Blessing getAssociatedBlessing() {
         return Blessing.SHUB;
     }
@@ -192,7 +197,6 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
 
         return flag;
     }
-
 
     @Override
     public boolean isEntityInsideOpaqueBlock() {
