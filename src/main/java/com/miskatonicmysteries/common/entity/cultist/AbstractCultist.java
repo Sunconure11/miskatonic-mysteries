@@ -100,28 +100,28 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     protected void initEntityAI() {
         if (aiSit == null)
-            this.aiSit = new EntityCultistAISit(this); //replace this with "cultist sit", which is bound to a block
+            this.aiSit = new EntityCultistAISit(this);
 
         if (cultistAIWander == null)
             this.cultistAIWander = new EntityCultistAIWander(this);
         this.tasks.addTask(1, new EntityCultistAITrade(this));
         this.tasks.addTask(2, new EntityAISwimming(this));
-        this.tasks.addTask(3, this.aiSit);// extend AIWander to also consider a second field: wander
-        this.tasks.addTask(4, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
-        this.tasks.addTask(5, new EntityAIAttackMelee(this, 1, true));
-        //fix cultists not being able to deal damage
-        this.tasks.addTask(6, new EntityAIFollowOwner(this, 1.5F, 4.0F, 8.0F));
-        this.tasks.addTask(7, new EntityAIMate(this, 1.0D)); //maybe?
-        this.tasks.addTask(8, this.cultistAIWander);
+        this.tasks.addTask(3, this.cultistAIWander);
+        this.tasks.addTask(4, new EntityCultistAIWanderAnywhere(this));
+        this.tasks.addTask(5, this.aiSit);// extend AIWander to also consider a second field: wander
+        this.tasks.addTask(6, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
+        this.tasks.addTask(7, new EntityAIAttackMelee(this, 1, true));
+        this.tasks.addTask(8, new EntityAIFollowOwner(this, 1.5F, 4.0F, 8.0F));
+        this.tasks.addTask(9, new EntityAIMate(this, 1.0D)); //maybe?
+
         this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 12.0F));
         this.tasks.addTask(11, new EntityAILookIdle(this));
 
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
-        this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntityPlayer.class, false, p -> BlessingCapability.Util.getBlessing((EntityPlayer) p) != getAssociatedBlessing()));
-        this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, AbstractCultist.class, false, c -> ((AbstractCultist) c).getAssociatedBlessing() != getAssociatedBlessing()));
-        this.targetTasks.addTask(6, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> l instanceof IHasAssociatedBlessing && ((IHasAssociatedBlessing) l).getAssociatedBlessing() != getAssociatedBlessing()));
+        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(3, new EntityAITargetNonTamed(this, EntityPlayer.class, false, p -> BlessingCapability.Util.getBlessing((EntityPlayer) p) != getAssociatedBlessing()));
+        this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, AbstractCultist.class, false, c -> ((AbstractCultist) c).getAssociatedBlessing() != getAssociatedBlessing()));
+        this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> l instanceof IHasAssociatedBlessing && ((IHasAssociatedBlessing) l).getAssociatedBlessing() != getAssociatedBlessing()));
         //will also attack pillagers and their beasts in 1.14
     }
 
@@ -209,7 +209,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public boolean isSitting() {
-        return dataManager.get(FOLLOW_MODE) == 1;
+        return dataManager.get(FOLLOW_MODE) >= 1;
     }
 
     public boolean isNeutral() {
@@ -240,10 +240,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         setArmsFolded(compound.getBoolean("armsFolded"));
-        setWandering(compound.getBoolean("wandering"));
-        if (aiSit instanceof EntityCultistAISit) {
-            this.setWandering(isWandering());
-        }
+        dataManager.set(FOLLOW_MODE, compound.getInteger("followMode"));
         setTamed(compound.getBoolean("tamed"));
 
         if (compound.hasKey("recipes"))
@@ -254,7 +251,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         compound.setBoolean("armsFolded", armsFolded());
-        compound.setBoolean("wandering", isWandering());
+        compound.setInteger("followMode", dataManager.get(FOLLOW_MODE));
         compound.setBoolean("tamed", isTamed());
         if (buyingList != null)
             compound.setTag("recipes", buyingList.getRecipiesAsTags());
@@ -395,8 +392,22 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         protected AbstractCultist cultist;
 
         public EntityCultistAIWander(AbstractCultist entityIn) {
-            super(entityIn, 1.0D);
+            super(entityIn, 0.6D);
             this.cultist = entityIn;
+        }
+
+        @Override
+        public boolean shouldExecute() {
+            return cultist.isWandering() && super.shouldExecute();
+        }
+    }
+
+    static class EntityCultistAIWanderAnywhere extends EntityAIWander {
+        protected AbstractCultist cultist;
+
+        public EntityCultistAIWanderAnywhere(AbstractCultist creatureIn) {
+            super(creatureIn, 0.6D, 40);
+            this.cultist = creatureIn;
         }
 
         @Override

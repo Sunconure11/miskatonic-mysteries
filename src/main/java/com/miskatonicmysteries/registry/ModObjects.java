@@ -106,6 +106,8 @@ public class ModObjects {
 
     public static Item gold_oceanic = Util.create("gold_oceanic");
 
+    public static Item incantation_gate_key = Util.create("incantation_gate_key");
+
     public static Item necronomicon = Util.create(new ItemMMBook("necronomicon", Blessing.NONE), "necronomicon");
 
     public static BannerPattern YELLOW_SIGN_PATTERN = null;
@@ -121,6 +123,7 @@ public class ModObjects {
 
     public static void addFoci(){
         OreDictRiteFocus.create(0.2F, 75, 2, RiteFocus.EnumType.HELD, "goldOceanic");
+        OreDictRiteFocus.create(0.25F, 100, 1, RiteFocus.EnumType.HELD, "incantationGateKey");
         OreDictRiteFocus.create(0.1F, 50, 3, RiteFocus.EnumType.HELD, "gemDiamond", "gemEmerald", "gem");
         OreDictRiteFocus.create(0.15F, 100, 1, RiteFocus.EnumType.HELD, "netherStar");
         OreDictRiteFocus.create(0.1F, 35, 2, RiteFocus.EnumType.HELD, "daggerMM", "daggerMagic");

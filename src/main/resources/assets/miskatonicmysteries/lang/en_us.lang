@@ -82,6 +82,8 @@ item.blotter.name=Blotter
 
 item.infested_wheat.name=Infested Wheat
 
+item.incantation_gate_key.name=Incantation of the Gate-and-Key
+
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath
 entity.hastur.name=Hastur

@@ -38,6 +38,7 @@ public class BlockAltar extends BlockTileEntity<TileEntityAltar> {
     public BlockAltar() {
         super(Material.ROCK);
         setLightOpacity(0);
+        setLightLevel(4);
     }
 
     @Override

@@ -66,35 +66,36 @@ public class RiteEldritchTrap extends OctagramRite {
             for (int i = 0; i < 66; i++) {
                 spawnSpawnParticles(octagram);
             }
-        }
-        List<EntityLivingBase> triggers = octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(2, 0, 2).offset(octagram.getPos()), l -> l instanceof IMob || l instanceof EntityPlayer);
-        for (int i = 0; i < 4 + world.rand.nextInt(4) + triggers.size(); i++) {
-            EntityLiving entity = null;
-            switch (world.rand.nextInt(2)) {
-                case 0: {
-                    entity = new EntityZombie(world);
-                    if (BiomeDictionary.hasType(world.getBiome(octagram.getPos()), BiomeDictionary.Type.SANDY)) {
-                        entity = new EntityHusk(world);
-                    }//spawn Drowned in 1.14
-                    break;
-                }
-                case 1: {
-                    entity = new EntitySpider(world);
-                    if (world.rand.nextInt(3) == 0) {
-                        entity = new EntityCaveSpider(world);
+        }else {
+            List<EntityLivingBase> triggers = octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(2, 0, 2).offset(octagram.getPos()), l -> l instanceof IMob || l instanceof EntityPlayer);
+            for (int i = 0; i < 4 + world.rand.nextInt(4) + triggers.size(); i++) {
+                EntityLiving entity = null;
+                switch (world.rand.nextInt(2)) {
+                    case 0: {
+                        entity = new EntityZombie(world);
+                        if (BiomeDictionary.hasType(world.getBiome(octagram.getPos()), BiomeDictionary.Type.SANDY)) {
+                            entity = new EntityHusk(world);
+                        }//spawn Drowned in 1.14
+                        break;
                     }
-                    break;
+                    case 1: {
+                        entity = new EntitySpider(world);
+                        if (world.rand.nextInt(3) == 0) {
+                            entity = new EntityCaveSpider(world);
+                        }
+                        break;
+                    }
                 }
-            }
 
-            if (entity != null) {
-                entity.setDropItemsWhenDead(false);
-                if (!entity.isImmuneToFire())
-                    entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 1000, 0));
-                entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1000, 0));
-                entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 1000, 0));
-                entity.setAttackTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
-                WorldGenUtil.spawnEntity(entity, world, octagram.getPos().up(), 2 + world.rand.nextInt(10), 5);
+                if (entity != null) {
+                    entity.setDropItemsWhenDead(false);
+                    if (!entity.isImmuneToFire())
+                        entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 1000, 0));
+                    entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1000, 0));
+                    entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 1000, 0));
+                    entity.setAttackTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
+                    WorldGenUtil.spawnEntity(entity, world, octagram.getPos().up(), 2 + world.rand.nextInt(10), 5);
+                }
             }
         }
     }

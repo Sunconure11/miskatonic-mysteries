@@ -15,6 +15,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,13 +32,20 @@ public class RiteManiacsMeeting extends OctagramRite {
 
     @Override
     public boolean test(TileEntityOctagram octagram) {
-        return !octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(5, 2, 5).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null).isEmpty();
+        return !octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(6, 2, 6).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null).isEmpty();
     }
 
     @Override
     public void doRitual(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
+        World world = octagram.getWorld();
         if (octagram.getWorld().isRemote)
             spawnParticles(octagram);
+        else{
+            List<EntityVillager> villagersInside = octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(4, 2, 4).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null);
+           octagram.getWorld().getEntitiesWithinAABB(EntityVillager.class, Block.FULL_BLOCK_AABB.grow(7, 2, 7).offset(octagram.getPos()), v -> v.getActivePotionEffect(ModPotions.mania) != null && !villagersInside.contains(v)).forEach(v -> {
+                v.getMoveHelper().setMoveTo(octagram.getPos().getX() + 0.5F + world.rand.nextGaussian(), octagram.getPos().getY(), octagram.getPos().getZ() + 0.5F + world.rand.nextGaussian(), 1F);
+            });
+        }
     }
 
     @SideOnly(Side.CLIENT)

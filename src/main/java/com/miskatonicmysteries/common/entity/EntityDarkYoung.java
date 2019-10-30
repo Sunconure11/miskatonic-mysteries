@@ -22,6 +22,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.GetCollisionBoxesEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nullable;
 
@@ -35,7 +38,9 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         super(worldIn);
         setSize(2.5F, 4.5F);
         experienceValue = 12;
+        //noClip...
     }
+
 
     @Override
     public void move(MoverType type, double x, double y, double z) {

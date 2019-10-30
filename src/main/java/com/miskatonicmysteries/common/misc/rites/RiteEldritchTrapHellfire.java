@@ -46,7 +46,7 @@ public class RiteEldritchTrapHellfire extends OctagramRite {
     @SideOnly(Side.CLIENT)
     private void spawnParticles(TileEntityOctagram octagram) {
         Particle p = new ParticleSpell.MobFactory().createParticle(0, octagram.getWorld(), octagram.getPos().getX() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 2), octagram.getPos().getY(), octagram.getPos().getZ() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 2), 0, 0, 0);
-        p.setRBGColorF(0.05F, 0.5F, 0.4F);
+        p.setRBGColorF(0.5F, 0.3F, 0.0F);
         Minecraft.getMinecraft().effectRenderer.addEffect(p);
     }
 
@@ -65,38 +65,36 @@ public class RiteEldritchTrapHellfire extends OctagramRite {
             for (int i = 0; i < 66; i++) {
                 spawnSpawnParticles(octagram);
             }
-        }
-        List<EntityLivingBase> triggers = octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(2, 0, 2).offset(octagram.getPos()), l -> l instanceof IMob || l instanceof EntityPlayer);
-        for (int i = 0; i < 4 + world.rand.nextInt(4) + triggers.size(); i++) {
-            EntityLiving entity = null;
-            switch (world.rand.nextInt(3)) {
-                case 0: {
-                    entity = new EntityPigZombie(world);
-                    entity.setRevengeTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
-                    break;
-                }
-                case 1: {
-                    entity = new EntityBlaze(world);
-                    if (world.rand.nextInt(3) == 0) {
-                        entity = new EntityCaveSpider(world);
+        }else {
+            List<EntityLivingBase> triggers = octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(2, 0, 2).offset(octagram.getPos()), l -> l instanceof IMob || l instanceof EntityPlayer);
+            for (int i = 0; i < 4 + world.rand.nextInt(4) + triggers.size(); i++) {
+                EntityLiving entity = null;
+                switch (world.rand.nextInt(3)) {
+                    case 0: {
+                        entity = new EntityPigZombie(world);
+                        entity.setRevengeTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
+                        break;
                     }
-                    break;
-                }
-                case 2: {
-                    entity = new EntityMagmaCube(world);
-                    if (world.rand.nextInt(8) == 0) {
-                        entity = new EntityGhast(world);
+                    case 1: {
+                        entity = new EntityBlaze(world);
+                        break;
                     }
-                    break;
+                    case 2: {
+                        entity = new EntityMagmaCube(world);
+                        if (world.rand.nextInt(8) == 0) {
+                            entity = new EntityGhast(world);
+                        }
+                        break;
+                    }
                 }
-            }
 
-            if (entity != null) {
-                entity.setDropItemsWhenDead(false);
-                entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1000, 0));
-                entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 1000, 0));
-                entity.setAttackTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
-                WorldGenUtil.spawnEntity(entity, world, octagram.getPos().up(), 2 + world.rand.nextInt(10), 5);
+                if (entity != null) {
+                    entity.setDropItemsWhenDead(false);
+                    entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1000, 0));
+                    entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 1000, 0));
+                    entity.setAttackTarget(triggers.isEmpty() ? trigger : triggers.get(world.rand.nextInt(triggers.size())));
+                    WorldGenUtil.spawnEntity(entity, world, octagram.getPos().up(), 2 + world.rand.nextInt(10), 5);
+                }
             }
         }
     }

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class LootHandler {
-    private static final List<String> TABLES = ImmutableList.of(
+    private static final List<String> TABLES_GOLD_OCEANIC = ImmutableList.of(
             "abandoned_mineshaft",
             "simple_dungeon",
             "village_blacksmith",
@@ -31,8 +31,15 @@ public class LootHandler {
             "stronghold_crossing"
     );
 
+    private static final List<String> TABLES_INCANTATION = ImmutableList.of(
+            "simple_dungeon",
+            "stronghold_crossing",
+            "stronghold_library"
+    );
+
     public LootHandler() {
         LootTableList.register(new ResourceLocation(MiskatonicMysteries.MODID, "oceanic_gold"));
+        LootTableList.register(new ResourceLocation(MiskatonicMysteries.MODID, "incantation_gate_key"));
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -49,9 +56,13 @@ public class LootHandler {
 
         if (name.startsWith(prefix)) {
             String file = name.substring(name.indexOf(prefix) + prefix.length());
-            if (TABLES.contains(file)) {
+            if (TABLES_GOLD_OCEANIC.contains(file)) {
                 event.getTable().addPool(new LootPool(new LootEntry[]{getLootTable("oceanic_gold")},
                         new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "oceanic_gold_inject"));
+            }
+            if (TABLES_INCANTATION.contains(file)) {
+                event.getTable().addPool(new LootPool(new LootEntry[]{getLootTable("incantation_gate_key")},
+                        new LootCondition[0], new RandomValueRange(1), new RandomValueRange(0, 1), "incantation_gate_key_inject"));
             }
         }
     }

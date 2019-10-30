@@ -36,7 +36,7 @@ import java.util.List;
 public class RiteBlackMass extends OctagramRite {
     private static final Biome.SpawnListEntry DARK_YOUNG_SPAWN = new Biome.SpawnListEntry(EntityDarkYoung.class, 1, 1, 2);
     public RiteBlackMass() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "black_mass"), 200, 50, 600, EnumType.FOCUSED, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata())), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata())));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "black_mass"), 200, 50, 200, EnumType.FOCUSED, Blessing.SHUB, Blessing.SHUB, Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.MUTTON), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(Items.ENDER_PEARL), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata())), Ingredient.fromStacks(new ItemStack(Blocks.WOOL, 1, EnumDyeColor.BLACK.getMetadata())));
     }
 
     @Override

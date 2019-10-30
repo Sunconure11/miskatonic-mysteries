@@ -193,6 +193,8 @@ public class MiskatonicMysteries {
         OreDictionary.registerOre("oreGold", ModObjects.gold_oceanic);
         OreDictionary.registerOre("goldOceanic", ModObjects.gold_oceanic);
 
+        OreDictionary.registerOre("incantationGateKey", ModObjects.incantation_gate_key);
+
 
         OreDictionary.registerOre("daggerMM", ModObjects.black_goats_gutting_dagger);
         OreDictionary.registerOre("daggerMM", ModObjects.black_goats_horned_dagger);
