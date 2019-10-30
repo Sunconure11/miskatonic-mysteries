@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.handler;
 
 import com.google.common.collect.ImmutableList;
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.EntityLivingBase;
@@ -92,7 +93,7 @@ public class LootHandler {
     @SubscribeEvent
     public void dropInfestedWheat(BlockEvent.HarvestDropsEvent breakEvent) {
         if (breakEvent.getState() != null && breakEvent.getHarvester() != null) {
-            if (breakEvent.getHarvester().world.rand.nextInt(40) == 0 && breakEvent.getState().getBlock() == Blocks.WHEAT && ((BlockCrops) Blocks.WHEAT).isMaxAge(breakEvent.getState())) {
+            if (breakEvent.getHarvester().world.rand.nextFloat() < ModConfig.misc.infestedWheatChance && breakEvent.getState().getBlock() == Blocks.WHEAT && ((BlockCrops) Blocks.WHEAT).isMaxAge(breakEvent.getState())) {
                 breakEvent.getDrops().clear();
                 breakEvent.getDrops().add(new ItemStack(ModObjects.infested_wheat));
             }

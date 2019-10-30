@@ -24,7 +24,7 @@ public class SpellMania extends Spell {
     @Override
     public boolean check(EntityPlayer caster) {
         if (super.check(caster)){
-            return caster.experienceLevel >= 3;
+            return caster.experienceLevel >= 1;
         }
         return false;
     }
@@ -58,6 +58,6 @@ public class SpellMania extends Spell {
     @Override
     public void price(EntityPlayer caster) {
         caster.inventory.clearMatchingItems(ModObjects.infested_wheat, 0, 1, null);
-        caster.addExperienceLevel(-3);
+        caster.addExperienceLevel(-1);
     }
 }

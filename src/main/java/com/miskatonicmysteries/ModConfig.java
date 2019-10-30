@@ -27,6 +27,10 @@ public class ModConfig {
     @Config.Comment("Config settings on this mod's entities.")
     public static final EntitySettings entities = new EntitySettings();
 
+    @Config.LangKey("config.category_misc")
+    @Config.Comment("Config settings on various aspects of this mod.")
+    public static final MiscSettings misc = new MiscSettings();
+
 
     public static class Client{
         @Config.Comment("Set this to false to disable the shaders in this mod.")
@@ -53,6 +57,7 @@ public class ModConfig {
         @Config.LangKey("config.insanity_interval")
         public int insanityInterval = 2000;
     }
+
 
     public static class WorldGen{
         @Config.Comment("Determines the chance for the Black Goat's shrines to spawn. Set to 1 to spawn a shrine in (almost) every chunk it can spawn in, set to 0 to disable.")
@@ -97,6 +102,12 @@ public class ModConfig {
         @Config.LangKey("config.darkYoungBiomes")
         public String[] darkYoungBiomes = {BiomeDictionary.Type.FOREST.getName(), BiomeDictionary.Type.SPOOKY.getName()};
 
+    }
+
+    public static class MiscSettings {
+        @Config.Comment("Determines the chance for Infested Wheat to drop instead of Wheat from wheat crops. Set to 1 drop one one for every wheat crop. Set to 0 to disable Infested Wheat drops.")
+        @Config.LangKey("config.infestedWheatChance")
+        public float infestedWheatChance = 1 / 40F;
     }
 
     @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)

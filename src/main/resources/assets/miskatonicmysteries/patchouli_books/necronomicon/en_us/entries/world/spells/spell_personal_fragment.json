@@ -1,0 +1,16 @@
+{
+  "name": "Personal Fragment",
+  "category": "spells",
+  "icon": "miskatonicmysteries:textures/misc/spell/personal_fragment.png",
+  "pages": [
+    {
+      "type": "miskatonicmysteries:rite",
+      "rite": "miskatonicmysteries:learn_spell_personal_fragment",
+      "text": "This Rite will engrave the $(marked)Personal Fragment$() Spell into the caster's mind."
+    },
+    {
+      "type": "text",
+      "text": "The Rite for learning this spell requires a huge amount of Focal Power; the Personal Fragment Spell will fire a projectile from the soul. The damage of this projectile will increase with the caster's insanity. Other physical or mental conditions of the caster may affect the projectile, too."
+    }
+  ]
+}
