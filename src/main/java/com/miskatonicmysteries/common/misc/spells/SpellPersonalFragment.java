@@ -7,13 +7,14 @@ import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.entity.projectile.EntityPersonalProjectile;
 import com.miskatonicmysteries.common.entity.projectile.EntityWaterProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBow;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
 public class SpellPersonalFragment extends Spell {
     public SpellPersonalFragment() {
         super(new ResourceLocation(MiskatonicMysteries.MODID, "personal_fragment"));
-        this.castTime = 60;
+        this.castTime = 10;
         this.cooldownTime = 200;
     }
 
@@ -25,7 +26,7 @@ public class SpellPersonalFragment extends Spell {
     @Override
     public void cast(EntityPlayer caster) {
         EntityPersonalProjectile projectile = new EntityPersonalProjectile(caster.world, caster);
-        projectile.shoot(caster, caster.rotationPitch, caster.rotationYawHead, 0, 1F, 0F);
+        projectile.shoot(caster, caster.rotationPitch, caster.rotationYaw, 0, 1F, 0F);
         float damageFactor = 9 * (1 - Sanity.Util.getSanity(caster) / (float) Sanity.SANITY_MAX);
         projectile.setDamage(3 + damageFactor);
         if (!caster.world.isRemote)
@@ -35,6 +36,6 @@ public class SpellPersonalFragment extends Spell {
 
     @Override
     public void price(EntityPlayer caster) {
-        caster.attackEntityFrom(DamageSource.OUT_OF_WORLD, 2);
+        caster.attackEntityFrom(MiskatonicMysteries.SLEEP, 2);
     }
 }

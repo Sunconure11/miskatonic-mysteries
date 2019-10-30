@@ -10,12 +10,12 @@ import net.minecraft.world.World;
 
 public class InsanityEffectResistance extends InsanityEffect {
     public InsanityEffectResistance() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "resistance"), 0.01F, 70, EnumTrigger.HIT);
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "resistance"), 0.005F, 70, EnumTrigger.HIT);
     }
 
     @Override
     public float getChance(World world, EntityPlayer player, ISanity sanity) {
-        return super.getChance(world, player, sanity) * (player.getHealth() <= 6 ? 30 : (1 - player.getHealth() / player.getMaxHealth()) * 4);
+        return super.getChance(world, player, sanity) * (player.getHealth() <= 6 ? 30 : (1 - player.getHealth() / player.getMaxHealth()) * 2);
     }
 
     @Override

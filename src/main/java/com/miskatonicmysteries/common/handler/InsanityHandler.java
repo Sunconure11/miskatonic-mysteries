@@ -75,7 +75,7 @@ public class InsanityHandler {
 
     @SubscribeEvent
     public static void onHurt(LivingAttackEvent event) {
-        if (event.getEntityLiving() instanceof EntityPlayer && !event.getSource().isDamageAbsolute()) {
+        if (event.getEntityLiving() instanceof EntityPlayer && !event.getSource().isUnblockable()) {
             MinecraftForge.EVENT_BUS.post(new InsanityEvent((EntityPlayer) event.getEntityLiving(), Sanity.Util.getSanityCapability((EntityPlayer) event.getEntityLiving()), event));
         }
     }

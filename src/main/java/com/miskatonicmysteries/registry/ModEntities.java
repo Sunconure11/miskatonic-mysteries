@@ -8,6 +8,7 @@ import com.miskatonicmysteries.common.entity.cultist.EntityHasturCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import com.miskatonicmysteries.common.entity.goo.EntityHastur;
 import com.miskatonicmysteries.common.entity.goo.EntityShub;
+import com.miskatonicmysteries.common.entity.projectile.EntityPersonalProjectile;
 import com.miskatonicmysteries.common.entity.projectile.EntityWaterProjectile;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -34,6 +35,7 @@ public class ModEntities {
         registerEntity("hastur", EntityHastur.class, 128);
 
         registerEntity("projectile_water", EntityWaterProjectile.class, 16);
+        registerEntity("projectile_personal", EntityPersonalProjectile.class, 16);
 
         addNaturalSpawns();
     }
@@ -50,6 +52,13 @@ public class ModEntities {
             @Nullable
             @Override
             protected ResourceLocation getEntityTexture(EntityWaterProjectile entity) {
+                return null;
+            }
+        });
+        RenderingRegistry.registerEntityRenderingHandler(EntityPersonalProjectile.class, manager -> new Render<EntityPersonalProjectile>(manager) {
+            @Nullable
+            @Override
+            protected ResourceLocation getEntityTexture(EntityPersonalProjectile entity) {
                 return null;
             }
         });
