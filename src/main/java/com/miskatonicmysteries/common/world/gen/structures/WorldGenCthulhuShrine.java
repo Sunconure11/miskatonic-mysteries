@@ -5,6 +5,7 @@ import com.miskatonicmysteries.common.world.gen.processor.CthulhuStructureProces
 import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -49,7 +50,7 @@ public class WorldGenCthulhuShrine extends WorldGenerator {
         boolean centerZ = template.getSize().getZ() % 2 == 0;
         WorldGenUtil.generateDome(Math.round((float) template.getSize().getX() / 2F) + 3, template.getSize().getY() + 4, Math.round((float) template.getSize().getZ() / 2F) + 3, position.add(0, y, 0), worldIn);//position.add((float)template.getSize().getX() / 2F, -1, (float)template.getSize().getZ() / 2F), worldIn);
         PlacementSettings placementsettings = (new PlacementSettings()).setRotation(Rotation.NONE).setIntegrity(1);//.setBoundingBox(new StructureBoundingBox(position, position.add(template.getSize())));
-        template.addBlocksToWorld(worldIn, position.subtract(offset).add(centerX ? 1 : 2, y, centerZ ? 1 : 2), new CthulhuStructureProcessor(position.getY() + y - 1), placementsettings, 2);
+        template.addBlocksToWorld(worldIn, position.subtract(offset).add(centerX ? 1 : 2, y, centerZ ? 1 : 2), new CthulhuStructureProcessor(position.getY() + y - 1, Rotation.NONE, Mirror.NONE), placementsettings, 2);
         return true;
     }
 }

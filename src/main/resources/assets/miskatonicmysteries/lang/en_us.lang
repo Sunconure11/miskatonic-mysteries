@@ -119,6 +119,9 @@ config.darkYoungGroupMax=Dark Young Group Maximum
 config.darkYoungGroupMin=Dark Young Group Minimum
 config.darkYoungBiomes=Dark Young Biomes
 
+config.category_misc=Miscellaneous
+config.infestedWheatChance=Infested Wheat Chance
+
 #COMMANDS
 commands.miskmyst.usage=miskatonicmysteries <player> <command> <value>
 command.miskmyst.player_null=§cPlayer %s could not be found

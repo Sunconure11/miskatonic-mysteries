@@ -6,6 +6,8 @@ import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.Template;
@@ -13,8 +15,8 @@ import net.minecraft.world.gen.structure.template.Template;
 import javax.annotation.Nullable;
 
 public class ShubStructureProcessor extends OldStructureProcessor {
-    public ShubStructureProcessor(int groundY, boolean coldBiomeIn) {
-        super(groundY, false, true, !coldBiomeIn, Biomes.FOREST);
+    public ShubStructureProcessor(int groundY, boolean coldBiomeIn, Rotation rotation, Mirror mirror) {
+        super(groundY, false, true, !coldBiomeIn, Biomes.FOREST, rotation, mirror);
     }
 
     @Nullable

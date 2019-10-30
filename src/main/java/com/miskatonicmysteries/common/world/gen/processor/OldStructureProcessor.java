@@ -1,8 +1,12 @@
 package com.miskatonicmysteries.common.world.gen.processor;
 
+import com.miskatonicmysteries.common.block.BlockMural;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -17,12 +21,17 @@ public class OldStructureProcessor implements ITemplateProcessor {
     protected  boolean crack = false, growMoss = false;
     protected Biome biome = Biomes.FOREST;
 
-    public OldStructureProcessor(int groundY, boolean placeDirt, boolean crack, boolean growMoss, Biome biomeIn) {
+    protected Mirror mirror;
+    protected Rotation rotation;
+
+    public OldStructureProcessor(int groundY, boolean placeDirt, boolean crack, boolean growMoss, Biome biomeIn, Rotation rotation, Mirror mirror) {
         this.groundY = groundY;
         this.placeDirt = placeDirt;
         this.crack = crack;
         this.growMoss = growMoss;
         this.biome = biomeIn;
+        this.mirror = mirror;
+        this.rotation = rotation;
     }
 
     @Nullable
@@ -44,6 +53,12 @@ public class OldStructureProcessor implements ITemplateProcessor {
             if (growMoss && worldIn.rand.nextBoolean()){
                 blockInfoIn = new Template.BlockInfo(pos, Blocks.MOSSY_COBBLESTONE.getDefaultState(), null);
             }
+        }
+
+        if (blockInfoIn.blockState.getBlock() instanceof BlockMural){
+            EnumFacing facing = blockInfoIn.blockState.getValue(BlockMural.FACING);
+            blockInfoIn = new Template.BlockInfo(pos, blockInfoIn.blockState.withProperty(BlockMural.FACING, mirror.mirror(rotation.rotate(facing))), null);
+
         }
         if (placeDirt && pos.getY() == groundY){
             worldIn.setBlockState(pos.down(), worldIn.getBiome(pos).topBlock);

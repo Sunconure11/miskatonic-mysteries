@@ -10,6 +10,8 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.Template;
@@ -18,8 +20,8 @@ import net.minecraftforge.common.BiomeDictionary;
 import javax.annotation.Nullable;
 
 public class HasturStructureProcessor extends OldStructureProcessor {
-    public HasturStructureProcessor(int groundY) {
-        super(groundY, true, true, false, Biomes.FOREST);
+    public HasturStructureProcessor(int groundY, Rotation rotation, Mirror mirror) {
+        super(groundY, true, true, false, Biomes.FOREST, rotation, mirror);
     }
 
     @Nullable

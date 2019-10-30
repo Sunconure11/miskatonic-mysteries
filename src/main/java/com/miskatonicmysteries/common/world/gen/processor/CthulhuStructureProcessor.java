@@ -7,6 +7,8 @@ import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.template.Template;
@@ -14,8 +16,8 @@ import net.minecraft.world.gen.structure.template.Template;
 import javax.annotation.Nullable;
 
 public class CthulhuStructureProcessor extends OldStructureProcessor {
-    public CthulhuStructureProcessor(int groundY) {
-        super(groundY, false, true, true, Biomes.OCEAN);
+    public CthulhuStructureProcessor(int groundY, Rotation rotation, Mirror mirror) {
+        super(groundY, false, true, true, Biomes.OCEAN, rotation, mirror);
     }
 
     @Nullable

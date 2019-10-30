@@ -38,7 +38,8 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
     }
 
     public static VillageComponentHasturShrine createPiece(StructureVillagePieces.Start start, List<StructureComponent> p_175854_1_, Random rand, int p1, int p2, int p3, EnumFacing p4, int p5){//List pieces, int p1, int p2, int p3, EnumFacing p4){
-        StructureBoundingBox maxBoundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, MAX_X, MAX_Y, MAX_Z, p4);
+        StructureBoundingBox maxBoundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, MAX_X, MAX_Y, MAX_Z, p4); //select that stuff earlier
+
         return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(p_175854_1_, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4) : null;
     }
 
@@ -88,9 +89,9 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
                     this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, 0, z, boundingBox);
                 }
             }
-
-            template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl), settings, 2);
-            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX(), position.getZ() - 5, 7, 7, randomIn);
+            BlockPos basePos = template.getZeroPositionWithTransform(position, mirror, rotation);
+            template.addBlocksToWorld(worldIn, basePos, new HasturStructureProcessor(averageGroundLvl, rotation, mirror), settings, 2);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, basePos.getX(), basePos.getZ() - 5, 7, 7, randomIn);
             return true;
         }
         return false;
