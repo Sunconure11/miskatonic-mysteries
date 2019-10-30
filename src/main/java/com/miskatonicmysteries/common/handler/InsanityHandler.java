@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -58,7 +59,7 @@ public class InsanityHandler {
     }
 
     public static EntityLivingBase getFittingMob(World world, BlockPos pos, boolean friendlyOnes) {
-        List<Biome.SpawnListEntry> spawns = world.getBiome(pos).getSpawnableList(EnumCreatureType.MONSTER);
+        List<Biome.SpawnListEntry> spawns = new ArrayList<>(world.getBiome(pos).getSpawnableList(EnumCreatureType.MONSTER));
         if (friendlyOnes)
             spawns.addAll(world.getBiome(pos).getSpawnableList(EnumCreatureType.CREATURE));
 
@@ -66,7 +67,7 @@ public class InsanityHandler {
             return new EntityZombie(world);
         } else {
             try {
-                return spawns.get(world.rand.nextInt(spawns.size())).entityClass.getConstructor(World.class).newInstance(world);
+               return spawns.get(world.rand.nextInt(spawns.size())).newInstance(world);
             } catch (Exception e) {
                 return new EntityZombie(world);
             }

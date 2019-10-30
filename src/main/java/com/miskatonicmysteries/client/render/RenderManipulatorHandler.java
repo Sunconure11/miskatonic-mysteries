@@ -63,11 +63,10 @@ public class RenderManipulatorHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onRender(RenderLivingEvent.Pre event) {
-        if (mobMob.get(event.getEntity().getEntityId()) != null) {
+        if (mobMob.containsKey(event.getEntity().getEntityId())) {
             event.setCanceled(true);
-
             EntityLivingBase entity = mobMob.get(event.getEntity().getEntityId());
-            entity.renderYawOffset = event.getEntity().renderYawOffset;
+             entity.renderYawOffset = event.getEntity().renderYawOffset;
             entity.prevRenderYawOffset = event.getEntity().prevRenderYawOffset;
             entity.cameraPitch = event.getEntity().cameraPitch;
             entity.posX = event.getEntity().posX;
