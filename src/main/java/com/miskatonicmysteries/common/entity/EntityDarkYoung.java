@@ -5,6 +5,10 @@ import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
@@ -22,13 +26,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.GetCollisionBoxesEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart, IHasAssociatedBlessing { //EntityMob
+public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart, IHasAssociatedBlessing, IIgnoreMaterials { //EntityMob
     private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(EntityDarkYoung.class, DataSerializers.VARINT);
 
     //  public MultiPartEntityPart[] tentacleSegments;
@@ -39,13 +42,6 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         setSize(2.5F, 4.5F);
         experienceValue = 12;
         //noClip...
-    }
-
-
-    @Override
-    public void move(MoverType type, double x, double y, double z) {
-        super.move(type, x, y, z);
-        doBlockCollisions();
     }
 
     @Nullable
@@ -195,6 +191,17 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         }
 
         return flag;
+    }
+
+
+    @Override
+    public boolean isEntityInsideOpaqueBlock() {
+        return false;
+    }
+
+    @Override
+    public boolean checkIgnore(IBlockState state) {
+        return state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLeaves;
     }
 
     public static class EntityDarkYoungAIAttackMelee extends EntityAIAttackMelee {

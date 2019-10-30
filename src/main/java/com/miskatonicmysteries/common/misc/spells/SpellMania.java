@@ -18,7 +18,7 @@ public class SpellMania extends Spell {
     public SpellMania() {
         super(new ResourceLocation(MiskatonicMysteries.MODID, "spell_mania"), Ingredient.fromItem(ModObjects.infested_wheat));
         this.castTime = 80;
-        this.cooldownTime = 20 * 60;
+        this.cooldownTime = 400;
     }
 
     @Override

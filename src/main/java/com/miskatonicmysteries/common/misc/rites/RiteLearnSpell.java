@@ -43,7 +43,7 @@ public class RiteLearnSpell extends OctagramRite {
             caster = players.get(0);
         }
         if (caster != null){
-            caster.move(MoverType.SELF, (octagram.getPos().getX() + 0.5F - caster.posX) / 20F, (octagram.getPos().getY() + 0.2F - caster.posY) / 20F,(octagram.getPos().getZ() - caster.posZ) / 20F);
+            caster.move(MoverType.SELF, (octagram.getPos().getX() + 0.5F - caster.width / 2F - caster.posX) / 20F, (octagram.getPos().getY() + 0.2F - caster.posY) / 20F,(octagram.getPos().getZ() + 0.5F - caster.width / 2F- caster.posZ) / 20F);
         }
         if (octagram.getWorld().isRemote)
             spawnParticles(octagram, caster);
