@@ -32,6 +32,7 @@ public class ModRegistries {
     public static Spell REGENERATION;
     public static Spell FEAST;
     public static Spell SPELL_MANIA;
+    public static Spell PERSONAL_FRAGMENT;
 
     //Shub-Spells
     public static Spell GROWTH;
@@ -100,6 +101,7 @@ public class ModRegistries {
         REGENERATION = new SpellHeal();
         FEAST = new SpellFeast();
         SPELL_MANIA = new SpellMania();
+        PERSONAL_FRAGMENT = new SpellPersonalFragment();
 
         GROWTH = new SpellGrowth();
         YELLOW_SIGN = new SpellYellowSign();
