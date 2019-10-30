@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class EnchantmentRiteFocus extends RiteFocus {
     public EnchantmentRiteFocus() {
-        super(0.15F, 40, 4, EnumType.HELD);
+        super(0.15F, 20, 4, EnumType.HELD);
         this.selector = (s -> s instanceof ItemStack && !EnchantmentHelper.getEnchantments((ItemStack) s).isEmpty() || ((ItemStack)s).getItem() instanceof ItemEnchantedBook);
     }
 }

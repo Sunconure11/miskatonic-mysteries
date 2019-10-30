@@ -123,19 +123,19 @@ public class ModObjects {
 
     public static void addFoci(){
         OreDictRiteFocus.create(0.2F, 75, 2, RiteFocus.EnumType.HELD, "goldOceanic");
-        OreDictRiteFocus.create(0.25F, 100, 1, RiteFocus.EnumType.HELD, "incantationGateKey");
-        OreDictRiteFocus.create(0.1F, 50, 3, RiteFocus.EnumType.HELD, "gemDiamond", "gemEmerald", "gem");
-        OreDictRiteFocus.create(0.15F, 100, 1, RiteFocus.EnumType.HELD, "netherStar");
-        OreDictRiteFocus.create(0.1F, 35, 2, RiteFocus.EnumType.HELD, "daggerMM", "daggerMagic");
+        OreDictRiteFocus.create(0.25F, 75, 1, RiteFocus.EnumType.HELD, "incantationGateKey");
+        OreDictRiteFocus.create(0.1F, 35, 3, RiteFocus.EnumType.HELD, "gemDiamond", "gemEmerald", "gem");
+        OreDictRiteFocus.create(0.15F, 75, 1, RiteFocus.EnumType.HELD, "netherStar");
+        OreDictRiteFocus.create(0.1F, 25, 2, RiteFocus.EnumType.HELD, "daggerMM", "daggerMagic");
         RiteFocus.addFocus(new EnchantmentRiteFocus());
         RiteFocus.addFocus(new CandleRiteFocus());
-        BlockRiteFocus.create(0.15F, 50, 1, BlockAltar.class);
+        BlockRiteFocus.create(0.15F, 40, 1, BlockAltar.class);
 
-        RiteFocus.addFocus(new SkullRiteFocus(0, 0.1F, 30, 2));
-        RiteFocus.addFocus(new SkullRiteFocus(2, 0.1F, 30, 2));
-        RiteFocus.addFocus(new SkullRiteFocus(1, 0.15F, 50, 2));
-        RiteFocus.addFocus(new SkullRiteFocus(3, 0.15F, 50, 2));
-        RiteFocus.addFocus(new SkullRiteFocus(5, 0.2F, 120, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(0, 0.1F, 20, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(2, 0.1F, 20, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(1, 0.15F, 45, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(3, 0.15F, 45, 2));
+        RiteFocus.addFocus(new SkullRiteFocus(5, 0.2F, 100, 2));
 
          // Blocks.DIAMOND_BLOCK
         OreDictRiteFocus.create(0.2F, 120, 2, RiteFocus.EnumType.PLACED, "blockDiamond"); //see if that works at all... if it doesn't then well shit

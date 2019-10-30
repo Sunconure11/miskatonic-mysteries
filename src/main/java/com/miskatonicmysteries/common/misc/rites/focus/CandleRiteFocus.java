@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 public class CandleRiteFocus extends BlockRiteFocus {
     public CandleRiteFocus() {
-        super(0.1F, 10, 8, BlockCandles.class);
+        super(0.1F, 8, 7, BlockCandles.class);
     }
 
     @Override

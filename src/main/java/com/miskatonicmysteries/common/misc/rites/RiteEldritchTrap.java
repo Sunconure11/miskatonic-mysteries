@@ -30,7 +30,7 @@ import java.util.List;
 
 public class RiteEldritchTrap extends OctagramRite {
     public RiteEldritchTrap() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "eldritch_trap"), 100, 50, 200, EnumType.PRIMED, Blessing.NONE, Blessing.NONE, Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.SPIDER_EYE), Ingredient.fromItem(Items.SPIDER_EYE), Ingredient.fromItem(Items.GOLD_NUGGET), Ingredient.fromItem(Items.GOLD_NUGGET), Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)), Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "eldritch_trap"), 80, 70, 200, EnumType.PRIMED, Blessing.NONE, Blessing.NONE, Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromItem(Items.SPIDER_EYE), Ingredient.fromItem(Items.SPIDER_EYE), Ingredient.fromItem(Items.GOLD_NUGGET), Ingredient.fromItem(Items.GOLD_NUGGET), Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)), Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM)));
     }
 
     @Override
