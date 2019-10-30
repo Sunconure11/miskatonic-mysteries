@@ -42,7 +42,7 @@ public class WorldGenShubShrine extends WorldGenerator {
             BlockPos basePos = template.getZeroPositionWithTransform(position, Mirror.NONE, Rotation.NONE);
 
             template.addBlocksToWorld(worldIn, basePos, new ShubStructureProcessor(basePos.getY(), worldIn.getBiome(basePos).isSnowyBiome(), Rotation.NONE, Mirror.NONE), placementsettings, 2);
-            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_SHUB, worldIn, Math.round(basePos.getX() - template.getSize().getX() / 2F), Math.round(basePos.getZ() - template.getSize().getZ() / 2F), 7, 7, rand);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_SHUB, worldIn, Math.round(basePos.getX()), Math.round(basePos.getZ()), 7, 7, rand);
             return true;
         }
         return false;
