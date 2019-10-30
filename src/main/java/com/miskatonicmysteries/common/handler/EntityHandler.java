@@ -34,7 +34,7 @@ public class EntityHandler {
     public static void clipThruWood(GetCollisionBoxesEvent event){
         if (event.getEntity() instanceof IIgnoreMaterials){
             World world = event.getWorld();
-            event.getCollisionBoxesList().removeIf(box -> ((IIgnoreMaterials) event.getEntity()).checkIgnore(world.getBlockState(new BlockPos(box.minX, box.minY, box.minZ))));
+            event.getCollisionBoxesList().removeIf(box -> ((IIgnoreMaterials) event.getEntity()).checkIgnore().test(world.getBlockState(new BlockPos(box.minX, box.minY, box.minZ))));
         }
     }
 }

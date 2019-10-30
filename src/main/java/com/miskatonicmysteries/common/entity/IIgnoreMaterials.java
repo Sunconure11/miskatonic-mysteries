@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public interface IIgnoreMaterials {
-    boolean checkIgnore(IBlockState state);
+    Predicate<IBlockState> checkIgnore();
 }

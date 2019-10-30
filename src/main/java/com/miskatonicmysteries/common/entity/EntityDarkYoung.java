@@ -4,6 +4,7 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.entity.cultist.AbstractCultist;
+import com.miskatonicmysteries.common.entity.processor.PathNavigateGroundIgnoreSpecial;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -19,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -31,6 +33,7 @@ import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart, IHasAssociatedBlessing, IIgnoreMaterials { //EntityMob
     private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(EntityDarkYoung.class, DataSerializers.VARINT);
@@ -42,6 +45,7 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         super(worldIn);
         setSize(2.5F, 4.5F);
         experienceValue = 12;
+        navigator= new PathNavigateGroundIgnoreSpecial(this, worldIn);
     }
 
     @Nullable
@@ -204,8 +208,8 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
     }
 
     @Override
-    public boolean checkIgnore(IBlockState state) {
-        return state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLeaves;
+    public Predicate<IBlockState> checkIgnore() {
+        return state -> state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLeaves;
     }
 
     public static class EntityDarkYoungAIAttackMelee extends EntityAIAttackMelee {
