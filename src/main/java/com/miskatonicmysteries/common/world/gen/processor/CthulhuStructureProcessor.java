@@ -57,9 +57,6 @@ public class CthulhuStructureProcessor extends OldStructureProcessor {
                     flag = false;
                 }else{
                     worldIn.setBlockState(pos.add(0, -i, 0), Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.STONE));
-                    /*if (blockInfoIn.blockState.isFullBlock() || blockInfoIn.blockState.isFullCube()){
-                        worldIn.setBlockState(pos.add(0, -i, 0), blockInfoIn.blockState);
-                    }*/
                 }
             }
         }

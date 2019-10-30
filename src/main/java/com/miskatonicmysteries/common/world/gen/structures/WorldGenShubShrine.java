@@ -37,40 +37,12 @@ public class WorldGenShubShrine extends WorldGenerator {
         if (canSpawnHere(template, worldServer, position)) {
             IBlockState iBlockState = worldIn.getBlockState(position);
             worldIn.notifyBlockUpdate(position, iBlockState, iBlockState, 3);
-            Mirror mirror;
-            Rotation rotation;
-            switch (rand.nextInt(3)){
-                case 0:
-                    mirror = Mirror.LEFT_RIGHT;
-                    break;
-                case 1:
-                    mirror = Mirror.FRONT_BACK;
-                    break;
-                default:
-                case 2:
-                    mirror = Mirror.NONE;
-                    break;
-            }
-            switch (rand.nextInt(4)){
-                case 0:
-                    rotation = Rotation.CLOCKWISE_90;
-                    break;
-                case 1:
-                    rotation = Rotation.CLOCKWISE_180;
-                    break;
-                case 2:
-                    rotation = Rotation.COUNTERCLOCKWISE_90;
-                    break;
-                default:
-                case 3:
-                    rotation = Rotation.NONE;
-                    break;
-            }
 
-            PlacementSettings placementsettings = (new PlacementSettings()).setMirror(mirror).setRotation(rotation).setIntegrity(1).setBoundingBox(new StructureBoundingBox(position, position.add(template.getSize())));
-            BlockPos basePos = template.getZeroPositionWithTransform(position, mirror, rotation);
-            template.addBlocksToWorld(worldIn, basePos, new ShubStructureProcessor(basePos.getY(), worldIn.getBiome(basePos).isSnowyBiome(), rotation, mirror), placementsettings, 2);
-            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_SHUB, worldIn, Math.round(basePos.getX() + template.getSize().getX() / 4F), Math.round(basePos.getZ() + template.getSize().getZ() / 4F), 7, 7, rand);
+            PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE).setRotation(Rotation.NONE).setIntegrity(1).setBoundingBox(new StructureBoundingBox(position, position.add(template.getSize())));
+            BlockPos basePos = template.getZeroPositionWithTransform(position, Mirror.NONE, Rotation.NONE);
+
+            template.addBlocksToWorld(worldIn, basePos, new ShubStructureProcessor(basePos.getY(), worldIn.getBiome(basePos).isSnowyBiome(), Rotation.NONE, Mirror.NONE), placementsettings, 2);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_SHUB, worldIn, Math.round(basePos.getX() - template.getSize().getX() / 2F), Math.round(basePos.getZ() - template.getSize().getZ() / 2F), 7, 7, rand);
             return true;
         }
         return false;

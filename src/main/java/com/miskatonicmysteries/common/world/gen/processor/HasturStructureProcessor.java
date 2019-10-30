@@ -56,7 +56,7 @@ public class HasturStructureProcessor extends OldStructureProcessor {
             }
         }
 
-        return super.processBlock(worldIn, pos, blockInfoIn);//blockInfoIn.blockState.getBlock().equals(Blocks.AIR) ? new Template.BlockInfo(pos, worldIn.getBlockState(pos), null) :
+        return super.processBlock(worldIn, pos, blockInfoIn);
     }
 
     protected IBlockState getTaigaVariants(IBlockState block) {

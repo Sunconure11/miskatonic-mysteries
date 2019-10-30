@@ -31,18 +31,25 @@ import java.util.Random;
 public class VillageComponentHasturShrine extends StructureVillagePieces.House1 {
     public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12; //probably make one for each different type
     private static final Biome.SpawnListEntry ENTRY_CULTISTS_HASTUR = new Biome.SpawnListEntry(EntityHasturCultist.class, 1, 1, 4);
-
-    public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5){
+    protected int type;
+    public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5, int type){
         this.setCoordBaseMode(par5);
-        this.boundingBox = boundingBox; //add biome n' stuff
+        this.boundingBox = boundingBox;
+        this.type = type;
     }
 
     public static VillageComponentHasturShrine createPiece(StructureVillagePieces.Start start, List<StructureComponent> p_175854_1_, Random rand, int p1, int p2, int p3, EnumFacing p4, int p5){//List pieces, int p1, int p2, int p3, EnumFacing p4){
-        StructureBoundingBox maxBoundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, MAX_X, MAX_Y, MAX_Z, p4); //select that stuff earlier
-
-        return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(p_175854_1_, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4) : null;
+        StructureBoundingBox maxBoundingBox = StructureBoundingBox.getComponentToAddBoundingBox(p1, p2, p3, 0, 0, 0, MAX_X, MAX_Y, MAX_Z, p4);
+        return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(p_175854_1_, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4, 1 + rand.nextInt(2)) : null;
     }
+/*
+  System.out.println("before vibe check: " + boundingBox);
+            boundingBox.maxX = boundingBox.minX + template.getSize().getX();
+            boundingBox.maxY = boundingBox.minY + template.getSize().getY();
+            boundingBox.maxZ = boundingBox.minZ + template.getSize().getZ();
+            System.out.println("when vibe check: " + boundingBox);
 
+ */
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
         if (randomIn.nextDouble() < ModConfig.worldGen.chanceHasturShrines) {
@@ -57,13 +64,14 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
             WorldServer worldServer = (WorldServer) worldIn;
             MinecraftServer minecraftServer = worldIn.getMinecraftServer();
             TemplateManager templateManager = worldServer.getStructureTemplateManager();
-            Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_" + (1 + worldIn.rand.nextInt(2)))); //replace with plains
-            if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SAVANNA)) {
-                template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + (1 + worldIn.rand.nextInt(2))));
-            }
+            Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_" + type)); //replace with plains
             if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SANDY)) {
                 return false;
             }
+            if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SAVANNA)) {
+                template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + type));
+            }
+
             if (worldIn.isRemote) return false;
             EnumFacing facing = this.getCoordBaseMode();
 
@@ -83,15 +91,16 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
                 rotation = Rotation.NONE;
             }
             PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(mirror);
+
+
             for (int x = 0; x < template.getSize().getX(); x++) {
                 for (int z = 0; z < template.getSize().getZ(); z++) {
                     this.clearCurrentPositionBlocksUpwards(worldIn, x, 0, z, boundingBox);
                     this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, 0, z, boundingBox);
                 }
             }
-            BlockPos basePos = template.getZeroPositionWithTransform(position, mirror, rotation);
-            template.addBlocksToWorld(worldIn, basePos, new HasturStructureProcessor(averageGroundLvl, rotation, mirror), settings, 2);
-            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, basePos.getX(), basePos.getZ() - 5, 7, 7, randomIn);
+            template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl, rotation, mirror), settings, 2);
+            WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX(), position.getZ(), 7, 7, randomIn);
             return true;
         }
         return false;
