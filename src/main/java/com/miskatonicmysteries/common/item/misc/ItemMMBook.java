@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.item.misc;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -52,6 +53,8 @@ public class ItemMMBook extends Item implements IHasAssociatedBlessing{
             return new ActionResult(EnumActionResult.FAIL, stack);
         } else {
             if (playerIn instanceof EntityPlayerMP) {
+                if (!Sanity.Util.getSanityCapability(playerIn).getExpansionMap().containsKey("expansion_" + bookName.toString() + "_read"))
+                    Sanity.Util.addExpansion("expansion_" + bookName.toString() + "_read", -10, playerIn); //todo: adjust insanity stuff
                 NetworkHandler.INSTANCE.sendTo(new MessageOpenBookGui(book.resourceLoc.toString()), (EntityPlayerMP)playerIn);
                 SoundEvent sfx = PatchouliSounds.getSound(book.openSound, PatchouliSounds.book_open);
                 worldIn.playSound(null, ((EntityPlayerMP) playerIn).posX, ((EntityPlayerMP) playerIn).posY, ((EntityPlayerMP) playerIn).posZ, sfx, SoundCategory.PLAYERS, 1.0F, (float)(0.7D + Math.random() * 0.4D));

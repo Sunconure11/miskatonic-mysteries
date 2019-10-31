@@ -1,12 +1,14 @@
 package com.miskatonicmysteries.common.item.misc;
 
 import com.miskatonicmysteries.common.block.BlockOctagram;
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -52,6 +54,12 @@ public class ItemChalk extends ItemBlock {
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 worldIn.setBlockState(pos.add(x, 0, z), state.withProperty(BlockOctagram.PART, x == 0 && z == 0 ? BlockOctagram.EnumPartType.CENTER : BlockOctagram.EnumPartType.OUTER));
+                if (x == 0 && z == 0){
+                    TileEntity octagram = worldIn.getTileEntity(pos);
+                    if (octagram instanceof TileEntityOctagram){
+                        ((TileEntityOctagram) octagram).ownerUUID = player.getUniqueID().toString();
+                    }
+                }
             }
         }
         worldIn.playSound(null, pos, SoundEvents.BLOCK_SNOW_BREAK, SoundCategory.BLOCKS, 0.5F, 2F);

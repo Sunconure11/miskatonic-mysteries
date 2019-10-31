@@ -3,13 +3,17 @@ package com.miskatonicmysteries.common.block.tile;
 import com.miskatonicmysteries.client.particles.ParticleOccultEnchant;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import com.miskatonicmysteries.common.misc.IHasOwner;
+import com.miskatonicmysteries.common.misc.IInducesInsanity;
 import com.miskatonicmysteries.common.misc.rites.OctagramRite;
 import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
 import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModRegistries;
 import com.mojang.realmsclient.util.Pair;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +32,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.*;
 
-public class TileEntityOctagram extends TileEntityMod implements ITickable, IHasAssociatedBlessing {
+public class TileEntityOctagram extends TileEntityMod implements ITickable, IHasAssociatedBlessing, IHasOwner, IInducesInsanity {
 
     public ItemStackHandler inventory = new ItemStackHandler(8) {
         @Override
@@ -51,6 +55,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public String lastPlayerUUID = "";
 
+    public String ownerUUID = "";
+
     public final List<BlockPos> PARTICLE_EMMITTERS = new ArrayList<>();
     public final List<Pair<BlockPos, RiteFocus>> PLACED_FOCI = new ArrayList<>();
     public final List<RiteFocus> HELD_FOCI = new ArrayList<>(); //possibly pass an entity id with that? (for particles, if there should be any)
@@ -68,6 +74,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         compound.setInteger("focusPower", focusPower);
         compound.setString("currentRite", currentRite);
         compound.setString("lastPlayerUUID", lastPlayerUUID);
+        compound.setString("ownerUUID", ownerUUID);
         return super.writeToNBT(compound);
     }
 
@@ -80,6 +87,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         focusPower = compound.getInteger("focusPower");
         currentRite = compound.getString("currentRite");
         lastPlayerUUID = compound.getString("lastPlayerUUID");
+        ownerUUID = compound.getString("ownerUUID");
         super.readFromNBT(compound);
     }
 
@@ -123,8 +131,12 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     @Override
     public void update() {
-        if (world.getTotalWorldTime() % 60 == 0)
+        if (world.getTotalWorldTime() % 60 == 0) {
             updateRiteStats();
+            if (getOwnerUUID() == null){
+                world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false);
+            }
+        }
         if (!altarUsable()) {
             findNearestAltar();
         } else {
@@ -236,6 +248,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             for (int i = 0; i < inventory.getSlots(); i++) {
                 inventory.setStackInSlot(i, ItemStack.EMPTY);
             }
+
+            world.getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.grow(15, 5, 15).offset(getPos()), p -> p.getRNG().nextInt(4) == 0).forEach(player -> {
+                Sanity.Util.setSanity(Sanity.Util.getSanity(player) - 2, player);
+            });
         }
     }
 
@@ -430,5 +446,26 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             }
         }
         return false;
+    }
+
+    @Override
+    public UUID getOwnerUUID() {
+        return ownerUUID.isEmpty() ? null : UUID.fromString(ownerUUID);
+    }
+
+
+    @Override
+    public EntityPlayer getOwner() {
+        return world.getPlayerEntityByUUID(getOwnerUUID());
+    }
+
+    @Override
+    public int getInsanityPenalty() {
+        return 1;
+    }
+
+    @Override
+    public float getChanceForInsanity(EntityPlayer player) {
+        return player.equals(getOwner()) ? 1 / 10F : 1 / 5F;
     }
 }

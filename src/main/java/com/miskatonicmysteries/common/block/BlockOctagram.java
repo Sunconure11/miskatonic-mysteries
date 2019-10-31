@@ -4,6 +4,7 @@ import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
+import com.miskatonicmysteries.common.misc.IInducesInsanity;
 import com.miskatonicmysteries.util.InventoryUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
