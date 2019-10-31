@@ -19,6 +19,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -40,6 +42,7 @@ public class ModEntities {
         addNaturalSpawns();
     }
 
+    @SideOnly(Side.CLIENT)
     public static void registerRenderers(){
         RenderingRegistry.registerEntityRenderingHandler(EntityDarkYoung.class, RenderDarkYoung::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityShubCultist.class, RenderShubCultist::new);
