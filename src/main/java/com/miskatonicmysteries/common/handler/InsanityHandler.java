@@ -5,6 +5,7 @@ import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.handler.effects.InsanityEffect;
 import com.miskatonicmysteries.common.handler.effects.InsanityEffectFlux;
 import com.miskatonicmysteries.common.handler.event.InsanityEvent;
+import com.miskatonicmysteries.common.misc.IInducesInsanity;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.client.PacketYellowSign;
 import com.miskatonicmysteries.common.network.message.event.PacketHandleInsanity;
@@ -111,6 +112,17 @@ public class InsanityHandler {
                             PacketHandler.network.sendToServer(new PacketYellowSign());
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public static void checkInduction(World world, EntityPlayer player){
+        for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(player.getPosition().add(-8, -8, -8), player.getPosition().add(8, 8, 8))){
+            if (world.getTileEntity(pos) instanceof IInducesInsanity){
+                if (((IInducesInsanity) world.getTileEntity(pos)).getChanceForInsanity(player) > player.getRNG().nextFloat()){
+                    Sanity.Util.setSanity(Sanity.Util.getSanity(player) - ((IInducesInsanity) world.getTileEntity(pos)).getInsanityPenalty(), player);
+                    return;
                 }
             }
         }
