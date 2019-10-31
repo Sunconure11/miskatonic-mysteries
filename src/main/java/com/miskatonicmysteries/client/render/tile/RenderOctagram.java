@@ -18,6 +18,7 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
 
     @Override
     public void render(TileEntityOctagram te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+        if (getWorld().getBlockState(te.getPos()).getBlock() instanceof BlockOctagram) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5F, y + 0.01, z + 0.5F);
         GlStateManager.disableLighting();
@@ -25,19 +26,20 @@ public class RenderOctagram extends TileEntitySpecialRenderer<TileEntityOctagram
         bindTexture(getTexture(te));
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager.pushMatrix();
-        EnumFacing facing = getWorld().getBlockState(te.getPos()).getValue(BlockOctagram.FACING);
-        GlStateManager.rotate(facing == EnumFacing.WEST ? 90 : facing == EnumFacing.SOUTH ? 180 : facing == EnumFacing.EAST ? 270 : 0, 0, 1, 0);
-        if (te.primed){
-            float state = (te.getWorld().getTotalWorldTime() % 100) / 100F;
-            state = 0.5F - Math.abs(0.5F - state);
-            GlStateManager.color(1, 1, 0.5F + state, 0.5F + (0.5F * state * 2));
+            EnumFacing facing = getWorld().getBlockState(te.getPos()).getValue(BlockOctagram.FACING);
+            GlStateManager.rotate(facing == EnumFacing.WEST ? 90 : facing == EnumFacing.SOUTH ? 180 : facing == EnumFacing.EAST ? 270 : 0, 0, 1, 0);
+            if (te.primed) {
+                float state = (te.getWorld().getTotalWorldTime() % 100) / 100F;
+                state = 0.5F - Math.abs(0.5F - state);
+                GlStateManager.color(1, 1, 0.5F + state, 0.5F + (0.5F * state * 2));
+            }
+            drawOctagram();
+            GlStateManager.popMatrix();
+            renderItems(te);
+            GlStateManager.disableBlend();
+            GlStateManager.enableLighting();
+            GlStateManager.popMatrix();
         }
-        drawOctagram();
-        GlStateManager.popMatrix();
-        renderItems(te);
-        GlStateManager.disableBlend();
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
     }
 
     public void drawOctagram(){
