@@ -21,21 +21,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.HashMap;
 
 public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAssociatedBlessing {
-    public static final HashMap<Item, ResourceLocation> BOOK_TEXTURES = new HashMap<Item, ResourceLocation>();
-
-    static {
-        BOOK_TEXTURES.put(ModObjects.research_notes_shubniggurath, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_shub.png"));
-        BOOK_TEXTURES.put(ModObjects.research_notes_hastur, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_hastur.png"));
-        BOOK_TEXTURES.put(ModObjects.research_notes_cthulhu, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_cthulhu.png"));
-        BOOK_TEXTURES.put(ModObjects.necronomicon, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_necronomicon.png"));
-
-        BOOK_TEXTURES.put(Items.BOOK, RenderAltar.TEXTURE_BOOK);
-        BOOK_TEXTURES.put(Items.ENCHANTED_BOOK, RenderAltar.TEXTURE_BOOK);
-        BOOK_TEXTURES.put(Items.WRITABLE_BOOK, RenderAltar.TEXTURE_BOOK);
-        BOOK_TEXTURES.put(Items.WRITTEN_BOOK, RenderAltar.TEXTURE_BOOK);
-
-    }
-
     public boolean bookOpen = false;
     public float flipSpeed;
     public ItemStackHandler inventory = new ItemStackHandler(1) {

@@ -1,24 +1,45 @@
 package com.miskatonicmysteries.client.render.tile;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.BlockAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
+import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.HashMap;
+
 public class RenderAltar extends TileEntitySpecialRenderer<TileEntityAltar> {
     public static final ResourceLocation TEXTURE_BOOK = new ResourceLocation("textures/entity/enchanting_table_book.png");
+    public static final HashMap<Item, ResourceLocation> BOOK_TEXTURES = new HashMap<Item, ResourceLocation>();
+
+    static {
+        BOOK_TEXTURES.put(ModObjects.research_notes_shubniggurath, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_shub.png"));
+        BOOK_TEXTURES.put(ModObjects.research_notes_hastur, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_hastur.png"));
+        BOOK_TEXTURES.put(ModObjects.research_notes_cthulhu, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_cthulhu.png"));
+        BOOK_TEXTURES.put(ModObjects.necronomicon, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_necronomicon.png"));
+
+        BOOK_TEXTURES.put(Items.BOOK, RenderAltar.TEXTURE_BOOK);
+        BOOK_TEXTURES.put(Items.ENCHANTED_BOOK, RenderAltar.TEXTURE_BOOK);
+        BOOK_TEXTURES.put(Items.WRITABLE_BOOK, RenderAltar.TEXTURE_BOOK);
+        BOOK_TEXTURES.put(Items.WRITTEN_BOOK, RenderAltar.TEXTURE_BOOK);
+
+    }
+
     private final ModelBook modelBook = new ModelBook();
 
     @Override
     public void render(TileEntityAltar te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (TileEntityAltar.BOOK_TEXTURES.containsKey(te.inventory.getStackInSlot(0).getItem())) {
+        if (BOOK_TEXTURES.containsKey(te.inventory.getStackInSlot(0).getItem())) {
             GlStateManager.pushMatrix();
             GlStateManager.enableCull();
             doStandardTransformations(te, x, y, z);
-            bindTexture(TileEntityAltar.BOOK_TEXTURES.getOrDefault(te.inventory.getStackInSlot(0).getItem(), TEXTURE_BOOK));
+            bindTexture(BOOK_TEXTURES.getOrDefault(te.inventory.getStackInSlot(0).getItem(), TEXTURE_BOOK));
             GlStateManager.rotate(90 * (1 - te.bookOpeningProgress), 0, 1, 0);
             float flip = (getWorld().getWorldTime() * te.flipSpeed) % 100;
             flip /= 100F;
