@@ -232,6 +232,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         if (!isTamed() && getAvailableWeapons() != null && !getAvailableWeapons().isEmpty()) {
             setItemStackToSlot(EntityEquipmentSlot.MAINHAND, getAvailableWeapons().get(rand.nextInt(getAvailableWeapons().size())));
         }
+        setWandering(true);
         cultistAIWander = new EntityCultistAIWander(this);
         setHomePosAndDistance(getPosition(), 20);
         return super.onInitialSpawn(difficulty, livingdata);
@@ -276,9 +277,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
                 this.navigator.clearPath();
                 setAttackTarget(null);
                 this.isJumping = false;
-               /*if (world.isRemote) {
-                    player.sendStatusMessage(new TextComponentString(I18n.format("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow"))), true);
-                }*/
                 return true;
             } else if (!player.isSneaking() && isTamed()) {
                 if (this.buyingList == null) {

@@ -138,7 +138,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     if (world.rand.nextFloat() < 0.05F)
                         world.playSound(null, pos, SoundEvents.ENTITY_ILLAGER_CAST_SPELL, SoundCategory.BLOCKS, 0.05F, 0.2F + world.rand.nextFloat());
 
-                    if (world.rand.nextFloat() < 0.2) {
+                    if (world.isRemote && world.rand.nextFloat() < 0.2) {
                         spawnParticlesOnItems(false);
                     }
                 } else {
@@ -193,7 +193,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 currentRite = "";
             }
         }
-        if (world.rand.nextFloat() < (tickCount > 0 ? 0.08F : 0.02F)) { //maybe just handle particles there
+        if (world.isRemote && world.rand.nextFloat() < (tickCount > 0 ? 0.08F : 0.02F)) { //maybe just handle particles there
             handleParticles();
         }
         PacketHandler.updateTE(this);
