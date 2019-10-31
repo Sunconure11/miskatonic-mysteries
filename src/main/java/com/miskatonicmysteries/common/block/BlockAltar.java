@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.client.particles.ParticleOccultFlame;
+import com.miskatonicmysteries.client.render.tile.RenderAltar;
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.network.PacketHandler;

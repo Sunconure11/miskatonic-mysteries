@@ -18,7 +18,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAssociatedBlessing {
     public boolean bookOpen = false;
@@ -35,6 +37,21 @@ public class TileEntityAltar extends TileEntityMod implements ITickable, IHasAss
             super.onContentsChanged(slot);
         }
     };
+
+    public static final Map<Item, ResourceLocation> BOOK_TEXTURES = new HashMap<>();
+
+    static {
+        BOOK_TEXTURES.put(ModObjects.research_notes_shubniggurath, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_shub.png"));
+        BOOK_TEXTURES.put(ModObjects.research_notes_hastur, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_hastur.png"));
+        BOOK_TEXTURES.put(ModObjects.research_notes_cthulhu, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_cthulhu.png"));
+        BOOK_TEXTURES.put(ModObjects.necronomicon, new ResourceLocation(MiskatonicMysteries.MODID, "textures/misc/book_necronomicon.png"));
+
+        BOOK_TEXTURES.put(Items.BOOK,  new ResourceLocation("textures/entity/enchanting_table_book.png"));
+        BOOK_TEXTURES.put(Items.ENCHANTED_BOOK, new ResourceLocation("textures/entity/enchanting_table_book.png"));
+        BOOK_TEXTURES.put(Items.WRITABLE_BOOK, new ResourceLocation("textures/entity/enchanting_table_book.png"));
+        BOOK_TEXTURES.put(Items.WRITTEN_BOOK, new ResourceLocation("textures/entity/enchanting_table_book.png"));
+
+    }
 
     //rendering vars
     public float bookOpeningProgress;

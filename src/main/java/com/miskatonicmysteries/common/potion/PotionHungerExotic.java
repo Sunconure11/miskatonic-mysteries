@@ -63,8 +63,8 @@ public class PotionHungerExotic extends ModPotion {
                 boolean ambient = effect.getIsAmbient();
                 boolean showParticles = effect.doesShowParticles();
                 event.getEntityLiving().removeActivePotionEffect(ModPotions.hunger_exotic);
-                if (duration > 400)
-                    event.getEntityLiving().addPotionEffect(new PotionEffect(ModPotions.hunger_exotic, duration - 400, amplifier, ambient, showParticles));
+                if (duration > 800)
+                    event.getEntityLiving().addPotionEffect(new PotionEffect(ModPotions.hunger_exotic, duration - 800, amplifier, ambient, showParticles));
             }
         }
     }
