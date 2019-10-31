@@ -456,7 +456,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     @Override
     public EntityPlayer getOwner() {
-        return world.getPlayerEntityByUUID(getOwnerUUID());
+        return getOwnerUUID() != null ? world.getPlayerEntityByUUID(getOwnerUUID()) : null;
     }
 
     @Override
@@ -466,6 +466,6 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     @Override
     public float getChanceForInsanity(EntityPlayer player) {
-        return player.equals(getOwner()) ? 1 / 10F : 1 / 5F;
+        return getOwnerUUID() != null && player.equals(getOwner()) ? 1 / 10F : 1 / 5F;
     }
 }
