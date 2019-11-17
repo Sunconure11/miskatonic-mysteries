@@ -12,7 +12,7 @@ import com.miskatonicmysteries.common.misc.rites.effect.RiteEffect;
 import com.miskatonicmysteries.common.misc.rites.focus.RiteFocus;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModRegistries;
-import com.mojang.realmsclient.util.Pair;
+import com.miskatonicmysteries.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -356,6 +356,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
             BlockPos.getAllInBox(pos.add(-10, -4, -10), pos.add(9, 5, 9)).forEach(blockPos ->
                     RiteFocus.getFociFor(world.getBlockState(blockPos).getBlock(), RiteFocus.EnumType.PLACED).forEach(focus -> {
                         PARTICLE_EMMITTERS.add(blockPos);
+
                         PLACED_FOCI.add(Pair.of(blockPos, focus));
                     }));
         }
