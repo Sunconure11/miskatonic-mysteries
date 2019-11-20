@@ -1,0 +1,229 @@
+#SETTINGS
+category.miskatonicmysteries=Miskatonic Mysteries
+key.miskmyst_up=Nächster Zauber
+key.miskmyst_down=Vorheriger Zauber
+key.miskmyst_cancel=Zauber abbrechen
+
+#DAMAGE
+death.attack.miskatonicmysteries_devour=%1$s wurde verschlungen
+death.attack.miskatonicmysteries_devour.player=%1$s wurde von %2$s verschlungen
+death.attack.miskatonicmysteries_devour.item=%1$s wurde von %2$s mit %3$s verschlungen
+
+death.attack.miskatonicmysteries_devour=%1$s ist nicht aufgewacht
+death.attack.miskatonicmysteries_devour.player=%1$s ist nicht aufgewacht
+death.attack.miskatonicmysteries_devour.item=%1$s ist nicht aufgewacht
+
+#BLOCK
+tile.stone_cthulhu_mural.name=Stein Cthulhu-Mural
+tile.moss_stone_cthulhu_mural.name=Moosbedecktes Stein Cthulhu-Mural
+tile.prismarine_cthulhu_mural.name=Prismarin Cthulhu-Mural
+
+tile.stone_hastur_mural.name=Stein Hastur-Mural
+tile.moss_stone_hastur_mural.name=Moosbedecktes Steinernes Hastur-Mural
+tile.terracotta_hastur_mural.name=Terrakotta Hastur-Mural
+tile.yellow_terracotta_hastur_mural.name=Gelbes Terrakotta Hastur-Mural
+
+tile.stone_shubniggurath_mural.name=Stein Shub-Niggurath-Mural
+tile.moss_stone_shubniggurath_mural.name=Moosbedecktes Stein Shub-Niggurath-Mural
+
+tile.altar_stone.name=Steinaltar
+tile.altar_stone_mossy.name=Moosbedeckter Steinaltar
+tile.altar_netherbrick.name=Netherziegelaltar
+tile.altar_prismarine.name=Prismarinaltar
+tile.altar_sandstone.name=Sandsteinaltar
+tile.altar_purpur.name=Ziemlich Hipper Altar
+
+tile.altar_coral_dead.name=Toter Korallenaltar
+tile.altar_stone_enriched.name=Angereicherter Steinaltar
+tile.altar_brick_scorned.name=Verachteter Ziegelaltar
+
+tile.yellow_sign.name=Gelbes Zeichen
+
+tile.chemistry_set.name=Chemiekasten
+
+tile.candles.name=Kerze
+
+tile.octagram_shub.name=Kreide der Schwarzen Ziege
+tile.octagram_hastur.name=Kreide des Gelben Königs
+item.chalk.name=Profane Kreide
+
+#ITEM
+item.research_notes_cthulhu.name=Forschungsnotizen
+item.research_notes_hastur.name=Forschungsnotizen
+item.research_notes_shubniggurath.name=Forschungsnotizen
+
+item.hastur_cultist_hood.name=Hastur-Kultistenkapuze
+item.hastur_cultist_robes.name=Hastur-Kultistenrobe
+item.hastur_cultist_pants.name=Hastur-Kultistenhose
+
+item.yellow_kings_dagger.name=Dolch des Gelben Königs
+
+item.shubniggurath_cultist_mask.name=Shub-Niggurath-Kultistenmaske
+item.shubniggurath_cultist_hoodmask.name=Shub-Niggurath-Kultistenkapuzenmaske
+item.shubniggurath_cultist_robes.name=Shub-Niggurath-Kultistenrobe
+item.shubniggurath_cultist_pants.name=Shub-Niggurath-Kultistenhose
+
+item.black_goats_gutting_dagger.name=Ausweidender Dolch der Schwarzen Ziege
+item.black_goats_horned_dagger.name=Gehörnter Doclh der Schwarzen Ziege
+
+item.tranquilizer.name=Beruhigungsmittel
+
+item.milk_black_goat.name=Milch der Schwarzen Ziege
+item.gold_oceanic.name=Ozeanisches Gold
+
+item.necronomicon.name=Necronomikon
+
+item.tallow.name=Talg
+
+item.flesh_dark_young.name=Fleisch des Dunklen Jung
+item.blotter.name=Blotter
+
+item.infested_wheat.name=Verseuchtes Weizen
+
+item.incantation_gate_key.name=Zauberformel des Schlüssel-Tors
+
+#ENTITIES
+entity.shub_niggurath.name=Shub-Niggurath
+entity.hastur.name=Hastur
+entity.cultist_hastur.name=Höriger des Gelben Königs
+entity.cultist_shub.name=Kultist der Ziege
+entity.dark_young.name=Dunkles Jung
+
+#POTIONS
+miskatonicmysteries.tranquilized=Beruhigt
+miskatonicmysteries.mania=Manie
+miskatonicmysteries.hunger_exotic=Exotische Verlangen
+
+#INFO
+itemGroup.miskatonicmysteries=Miskatonic Mysteries
+
+#CONFIG
+config.category_client=Client Settings
+config.use_shaders=Use Shaders
+config.change_player_model=Player Model Overrides
+config.particle_amount=Particle Amount
+
+config.category_worldgen=World Generation
+config.chanceShubShrines=Chance for Shub-Niggurath Shrines
+config.chanceBananaShrines=Chance for Hastur Shrines
+config.chanceCthulhuShrines=Chance for Cthulhu Shrines
+
+config.category_sanity=Sanity
+config.insanity_interval=Insanity Event Interval
+
+config.category_entities=Entities
+config.darkYoungSpawnRate=Dark Young Spawn Rate
+config.darkYoungGroupMax=Dark Young Group Maximum
+config.darkYoungGroupMin=Dark Young Group Minimum
+config.darkYoungBiomes=Dark Young Biomes
+
+config.category_misc=Miscellaneous
+config.infestedWheatChance=Infested Wheat Chance
+
+#COMMANDS
+commands.miskmyst.usage=miskatonicmysteries <player> <command> <value>
+command.miskmyst.player_null=§cSpieler %s konnte nicht gefunden werden
+command.miskmyst.no_command=%s ist kein existierender Befehl
+
+commands.miskmyst.sanity.success=Die Geistige Gesundheit von %s wurde erfolgreich auf %s gesetzt
+commands.miskmyst.sanity.fail_badnum=%s ist keine gültige Zahl
+
+commands.miskmyst.blessing.success=Der Segen von %s wurde erfolgreich auf %s gesetzt
+commands.miskmyst.blessing.fail_badblessing=%s ist kein existierender Segen
+
+commands.miskmyst.spell.success=%s wurde erfolgreich dem Kompendium vom %s beigefügt
+commands.miskmyst.spell.fail_no_spell=%s ist kein existierender Zauber
+
+commands.miskmyst.reset_cooldown.success=%ss Zauberabklingzeit wurde erfolgreich zurückgesetzt
+commands.miskmyst.reset_cooldown.fail_no_spells=Zauberabklingzeit konnte nicht zurückgesetzt werden, da %s keine Zauber kennt
+
+commands.miskmyst.reset_spells.success=%ss kennt jetzt keine Zauber mehr :)
+commands.miskmyst.reset_spells.fail_no_spells=%ss Zauber konnten nicht entfernt werden, da keine Zauber vorhanden sind
+
+commands.miskmyst.play_insanity_effect.success=Die Wahnerscheinung %s wurde erfolgreich für %s abgespielt
+commands.miskmyst.play_insanity_effect.fail=%s ist keine existierende Wahnerscheinung
+
+#BOOK
+info.necronomicon.book.landing=There lies a terrible truth behind that thin veil of normality, cast away all superstitions to glance far beyond.
+info.miskatonicmysteries.necronomicon.subtitle=1st Edition
+
+info.miskatonicmysteries.notes_shub.subtitle=Shub-Niggurath
+info.notes_shub.book.landing=In the depths of the Woods, the Black Goat awaits, and this book holds a fraction of her power, and a much greater potential within.
+info.miskatonicmysteries.notes_hastur.subtitle=Hastur
+info.notes_hastur.book.landing=The Yellow King bears great knowledge; it is hard to record all of it in a book. Still, I have been blessed with a fraction of it.
+info.miskatonicmysteries.notes_cthulhu.subtitle=Cthulhu
+
+#MESSAGES
+message.insanity_concern.0=%s sieht heute eher hager aus.
+message.insanity_concern.1=%s scheint blasser als sonst zu sein.
+message.insanity_concern.2=%s scheint etwas zu sich selbst zu flüstern.
+message.insanity_concern.3=%s spricht fremde Sprachen.
+message.insanity_concern.4=Etwas scheint an %s scheint einfach... nicht richtig.
+message.insanity_concern.5=%ss Blick scheint leer zu sein.
+message.insanity_concern.6=%s scheint heute psychisch nicht auf dieser Welt zu sein.
+message.insanity_concern.7=Etwas an %ss Augen zermürbt dich
+message.insanity_concern.8=%s lächelt dement und scheint über etwas zu kichern.
+message.insanity_concern.9=%s verhält sich paranoid und sieht sich konstant um, als ob ihnen etwas folgen würde.
+message.insanity_concern.10=%s bewegt sich eigenartig und unruhig.
+message.insanity_concern.11=%s Pupillen sind übermäßig ausgeweitet.
+
+message.cultist.sit=Der Kultist wird hier bleiben
+message.cultist.wander=Der Kultist wird hier herumwandern
+message.cultist.follow=Der Kultist wird dir folgen
+
+#MISC
+item.banner.miskatonicmysteries_yellow_sign.yellow=Wahrlich Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.black=Schwarzes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.red=Rotes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.green=Grünes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.brown=Braunes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.lightBlue=Hellblaues Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.lime=Hellgrünes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.orange=Orangenes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.pink=Pinkes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.purple=Violettes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.white=Weißes Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.blue=Blaues Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.cyan=Türkises Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.gray=Graues Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.silver=Hellgraues Gelbes Zeichen
+item.banner.miskatonicmysteries_yellow_sign.magenta=Magenta Gelbes Zeichen
+
+#RITES
+rite.eldritch_trap.name=Falle des Fremden
+rite.hellfire_eldritch_trap.name=Höllenfeuerefalle
+rite.hysteria.name=Hysterie
+rite.maniacs_meeting_shub.name=Wahnsinnstreffen
+rite.maniacs_meeting_hastur.name=Wahnsinnstreffen
+rite.blank_slate.name=Schieferschrei
+rite.black_mass.name=Schwarze Messe
+
+rite.learn_spell_regeneration.name=Regeneration
+rite.learn_spell_feast.name=Internes Festmahl
+rite.learn_spell_spell_mania.name=Manie
+rite.learn_spell_personal_fragment.name=Persönliches Fragment
+
+rite.learn_spell_growth.name=Lerne Wachstum
+
+rite.learn_spell_yellow_sign.name=Lerne Gelbes Zeichen
+
+#TOOLTIPS
+tooltip.notes_shub=Shub-Niggurath
+tooltip.notes_hastur=Hastur
+tooltip.notes_cthulhu=Cthulhu
+
+tooltip.focus=Fokusstatistiken:
+
+tooltip.focus.power.immense=Gewährt immense Mengen an Fokaler Kraft
+tooltip.focus.power.greater=Gewärt größere Mengen an Fokaler Kraft
+tooltip.focus.power.mediocre=Gewährt mittlemäßige Mengen an Fokaler Kraft
+tooltip.focus.power.little=Gewährt unbeeindruckende Mengen an Fokaler Kraft
+
+tooltip.focus.instability.low=Niedrige Instabilität
+tooltip.focus.instability.normal=Normale Instabilität
+tooltip.focus.instability.high=Hohe Instabilität
+tooltip.focus.instability.immense=Immense Instabilität
+
+tooltip.focus.use.little=Sollte in winzigen Mengen benutzt werden
+tooltip.focus.use.normal=Kann in durchschnittlichen Mengen benutzt werden
+tooltip.focus.use.often=Kann in großen Mengen benutzt werden
