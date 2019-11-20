@@ -1,6 +1,7 @@
 package com.miskatonicmysteries;
 
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
+import com.miskatonicmysteries.common.block.tile.TileEntityChemistrySet;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.BlessingStorage;
@@ -114,6 +115,7 @@ public class MiskatonicMysteries {
     public void initTileEntities(){
         GameRegistry.registerTileEntity(TileEntityAltar.class, new ResourceLocation(MODID, "altar"));
         GameRegistry.registerTileEntity(TileEntityOctagram.class, new ResourceLocation(MODID, "octagram"));
+        GameRegistry.registerTileEntity(TileEntityChemistrySet.class, new ResourceLocation(MODID, "chemistry_set"));
     }
 
 

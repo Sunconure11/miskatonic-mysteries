@@ -1,8 +1,10 @@
 package com.miskatonicmysteries.registry;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.block.tile.TileEntityChemistrySet;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.recipes.ChemistryRecipe;
 import com.miskatonicmysteries.common.misc.rites.*;
 import com.miskatonicmysteries.common.misc.rites.effect.*;
 import com.miskatonicmysteries.common.misc.spells.*;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class ModRegistries {
     public static Map<ResourceLocation, OctagramRite> RITES = new ConcurrentHashMap<>();
     public static final Map<ResourceLocation, RiteEffect> RITE_EFFECTS = new ConcurrentHashMap<>();
+    public static final Map<ResourceLocation, ChemistryRecipe> CHEMISTRY_RECIPES = new ConcurrentHashMap<>();
 
     public static Spell REGENERATION;
     public static Spell FEAST;
@@ -39,7 +42,7 @@ public class ModRegistries {
 
     //Hastur-Spells
     public static Spell YELLOW_SIGN;
- //   public static Spell TIDE_WAVE;
+ //   public static Spell TIDE_WAVE; todo add those back in later
  //   public static Spell DEFY_DEATH;
 
 
@@ -112,7 +115,10 @@ public class ModRegistries {
     }
 
     private static void initRecipes() {
-
+        //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "laudanum"), new ItemStack(ModObjects.laudanum), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.WHEAT));
+        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "blotter"), new ItemStack(ModObjects.blotter), new ItemStack(Items.PAPER), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART));
+        //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "re_agent_syringe"));
+        //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "essential_salt"));
     }
 
     public static class Util {
@@ -146,6 +152,10 @@ public class ModRegistries {
 
         public static OctagramRite getRite(TileEntityOctagram octagram) {
             return RITES.values().stream().filter(r -> InventoryUtil.areItemStackListsEqual(r.ingredients, octagram.inventory)).findFirst().orElse(null);
+        }
+
+        public static ChemistryRecipe getChemistryRecipe(TileEntityChemistrySet chemistrySet) {
+            return CHEMISTRY_RECIPES.values().stream().filter(r -> InventoryUtil.areItemStackListsEqual(r.ingredients, chemistrySet.inventory)).findFirst().orElse(null);
         }
     }
 }

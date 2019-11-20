@@ -58,7 +58,6 @@ public class InventoryUtil {
 
     public static int getNextStackSlot(IItemHandler handler){
         for (int i = 0; i < handler.getSlots(); i++){
-            System.out.println(i);
             if (!handler.getStackInSlot(i).isEmpty())
                 return i;
         }
