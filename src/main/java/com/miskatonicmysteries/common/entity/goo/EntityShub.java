@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.entity.goo;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -88,7 +89,7 @@ public class EntityShub extends AbstractOldOne {
 
     @Override
     public Biome getDistortionBiome() {
-        return super.getDistortionBiome();
+        return Biomes.OCEAN;
     }
 
     @Override

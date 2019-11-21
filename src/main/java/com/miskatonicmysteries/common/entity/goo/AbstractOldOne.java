@@ -1,9 +1,12 @@
 package com.miskatonicmysteries.common.entity.goo;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
+import com.miskatonicmysteries.ModConfig;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.world.gen.BiomeManipulator;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -15,6 +18,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -37,17 +41,23 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
 
     @Override
     public void onLivingUpdate() {
-        if (ticksExisted % 20 == 0) {
+        if (ticksExisted % ModConfig.EntitySettings.goos.greatOldOneManipulationInterval == 0) {
             manipulateEnvironment();
         }
         super.onLivingUpdate();
     }
 
     public void manipulateEnvironment() {
-        //if (getDistortionBiome() != null)
-        //    BiomeManipulator.setMultiBiome(world, getDistortionBiome(), Iterables.toArray(BlockPos.getAllInBox(getPosition().add(-10, -10, -10), getPosition().add(10, 10, 10)), BlockPos.class));
+        if (getDistortionBiome() != null) {
+            BlockPos randomPos = new BlockPos(posX - (getInfluenceRadius() / 2F) + world.rand.nextInt(getInfluenceRadius()), posY, posZ - (getInfluenceRadius() / 2F) + world.rand.nextInt(getInfluenceRadius()));
+            if (world.getBiome(randomPos) != getDistortionBiome())
+                BiomeManipulator.setBiome(world, getDistortionBiome(), true, randomPos);
+        }
     }
 
+    public int getInfluenceRadius(){
+        return 32;
+    }
     @Override
     public void onKillCommand() {
         setDead();

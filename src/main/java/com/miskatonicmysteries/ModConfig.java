@@ -102,6 +102,17 @@ public class ModConfig {
         @Config.LangKey("config.darkYoungBiomes")
         public String[] darkYoungBiomes = {BiomeDictionary.Type.FOREST.getName(), BiomeDictionary.Type.SPOOKY.getName()};
 
+
+        @Config.LangKey("config.category_goos")
+        @Config.Comment("Config settings on the Great Old Ones")
+        public static final GreatOldOnesSettings goos = new GreatOldOnesSettings();
+
+        public static class GreatOldOnesSettings {
+            @Config.Comment("Determines the interval (in ticks) for when the Great Old One changes an element of the environment.")
+            @Config.LangKey("config.greatOldOneManipulationInterval")
+            @Config.RangeInt(min = 1)
+            public int greatOldOneManipulationInterval = 20;
+        }
     }
 
     public static class MiscSettings {

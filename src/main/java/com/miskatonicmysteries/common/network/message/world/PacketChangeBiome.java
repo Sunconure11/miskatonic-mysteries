@@ -17,14 +17,16 @@ import java.util.HashSet;
 public class PacketChangeBiome implements IMessage {
     BlockPos[] positions;
     Biome biome;
+    boolean storeOld;
 
-    public PacketChangeBiome(World world, BlockPos pos) {
-        this(world.getBiomeForCoordsBody(pos), pos);
+    public PacketChangeBiome(World world, BlockPos pos, boolean storeOld) {
+        this(world.getBiomeForCoordsBody(pos), storeOld, pos);
     }
 
-    public PacketChangeBiome(Biome biome, BlockPos... positions) {
+    public PacketChangeBiome(Biome biome, boolean storeOld, BlockPos... positions) {
         this.positions = positions;
         this.biome = biome;
+        this.storeOld = storeOld;
     }
 
     public PacketChangeBiome() {
@@ -39,6 +41,7 @@ public class PacketChangeBiome implements IMessage {
         for (int i = 0; i < length; i++) {
             positions[i] = BlockPos.fromLong(buf.readLong());
         }
+        storeOld = buf.readBoolean();
     }
 
     @Override
@@ -48,6 +51,7 @@ public class PacketChangeBiome implements IMessage {
         for (BlockPos position : positions) {
             buf.writeLong(position.toLong());
         }
+        buf.writeBoolean(storeOld);
     }
 
     public static class Handler implements IMessageHandler<PacketChangeBiome, IMessage> {
@@ -55,7 +59,7 @@ public class PacketChangeBiome implements IMessage {
         public IMessage onMessage(PacketChangeBiome message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
                 World world = MiskatonicMysteries.proxy.getPlayer(ctx).world;
-                BiomeManipulator.setMultiBiome(world, message.biome, message.positions);
+                BiomeManipulator.setMultiBiome(world, message.biome, message.storeOld, message.positions);
 
                 HashSet<ChunkPos> finishedPos = new HashSet<>();
                 for (BlockPos pos : message.positions) {

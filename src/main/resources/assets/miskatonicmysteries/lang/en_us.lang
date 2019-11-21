@@ -121,6 +121,9 @@ config.darkYoungBiomes=Dark Young Biomes
 config.category_misc=Miscellaneous
 config.infestedWheatChance=Infested Wheat Chance
 
+config.category_goos=Great Old Ones
+config.greatOldOneManipulationInterval=Great Old One Manipulation Interval
+
 #COMMANDS
 commands.miskmyst.usage=miskatonicmysteries <player> <command> <value>
 command.miskmyst.player_null=§cPlayer %s could not be found
