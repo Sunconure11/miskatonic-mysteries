@@ -86,8 +86,8 @@ public class MiskatonicMysteries {
         CapabilityManager.INSTANCE.register(ISanity.class, new SanityStorage(), Sanity.class);
         CapabilityManager.INSTANCE.register(IBlessingCapability.class, new BlessingStorage(), BlessingCapability.class);
         CapabilityManager.INSTANCE.register(ISpellKnowledge.class, new SpellKnowledgeStorage(), SpellKnowledge.class);
-        ModEntities.init();
         ModBiomes.registerBiomes();
+        ModEntities.init();
         initTileEntities();
         ModObjects.addBanners(); //todo, add the rest of the recipes
     }

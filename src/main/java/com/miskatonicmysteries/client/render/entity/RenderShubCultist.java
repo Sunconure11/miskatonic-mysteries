@@ -1,7 +1,7 @@
 package com.miskatonicmysteries.client.render.entity;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.model.entity.ModelCultistShub;
+import com.miskatonicmysteries.client.model.entity.ModelShubCultist;
 import com.miskatonicmysteries.common.entity.cultist.EntityShubCultist;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 public class RenderShubCultist extends RenderBiped<EntityShubCultist> {
     public RenderShubCultist(RenderManager rendermanagerIn) {
-        super(rendermanagerIn, new ModelCultistShub(), 0.5F);
+        super(rendermanagerIn, new ModelShubCultist(), 0.5F);
     }
 
     @Nullable

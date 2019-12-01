@@ -5,6 +5,7 @@ import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
 import com.miskatonicmysteries.client.render.entity.RenderGoatLegs;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.entity.goo.AbstractOldOne;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -33,6 +35,7 @@ public class RenderManipulatorHandler {
     public static boolean switchYawDirection = false;
     public static float cameraPitch = 0;
     public static boolean switchPitchDirection = false;
+
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void maniaSettings(EntityViewRenderEvent.CameraSetup event) {
@@ -58,6 +61,49 @@ public class RenderManipulatorHandler {
                 event.setRoll(event.getRoll() + cameraRoll);
             }
     }
+
+   /* @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void addGOOFogDensity(EntityViewRenderEvent.FogDensity fogDensity){
+        if (fogDensity.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) fogDensity.getEntity();
+            AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
+            if (goo != null){
+                //fogDensity.setCanceled(true); ???
+                float density = (float) goo.getFogDensity(player, player.posX, player.posY, player.posZ, fogDensity.getDensity());
+                fogDensity.setDensity(density);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void addGOOFogColor(EntityViewRenderEvent.FogColors fogColors){
+        if (fogColors.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) fogColors.getEntity();
+            AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
+            if (goo != null){
+                Color color = goo.getFogColor(player, player.posX, player.posY, player.posZ, new Color(fogColors.getRed(), fogColors.getGreen(), fogColors.getBlue()));
+                if (color != null) {
+                    fogColors.setRed(color.getRed() / 255F);
+                    fogColors.setGreen(color.getGreen() / 255F);
+                    fogColors.setBlue(color.getBlue() / 255F);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void addSpecialGOOFog(EntityViewRenderEvent.RenderFogEvent fogRender){
+        if (fogRender.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) fogRender.getEntity();
+            AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
+            if (goo != null){
+                goo.renderSpecialFog(fogRender);
+            }
+        }
+    }*/
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent

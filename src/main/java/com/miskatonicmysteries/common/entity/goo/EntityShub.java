@@ -1,6 +1,8 @@
 package com.miskatonicmysteries.common.entity.goo;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.world.biome.GreatOldOneArea;
+import com.miskatonicmysteries.registry.ModBiomes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -88,8 +90,8 @@ public class EntityShub extends AbstractOldOne {
 
 
     @Override
-    public Biome getDistortionBiome() {
-        return Biomes.OCEAN;
+    public GreatOldOneArea getDistortionBiome() {
+        return ModBiomes.SHUB;
     }
 
     @Override
