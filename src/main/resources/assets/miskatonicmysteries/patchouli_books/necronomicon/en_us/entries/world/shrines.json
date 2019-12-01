@@ -32,7 +32,7 @@
     {
       "type": "image",
       "images": [
-        "miskatonicmysteries:textures/gui/images/hastur_1.png"
+        "miskatonicmysteries:textures/gui/images/shrine_hastur_1.png"
       ],
       "border": true,
       "text": "$(l)Shrines to the Yellow King$()"

@@ -57,7 +57,7 @@ import java.lang.reflect.Field;
 @SuppressWarnings("WeakerAccess")
 @Mod(modid = MiskatonicMysteries.MODID, name = MiskatonicMysteries.NAME, version = MiskatonicMysteries.VERSION)
 public class MiskatonicMysteries {
-    public static final String MODID = "miskatonicmysteries", NAME = "Miskatonic Mysteries", VERSION = "1.1";
+    public static final String MODID = "miskatonicmysteries", NAME = "Miskatonic Mysteries", VERSION = "1.2";
 
     @Mod.Instance(MODID)
     public static MiskatonicMysteries instance;
