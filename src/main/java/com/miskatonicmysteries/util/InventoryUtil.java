@@ -3,6 +3,7 @@ package com.miskatonicmysteries.util;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -119,6 +120,26 @@ public class InventoryUtil {
         for (int i = 0; i < inventory.getSlots(); i++){
             list.add(inventory.getStackInSlot(i));
         }
+        return list;
+    }
+
+    //includes offhand
+
+    public static ItemStack getItemInHotbar(EntityPlayer player, Item item){
+        for (int i = 0; i < 9; i++){
+            if (player.inventory.getStackInSlot(i).getItem() == item){
+                return player.inventory.getStackInSlot(i);
+            }
+        }
+        return player.getHeldItemOffhand().getItem() == item ? player.getHeldItemOffhand() : ItemStack.EMPTY;
+    }
+
+    public static NonNullList<ItemStack> getHotbarInventory(EntityPlayer player){
+        NonNullList<ItemStack> list = NonNullList.create();
+        for (int i = 0; i < 9; i++){
+            list.add(player.inventory.getStackInSlot(i));
+        }
+        list.add(player.getHeldItemOffhand());
         return list;
     }
 }

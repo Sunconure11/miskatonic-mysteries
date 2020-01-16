@@ -43,7 +43,7 @@ public class ShubBlessing extends Blessing {
     @SubscribeEvent
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer && hasBlessing((EntityPlayer)event.getEntityLiving())){
-            ((EntityPlayer) event.getEntityLiving()).fallDistance *= 0.7F;
+            ((EntityPlayer) event.getEntityLiving()).fallDistance *= 0.78F;
             ((EntityPlayer) event.getEntityLiving()).stepHeight = 1.25F;
         }
     }

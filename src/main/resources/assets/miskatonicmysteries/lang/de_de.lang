@@ -9,9 +9,9 @@ death.attack.miskatonicmysteries_devour=%1$s wurde verschlungen
 death.attack.miskatonicmysteries_devour.player=%1$s wurde von %2$s verschlungen
 death.attack.miskatonicmysteries_devour.item=%1$s wurde von %2$s mit %3$s verschlungen
 
-death.attack.miskatonicmysteries_devour=%1$s ist nicht aufgewacht
-death.attack.miskatonicmysteries_devour.player=%1$s ist nicht aufgewacht
-death.attack.miskatonicmysteries_devour.item=%1$s ist nicht aufgewacht
+death.attack.miskatonicmysteries_sleep=%1$s ist nicht aufgewacht
+death.attack.miskatonicmysteries_sleep.player=%1$s ist nicht aufgewacht
+death.attack.miskatonicmysteries_sleep.item=%1$s ist nicht aufgewacht
 
 #BLOCK
 tile.stone_cthulhu_mural.name=Stein Cthulhu-Mural

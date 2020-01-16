@@ -10,9 +10,9 @@ death.attack.miskatonicmysteries_devour=%1$s was verslonden
 death.attack.miskatonicmysteries_devour.player=%1$s was verslonden door %2$s
 death.attack.miskatonicmysteries_devour.item=%1$s werd verslonden door %2$s met %3$s
 
-death.attack.miskatonicmysteries_devour=%1$s werd niet wakker
-death.attack.miskatonicmysteries_devour.player=%1$s werd niet wakker
-death.attack.miskatonicmysteries_devour.item=%1$s werd niet wakker
+death.attack.miskatonicmysteries_sleep=%1$s werd niet wakker
+death.attack.miskatonicmysteries_sleep.player=%1$s werd niet wakker
+death.attack.miskatonicmysteries_sleep.item=%1$s werd niet wakker
 
 #BLOK
 tile.stone_cthulhu_mural.name=Stenen Cthulhu muurschildering

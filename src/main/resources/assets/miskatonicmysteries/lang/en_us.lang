@@ -10,9 +10,18 @@ death.attack.miskatonicmysteries_devour=%1$s was devoured
 death.attack.miskatonicmysteries_devour.player=%1$s was devoured by %2$s
 death.attack.miskatonicmysteries_devour.item=%1$s was devoured by %2$s using %3$s
 
-death.attack.miskatonicmysteries_devour=%1$s did not wake up
-death.attack.miskatonicmysteries_devour.player=%1$s did not wake up
-death.attack.miskatonicmysteries_devour.item=%1$s did not wake up
+death.attack.miskatonicmysteries_sleep=%1$s did not wake up
+death.attack.miskatonicmysteries_sleep.player=%1$s did not wake up
+death.attack.miskatonicmysteries_sleep.item=%1$s did not wake up
+
+death.mania.0=%1$s's mind was at last overwhelmed by the madness of things man should not know
+death.mania.1=%1$s's mind could no longer contain their madness
+death.mania.2=%1$s could no longer resist their madness and killed themselves in a fit of Mania
+
+death.mania.shub=%1$s has died by will alone to become one of the Thousand Young within the Black Wood
+death.mania.hastur=%1$s has heard the calling of the King in Yellow and has abandoned their body to join their lord in dim Carcosa.
+death.mania.yog_sothoth=%1$s journeys forever more beyond the wall of sleep
+death.mania.cthulhu=%1$s's mind has departed to slumber in R'lyeh
 
 #BLOCK
 tile.stone_cthulhu_mural.name=Stone Cthulhu Mural
@@ -83,6 +92,8 @@ item.infested_wheat.name=Infested Wheat
 
 item.incantation_gate_key.name=Incantation of the Gate-and-Key
 
+item.re_agent.name=ReAgent
+
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath
 entity.hastur.name=Hastur
@@ -96,8 +107,10 @@ miskatonicmysteries.mania=Mania
 miskatonicmysteries.hunger_exotic=Exotic Cravings
 miskatonicmysteries.defy_death=Defy Death
 
-miskatonicmysteries.blessed_shub=Blessed
-miskatonicmysteries.blessed_hastur=Blessed
+miskatonicmysteries.lazarus=Lazarus
+
+miskatonicmysteries.shub_blessing=Blessed
+miskatonicmysteries.hastur_blessing=Blessed
 
 
 #INFO

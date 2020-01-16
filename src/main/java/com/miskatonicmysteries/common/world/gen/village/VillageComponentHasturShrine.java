@@ -44,6 +44,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
         return canVillageGoDeeper(maxBoundingBox) && StructureComponent.findIntersecting(p_175854_1_, maxBoundingBox) == null ? new VillageComponentHasturShrine(maxBoundingBox, p4, 1 + rand.nextInt(2)) : null;
     }
 
+
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
         if (randomIn.nextDouble() < ModConfig.worldGen.chanceHasturShrines) {

@@ -6,6 +6,7 @@ import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.BlessingStorage;
 import com.miskatonicmysteries.common.capability.blessing.IBlessingCapability;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.ISanity;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.capability.sanity.SanityStorage;
@@ -22,7 +23,9 @@ import com.miskatonicmysteries.proxy.ServerProxy;
 import com.miskatonicmysteries.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -33,6 +36,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -72,6 +77,9 @@ public class MiskatonicMysteries {
         }
     };
 
+    public static final DamageSource INSANITY = new DamageSource(MODID + "_insanity"){
+        @Override
+        public ITextComponent getDeathMessage(EntityLivingBase entityLivingBaseIn) { return new TextComponentTranslation("death.mania." + ((entityLivingBaseIn instanceof EntityPlayer && !BlessingCapability.Util.hasBlessing((EntityPlayer) entityLivingBaseIn, Blessing.NONE)) ? BlessingCapability.Util.getBlessing((EntityPlayer) entityLivingBaseIn).getName().toLowerCase() : entityLivingBaseIn.getRNG().nextInt(3)), new Object[] {entityLivingBaseIn.getDisplayName()}); }}.setDamageBypassesArmor().setDamageIsAbsolute();
     public static final DamageSource VORE = new DamageSource(MODID + "_devour").setDamageBypassesArmor().setDamageIsAbsolute();
     public static final DamageSource SLEEP = new DamageSource(MODID + "_sleep").setDamageBypassesArmor().setDamageIsAbsolute();
 

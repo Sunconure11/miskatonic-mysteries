@@ -1,10 +1,15 @@
 package com.miskatonicmysteries.common.potion;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EntityDamageSource;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +18,21 @@ public class PotionMania extends ModPotion {
     public PotionMania() {
         super("mania", false, 7606784);
 
+    }
+
+    @Override
+    public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, EntityLivingBase entityLivingBaseIn, int amplifier, double health) {
+        if (entityLivingBaseIn instanceof EntityPlayer){
+            if (Sanity.Util.getSanity((EntityPlayer) entityLivingBaseIn) <= 10){
+                EntityPlayer player = (EntityPlayer) entityLivingBaseIn;
+                int sanity = Sanity.Util.getSanity(player);
+                float chance = Math.max(1 - (sanity / 10), 0.5F);
+                if (chance < player.getRNG().nextFloat() * (Math.max(1, amplifier / 1.5F))){
+                    Sanity.Util.setSanity(15, player);
+                    player.attackEntityFrom(MiskatonicMysteries.INSANITY, 666);
+                }
+            }
+        }
     }
 
     @Override
