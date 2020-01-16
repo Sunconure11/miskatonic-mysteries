@@ -5,10 +5,18 @@ import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
 import com.miskatonicmysteries.client.render.entity.RenderGoatLegs;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.capability.spells.SpellKnowledge;
 import com.miskatonicmysteries.common.entity.goo.AbstractOldOne;
 import com.miskatonicmysteries.registry.ModPotions;
+import com.miskatonicmysteries.registry.ModRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelHorse;
+import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -17,7 +25,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -39,37 +49,37 @@ public class RenderManipulatorHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void maniaSettings(EntityViewRenderEvent.CameraSetup event) {
-            EntityPlayer player = Minecraft.getMinecraft().player;
-            if (player.getActivePotionEffect(ModPotions.mania) != null) {
-                Random rand = player.getRNG();
-                if (!Minecraft.getMinecraft().isGamePaused()) {
-                    cameraRoll += rand.nextFloat() / 3F * (switchRollDirection ? 1 : -1);
-                    if ((cameraRoll >= 1 && switchRollDirection) || (!switchRollDirection && cameraRoll <= -1)) {
-                        switchRollDirection = !switchRollDirection;
-                    }
-                    cameraYaw += rand.nextFloat() / 3F * (switchYawDirection ? 1 : -1);
-                    if ((cameraYaw >= 1 && switchYawDirection) || (!switchYawDirection && cameraYaw <= -1)) {
-                        switchYawDirection = !switchYawDirection;
-                    }
-                    cameraPitch += rand.nextFloat() / 3F * (switchPitchDirection ? 1 : -1);
-                    if ((cameraPitch >= 1 && switchPitchDirection) || (!switchPitchDirection && cameraPitch <= -1)) {
-                        switchPitchDirection = !switchPitchDirection;
-                    }
+        EntityPlayer player = Minecraft.getMinecraft().player;
+        if (player.getActivePotionEffect(ModPotions.mania) != null) {
+            Random rand = player.getRNG();
+            if (!Minecraft.getMinecraft().isGamePaused()) {
+                cameraRoll += rand.nextFloat() / 3F * (switchRollDirection ? 1 : -1);
+                if ((cameraRoll >= 1 && switchRollDirection) || (!switchRollDirection && cameraRoll <= -1)) {
+                    switchRollDirection = !switchRollDirection;
                 }
-                event.setYaw(event.getYaw() + cameraYaw);
-                event.setPitch(event.getPitch() + cameraPitch);
-                event.setRoll(event.getRoll() + cameraRoll);
+                cameraYaw += rand.nextFloat() / 3F * (switchYawDirection ? 1 : -1);
+                if ((cameraYaw >= 1 && switchYawDirection) || (!switchYawDirection && cameraYaw <= -1)) {
+                    switchYawDirection = !switchYawDirection;
+                }
+                cameraPitch += rand.nextFloat() / 3F * (switchPitchDirection ? 1 : -1);
+                if ((cameraPitch >= 1 && switchPitchDirection) || (!switchPitchDirection && cameraPitch <= -1)) {
+                    switchPitchDirection = !switchPitchDirection;
+                }
             }
+            event.setYaw(event.getYaw() + cameraYaw);
+            event.setPitch(event.getPitch() + cameraPitch);
+            event.setRoll(event.getRoll() + cameraRoll);
+        }
     }
 
-   /* @SubscribeEvent
+    @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void addGOOFogDensity(EntityViewRenderEvent.FogDensity fogDensity){
+    public void addGOOFogDensity(EntityViewRenderEvent.FogDensity fogDensity) {
         if (fogDensity.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) fogDensity.getEntity();
             AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
-            if (goo != null){
-                //fogDensity.setCanceled(true); ???
+            if (goo != null) {
+                fogDensity.setCanceled(true); //???
                 float density = (float) goo.getFogDensity(player, player.posX, player.posY, player.posZ, fogDensity.getDensity());
                 fogDensity.setDensity(density);
             }
@@ -78,13 +88,14 @@ public class RenderManipulatorHandler {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void addGOOFogColor(EntityViewRenderEvent.FogColors fogColors){
+    public void addGOOFogColor(EntityViewRenderEvent.FogColors fogColors) {
         if (fogColors.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) fogColors.getEntity();
             AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
-            if (goo != null){
+            if (goo != null) {
                 Color color = goo.getFogColor(player, player.posX, player.posY, player.posZ, new Color(fogColors.getRed(), fogColors.getGreen(), fogColors.getBlue()));
                 if (color != null) {
+
                     fogColors.setRed(color.getRed() / 255F);
                     fogColors.setGreen(color.getGreen() / 255F);
                     fogColors.setBlue(color.getBlue() / 255F);
@@ -95,15 +106,15 @@ public class RenderManipulatorHandler {
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void addSpecialGOOFog(EntityViewRenderEvent.RenderFogEvent fogRender){
+    public void addSpecialGOOFog(EntityViewRenderEvent.RenderFogEvent fogRender) {
         if (fogRender.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) fogRender.getEntity();
             AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
-            if (goo != null){
+            if (goo != null) {
                 goo.renderSpecialFog(fogRender);
             }
         }
-    }*/
+    }
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent
@@ -112,7 +123,7 @@ public class RenderManipulatorHandler {
         if (mobMob.containsKey(event.getEntity().getEntityId())) {
             event.setCanceled(true);
             EntityLivingBase entity = mobMob.get(event.getEntity().getEntityId());
-             entity.renderYawOffset = event.getEntity().renderYawOffset;
+            entity.renderYawOffset = event.getEntity().renderYawOffset;
             entity.prevRenderYawOffset = event.getEntity().prevRenderYawOffset;
             entity.cameraPitch = event.getEntity().cameraPitch;
             entity.posX = event.getEntity().posX;
@@ -154,14 +165,17 @@ public class RenderManipulatorHandler {
     }
 
     @SubscribeEvent
-    public void renderBlessing(RenderPlayerEvent.Pre event) {
-        if (ModConfig.client.playerModelOverrides) {
-            if (BlessingCapability.Util.hasBlessing(event.getEntityPlayer(), Blessing.SHUB) && !(event.getRenderer() instanceof RenderGoatLegs) && event.getEntityPlayer() instanceof AbstractClientPlayer) {
-                event.setCanceled(true);
-                boolean smolArms = !((AbstractClientPlayer) event.getEntityPlayer()).getSkinType().equals("default");
-                RenderGoatLegs render = new RenderGoatLegs(Minecraft.getMinecraft().getRenderManager(), new ModelGoatBlessing(0, smolArms), smolArms);
-                render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, event.getPartialRenderTick());
-            }
+    public void renderBlessing(RenderPlayerEvent.Pre event) { //the issue is that the capability has different values for other players, for some reason
+        //might be fixed? if not, maybe try sending a packet to the server after having sent a packet to  the client (see CapabilityHandler)
+        if (!(event.getRenderer() instanceof RenderGoatLegs) && BlessingCapability.Util.hasBlessing(event.getEntityPlayer(), Blessing.SHUB)) {
+            event.setCanceled(true);
+            boolean smolArms = false;
+            try {
+                smolArms = ObfuscationReflectionHelper.findField(RenderPlayer.class, "field_177140_a").getBoolean(event.getRenderer());
+            } catch (Exception ignore) {}
+
+            RenderGoatLegs render = new RenderGoatLegs(Minecraft.getMinecraft().getRenderManager(), new ModelGoatBlessing(0, smolArms), smolArms);
+            render.doRender((AbstractClientPlayer) event.getEntityPlayer(), event.getX(), event.getY(), event.getZ(), ((AbstractClientPlayer) event.getEntityPlayer()).rotationYaw, event.getPartialRenderTick());
         }
     }
 }

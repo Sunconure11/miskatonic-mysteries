@@ -18,4 +18,8 @@ public class ModelAnimUtil {
             tentacle[i + 1].rotateAngleX += MathHelper.sin(progress * i * strength) * (i % 2 == 0 ? -1 : 1);
         }
     }
+
+    public static float calculateTickSequenceProgress(int tickSequence, float ageInTicks){
+        return (ageInTicks % tickSequence) / (float) tickSequence;
+    }
 }

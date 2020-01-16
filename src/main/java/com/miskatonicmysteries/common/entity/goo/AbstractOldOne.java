@@ -196,7 +196,7 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
         if (ratio < 0){
             ratio = 0;
         }
-        return oldDensity + ratio;
+        return oldDensity + ratio * 3;
     }
 
     @SideOnly(Side.CLIENT)

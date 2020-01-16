@@ -19,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemShield;
 import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -99,16 +100,16 @@ public class InsanityHandler {
     @SubscribeEvent
     public static void handleYellowSign(EntityViewRenderEvent.CameraSetup event) {
         Minecraft mc = Minecraft.getMinecraft();
-        if (mc.world.rand.nextInt(60) == 0) {
+        if (mc.getRenderViewEntity() != null && mc.world.rand.nextInt(60) == 0) {
             if (mc.pointedEntity != null) {
                 if (StreamSupport.stream(mc.pointedEntity.getEquipmentAndArmor().spliterator(), true).anyMatch(stack -> stack.getItem() instanceof ItemShield && stack.getSubCompound("BlockEntityTag") != null && stack.getSubCompound("BlockEntityTag").getString("Pattern") == ModObjects.YELLOW_SIGN_PATTERN.getHashname())) {
                     PacketHandler.network.sendToServer(new PacketYellowSign());
                 }
             } else {
-                BlockPos pos = mc.getRenderViewEntity().rayTrace(8, (float) event.getRenderPartialTicks()).getBlockPos();
-                if (pos != null) {
-                    if (mc.world.getTileEntity(pos) instanceof TileEntityBanner) {
-                        if (((TileEntityBanner) mc.world.getTileEntity(pos)).getPatternList().contains(ModObjects.YELLOW_SIGN_PATTERN)) {
+                RayTraceResult trace = mc.getRenderViewEntity().rayTrace(8, (float) event.getRenderPartialTicks());
+                if (trace != null && trace.getBlockPos() != null) {
+                    if (mc.world.getTileEntity(trace.getBlockPos()) instanceof TileEntityBanner) {
+                        if (((TileEntityBanner) mc.world.getTileEntity(trace.getBlockPos())).getPatternList().contains(ModObjects.YELLOW_SIGN_PATTERN)) {
                             PacketHandler.network.sendToServer(new PacketYellowSign());
                         }
                     }

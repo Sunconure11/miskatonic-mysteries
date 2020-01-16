@@ -101,7 +101,7 @@ public class EntityShubCultist extends AbstractCultist {
     public List<EntityVillager.ITradeList> getMiscTradeList() {
         List<EntityVillager.ITradeList> trades = new ArrayList<>();
         trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 5 + random.nextInt(4)), new ItemStack(ModObjects.flesh_dark_young, 1 + random.nextInt(3)))));
-        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 8 + random.nextInt(5)), new ItemStack(ModObjects.necronomicon, 1))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 4 + random.nextInt(5)), new ItemStack(ModObjects.necronomicon, 1))));
         //trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 8 + random.nextInt(5)), new ItemStack(ModObjects.tranquilizer, 1)))); todo add goat idol
         return trades;
     }

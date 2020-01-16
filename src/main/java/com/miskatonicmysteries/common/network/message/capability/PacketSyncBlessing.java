@@ -40,6 +40,7 @@ public class PacketSyncBlessing implements IMessage{
                 if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.hasCapability(SanityProvider.SANITY, null)) {
                     IBlessingCapability c = Minecraft.getMinecraft().player.getCapability(BlessingProvider.BLESSING, null);
                     c.setBlessing(Blessing.getBlessing(message.blessing));
+                    c.setDirty(false);
                 }
             });
             return null;

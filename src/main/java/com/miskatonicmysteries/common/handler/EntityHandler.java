@@ -1,9 +1,16 @@
 package com.miskatonicmysteries.common.handler;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.client.model.entity.ModelGoatBlessing;
+import com.miskatonicmysteries.client.render.entity.RenderGoatLegs;
+import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
+import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.entity.EntityDarkYoung;
 import com.miskatonicmysteries.common.entity.IIgnoreMaterials;
 import com.miskatonicmysteries.registry.ModObjects;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityVindicator;
@@ -14,9 +21,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid = MiskatonicMysteries.MODID)

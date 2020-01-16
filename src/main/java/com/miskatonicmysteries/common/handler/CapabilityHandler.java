@@ -18,6 +18,7 @@ import com.miskatonicmysteries.proxy.ClientProxy;
 import com.miskatonicmysteries.registry.ModInsanityEffects;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -86,7 +87,11 @@ public class CapabilityHandler {
 
                 if (event.getEntityLiving().hasCapability(BlessingProvider.BLESSING, null)) {
                     IBlessingCapability blessing = event.getEntityLiving().getCapability(BlessingProvider.BLESSING, null);
-                    if (blessing.isDirty() && !event.getEntityLiving().world.isRemote) {
+
+                    //System.out.println(((EntityPlayer) event.getEntityLiving()).world.isRemote ? "Client: " : "Server: " + blessing.getBlessing().getName());
+                    if (blessing.getBlessing().getPotionEffect() != null)
+                        event.getEntityLiving().addPotionEffect(new PotionEffect(blessing.getBlessing().getPotionEffect()));
+                    if (!event.getEntityLiving().world.isRemote && blessing.isDirty()) {
                         BlessingCapability.Util.syncBlessing((EntityPlayer) event.getEntityLiving(), blessing);
                         blessing.setDirty(false);
                     }

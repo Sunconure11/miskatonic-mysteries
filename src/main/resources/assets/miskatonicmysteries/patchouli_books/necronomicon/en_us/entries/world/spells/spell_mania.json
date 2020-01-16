@@ -10,7 +10,7 @@
     },
     {
       "type": "text",
-      "text": "The Rite for learning this spell requires a small amount of Focal Power, though I should be really careful with the Focal Power I use; the Mania Spell will apply the according effect on any living beings nearby, unless they are able to resist. The effect lasts around twenty seconds, it is however very potent."
+      "text": "The Rite for learning this spell requires a small amount of Focal Power, though one should be really careful with the Focal Power used; the Mania Spell will apply the according effect on any living beings nearby, unless they are able to resist. The effect lasts around twenty seconds, it is however very potent. Casting this requires $(item)Infested Wheat$()."
     }
   ]
 }

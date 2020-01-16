@@ -39,8 +39,8 @@ public class ModConfig {
 
 
         @Config.Comment("Set this to false to disable changes to the player's model under certain circumstances, e.g. when under a special transformation.")
-        @Config.LangKey("config.change_player_model")
-        public boolean playerModelOverrides = true;
+        @Config.LangKey("config.render_blessing_effect")
+        public boolean renderBlessingEffect = true;
 
         @Config.Comment("Determines the amount of particles that are spawned.")
         @Config.LangKey("config.particle_amount")

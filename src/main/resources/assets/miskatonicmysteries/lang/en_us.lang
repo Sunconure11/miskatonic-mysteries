@@ -94,6 +94,11 @@ entity.dark_young.name=Dark Young
 miskatonicmysteries.tranquilized=Tranquilized
 miskatonicmysteries.mania=Mania
 miskatonicmysteries.hunger_exotic=Exotic Cravings
+miskatonicmysteries.defy_death=Defy Death
+
+miskatonicmysteries.blessed_shub=Blessed
+miskatonicmysteries.blessed_hastur=Blessed
+
 
 #INFO
 itemGroup.miskatonicmysteries=Miskatonic Mysteries
@@ -101,7 +106,7 @@ itemGroup.miskatonicmysteries=Miskatonic Mysteries
 #CONFIG
 config.category_client=Client Settings
 config.use_shaders=Use Shaders
-config.change_player_model=Player Model Overrides
+config.render_blessing_effect=Render Blessing Icon
 config.particle_amount=Particle Amount
 
 config.category_worldgen=World Generation

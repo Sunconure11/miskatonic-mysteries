@@ -3,6 +3,7 @@ package com.miskatonicmysteries.common.capability.blessing;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.common.network.message.capability.PacketSyncBlessing;
+import com.miskatonicmysteries.common.potion.PotionBlessedBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
@@ -39,7 +40,9 @@ public class BlessingCapability implements IBlessingCapability {
     public static class Util {
         public static boolean setBlessing(Blessing blessing, EntityPlayer player) {
             if (blessing != null && !player.world.isRemote && getBlessingCapability(player) != null) {
+                getBlessing(player).onRemoved(player);
                 getBlessingCapability(player).setBlessing(blessing);
+                getBlessing(player).onAdded(player);
                 return true;
             }
             return false;
@@ -57,7 +60,7 @@ public class BlessingCapability implements IBlessingCapability {
         }
 
         public static boolean hasBlessing(EntityPlayer player, Blessing blessing){
-            return getBlessing(player).getName().equals(blessing.getName());
+            return (blessing.getPotionEffect() != null && player.getActivePotionEffect(blessing.getPotionEffect().getPotion()) != null) || getBlessing(player).getName().equals(blessing.getName());
         }
 
         public static void transferToClone(PlayerEvent.Clone event) {

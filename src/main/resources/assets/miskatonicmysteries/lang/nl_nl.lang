@@ -1,0 +1,232 @@
+
+#INSTELLINGEN
+category.miskatonicmysteries=Miskatonic mysteries
+key.miskmyst_up=Volgende spreuk
+key.miskmyst_down=Vorige spreuk
+key.miskmyst_cancel=Spreuk annuleren
+
+#SCHADE
+death.attack.miskatonicmysteries_devour=%1$s was verslonden
+death.attack.miskatonicmysteries_devour.player=%1$s was verslonden door %2$s
+death.attack.miskatonicmysteries_devour.item=%1$s werd verslonden door %2$s met %3$s
+
+death.attack.miskatonicmysteries_devour=%1$s werd niet wakker
+death.attack.miskatonicmysteries_devour.player=%1$s werd niet wakker
+death.attack.miskatonicmysteries_devour.item=%1$s werd niet wakker
+
+#BLOK
+tile.stone_cthulhu_mural.name=Stenen Cthulhu muurschildering
+tile.moss_stone_cthulhu_mural.name=Bemost steen Cthulhu muurschildering
+tile.prismarine_cthulhu_mural.name=Prismarine Cthulhu muurschildering
+
+tile.stone_hastur_mural.name=Stenen Hastur muurschildering
+tile.moss_stone_hastur_mural.name=Bemost steen Hastur muurschildering
+tile.terracotta_hastur_mural.name=Terracotta Hastur muurschildering
+tile.yellow_terracotta_hastur_mural.name=Gele Terracotta Hastur muurschildering
+
+tile.stone_shubniggurath_mural.name=Stenen Shub-Niggurath muurschildering
+tile.moss_stone_shubniggurath_mural.name=Mos steen Shub-Niggurath muurschildering
+
+tile.altar_stone.name=Stenen Altaar
+tile.altar_stone_mossy.name=Bemost stenen altaar
+tile.altar_netherbrick.name=Nether baksteen altaar
+tile.altar_prismarine.name=Prismarine altaar
+tile.altar_sandstone.name=Zandsteen altaar
+tile.altar_purpur.name=Funky altaar
+
+tile.altar_coral_dead.name=Dood koraal altaar
+tile.altar_stone_enriched.name=Verrijkte steen altaar
+tile.altar_brick_scorned.name=Geminachte baksteen altaar
+
+tile.yellow_sign.name=Geel bord
+
+tile.chemistry_set.name=Scheikunde set
+
+tile.candles.name=Kaars
+
+tile.octagram_shub.name=Zwart geitenkrijt
+tile.octagram_hastur.name=Gele geitenkrijt
+item.chalk.name=Profaan krijt
+
+#ITEM
+item.research_notes_cthulhu.name=Onderzoeksnotities
+item.research_notes_hastur.name=Onderzoeksnotities
+item.research_notes_shubniggurath.name=Onderzoeksnotities
+
+item.hastur_cultist_hood.name=Hastur's cultistische kap
+item.hastur_cultist_robes.name=Hastur's cultistische gewaden
+item.hastur_cultist_pants.name=Hastur's cultistische broek
+
+item.yellow_kings_dagger.name=De dolk van de gele koning
+
+item.shubniggurath_cultist_mask.name=Shub-Niggurath's cultistische masker
+item.shubniggurath_cultist_hoodmask.name=Shub-Niggurath's cultistische kap
+item.shubniggurath_cultist_robes.name=Shub-Niggurath's cultistische gewaden
+item.shubniggurath_cultist_pants.name=Shub-Niggurath's cultistische broek
+
+item.black_goats_gutting_dagger.name=De dolk van de zwarte geit
+item.black_goats_horned_dagger.name=De gehoornde dolk van de zwarte geit
+
+item.tranquilizer.name=Kalmeringsmiddel
+
+item.milk_black_goat.name=Melk van de zwarte geit
+item.gold_oceanic.name=Oceanisch goud
+
+item.necronomicon.name=Necronomicon
+
+item.tallow.name=Talg
+
+item.flesh_dark_young.name=Donker jong vlees
+item.blotter.name=Vloeipapier
+
+item.infested_wheat.name=Besmette tarwe
+
+item.incantation_gate_key.name=Betovering van de poort en sleutel
+
+#ENTITEITEN
+entity.shub_niggurath.name=Shub-Niggurath
+entity.hastur.name=Hastur
+entity.cultist_hastur.name=Dienaar van de gele Koning
+entity.cultist_shub.name=Cultist van de geit
+entity.dark_young.name=Dark Young
+
+#DRANKJES
+miskatonicmysteries.tranquilized=Gekalmeerd
+miskatonicmysteries.mania=Mania
+miskatonicmysteries.hunger_exotic=Exotische verlangens
+
+#INFORMATIE
+itemGroup.miskatonicmysteries=Miskatonic mysteries
+
+#CONFIGURATIE
+config.category_client=Client instellingen
+config.use_shaders=Gebruik Shaders
+config.change_player_model=Overschrijvingen van spelersmodel
+config.particle_amount=Aantal particles
+
+config.category_worldgen=Wereld generatie
+config.chanceShubShrines=Kans op Shub-Niggurath's heiligdommen
+config.chanceBananaShrines=Kans op Hastur's heiligdommen
+config.chanceCthulhuShrines=Kans op Cthulhu's heiligdommen
+
+config.category_sanity=Geestelijke gezondheid
+config.insanity_interval=Krankzinnigheid gebeurtenis interval
+
+config.category_entities=Entiteiten
+config.darkYoungSpawnRate=Dark Young's Spawn snelheid
+config.darkYoungGroupMax=Dark Young's maximale groep
+config.darkYoungGroupMin=Dark Young's minimale groep
+config.darkYoungBiomes=Dark Young's klimaten
+
+config.category_misc=Diversen
+config.infestedWheatChance=Kans op besmette tarwe
+
+config.category_goos=Grote ouden
+config.greatOldOneManipulationInterval=Geweldig oud manipulatie interval
+
+#COMMANDO'S
+commands.miskmyst.usage=miskatonicmysteries <player> <command> <value>
+command.miskmyst.player_null=Kan speler %s niet vinden
+command.miskmyst.no_command=%s is geen geldige opdracht
+
+commands.miskmyst.sanity.success=Stel verstandigheid %s's met succes in %s
+commands.miskmyst.sanity.fail_badnum=%s is geen geldig nummer
+
+commands.miskmyst.blessing.success=Zet zegen %s's succesvol op %s
+commands.miskmyst.blessing.fail_badblessing=%s is geen geldige zegen
+
+commands.miskmyst.spell.success=Met succes toegevoegd %s aan %s's compendium
+commands.miskmyst.spell.fail_no_spell=%s is geen geldige spreuk
+
+commands.miskmyst.reset_cooldown.success=Reset de cooldown van %s's spreuken
+commands.miskmyst.reset_cooldown.fail_no_spells=Spreuken konden niet worden gereset, omdat %s geen spreuken heeft
+
+commands.miskmyst.reset_spells.success=Spreukenlijst van %s's met succes gewist
+commands.miskmyst.reset_spells.fail_no_spells=%s's spreukenlijst kon niet worden gewist, omdat ze er geen hebben
+
+commands.miskmyst.play_insanity_effect.success=Speelde met succes het krankzinnigheidseffect %s voor speler %s
+commands.miskmyst.play_insanity_effect.fail=%s is geen geldig krankzinnigheidseffect
+
+#BOEK
+info.necronomicon.book.landing=Achter die dunne sluier van normaliteit schuilt een vreselijke waarheid, die alle bijgeloof weggooit om verder te kijken.
+info.miskatonicmysteries.necronomicon.subtitle=1st Editie
+
+info.miskatonicmysteries.notes_shub.subtitle=Shub-Niggurath
+info.notes_shub.book.landing=In de diepten van het bos wacht de Zwarte Geit en dit boek bevat een fractie van haar kracht en een veel groter potentieel binnenin.
+info.miskatonicmysteries.notes_hastur.subtitle=Hastur
+info.notes_hastur.book.landing=De Gele Koning heeft grote kennis; het is moeilijk om alles in een boek op te nemen. Toch ben ik gezegend met een fractie ervan.
+info.miskatonicmysteries.notes_cthulhu.subtitle=Cthulhu
+
+#BERICHTEN
+message.insanity_concern.0=%s ziet er vandaag nogal mager uit.
+message.insanity_concern.1=%s lijkt bleker dan normaal.
+message.insanity_concern.2=%s lijkt iets tegen zichzelf te fluisteren.
+message.insanity_concern.3=%s mompelt in een taal die je niet begrijpt.
+message.insanity_concern.4=Iets over %s lijkt gewoon niet... goed...
+message.insanity_concern.5=%s lijkt in het niets te staren.
+message.insanity_concern.6=%s ziet er ruim uit vandaag.
+message.insanity_concern.7=Iets over %s’s ogen maakt je onwetend ...
+message.insanity_concern.8=%s heeft een demente glimlach en lijkt ergens om te giechelen.
+message.insanity_concern.9=%s handelt paranoïde en kijkt constant rond alsof iets hen volgt.
+message.insanity_concern.10=%’s bewegingen zijn vreemd en zenuwachtig.
+message.insanity_concern.11=%’s pupillen zijn overdreven verwijd.
+
+message.cultist.sit=De cultist zal hier blijven
+message.cultist.wander=De cultist zal hier ronddwalen
+message.cultist.follow=De cultist zal je volgen
+
+#DIVERSEN
+item.banner.miskatonicmysteries_yellow_sign.yellow=Echt geel bord
+item.banner.miskatonicmysteries_yellow_sign.black=Zwart geel bord
+item.banner.miskatonicmysteries_yellow_sign.red=Rood geel bord
+item.banner.miskatonicmysteries_yellow_sign.green=Groen geel bord
+item.banner.miskatonicmysteries_yellow_sign.brown=Bruin geel bord
+item.banner.miskatonicmysteries_yellow_sign.lightBlue=Lichtblauw geel bord
+item.banner.miskatonicmysteries_yellow_sign.lime=Lime geel bord
+item.banner.miskatonicmysteries_yellow_sign.orange=Oranje geel bord
+item.banner.miskatonicmysteries_yellow_sign.pink=Roze geel bord
+item.banner.miskatonicmysteries_yellow_sign.purple=Paars geel bord
+item.banner.miskatonicmysteries_yellow_sign.white=Wit geel bord
+item.banner.miskatonicmysteries_yellow_sign.blue=Blauw geel bord
+item.banner.miskatonicmysteries_yellow_sign.cyan=Cyaan geel bord
+item.banner.miskatonicmysteries_yellow_sign.gray=Grijs geel bord
+item.banner.miskatonicmysteries_yellow_sign.silver=Licht grijs geel bord
+item.banner.miskatonicmysteries_yellow_sign.magenta=Magenta geel bord
+
+#PLECHTIGHEID
+rite.eldritch_trap.name=Eldritch Trap
+rite.hellfire_eldritch_trap.name=Hellevuur Trap
+rite.hysteria.name=Hysteria
+rite.maniacs_meeting_shub.name=Maniac's bijeenkomst
+rite.maniacs_meeting_hastur.name=Maniac's bijeenkomst
+rite.blank_slate.name=Schone lei
+rite.black_mass.name=Zwarte massa
+
+rite.learn_spell_regeneration.name=Regeneratie
+rite.learn_spell_feast.name=Intern feesten
+rite.learn_spell_spell_mania.name=Mania
+rite.learn_spell_personal_fragment.name=Persoonlijk fragment
+
+rite.learn_spell_growth.name=Leer groei
+
+rite.learn_spell_yellow_sign.name=Leer geel bord
+
+#TOOLTIPS
+tooltip.notes_shub=Shub-Niggurath
+tooltip.notes_hastur=Hastur
+tooltip.notes_cthulhu=Cthulhu
+
+tooltip.focus=Focusstatistieken:
+tooltip.focus.power.immense=Verleent enorme hoeveelheden Focal Power
+tooltip.focus.power.greater=Verleent grotere hoeveelheden Focal Power
+tooltip.focus.power.mediocre=Verleent middelmatige hoeveelheden Focal Power
+tooltip.focus.power.little=Verleent indrukwekkende hoeveelheden Focal Power
+
+tooltip.focus.instability.low=Lage instabiliteit
+tooltip.focus.instability.normal=Normale instabiliteit
+tooltip.focus.instability.high=Hoge instabiliteit
+tooltip.focus.instability.immense=Immense instabiliteit
+
+tooltip.focus.use.little=Mag in kleine hoeveelheden worden gebruikt
+tooltip.focus.use.normal=Mag in normale hoeveelheden worden gebruikt
+tooltip.focus.use.often=Mag in grote hoeveelheden worden gebruikt

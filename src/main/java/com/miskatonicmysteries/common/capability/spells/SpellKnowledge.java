@@ -112,7 +112,7 @@ public class SpellKnowledge implements ISpellKnowledge {
         }
 
         public static Spell getCurrentSpell(EntityPlayer player) {
-            if (!player.world.isRemote && isSpellSelected(player)) {
+            if (isSpellSelected(player)) {
                 return getKnowledge(player).getSpells()[getKnowledge(player).getCurrentSpell()];
             }
             return null;

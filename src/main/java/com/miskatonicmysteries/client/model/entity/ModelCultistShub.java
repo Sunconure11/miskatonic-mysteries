@@ -35,7 +35,6 @@ public class ModelCultistShub extends ModelCultist {
     public ModelRenderer rHoofClaw02a;
     public ModelRenderer rHoofClaw01b;
     public ModelRenderer rHoofClaw02b;
-
     public ModelRenderer lGoatLeg01;
     public ModelRenderer lGoatLeg02;
     public ModelRenderer lGoatLeg03;

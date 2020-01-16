@@ -100,7 +100,7 @@ itemGroup.miskatonicmysteries=Miskatonic Mysteries
 #CONFIG
 config.category_client=Client Settings
 config.use_shaders=Use Shaders
-config.change_player_model=Player Model Overrides
+config.render_blessing_effect=Render Blessing Icon
 config.particle_amount=Particle Amount
 
 config.category_worldgen=World Generation

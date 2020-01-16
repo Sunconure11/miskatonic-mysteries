@@ -30,6 +30,8 @@ public class ModInsanityEffects {
 
     public static final InsanityEffect EFFECT_FLUX = new InsanityEffectFlux();
 
+    public static final InsanityEffectPublicConcern CONCERNS_HAVE_BEEN_RAISED = new InsanityEffectPublicConcern();
+
     @Nullable
     public static InsanityEffect getRandomEffect(World world, EntityPlayer player, ISanity sanity, InsanityEffect.EnumTrigger trigger){
         List<InsanityEffect> effects = getAvailableEffects(world, player, sanity, trigger);

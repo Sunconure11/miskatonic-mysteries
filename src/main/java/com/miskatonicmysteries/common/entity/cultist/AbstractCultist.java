@@ -63,8 +63,8 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     public List<EntityVillager.ITradeList> getCurrencyTradeList() {
         List<EntityVillager.ITradeList> trades = new ArrayList<>();
-        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 3 + random.nextInt(2)), new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)))));
-        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.GOLD_INGOT, 4 + random.nextInt(2)), new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 1 + random.nextInt(3)), new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(Items.GOLD_INGOT, 2 + random.nextInt(3)), new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)))));
         trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 1 + random.nextInt(2)), new ItemStack(ModObjects.candles, 4 + random.nextInt(3)))));
         return trades;
     }
