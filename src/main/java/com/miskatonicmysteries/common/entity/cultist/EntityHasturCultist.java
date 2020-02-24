@@ -1,8 +1,12 @@
 package com.miskatonicmysteries.common.entity.cultist;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAITargetNonTamed;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -19,6 +23,11 @@ public class EntityHasturCultist extends AbstractCultist {
         super(worldIn);
     }
 
+    @Override
+    protected void initEntityAI() {
+        super.initEntityAI();
+        this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> !(l instanceof IHasAssociatedBlessing) && l instanceof EntityZombie));
+    }
 
     @Nullable
     @Override

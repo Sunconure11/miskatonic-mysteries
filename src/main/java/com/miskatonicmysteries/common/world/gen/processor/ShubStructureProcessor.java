@@ -31,11 +31,15 @@ public class ShubStructureProcessor extends OldStructureProcessor {
             if (r <= 0.5) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
             } else if (r <= 0.2) {
-                switch (worldIn.rand.nextInt(2)) {
+                switch (worldIn.rand.nextInt(3)) {
                     case 0:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//decorative statue
+                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_gold.getDefaultState(), null));
                     case 1:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));//actual statue
+                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_stone.getDefaultState(), null));
+                    case 2:
+                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_mossy.getDefaultState(), null));
+                    //case 3:
+                     //   return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_terracotta.getDefaultState(), null));
                 }
             }else{
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));

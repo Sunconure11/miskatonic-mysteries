@@ -49,8 +49,8 @@ public class TileEntityChemistrySet extends TileEntityMod implements ITickable {
         }
 
         @Override
-        public boolean canDrainFluidType(@Nullable FluidStack fluid) {
-            return super.canDrainFluidType(fluid);
+        public boolean canDrain() {
+            return tickCount <= 0;
         }
     };
 
@@ -85,7 +85,7 @@ public class TileEntityChemistrySet extends TileEntityMod implements ITickable {
 
     @Override
     public void update() {
-        System.out.println(tank.getInfo().capacity);
+        System.out.println(tank.getFluidAmount());
     }
 
     public ChemistryRecipe getCurrentRecipe(){

@@ -32,6 +32,10 @@ public class ServerProxy {
 
     }
 
+	public void setTEISRforItem(Item item) {
+
+	}
+
 	public EntityPlayer getPlayer(MessageContext ctx){
 		if (ctx.side.isServer()) {
 			return ctx.getServerHandler().player;

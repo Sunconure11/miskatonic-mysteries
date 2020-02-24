@@ -8,6 +8,7 @@ import com.miskatonicmysteries.common.block.tile.TileEntityChemistrySet;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.InventoryUtil;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -58,31 +59,33 @@ public class BlockChemistrySet extends BlockTileEntity<TileEntityChemistrySet> {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntityChemistrySet set = getTileEntity(worldIn, pos);
         set.tank.setTileEntity(set);
-
-        /*     if (worldIn.isRemote) return true;
- //       if (set.isDone() && set.collectResults(playerIn, playerIn.getHeldItem(hand))) return true;
-
+        if (worldIn.isRemote) return true;
+        //fluid-handling
         if (playerIn.getHeldItem(hand).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
-            IFluidHandlerItem cap = playerIn.getHeldItem(hand).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-            if (cap instanceof FluidBucketWrapper) {
-                FluidBucketWrapper wrapper = (FluidBucketWrapper) cap;
-                FluidStack fluid = wrapper.getFluid();
-                if ((fluid == null || set.tank.canFillFluidType(fluid) && FluidUtil.interactWithFluidHandler(playerIn, hand, set.tank))) {
-                    worldIn.updateComparatorOutputLevel(pos, this);
-                    worldIn.notifyBlockUpdate(pos, worldIn.getBlockState(pos), worldIn.getBlockState(pos), 2);
-                }
+            if (FluidUtil.interactWithFluidHandler(playerIn, hand, set.tank)){
+                worldIn.updateComparatorOutputLevel(pos, this);
+                worldIn.notifyBlockUpdate(pos, worldIn.getBlockState(pos), worldIn.getBlockState(pos), 2);
+                return true;
             }
-        } else if (playerIn.getHeldItem(hand).getItem() instanceof ItemFlintAndSteel) {
+        }
+
+        //fire
+        else if (playerIn.getHeldItem(hand).getItem() instanceof ItemFlintAndSteel) {
             worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(LIT, true));
             playerIn.getHeldItem(hand).damageItem(1, playerIn);
-        } else if (playerIn.isSneaking() || playerIn.getHeldItem(hand).isEmpty()) {
+            return true;
+        }
+
+        //item drain
+        else if (playerIn.isSneaking() || playerIn.getHeldItem(hand).isEmpty()) {
             int slot = InventoryUtil.getNextStackSlot(set.inventory);
             if (slot > -1) {
                 ItemHandlerHelper.giveItemToPlayer(playerIn, set.inventory.extractItem(slot, 1, false));
+                return true;
             }else{
                 worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(LIT, false));
             }
-        } else {
+        } else if (!playerIn.getHeldItem(hand).isEmpty()){
             int slot = InventoryUtil.getFreeSlot(set.inventory);
             if (slot > -1) {
                 InventoryUtil.insertCurrentItemStack(playerIn, set.inventory, slot);
@@ -91,8 +94,8 @@ public class BlockChemistrySet extends BlockTileEntity<TileEntityChemistrySet> {
             }
         }
         PacketHandler.updateTE(set);
-        set.markDirty();*/
-        return true;
+        set.markDirty();
+        return false;
     }
 
 

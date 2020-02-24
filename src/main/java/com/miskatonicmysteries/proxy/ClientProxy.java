@@ -6,8 +6,10 @@ import com.miskatonicmysteries.client.render.RenderManipulatorHandler;
 import com.miskatonicmysteries.client.render.shaders.ShaderHandler;
 import com.miskatonicmysteries.client.render.tile.RenderAltar;
 import com.miskatonicmysteries.client.render.tile.RenderOctagram;
+import com.miskatonicmysteries.client.render.tile.RenderStatue;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
+import com.miskatonicmysteries.common.block.tile.TileEntityStatue;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.world.ExtendedWorld;
 import com.miskatonicmysteries.common.world.biome.GreatOldOneArea;
@@ -18,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -50,6 +53,7 @@ public class ClientProxy extends ServerProxy {
     public static Map<Blessing, ResourceLocation> OCTAGRAM_TEXTURES = new HashMap<Blessing, ResourceLocation>();
 
     public void preInit(FMLPreInitializationEvent event){
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStatue.class, new RenderStatue());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAltar.class, new RenderAltar());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOctagram.class, new RenderOctagram());
         ModEntities.registerRenderers();
@@ -58,6 +62,8 @@ public class ClientProxy extends ServerProxy {
     }
 
     public void init(FMLInitializationEvent event) {
+        TileEntityItemStackRenderer.instance = new RenderStatue.ForwardingTEISR(TileEntityItemStackRenderer.instance);
+
         MinecraftForge.EVENT_BUS.register(new ShaderHandler());
         MinecraftForge.EVENT_BUS.register(new RenderManipulatorHandler());
     }
@@ -102,5 +108,10 @@ public class ClientProxy extends ServerProxy {
         ClientRegistry.registerKeyBinding(SPELL_UP);
         ClientRegistry.registerKeyBinding(SPELL_DOWN);
         ClientRegistry.registerKeyBinding(SPELL_CANCEL);
+    }
+
+    @Override
+    public void setTEISRforItem(Item item) {
+        item.setTileEntityItemStackRenderer(new RenderStatue.ForwardingTEISR(TileEntityItemStackRenderer.instance));
     }
 }

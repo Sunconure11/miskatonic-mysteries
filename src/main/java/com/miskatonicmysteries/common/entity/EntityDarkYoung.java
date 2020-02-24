@@ -13,6 +13,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,8 +23,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.network.play.server.SPacketAnimation;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -30,17 +34,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart, IHasAssociatedBlessing, IIgnoreMaterials { //EntityMob
+public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart, IHasAssociatedBlessing, IIgnoreMaterials {
     private static final DataParameter<Byte> TYPE = EntityDataManager.createKey(EntityDarkYoung.class, DataSerializers.BYTE);
-
-    //  public MultiPartEntityPart[] tentacleSegments;
-   // public MultiPartEntityPart tentacleTip = new MultiPartEntityPart(this, "tentacle", 0.5F, 0.5F);
 
     public EntityDarkYoung(World worldIn) {
         super(worldIn);
@@ -48,6 +50,14 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         experienceValue = 12;
         navigator= new PathNavigateGroundIgnoreSpecial(this, worldIn);
     }
+
+
+    @Override
+    public void onLivingUpdate() {
+        this.updateArmSwingProgress();
+        super.onLivingUpdate();
+    }
+
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -117,7 +127,6 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         dataManager.set(TYPE, type);
     }
 
-
     @Override
     public boolean getCanSpawnHere() {
         if (!world.isDaytime() && super.getCanSpawnHere() && world.canSeeSky(getPosition().up()) && world.getDifficulty() != EnumDifficulty.PEACEFUL) {
@@ -183,8 +192,8 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         if (flag) {
             if (i > 0 && entityIn instanceof EntityLivingBase) {
                 ((EntityLivingBase) entityIn).knockBack(this, (float) i * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(this.rotationYaw * 0.017453292F)));
-                this.motionX *= 0.6D;
-                this.motionZ *= 0.6D;
+                this.motionX *= 0.1D;
+                this.motionZ *= 0.1D;
             }
 
             int j = EnchantmentHelper.getFireAspectModifier(this);

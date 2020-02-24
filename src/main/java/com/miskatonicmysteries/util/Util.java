@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.util;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.common.block.BlockStatue;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,6 +34,7 @@ public class Util {
 		if (item != null) {
 			item.setRegistryName(name);
 			item.setUnlocalizedName(name);
+				if (block instanceof BlockStatue) MiskatonicMysteries.proxy.setTEISRforItem(item);
 			MiskatonicMysteries.proxy.registerTexture(item, 0, name);
 			ForgeRegistries.ITEMS.register(item);
 		}

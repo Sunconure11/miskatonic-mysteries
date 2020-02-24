@@ -5,6 +5,7 @@ import com.miskatonicmysteries.util.ModelAnimUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
@@ -73,79 +74,6 @@ public class ModelDarkYoung extends ModelBase {
     public ModelRenderer[] tentacle10 = new ModelRenderer[4];
 
     public ModelRenderer[][] tentacles = {tentacle01, tentacle02, tentacle03, tentacle04, tentacle05,tentacle06, tentacle07, tentacle08, tentacle09, tentacle10};
-
-    //todo, adjust these values, probably via tabula
-    //[cycle] [angle]
-    private static float[][] tentacle01Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {-0.15F, 0.6F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle02Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, -0.3F, -0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle03Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {-0.15F, -0.2F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][]tentacle04Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
-            {0.12F, 0.1F, -0.17F},
-            {-0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle05Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, -0.15F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle06Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.6F, 0.25F},
-            {-0.12F, 0.5F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle07Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, 0.1F, 0.25F},
-            {0.12F, 0.15F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle08Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, -0.1F},
-            {0.25F, 0.2F, 0.21F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle09Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.2F, 0.2F, 0.1F},
-            {0.15F, -0.6F, 0.25F},
-            {0.12F, 0.12F, 0.17F},
-            {-0.5F, 0.2F, 0.19F}
-    };
-    private static float[][] tentacle10Anims = {
-            {0.1F, 0.4F, 0.3F},
-            {0.25F, 0.2F, 0.1F},
-            {0.15F, 0.3F, 0.25F},
-            {0.12F, 0.1F, 0.17F},
-            {0.5F, -0.2F, 0.19F}
-    };
 
     public ModelRenderer fur01;
     public ModelRenderer fur02;
@@ -798,7 +726,7 @@ public class ModelDarkYoung extends ModelBase {
     }
 
     private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        float progress = swingProgress > 0 ? 1 - swingProgress : 0;
+        float progress =  1 - (float) Math.abs(0.5 - entityIn.swingProgress) * 2;
         this.setRotateAngle(lJaw, -0.5759586531581287F, -0.6981317007977318F, 0.3490658503988659F, progress);
         this.setRotateAngle(lJawB, 0.7853981633974483F, 0.0F, 0.0F, progress);
         this.setRotateAngle(lJawC, -0.7853981633974483F, 0.0F, 0.0F, progress);
@@ -810,43 +738,16 @@ public class ModelDarkYoung extends ModelBase {
 
 
     private void doTentacleAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        float progress = calculateTentacleProgress(40, ageInTicks);
-        int cycle = (int) ((ageInTicks % 200) / 40F);
-
-        int prevCycle = cycle <= 0 ? 4 : cycle - 1;
-
-        addRotateAngles(tentacle01[1], tentacle01Anims[prevCycle][0], tentacle01Anims[prevCycle][1], tentacle01Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle02[1], tentacle02Anims[prevCycle][0], tentacle02Anims[prevCycle][1], tentacle02Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle03[1], tentacle03Anims[prevCycle][0], tentacle03Anims[prevCycle][1], tentacle03Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle04[1], tentacle04Anims[prevCycle][0], tentacle04Anims[prevCycle][1], tentacle04Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle05[1], tentacle05Anims[prevCycle][0], tentacle05Anims[prevCycle][1], tentacle05Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle06[1], tentacle06Anims[prevCycle][0], tentacle06Anims[prevCycle][1], tentacle06Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle07[1], tentacle07Anims[prevCycle][0], tentacle07Anims[prevCycle][1], tentacle07Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle08[1], tentacle08Anims[prevCycle][0], tentacle08Anims[prevCycle][1], tentacle08Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle09[1], tentacle09Anims[prevCycle][0], tentacle09Anims[prevCycle][1], tentacle09Anims[prevCycle][2], 1 - progress);
-        addRotateAngles(tentacle10[1], tentacle10Anims[prevCycle][0], tentacle10Anims[prevCycle][1], tentacle10Anims[prevCycle][2], 1 - progress);
-
-        addRotateAngles(tentacle01[1], tentacle01Anims[cycle][0], tentacle01Anims[cycle][1], tentacle01Anims[cycle][2], progress);
-        addRotateAngles(tentacle02[1], tentacle02Anims[cycle][0], tentacle02Anims[cycle][1], tentacle02Anims[cycle][2], progress);
-        addRotateAngles(tentacle03[1], tentacle03Anims[cycle][0], tentacle03Anims[cycle][1], tentacle03Anims[cycle][2], progress);
-        addRotateAngles(tentacle04[1], tentacle04Anims[cycle][0], tentacle04Anims[cycle][1], tentacle04Anims[cycle][2], progress);
-        addRotateAngles(tentacle05[1], tentacle05Anims[cycle][0], tentacle05Anims[cycle][1], tentacle05Anims[cycle][2], progress);
-        addRotateAngles(tentacle06[1], tentacle06Anims[cycle][0], tentacle06Anims[cycle][1], tentacle06Anims[cycle][2], progress);
-        addRotateAngles(tentacle07[1], tentacle07Anims[cycle][0], tentacle07Anims[cycle][1], tentacle07Anims[cycle][2], progress);
-        addRotateAngles(tentacle08[1], tentacle08Anims[cycle][0], tentacle08Anims[cycle][1], tentacle08Anims[cycle][2], progress);
-        addRotateAngles(tentacle09[1], tentacle09Anims[cycle][0], tentacle09Anims[cycle][1], tentacle09Anims[cycle][2], progress);
-        addRotateAngles(tentacle10[1], tentacle10Anims[cycle][0], tentacle10Anims[cycle][1], tentacle10Anims[cycle][2], progress);
-
-        ModelAnimUtil.waveTentacle(tentacle01, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle02, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle03, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle04, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle05, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle06, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle07, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle08, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle09, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(tentacle10, 0.8F, calculateTentacleProgress(100, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle01, 1F, 0.9F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle02, 0.1F, 1.3F, ModelAnimUtil.calculateTickSequenceProgress(70, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle03, 0.8F, 0.1F, ModelAnimUtil.calculateTickSequenceProgress(66, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle04, 1.1F, 0.1F, ModelAnimUtil.calculateTickSequenceProgress(75, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle05, 0.2F, 0.8F, ModelAnimUtil.calculateTickSequenceProgress(62, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle06, 0.5F, 0.5F, ModelAnimUtil.calculateTickSequenceProgress(50, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle07, 0.1F, 1F, ModelAnimUtil.calculateTickSequenceProgress(65, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle08, 0.15F, 1.2F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle09, 0.7F, 0.4F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(tentacle10, 0.3F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(68, ageInTicks), true);
     }
 
     private void doHurtAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
@@ -854,21 +755,12 @@ public class ModelDarkYoung extends ModelBase {
         if (entityIn.maxHurtTime > 0 && entityIn.hurtTime > 0){
             hurtProgress = (entityIn.maxHurtTime - entityIn.hurtTime + Minecraft.getMinecraft().getRenderPartialTicks()) / (float)entityIn.maxHurtTime;
         }
-        ModelAnimUtil.waveTentacle(tentacle01, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle02, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle03, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle04, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle05, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle06, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle07, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle08, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle09, 1.5F, hurtProgress, true);
-        ModelAnimUtil.waveTentacle(tentacle10, 1.5F, hurtProgress, true);
+
+        for (ModelRenderer[] ohGodManyTentacles : tentacles){
+            ModelAnimUtil.waveTentacle(ohGodManyTentacles, 1.8F, 0, hurtProgress, true);
+        }
     }
 
-    private float calculateTentacleProgress(int tickSequence, float ageInTicks){
-        return (ageInTicks % tickSequence) / (float) tickSequence;
-    }
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 

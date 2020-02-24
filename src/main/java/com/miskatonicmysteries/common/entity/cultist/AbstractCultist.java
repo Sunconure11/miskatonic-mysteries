@@ -10,6 +10,10 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityGolem;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.EntityZombieVillager;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +23,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -34,6 +39,7 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -46,6 +52,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
     private static final DataParameter<Boolean> ARMS_FOLDED = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> FOLLOW_MODE = EntityDataManager.createKey(AbstractCultist.class, DataSerializers.VARINT); //0 Standard, 1 Sit, 2 Wander
 
+    public boolean mayRefreshTrades = false;
     protected EntityCultistAIWander cultistAIWander;
 
     @Nullable
@@ -53,6 +60,8 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Nullable
     protected MerchantRecipeList buyingList;
+
+    public ItemStack lastTradedStack = ItemStack.EMPTY;
 
     public AbstractCultist(World worldIn) {
         super(worldIn);
@@ -104,13 +113,15 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
         if (cultistAIWander == null)
             this.cultistAIWander = new EntityCultistAIWander(this);
-        this.tasks.addTask(1, new EntityCultistAITrade(this));
-        this.tasks.addTask(2, new EntityAISwimming(this));
-        this.tasks.addTask(3, this.cultistAIWander);
-        this.tasks.addTask(4, new EntityCultistAIWanderAnywhere(this));
-        this.tasks.addTask(5, this.aiSit);// extend AIWander to also consider a second field: wander
-        this.tasks.addTask(6, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
-        this.tasks.addTask(7, new EntityAIAttackMelee(this, 1, true));
+        this.tasks.addTask(0, new EntityCultistAITrade(this));
+        this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1, true));
+        this.tasks.addTask(4, this.cultistAIWander);
+        this.tasks.addTask(3, new EntityAIMoveIndoors(this));
+        this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
+        this.tasks.addTask(3, new EntityCultistAIWanderAnywhere(this));
+        this.tasks.addTask(6, this.aiSit);
+        this.tasks.addTask(7, new EntityAIAvoidEntity<>(this, EntityGolem.class, 20, 0.5, 1));
         this.tasks.addTask(8, new EntityAIFollowOwner(this, 1.5F, 4.0F, 8.0F));
         this.tasks.addTask(9, new EntityAIMate(this, 1.0D)); //maybe?
 
@@ -121,7 +132,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(3, new EntityAITargetNonTamed(this, EntityPlayer.class, false, p -> BlessingCapability.Util.getBlessing((EntityPlayer) p) != getAssociatedBlessing()));
         this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, AbstractCultist.class, false, c -> ((AbstractCultist) c).getAssociatedBlessing() != getAssociatedBlessing()));
-        this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> l instanceof IHasAssociatedBlessing && ((IHasAssociatedBlessing) l).getAssociatedBlessing() != getAssociatedBlessing()));
+        this.targetTasks.addTask(5, new EntityAITargetNonTamed(this, EntityLiving.class, false, l -> (l instanceof IHasAssociatedBlessing && ((IHasAssociatedBlessing) l).getAssociatedBlessing() != getAssociatedBlessing())));
         //will also attack pillagers and their beasts in 1.14
     }
 
@@ -240,22 +251,28 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
+        mayRefreshTrades = compound.getBoolean("mayRefreshTrades");
         setArmsFolded(compound.getBoolean("armsFolded"));
         dataManager.set(FOLLOW_MODE, compound.getInteger("followMode"));
         setTamed(compound.getBoolean("tamed"));
 
         if (compound.hasKey("recipes"))
             buyingList = new MerchantRecipeList(compound.getCompoundTag("recipes"));
+        if (compound.hasKey("lastTradedStack"))
+            lastTradedStack = new ItemStack((NBTTagCompound) compound.getTag("lastTradedStack"));
         super.readEntityFromNBT(compound);
     }
 
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
+        compound.setBoolean("mayRefreshTrades", mayRefreshTrades);
         compound.setBoolean("armsFolded", armsFolded());
         compound.setInteger("followMode", dataManager.get(FOLLOW_MODE));
         compound.setBoolean("tamed", isTamed());
         if (buyingList != null)
             compound.setTag("recipes", buyingList.getRecipiesAsTags());
+        if (lastTradedStack.getTagCompound() != null)
+        compound.setTag("lastTradedStack", lastTradedStack.getTagCompound());
         super.writeEntityToNBT(compound);
     }
 
@@ -270,7 +287,7 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             if (player.isSneaking() && this.isOwner(player) && !this.world.isRemote && !this.isBreedingItem(player.getHeldItem(hand))) {
                 dataManager.set(FOLLOW_MODE, dataManager.get(FOLLOW_MODE) > 1 ? 0 : dataManager.get(FOLLOW_MODE) + 1);
                 if (isWandering()) {
-                    //scan for murals later on, for now just set the current position to the bound one
+                    //todo scan for murals later on, for now just set the current position to the bound one
                     setHomePosAndDistance(getPosition(), 20);
                 }
                 player.sendStatusMessage(new TextComponentTranslation("message.cultist." + (isWandering() ? "wander" : isSitting() ? "sit" : "follow")), true);
@@ -493,16 +510,25 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
 
     @Override
     public void useRecipe(MerchantRecipe recipe) {
-        if (world.rand.nextBoolean())
             recipe.incrementToolUses(); //might work on the recipe exhaustion stuff later
-        //recipe.increaseMaxTradeUses(1);
         this.livingSoundTime = -this.getTalkInterval();
         this.playSound(SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
         int i = 3 + this.rand.nextInt(4);
-
         if (recipe.getRewardsExp()) {
             this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY + 0.5D, this.posZ, i));
         }
+
+        System.out.println("ah");
+        if (recipe.getItemToSell() != lastTradedStack){
+            System.out.println("yay");
+            refreshTrades();
+        }
+        lastTradedStack = recipe.getItemToSell();
+        System.out.println(world.isRemote);
+    }
+
+    public void refreshTrades(){
+        mayRefreshTrades = true;
     }
 
     @Override
@@ -512,6 +538,20 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             this.livingSoundTime = -this.getTalkInterval();
             this.playSound(stack.isEmpty() ? SoundEvents.ENTITY_VILLAGER_NO : SoundEvents.ENTITY_VILLAGER_YES, this.getSoundVolume(), this.getSoundPitch());
         }
+    }
+
+    @Override
+    protected void updateAITasks() {
+        if (mayRefreshTrades && buyingList != null) {
+            for (MerchantRecipe merchantrecipe : this.buyingList) {
+                if (merchantrecipe.isRecipeDisabled()) { //only ONE trade is stocked
+                    merchantrecipe.increaseMaxTradeUses(this.rand.nextInt(6) + this.rand.nextInt(6) + 2);
+                    mayRefreshTrades = false;
+                    break;
+                }
+            }
+        }
+        super.updateAITasks();
     }
 
     @Override

@@ -11,11 +11,12 @@ public class ModelAnimUtil {
     }
 
 
-    public static void waveTentacle(ModelRenderer[] tentacle, float strength, float progress, boolean reset) {
+    public static void waveTentacle(ModelRenderer[] tentacle, float strengthX, float strengthZ, float progress, boolean reset) {
         if (reset)
             progress = (0.5F - Math.abs(0.5F - progress)) * 2F;
-        for (int i = 0; i < tentacle.length - 1; i++) {
-            tentacle[i + 1].rotateAngleX += MathHelper.sin(progress * i * strength) * (i % 2 == 0 ? -1 : 1);
+        for (int i = 0; i < tentacle.length - 1; i++) { //-0.5 )) + 1
+            tentacle[i + 1].rotateAngleX += MathHelper.sin(progress * i * strengthX) * (i % 2 == 0 ? -1 : 1);
+            tentacle[i + 1].rotateAngleZ += MathHelper.sin(progress * i * strengthZ) * (i % 2 == 0 ? -1 : 1);
         }
     }
 
