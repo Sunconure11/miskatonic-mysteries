@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -29,15 +30,15 @@ public class RiteFocus {
     }
 
 
-    public float getInstabilityRate(@Nullable World world, @Nullable BlockPos pos) {
+    public float getInstabilityRate(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         return instabilityRate;
     }
 
-    public int getConduitAmount(@Nullable World world, @Nullable BlockPos pos) {
+    public int getConduitAmount(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         return conduitAmount;
     }
 
-    public int getMaxSameType(@Nullable World world, @Nullable BlockPos pos) {
+    public int getMaxSameType(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         return maxSameType;
     }
 

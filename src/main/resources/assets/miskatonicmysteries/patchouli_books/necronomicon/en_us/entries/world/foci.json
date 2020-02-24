@@ -22,11 +22,11 @@
     },
     {
       "type": "text",
-      "text": "First of all, while there are still plenty of Foci to discover, this book contains a list of various $(o)known$() Foci. This list may be found on the last few pages of this entry.$(br2)Additionally, we wrote a guide to identify Foci, and vaguely determine their Focal Power, Instability and Usage Limit.$(br2)In order to take advantage of this, simply $(t:Do this by hovering over the item while pressing Shift)$(marked)inspect$() $(t:Do this by hovering over the item while pressing Shift)Held Foci in your inventory while holding this book.$()"
+      "text": "First of all, while there are still plenty of Foci to discover, this book contains a list of various $(o)known$() Foci. This list may be found on the last few pages of this entry.$(br2)Additionally, we wrote a guide to identify Foci, and vaguely determine their Focal Power, Instability and Usage Limit.$(br2)In order to take advantage of this, simply $(t:Do this by hovering over the item while pressing Shift)$(marked)inspect$()Held Foci in your inventory while holding this book.$()"
     },
     {
       "type": "text",
-      "text": "In order to inspect Placed Foci, the Focus in question must be placed and $(t:Hold the book while pressing shift)inspected with this book$().$(br2)Still, the information given is extremely vague, so each Entheator must in the end develop some sort of feeling for Focal Power et cetera. "
+      "text": "In order to inspect Placed Foci, the Focus in question must be placed and $(t:Hold the book while pressing shift)inspected with this book$().$(br2)Still, the information given is extremely vague, so each Entheator must in the end develop some sort of feeling for Focal Power et cetera. Additionally, the information given does not respect any interactions possible, like the one seen in Statues."
     },
     {
       "type": "text",
@@ -35,11 +35,15 @@
     },
     {
       "type": "text",
-      "text": "$(li)$(l)Gems$()$(br)Gems count as the same type of Focus; $(marked)Oceanic Gold$() however does not.$(li)$(l)Cultist Weapons$()$(br)Special Daggers worn by Cultist have the same inherent power; they do however all count as the same type of Focus.$(li)$(l)Artifacts$()$(br)Artifacts like the Star of Hell are immensely strong Foci; however, they usually have extremely low usage limits. "
+      "text": "$(li)$(l)Gems$()$(br)Gems count as the same type of Focus; $(marked)Oceanic Gold$() however does not.$(li)$(l)Cultist Weapons$()$(br)Special Daggers worn by Cultist have the same inherent power; they all count as the same type of Focus.$(li)$(l)Artifacts$()$(br)Artifacts like the Star of Hell are immensely strong Foci; however, they usually have extremely low usage limits. "
     },
     {
       "type": "text",
       "text": "$(li)$(l)Altars$()$(br)Altars all count as the same type of Focus; they will provide greater amounts of power and usually form the base of Rites.$(li)$(l)Enchanted Items$()$(br)Any enchanted item may be used as Held Focus; this stacks with inherent Focal Properties. All enchanted items are considered the same type of focus."
+    },
+    {
+      "type": "text",
+      "text": "$(li)$(l)Statues$()$(br)Statues are extremely powerful Foci when correctly used. A Statue is always dedicated to a Great Old One, and will yield the greatest effects when used together with a matching Octagram, golden Statues will even cancel most negative effects of Overloading; however, using a statue that addresses a different Great Old One might be a mistake. All Statues count as the same type of Focus."
     }
   ]
 }

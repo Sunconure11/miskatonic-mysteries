@@ -7,6 +7,7 @@ import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
 import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityStatue;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
+import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
 import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.InventoryUtil;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class BlockStatue extends BlockTileEntity<TileEntityStatue> {
+public class BlockStatue extends BlockTileEntity<TileEntityStatue> implements IHasAssociatedBlessing{
     public static Map<ResourceLocation, Statue> statues = new HashMap<>();
 
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -144,6 +145,11 @@ public class BlockStatue extends BlockTileEntity<TileEntityStatue> {
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED ;
+    }
+
+    @Override
+    public Blessing getAssociatedBlessing() {
+        return associatedGOO;
     }
 
     public static class Statue {

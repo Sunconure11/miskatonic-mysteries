@@ -46,6 +46,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     public boolean primed = false;
     public int tickCount = 0;
 
+    public boolean canOverload = true;
+
     public BlockPos closestAltarPos = null;
 
     public float instability = 0;
@@ -75,6 +77,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         compound.setString("currentRite", currentRite);
         compound.setString("lastPlayerUUID", lastPlayerUUID);
         compound.setString("ownerUUID", ownerUUID);
+        compound.setBoolean("canOverload", canOverload);
         return super.writeToNBT(compound);
     }
 
@@ -88,6 +91,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         currentRite = compound.getString("currentRite");
         lastPlayerUUID = compound.getString("lastPlayerUUID");
         ownerUUID = compound.getString("ownerUUID");
+        canOverload = compound.getBoolean("canOverload");
         super.readFromNBT(compound);
     }
 
@@ -198,11 +202,13 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     primed = false;
                     tickCount = 0;
                     currentRite = "";
+                    canOverload = true;
                 }
             } else {
                 tickCount = 0;
                 primed = false;
                 currentRite = "";
+                canOverload = true;
             }
         }
         if (world.isRemote && world.rand.nextFloat() < (tickCount > 0 ? 0.08F : 0.02F)) { //maybe just handle particles there
@@ -216,7 +222,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         if (!world.isRemote) {
             int checks = 1 + (int) (instability * 10); //let this depend on the instability, maybe like 10 * instability + 1 or so
             RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.POWER_CHECK);
-            if (effect != null) {
+            if (effect != null && canOverload) {
                 effect.execute(this, RiteEffect.EnumTrigger.POWER_CHECK);
                 return false;
             }
@@ -237,6 +243,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     }
 
     public void finish(boolean clearInv) {
+        canOverload = true;
         getAltar().bookOpen = false;
         getAltar().flipSpeed = 0;
         PacketHandler.updateTE(getAltar());
@@ -334,13 +341,14 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         getAllFoci(true);
         focusPower = 0;
         instability = 0;
+        canOverload = true;
         HELD_FOCI.forEach(focus -> {
-            focusPower += focus.getConduitAmount(world, pos);
-            instability += focus.getInstabilityRate(world, pos);
+            focusPower += focus.getConduitAmount(this, world, pos);
+            instability += focus.getInstabilityRate(this, world, pos);
         });
         PLACED_FOCI.forEach(pair -> {
-            focusPower += pair.second().getConduitAmount(world, pair.first());
-            instability += pair.second().getInstabilityRate(world, pair.first());
+            focusPower += pair.second().getConduitAmount(this, world, pair.first());
+            instability += pair.second().getInstabilityRate(this, world, pair.first());
         });
         float overhangFactor = calculateOverhangFactor();
         focusPower /= overhangFactor;
@@ -390,8 +398,8 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         float totalOverhang = 0;
         for (RiteFocus focus : FOCI) {
             int frequency = Collections.frequency(FOCI, focus);
-            overhang_each.put(focus, Math.max(frequency - focus.getMaxSameType(world, pos), 0));
-            totalMax += focus.getMaxSameType(world, pos);
+            overhang_each.put(focus, Math.max(frequency - focus.getMaxSameType(this, world, pos), 0));
+            totalMax += focus.getMaxSameType(this, world, pos);
         }
         for (Integer i : overhang_each.values()) {
             totalOverhang += i;

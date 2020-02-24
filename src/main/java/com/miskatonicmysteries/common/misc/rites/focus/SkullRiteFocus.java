@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.math.BlockPos;
@@ -15,20 +16,20 @@ public class SkullRiteFocus extends BlockRiteFocus {
     }
 
     @Override
-    public int getConduitAmount(@Nullable World world, @Nullable BlockPos pos) {
+    public int getConduitAmount(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         if (world != null && pos != null){
             if (isValid(world, pos)){
-                return super.getConduitAmount(world, pos);
+                return super.getConduitAmount(octagram, world, pos);
             }
         }
         return 0;
     }
 
     @Override
-    public float getInstabilityRate(@Nullable World world, @Nullable BlockPos pos) {
+    public float getInstabilityRate(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         if (world != null && pos != null) {
             if (isValid(world, pos)) {
-                return super.getInstabilityRate(world, pos);
+                return super.getInstabilityRate(octagram, world, pos);
             }
         }
         return 0;

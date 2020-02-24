@@ -14,14 +14,15 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraftforge.common.BiomeDictionary;
 
 import javax.annotation.Nullable;
 
 public class HasturStructureProcessor extends OldStructureProcessor {
-    public HasturStructureProcessor(int groundY, Rotation rotation, Mirror mirror) {
-        super(groundY, true, true, false, Biomes.FOREST, rotation, mirror);
+    public HasturStructureProcessor(Biome biome, int groundY, Rotation rotation, Mirror mirror) {
+        super(groundY, true, true, false, biome, rotation, mirror);
     }
 
     @Nullable
@@ -42,9 +43,9 @@ public class HasturStructureProcessor extends OldStructureProcessor {
             }
         } else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)) {
             float r = worldIn.rand.nextFloat();
-            if (r <= 0.5) {
+            if (r <= 0.6) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
-            } else if (r <= 0.2) {
+            } else if (r <= 0.3) {
                 switch (worldIn.rand.nextInt(4)) {
                     case 0:
                         return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_gold.getDefaultState(), null));

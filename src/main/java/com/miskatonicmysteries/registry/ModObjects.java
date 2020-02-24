@@ -157,9 +157,10 @@ public class ModObjects {
         RiteFocus.addFocus(new SkullRiteFocus(3, 0.15F, 45, 2));
         RiteFocus.addFocus(new SkullRiteFocus(5, 0.2F, 100, 2));
 
-         // Blocks.DIAMOND_BLOCK
         OreDictRiteFocus.create(0.2F, 120, 2, RiteFocus.EnumType.PLACED, "blockDiamond"); //see if that works at all... if it doesn't then well shit
 
         //heart of the sea and compat stuff (see doc)
+
+       RiteFocus.addFocus(new StatueRiteFocus());
     }
 }

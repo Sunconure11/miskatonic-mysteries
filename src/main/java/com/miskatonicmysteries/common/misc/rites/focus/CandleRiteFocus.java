@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.common.misc.rites.focus;
 
 import com.miskatonicmysteries.common.block.BlockCandles;
+import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -12,12 +13,12 @@ public class CandleRiteFocus extends BlockRiteFocus {
     }
 
     @Override
-    public int getConduitAmount(@Nullable World world, @Nullable BlockPos pos) {
+    public int getConduitAmount(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         if (world != null && pos != null){
             if (world.getBlockState(pos).getBlock() instanceof BlockCandles){
-                return super.getConduitAmount(world, pos) * world.getBlockState(pos).getValue(BlockCandles.CANDLES);
+                return super.getConduitAmount(octagram, world, pos) * world.getBlockState(pos).getValue(BlockCandles.CANDLES);
             }
         }
-        return super.getConduitAmount(world, pos);
+        return super.getConduitAmount(octagram, world, pos);
     }
 }

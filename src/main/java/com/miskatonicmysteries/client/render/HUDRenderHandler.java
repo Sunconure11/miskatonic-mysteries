@@ -48,9 +48,9 @@ public class HUDRenderHandler {
                 int maxUse = Integer.MAX_VALUE;
                 float instability = 0;
                 for (RiteFocus focus : foci) {
-                    totalFocusPower += focus.getConduitAmount(Minecraft.getMinecraft().world, null);
-                    maxUse = Math.min(maxUse, focus.getMaxSameType(Minecraft.getMinecraft().world, null));
-                    instability += focus.getInstabilityRate(Minecraft.getMinecraft().world, null);
+                    totalFocusPower += focus.getConduitAmount(null, Minecraft.getMinecraft().world, null);
+                    maxUse = Math.min(maxUse, focus.getMaxSameType(null, Minecraft.getMinecraft().world, null));
+                    instability += focus.getInstabilityRate(null, Minecraft.getMinecraft().world, null);
                 }
                 event.getToolTip().add("");
                 event.getToolTip().add(TextFormatting.ITALIC + I18n.format("tooltip.focus"));
@@ -104,9 +104,9 @@ public class HUDRenderHandler {
                     int maxUse = Integer.MAX_VALUE;
                     float instability = 0;
                     for (RiteFocus focus : foci) {
-                        totalFocusPower += focus.getConduitAmount(Minecraft.getMinecraft().world, pos);
-                        maxUse = Math.min(maxUse, focus.getMaxSameType(Minecraft.getMinecraft().world, pos));
-                        instability += focus.getInstabilityRate(Minecraft.getMinecraft().world, pos);
+                        totalFocusPower += focus.getConduitAmount(null, Minecraft.getMinecraft().world, pos);
+                        maxUse = Math.min(maxUse, focus.getMaxSameType(null, Minecraft.getMinecraft().world, pos));
+                        instability += focus.getInstabilityRate(null, Minecraft.getMinecraft().world, pos);
                     }
                     double posX = 5; //event.getResolution().getScaledHeight_double() / 2F;
                     double posY = 5;//event.getResolution().getScaledHeight_double() / 2F;

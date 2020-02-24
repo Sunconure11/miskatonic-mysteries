@@ -12,6 +12,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.structure.StructureOceanMonument;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
@@ -26,7 +27,7 @@ public class ModWorldGen implements IWorldGenerator {
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         generateStructure(shubShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.FOREST) || BiomeDictionary.hasType(b, BiomeDictionary.Type.DENSE));
         //add this to also generate the shrines in the depths of the ocean and not only in caves generateOceanStructure(luluShrine, world, random, ModConfig.worldGen.chanceShubShrines, chunkX, chunkZ, 1, 1, b -> BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
-        //generateCaveStuff(luluShrine, world, random, ModConfig.worldGen.chanceCthulhuShrines, chunkX, chunkZ, 1, 1, b -> StructureOceanMonument.WATER_BIOMES.contains(b) || BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
+       // generateCaveStuff(luluShrine, world, random, ModConfig.worldGen.chanceCthulhuShrines, chunkX, chunkZ, 1, 1, b -> StructureOceanMonument.WATER_BIOMES.contains(b) || BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(b, BiomeDictionary.Type.BEACH));
 
     }
 

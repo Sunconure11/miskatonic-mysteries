@@ -95,7 +95,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
                         this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, 0, z, boundingBox);
                     }
                 }
-                template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(averageGroundLvl, rotation, mirror), settings, 2);
+                template.addBlocksToWorld(worldIn, position, new HasturStructureProcessor(worldIn.getBiome(position), averageGroundLvl, rotation, mirror), settings, 2);
                 WorldGenUtil.spawnEntities(ENTRY_CULTISTS_HASTUR, worldIn, position.getX(), position.getZ(), 7, 7, randomIn);
                 return true;
             }

@@ -28,9 +28,9 @@ public class ShubStructureProcessor extends OldStructureProcessor {
             }
         }else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
             float r = worldIn.rand.nextFloat();
-            if (r <= 0.5) {
+            if (r <= 0.6) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
-            } else if (r <= 0.2) {
+            } else if (r <= 0.3) {
                 switch (worldIn.rand.nextInt(3)) {
                     case 0:
                         return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_gold.getDefaultState(), null));
