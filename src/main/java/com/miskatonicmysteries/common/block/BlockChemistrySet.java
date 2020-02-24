@@ -60,22 +60,22 @@ public class BlockChemistrySet extends BlockTileEntity<TileEntityChemistrySet> {
         TileEntityChemistrySet set = getTileEntity(worldIn, pos);
         set.tank.setTileEntity(set);
         if (worldIn.isRemote) return true;
-        //fluid-handling
-        if (playerIn.getHeldItem(hand).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
+
+        if (set.isDone()){
+            set.collect(playerIn, hand);
+        } else if (playerIn.getHeldItem(hand).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) { //fluid-handling
             if (FluidUtil.interactWithFluidHandler(playerIn, hand, set.tank)){
                 worldIn.updateComparatorOutputLevel(pos, this);
                 worldIn.notifyBlockUpdate(pos, worldIn.getBlockState(pos), worldIn.getBlockState(pos), 2);
                 return true;
             }
         }
-
         //fire
         else if (playerIn.getHeldItem(hand).getItem() instanceof ItemFlintAndSteel) {
             worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(LIT, true));
             playerIn.getHeldItem(hand).damageItem(1, playerIn);
             return true;
         }
-
         //item drain
         else if (playerIn.isSneaking() || playerIn.getHeldItem(hand).isEmpty()) {
             int slot = InventoryUtil.getNextStackSlot(set.inventory);

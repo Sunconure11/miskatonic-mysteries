@@ -115,10 +115,10 @@ public class ModRegistries {
     }
 
     private static void initRecipes() {
-        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "laudanum"), new ItemStack(ModObjects.laudanum), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.WHEAT));
-        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "blotter"), new ItemStack(ModObjects.blotter), new ItemStack(Items.PAPER), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART));
-       // new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "re_agent_syringe"));
-        //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "essential_salt"));
+        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "laudanum"), new ItemStack(ModObjects.laudanum, 2), new Ingredient[]{Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.WHEAT)});
+        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "blotter"), new ItemStack(ModObjects.blotter, 3), Ingredient.fromItem(Items.PAPER), new Ingredient[]{Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART)});
+        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "re_agent_syringe"), new ItemStack(ModObjects.re_agent, 2), Ingredient.fromItem(ModObjects.syringe), new Ingredient[]{Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromStacks(OreDictionary.getOres("meatRed").toArray(new ItemStack[]{})), Ingredient.fromStacks(new ItemStack(Items.SKULL, 1, 2)), Ingredient.fromItem(Items.EGG)});
+        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "essential_salts"), new ItemStack(ModObjects.essential_salts), new Ingredient[]{Ingredient.fromItem(Items.ROTTEN_FLESH), Ingredient.fromStacks(new ItemStack(Items.COAL, 1, 1)), Ingredient.fromStacks(OreDictionary.getOres("meatRed").toArray(new ItemStack[]{})), Ingredient.fromStacks(new ItemStack(Blocks.SOUL_SAND)), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, 15))});
     }
 
     public static class Util {

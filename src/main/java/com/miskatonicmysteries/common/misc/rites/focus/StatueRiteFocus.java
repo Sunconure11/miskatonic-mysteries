@@ -17,8 +17,11 @@ public class StatueRiteFocus extends BlockRiteFocus {
     public int getConduitAmount(@Nullable TileEntityOctagram octagram, @Nullable World world, @Nullable BlockPos pos) {
         if (world != null && pos != null){
             if (world.getBlockState(pos).getBlock() instanceof BlockStatue && octagram != null){
-                octagram.canOverload = false;
-                return Math.round(super.getConduitAmount(octagram, world, pos) * (isBlessingMatching(octagram, world, pos) ? 1 : 0.25F));
+                if (isBlessingMatching(octagram, world, pos)) {
+                    octagram.canOverload = !isBlessingMatching(octagram, world, pos);
+                    return super.getConduitAmount(octagram, world, pos);
+                }
+                return Math.round(super.getConduitAmount(octagram, world, pos) * 0.25F);
             }
         }
         return super.getConduitAmount(octagram, world, pos);

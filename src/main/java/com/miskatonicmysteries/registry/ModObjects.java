@@ -109,22 +109,18 @@ public class ModObjects {
     public static Item black_goats_horned_dagger = Util.create(new ItemBlackGoatsHornedDagger(), "black_goats_horned_dagger");
 
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
-
     public static Item laudanum = Util.create(new ItemLaudanum(), "laudanum");
-
     public static Item re_agent = Util.create(new ItemReAgent(), "re_agent");
 
     public static Item tallow = Util.create(new ItemFood(4, 6, false), "tallow");
-
     public static Item flesh_dark_young = Util.create(new ItemFleshDarkYoung(), "flesh_dark_young");
-
     public static Item blotter = Util.create(new ItemBlotter(), "blotter");
-
     public static Item infested_wheat = Util.create(new Item(), "infested_wheat");
-
     public static Item milk_black_goat = Util.create(new ItemMilkGoat(), "milk_black_goat");
 
     public static Item gold_oceanic = Util.create("gold_oceanic");
+    public static Item syringe = Util.create("syringe");
+    public static Item essential_salts = Util.create("essential_salts");
 
     public static Item incantation_gate_key = Util.create("incantation_gate_key");
 

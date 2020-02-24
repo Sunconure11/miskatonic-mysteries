@@ -12,10 +12,10 @@ import java.util.List;
 public class ChemistryRecipe{
     public ResourceLocation name;
     public List<Ingredient> ingredients;
-    public ItemStack containerItem;
+    public Ingredient containerItem;
     public ItemStack result;
 
-    public ChemistryRecipe(ResourceLocation name, ItemStack result, ItemStack containerItem, Ingredient... ingredients) {
+    public ChemistryRecipe(ResourceLocation name, ItemStack result, Ingredient containerItem, Ingredient... ingredients) {
         this.name = name;
         this.ingredients = Arrays.asList(ingredients);
         this.containerItem = containerItem;
@@ -24,6 +24,6 @@ public class ChemistryRecipe{
     }
 
     public ChemistryRecipe(ResourceLocation name, ItemStack result, Ingredient... ingredients) {
-        this(name, result, new ItemStack(Items.GLASS_BOTTLE), ingredients);
+        this(name, result, Ingredient.fromStacks(new ItemStack(Items.GLASS_BOTTLE)), ingredients);
     }
 }
