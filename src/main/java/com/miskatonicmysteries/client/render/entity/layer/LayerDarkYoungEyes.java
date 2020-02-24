@@ -14,8 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class LayerDarkYoungEyes implements LayerRenderer<EntityDarkYoung> {
     private final RenderDarkYoung darkYoungRenderer;
-    public static final ResourceLocation EYES_TEX = new ResourceLocation(MiskatonicMysteries.MODID, "textures/entity/dark_young/dark_young_eyes.png");
-    private static final ResourceLocation RES_ENDERMAN_EYES = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
+    public static final ResourceLocation EYES_TEX = new ResourceLocation(MiskatonicMysteries.MODID, "textures/entity/dark_young/dark_young_1_eyes.png");
+    public static final ResourceLocation EYES_TEX_ALT = new ResourceLocation(MiskatonicMysteries.MODID, "textures/entity/dark_young/dark_young_2_eyes.png");
 
     public LayerDarkYoungEyes(RenderDarkYoung render) {
         this.darkYoungRenderer = render;
@@ -24,7 +24,7 @@ public class LayerDarkYoungEyes implements LayerRenderer<EntityDarkYoung> {
     @Override
     public void doRenderLayer(EntityDarkYoung entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         if (!entitylivingbaseIn.isInvisible()) {
-            this.darkYoungRenderer.bindTexture(EYES_TEX);
+            this.darkYoungRenderer.bindTexture(entitylivingbaseIn.getType() == 0 ? EYES_TEX : EYES_TEX_ALT);
             GlStateManager.pushMatrix();
             GlStateManager.enableAlpha();
             GlStateManager.enableBlend();
@@ -37,7 +37,7 @@ public class LayerDarkYoungEyes implements LayerRenderer<EntityDarkYoung> {
             int k = i / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k);
             Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
-            this.darkYoungRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+            this.darkYoungRenderer.getMainModel(entitylivingbaseIn).render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 
 

@@ -115,9 +115,9 @@ public class ModRegistries {
     }
 
     private static void initRecipes() {
-        //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "laudanum"), new ItemStack(ModObjects.laudanum), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.WHEAT));
+        new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "laudanum"), new ItemStack(ModObjects.laudanum), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromStacks(new ItemStack(Blocks.RED_FLOWER, 1, 0)), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.WHEAT));
         new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "blotter"), new ItemStack(ModObjects.blotter), new ItemStack(Items.PAPER), Ingredient.fromItem(ModObjects.infested_wheat), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.SUGAR), Ingredient.fromItem(Items.NETHER_WART), Ingredient.fromItem(Items.NETHER_WART));
-        //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "re_agent_syringe"));
+       // new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "re_agent_syringe"));
         //new ChemistryRecipe(new ResourceLocation(MiskatonicMysteries.MODID, "essential_salt"));
     }
 

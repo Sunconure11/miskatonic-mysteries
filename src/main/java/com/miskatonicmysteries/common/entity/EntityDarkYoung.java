@@ -17,6 +17,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart, IHasAssociatedBlessing, IIgnoreMaterials { //EntityMob
-    private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(EntityDarkYoung.class, DataSerializers.VARINT);
+    private static final DataParameter<Byte> TYPE = EntityDataManager.createKey(EntityDarkYoung.class, DataSerializers.BYTE);
 
     //  public MultiPartEntityPart[] tentacleSegments;
    // public MultiPartEntityPart tentacleTip = new MultiPartEntityPart(this, "tentacle", 0.5F, 0.5F);
@@ -46,6 +47,18 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         setSize(2.5F, 4.5F);
         experienceValue = 12;
         navigator= new PathNavigateGroundIgnoreSpecial(this, worldIn);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setByte("Type", getType());
+        return super.writeToNBT(compound);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        setType(compound.getByte("Type"));
+        super.readFromNBT(compound);
     }
 
     @Nullable
@@ -92,15 +105,15 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
 
     @Override
     protected void entityInit() {
-        this.dataManager.register(TYPE, 0);
+        this.dataManager.register(TYPE, (byte) 0);
         super.entityInit();
     }
 
-    public int getType(){
+    public byte getType(){
         return dataManager.get(TYPE);
     }
 
-    public void setType(int type){
+    public void setType(byte type){
         dataManager.set(TYPE, type);
     }
 
@@ -116,7 +129,7 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        setType(world.rand.nextInt(4));
+        setType((byte) world.rand.nextInt(2));
         return super.onInitialSpawn(difficulty, livingdata);
     }
 

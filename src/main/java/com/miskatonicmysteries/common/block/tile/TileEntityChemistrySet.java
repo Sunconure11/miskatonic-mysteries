@@ -20,6 +20,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityChemistrySet extends TileEntityMod implements ITickable {
@@ -33,6 +34,11 @@ public class TileEntityChemistrySet extends TileEntityMod implements ITickable {
         protected void onContentsChanged(int slot) {
             PacketHandler.updateTE(world, pos);
             super.onContentsChanged(slot);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            return tickCount <= 0;
         }
     };
 
@@ -79,11 +85,7 @@ public class TileEntityChemistrySet extends TileEntityMod implements ITickable {
 
     @Override
     public void update() {
-        if (!world.isRemote && tank.getFluidAmount() >= 1000 && !isDone() && isLit() && getCurrentRecipe() != null){
-            tickCount++;
-            PacketHandler.updateTE(this);
-            System.out.println(getCurrentRecipe()); //todo add particles later once assets are in
-        }
+        System.out.println(tank.getInfo().capacity);
     }
 
     public ChemistryRecipe getCurrentRecipe(){
@@ -93,21 +95,6 @@ public class TileEntityChemistrySet extends TileEntityMod implements ITickable {
         return currentRecipe;
     }
 
-    public boolean collectResults(EntityPlayer user, ItemStack stackUsed){
-        if (getCurrentRecipe() != null){
-            if (stackUsed.getItem() == currentRecipe.containerItem.getItem() && ((stackUsed.getTagCompound() == null && currentRecipe.containerItem.getTagCompound() == null) || (stackUsed.getTagCompound().equals(currentRecipe.containerItem.getTagCompound())))){
-                stackUsed.shrink(1);
-                user.addItemStackToInventory(currentRecipe.result);
-                clearStuff();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isDone(){
-        return tank.getFluidAmount() >= 1000 && tickCount >= 100 && getCurrentRecipe() != null;
-    }
 
     private void clearStuff(){
         for (int i = 0; i < inventory.getSlots(); i++){

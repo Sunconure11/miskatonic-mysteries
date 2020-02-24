@@ -58,8 +58,10 @@ public class BlockChemistrySet extends BlockTileEntity<TileEntityChemistrySet> {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         TileEntityChemistrySet set = getTileEntity(worldIn, pos);
         set.tank.setTileEntity(set);
-        if (worldIn.isRemote) return true;
-        if (set.isDone() && set.collectResults(playerIn, playerIn.getHeldItem(hand))) return true;
+
+        /*     if (worldIn.isRemote) return true;
+ //       if (set.isDone() && set.collectResults(playerIn, playerIn.getHeldItem(hand))) return true;
+
         if (playerIn.getHeldItem(hand).hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
             IFluidHandlerItem cap = playerIn.getHeldItem(hand).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
             if (cap instanceof FluidBucketWrapper) {
@@ -87,15 +89,10 @@ public class BlockChemistrySet extends BlockTileEntity<TileEntityChemistrySet> {
                 worldIn.updateComparatorOutputLevel(pos, this);
                 return true;
             }
-            if (set.inventory.getStackInSlot(0).isEmpty() && TileEntityAltar.BOOK_TEXTURES.containsKey(playerIn.inventory.getCurrentItem().getItem())) {
-                InventoryUtil.insertCurrentItemStack(playerIn, set.inventory, 0);
-                worldIn.updateComparatorOutputLevel(pos, this);
-                return true;
-            }
         }
         PacketHandler.updateTE(set);
-        set.markDirty();
-        return false;
+        set.markDirty();*/
+        return true;
     }
 
 

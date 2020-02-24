@@ -1,0 +1,224 @@
+package com.miskatonicmysteries.client.model.tile;
+
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+
+/**
+ * cthulhu_statue - cybercat5555
+ * Created using Tabula 7.0.1
+ */
+public class ModelCthulhuStatue extends ModelBase {
+    public ModelRenderer plinth;
+    public ModelRenderer body;
+    public ModelRenderer neck;
+    public ModelRenderer Wing01;
+    public ModelRenderer lWing01;
+    public ModelRenderer lLeg01;
+    public ModelRenderer rLeg01;
+    public ModelRenderer lArm01;
+    public ModelRenderer rArm01;
+    public ModelRenderer head;
+    public ModelRenderer tentacleBase;
+    public ModelRenderer tentacle01;
+    public ModelRenderer tentacle02;
+    public ModelRenderer tentacle03;
+    public ModelRenderer tentacle04;
+    public ModelRenderer tentacle05;
+    public ModelRenderer tentacle05_1;
+    public ModelRenderer tentacle06;
+    public ModelRenderer rWing02;
+    public ModelRenderer rWing03;
+    public ModelRenderer rWing04;
+    public ModelRenderer rWing05;
+    public ModelRenderer lWing02;
+    public ModelRenderer lWing03;
+    public ModelRenderer lWing04;
+    public ModelRenderer lWing05;
+    public ModelRenderer lLeg02;
+    public ModelRenderer rLeg02;
+    public ModelRenderer lArm02;
+    public ModelRenderer lArm03;
+    public ModelRenderer rArm02;
+    public ModelRenderer rArm03;
+
+    public ModelCthulhuStatue() {
+        this.textureWidth = 64;
+        this.textureHeight = 32;
+        this.rArm01 = new ModelRenderer(this, 33, 0);
+        this.rArm01.mirror = true;
+        this.rArm01.setRotationPoint(-1.7F, -7.0F, 1.3F);
+        this.rArm01.addBox(-2.1F, -0.5F, -1.0F, 2, 4, 2, 0.0F);
+        this.setRotateAngle(rArm01, -0.5235987755982988F, 0.0F, 0.0F);
+        this.lWing05 = new ModelRenderer(this, 48, 23);
+        this.lWing05.setRotationPoint(0.0F, 0.0F, -2.8F);
+        this.lWing05.addBox(-0.5F, 0.0F, -0.5F, 1, 4, 1, 0.0F);
+        this.rArm02 = new ModelRenderer(this, 32, 7);
+        this.rArm02.mirror = true;
+        this.rArm02.setRotationPoint(-1.2F, 3.7F, -0.3F);
+        this.rArm02.addBox(-1.0F, -0.5F, -2.8F, 2, 1, 4, 0.0F);
+        this.setRotateAngle(rArm02, 0.3141592653589793F, 0.0F, -0.17453292519943295F);
+        this.tentacleBase = new ModelRenderer(this, 37, 18);
+        this.tentacleBase.setRotationPoint(0.0F, -2.1F, -1.4F);
+        this.tentacleBase.addBox(-1.5F, -1.8F, -2.0F, 3, 3, 2, 0.0F);
+        this.setRotateAngle(tentacleBase, 0.6981317007977318F, 0.0F, 0.0F);
+        this.tentacle04 = new ModelRenderer(this, 43, 24);
+        this.tentacle04.setRotationPoint(-0.5F, -0.5F, -1.4F);
+        this.tentacle04.addBox(-0.5F, 0.0F, -0.5F, 1, 6, 1, 0.0F);
+        this.setRotateAngle(tentacle04, -0.8726646259971648F, 0.0F, 0.0F);
+        this.lWing01 = new ModelRenderer(this, 53, 22);
+        this.lWing01.setRotationPoint(0.7F, -8.0F, 1.8F);
+        this.lWing01.addBox(-0.5F, 0.0F, 0.8F, 1, 5, 4, 0.0F);
+        this.setRotateAngle(lWing01, 0.2617993877991494F, 0.6981317007977318F, 0.08726646259971647F);
+        this.lLeg02 = new ModelRenderer(this, 48, 11);
+        this.lLeg02.setRotationPoint(1.7F, -0.1F, -4.5F);
+        this.lLeg02.addBox(-1.59F, -1.3F, -1.6F, 3, 6, 2, 0.0F);
+        this.setRotateAngle(lLeg02, 0.06981317007977318F, 0.0F, 0.0F);
+        this.rWing05 = new ModelRenderer(this, 48, 23);
+        this.rWing05.mirror = true;
+        this.rWing05.setRotationPoint(0.0F, 0.0F, -2.8F);
+        this.rWing05.addBox(-0.5F, 0.0F, -0.5F, 1, 4, 1, 0.0F);
+        this.lArm03 = new ModelRenderer(this, 32, 13);
+        this.lArm03.setRotationPoint(0.0F, 0.0F, -3.0F);
+        this.lArm03.addBox(-1.0F, -0.5F, -0.8F, 2, 3, 1, 0.0F);
+        this.lLeg01 = new ModelRenderer(this, 44, 0);
+        this.lLeg01.setRotationPoint(0.8F, -1.5F, 1.3F);
+        this.lLeg01.addBox(0.1F, -1.5F, -5.5F, 3, 3, 7, 0.0F);
+        this.setRotateAngle(lLeg01, -0.20943951023931953F, 0.0F, 0.0F);
+        this.tentacle05 = new ModelRenderer(this, 43, 24);
+        this.tentacle05.setRotationPoint(0.5F, -0.5F, -1.4F);
+        this.tentacle05.addBox(-0.5F, 0.0F, -0.5F, 1, 6, 1, 0.0F);
+        this.setRotateAngle(tentacle05, -0.8028514559173915F, 0.0F, 0.0F);
+        this.tentacle01 = new ModelRenderer(this, 43, 26);
+        this.tentacle01.setRotationPoint(-0.8F, -1.3F, -1.7F);
+        this.tentacle01.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1, 0.0F);
+        this.setRotateAngle(tentacle01, -0.7853981633974483F, 0.0F, 0.0F);
+        this.lArm01 = new ModelRenderer(this, 33, 0);
+        this.lArm01.setRotationPoint(1.7F, -7.0F, 1.3F);
+        this.lArm01.addBox(0.2F, -0.5F, -1.0F, 2, 4, 2, 0.0F);
+        this.setRotateAngle(lArm01, -0.5235987755982988F, 0.0F, 0.0F);
+        this.plinth = new ModelRenderer(this, 0, 0);
+        this.plinth.setRotationPoint(0.0F, 24.0F, 0.0F);
+        this.plinth.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
+        this.neck = new ModelRenderer(this, 5, 21);
+        this.neck.setRotationPoint(0.0F, -7.5F, 0.4F);
+        this.neck.addBox(-1.5F, -1.4F, -1.7F, 3, 2, 3, 0.0F);
+        this.setRotateAngle(neck, 0.3490658503988659F, 0.0F, 0.0F);
+        this.lWing02 = new ModelRenderer(this, 49, 23);
+        this.lWing02.setRotationPoint(0.1F, 4.9F, 4.3F);
+        this.lWing02.addBox(-0.5F, -0.2F, -0.5F, 1, 7, 1, 0.0F);
+        this.setRotateAngle(lWing02, -0.3490658503988659F, 0.0F, 0.0F);
+        this.body = new ModelRenderer(this, 0, 18);
+        this.body.setRotationPoint(0.0F, 16.4F, 0.0F);
+        this.body.addBox(-3.0F, -8.0F, -3.0F, 6, 8, 6, 0.0F);
+        this.setRotateAngle(body, 0.13962634015954636F, 0.0F, 0.0F);
+        this.rWing02 = new ModelRenderer(this, 49, 23);
+        this.rWing02.mirror = true;
+        this.rWing02.setRotationPoint(0.1F, 4.9F, 4.3F);
+        this.rWing02.addBox(-0.5F, -0.2F, -0.5F, 1, 7, 1, 0.0F);
+        this.setRotateAngle(rWing02, -0.3490658503988659F, 0.0F, 0.0F);
+        this.head = new ModelRenderer(this, 25, 23);
+        this.head.setRotationPoint(0.0F, -1.0F, 0.0F);
+        this.head.addBox(-2.0F, -3.6F, -2.5F, 4, 4, 4, 0.0F);
+        this.setRotateAngle(head, -0.3490658503988659F, 0.0F, 0.0F);
+        this.rWing03 = new ModelRenderer(this, 48, 23);
+        this.rWing03.mirror = true;
+        this.rWing03.setRotationPoint(0.0F, 0.0F, -0.9F);
+        this.rWing03.addBox(-0.5F, 0.0F, -0.5F, 1, 6, 1, 0.0F);
+        this.rWing04 = new ModelRenderer(this, 49, 23);
+        this.rWing04.mirror = true;
+        this.rWing04.setRotationPoint(0.0F, 0.0F, -1.9F);
+        this.rWing04.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1, 0.0F);
+        this.tentacle03 = new ModelRenderer(this, 43, 25);
+        this.tentacle03.setRotationPoint(0.8F, -1.3F, -1.7F);
+        this.tentacle03.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1, 0.0F);
+        this.setRotateAngle(tentacle03, -0.7853981633974483F, 0.0F, 0.0F);
+        this.rArm03 = new ModelRenderer(this, 32, 13);
+        this.rArm03.mirror = true;
+        this.rArm03.setRotationPoint(0.0F, 0.0F, -3.0F);
+        this.rArm03.addBox(-1.0F, -0.5F, -0.8F, 2, 3, 1, 0.0F);
+        this.tentacle06 = new ModelRenderer(this, 44, 25);
+        this.tentacle06.mirror = true;
+        this.tentacle06.setRotationPoint(0.9F, -0.5F, -1.4F);
+        this.tentacle06.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1, 0.0F);
+        this.setRotateAngle(tentacle06, -0.7853981633974483F, -0.08726646259971647F, 0.0F);
+        this.lArm02 = new ModelRenderer(this, 32, 7);
+        this.lArm02.setRotationPoint(1.2F, 3.7F, -0.3F);
+        this.lArm02.addBox(-1.0F, -0.5F, -2.8F, 2, 1, 4, 0.0F);
+        this.setRotateAngle(lArm02, 0.3141592653589793F, 0.0F, 0.17453292519943295F);
+        this.rLeg01 = new ModelRenderer(this, 44, 0);
+        this.rLeg01.mirror = true;
+        this.rLeg01.setRotationPoint(-0.8F, -1.5F, 1.3F);
+        this.rLeg01.addBox(-3.1F, -1.5F, -5.5F, 3, 3, 7, 0.0F);
+        this.setRotateAngle(rLeg01, -0.20943951023931953F, 0.0F, 0.0F);
+        this.tentacle02 = new ModelRenderer(this, 43, 24);
+        this.tentacle02.setRotationPoint(0.0F, -1.3F, -1.7F);
+        this.tentacle02.addBox(-0.5F, 0.0F, -0.5F, 1, 4, 1, 0.0F);
+        this.setRotateAngle(tentacle02, -0.9599310885968813F, 0.0F, 0.0F);
+        this.lWing04 = new ModelRenderer(this, 49, 23);
+        this.lWing04.setRotationPoint(0.0F, 0.0F, -1.9F);
+        this.lWing04.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1, 0.0F);
+        this.rLeg02 = new ModelRenderer(this, 48, 11);
+        this.rLeg02.mirror = true;
+        this.rLeg02.setRotationPoint(-1.7F, -0.1F, -4.5F);
+        this.rLeg02.addBox(-1.39F, -1.3F, -1.6F, 3, 6, 2, 0.0F);
+        this.setRotateAngle(rLeg02, 0.06981317007977318F, 0.0F, 0.0F);
+        this.lWing03 = new ModelRenderer(this, 48, 23);
+        this.lWing03.setRotationPoint(0.0F, 0.0F, -0.9F);
+        this.lWing03.addBox(-0.5F, 0.0F, -0.5F, 1, 6, 1, 0.0F);
+        this.tentacle05_1 = new ModelRenderer(this, 44, 25);
+        this.tentacle05_1.setRotationPoint(-0.9F, -0.5F, -1.4F);
+        this.tentacle05_1.addBox(-0.5F, 0.0F, -0.5F, 1, 5, 1, 0.0F);
+        this.setRotateAngle(tentacle05_1, -0.7853981633974483F, 0.08726646259971647F, 0.0F);
+        this.Wing01 = new ModelRenderer(this, 53, 22);
+        this.Wing01.mirror = true;
+        this.Wing01.setRotationPoint(-0.7F, -8.0F, 1.8F);
+        this.Wing01.addBox(-0.5F, 0.0F, 0.8F, 1, 5, 4, 0.0F);
+        this.setRotateAngle(Wing01, 0.2617993877991494F, -0.6981317007977318F, -0.08726646259971647F);
+        this.body.addChild(this.rArm01);
+        this.lWing02.addChild(this.lWing05);
+        this.rArm01.addChild(this.rArm02);
+        this.head.addChild(this.tentacleBase);
+        this.tentacleBase.addChild(this.tentacle04);
+        this.body.addChild(this.lWing01);
+        this.lLeg01.addChild(this.lLeg02);
+        this.rWing02.addChild(this.rWing05);
+        this.lArm02.addChild(this.lArm03);
+        this.body.addChild(this.lLeg01);
+        this.tentacleBase.addChild(this.tentacle05);
+        this.tentacleBase.addChild(this.tentacle01);
+        this.body.addChild(this.lArm01);
+        this.body.addChild(this.neck);
+        this.lWing01.addChild(this.lWing02);
+        this.Wing01.addChild(this.rWing02);
+        this.neck.addChild(this.head);
+        this.rWing02.addChild(this.rWing03);
+        this.rWing02.addChild(this.rWing04);
+        this.tentacleBase.addChild(this.tentacle03);
+        this.rArm02.addChild(this.rArm03);
+        this.tentacleBase.addChild(this.tentacle06);
+        this.lArm01.addChild(this.lArm02);
+        this.body.addChild(this.rLeg01);
+        this.tentacleBase.addChild(this.tentacle02);
+        this.lWing02.addChild(this.lWing04);
+        this.rLeg01.addChild(this.rLeg02);
+        this.lWing02.addChild(this.lWing03);
+        this.tentacleBase.addChild(this.tentacle05_1);
+        this.body.addChild(this.Wing01);
+    }
+
+    @Override
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+        this.plinth.render(f5);
+        this.body.render(f5);
+    }
+
+    /**
+     * This is a helper function from Tabula to set the rotation of model parts
+     */
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+        modelRenderer.rotateAngleX = x;
+        modelRenderer.rotateAngleY = y;
+        modelRenderer.rotateAngleZ = z;
+    }
+}

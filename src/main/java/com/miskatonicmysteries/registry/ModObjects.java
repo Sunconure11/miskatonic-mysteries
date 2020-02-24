@@ -62,7 +62,7 @@ public class ModObjects {
 
     public static BlockYellowSign yellow_sign = Util.create(new BlockYellowSign(), SoundType.STONE, 3, 20, "shovel", 0, "yellow_sign");
 
-   // public static BlockChemistrySet chemistry_set = Util.create(new BlockChemistrySet(), SoundType.STONE, 1.5F, 30, "pickaxe", 0, "chemistry_set");
+    public static BlockChemistrySet chemistry_set = Util.create(new BlockChemistrySet(), SoundType.STONE, 1.5F, 30, "pickaxe", 0, "chemistry_set");
 
     //ah, yes, the three physical states: block, fluid and item
 
@@ -90,7 +90,7 @@ public class ModObjects {
 
     public static Item tranquilizer = Util.create(new ItemTranquilizer(), "tranquilizer");
 
-    //public static Item laudanum = Util.create(new ItemLaudanum(), "laudanum");
+    public static Item laudanum = Util.create(new ItemLaudanum(), "laudanum");
 
     public static Item re_agent = Util.create(new ItemReAgent(), "re_agent");
 

@@ -39,17 +39,6 @@ public class PotionLazarus extends ModPotion {
     }
 
     @Override
-    public void removeAttributesModifiersFromEntity(EntityLivingBase entityLivingBaseIn, AbstractAttributeMap attributeMapIn, int amplifier) {
-        super.removeAttributesModifiersFromEntity(entityLivingBaseIn, attributeMapIn, amplifier);
-    }
-/*
-    @Override
-    public void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn, AbstractAttributeMap attributeMapIn, int amplifier) {
-        entityLivingBaseIn.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(new AttributeModifier("lazarus_health " + amplifier, getAttributeM));
-        super.applyAttributesModifiersToEntity(entityLivingBaseIn, attributeMapIn, amplifier);
-    }*/
-
-    @Override
     public List<ItemStack> getCurativeItems() {
         return new ArrayList<>();
     }
