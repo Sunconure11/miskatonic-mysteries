@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class SpellGrowth extends Spell {
     public SpellGrowth() {
-        super(new ResourceLocation(MiskatonicMysteries.MODID, "growth"), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())));
+        super(new ResourceLocation(MiskatonicMysteries.MODID, "growth"), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, 15)));
         this.castTime = 0;
         this.cooldownTime = 20;
     }
@@ -48,6 +48,6 @@ public class SpellGrowth extends Spell {
 
     @Override
     public void price(EntityPlayer caster) {
-        caster.inventory.clearMatchingItems(Items.DYE, EnumDyeColor.WHITE.getMetadata(), 1, null);
+        caster.inventory.clearMatchingItems(Items.DYE, 15, 1, null);
     }
 }

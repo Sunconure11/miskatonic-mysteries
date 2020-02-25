@@ -17,7 +17,7 @@ import java.util.Map;
 public class ModBiomes {
     public static Map<String, GreatOldOneArea> GOO_EFFECT_MAP = new HashMap<>();
 
-    public static GreatOldOneArea SHUB;
+    public static GreatOldOneArea SHUB; //GOO areas will actually be biomes that are stored in the extendedWorld, so they may be reset after a while
     public static GreatOldOneArea HASTUR;
 
     public static void registerBiomes(){

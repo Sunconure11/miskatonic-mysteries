@@ -51,7 +51,6 @@ public class SpellYellowSign extends Spell {
         if(world.getTileEntity(pos) instanceof TileEntityBanner){
             TileEntityBanner banner = (TileEntityBanner)world.getTileEntity(pos);
             NBTTagCompound bannerTag = banner.serializeNBT();
-            System.out.println(bannerTag);//Patterns:[{Pattern:"rs",Color:7}], a sub compound
             if (bannerTag.hasKey("Base")){
                 if (!bannerTag.hasKey("Patterns")){
                     bannerTag.setTag("Patterns", new NBTTagList());

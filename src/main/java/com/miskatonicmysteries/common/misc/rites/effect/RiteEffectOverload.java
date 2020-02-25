@@ -21,7 +21,6 @@ public class RiteEffectOverload extends RiteEffect {
 
     @Override
     public boolean test(TileEntityOctagram octagram, EnumTrigger trigger) {
-        System.out.println(octagram.focusPower);
         return octagram.focusPower >= (octagram.getCurrentRite().focusPower + octagram.getCurrentRite().overflowTolerance);
     }
 }

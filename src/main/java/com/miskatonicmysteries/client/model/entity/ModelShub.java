@@ -3,9 +3,11 @@ package com.miskatonicmysteries.client.model.entity;
 import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import com.miskatonicmysteries.util.ModelAnimUtil;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -1006,9 +1008,16 @@ public class ModelShub extends ModelBase {
     }
 
     public void setAnimations(EntityShub shub, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+        moveHead(shub, netHeadYaw, headPitch);
         moveTentaclesPassively(shub, ageInTicks);
         sit(shub.sittingProgress);
         openTheCursedMaw(shub.openingProgress);
+    }
+
+    public void moveHead(EntityShub shub, float netHeadYaw, float headPitch){
+        this.head.rotateAngleY = netHeadYaw * 0.017453292F;
+        this.head.rotateAngleX = headPitch * 0.017453292F;
+        //this.head.rotationPointY = 0.0F;
     }
 
     public void moveTentaclesPassively(EntityShub shub, float ageInTicks) {

@@ -45,7 +45,6 @@ public class EntityWaterProjectile extends EntityThrowable {
     @Override
     public void onUpdate() {
         ++ticksExisted;
-        System.out.println(ticksExisted);
         if (ticksExisted > 10) {
             setDead();
         } else {

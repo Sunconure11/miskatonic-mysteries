@@ -4,6 +4,7 @@ import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
+import com.miskatonicmysteries.common.network.PacketHandler;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.registry.ModPotions;
 import net.minecraft.block.Block;
@@ -64,16 +65,18 @@ public class RiteHysteria extends OctagramRite {
                 spawnSpawnParticles(octagram);
             }
         }
-        octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(1, 0, 1).offset(octagram.getPos()), l -> l instanceof EntityVillager || l instanceof EntityPlayer).forEach(
-                e -> {
-                    if (e.getRNG().nextBoolean()) {
-                        e.addPotionEffect(new PotionEffect(ModPotions.mania, 4800));
-                        if (e instanceof EntityPlayer && Sanity.Util.getSanityCapability((EntityPlayer) e).getHorrifiedCooldown() < 200) {
-                            Sanity.Util.getSanityCapability((EntityPlayer) e).setHorrifiedCooldown(200);
+        if (!world.isRemote) {
+            octagram.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, Block.FULL_BLOCK_AABB.grow(1, 0, 1).offset(octagram.getPos()), l -> l instanceof EntityVillager || l instanceof EntityPlayer).forEach(
+                    e -> {
+                        if (e.getRNG().nextFloat() < 0.75F) {
+                            e.addPotionEffect(new PotionEffect(ModPotions.mania, 4800));
+                            if (e instanceof EntityPlayer && Sanity.Util.getSanityCapability((EntityPlayer) e).getHorrifiedCooldown() < 200) {
+                                Sanity.Util.getSanityCapability((EntityPlayer) e).setHorrifiedCooldown(200);
+                            }
                         }
                     }
-                }
-        );
+            );
+        }
     }
 
 

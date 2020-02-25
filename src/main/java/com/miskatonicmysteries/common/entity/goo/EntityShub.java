@@ -8,6 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MultiPartEntityPart;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
@@ -34,7 +37,7 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
     public float openingProgress = 0;
 
     //tentacle code from https://github.com/Angry-Pixel/The-Betweenlands/blob/1.12-dev/src/main/java/thebetweenlands/common/entity/mobs/EntityShambler.java
-    public MultiPartEntityPart tentacle_grip = new MultiPartEntityPart(this, "tentacle_grip", 0.5F, 0.5F);
+//    public MultiPartEntityPart tentacle_grip = new MultiPartEntityPart(this, "tentacle_grip", 0.5F, 0.5F);
 
     public EntityShub(World worldIn) {
         super(worldIn);
@@ -75,9 +78,9 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
 
     @Override
     protected void initEntityAI() {
-        //  this.tasks.addTask(0, new EntityAISwimming(this));
-        // this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        //    this.tasks.addTask(2, new EntityAILookIdle(this));
+        this.tasks.addTask(0, new EntityAISwimming(this));
+         this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+         this.tasks.addTask(2, new EntityAILookIdle(this));
         super.initEntityAI();
     }
 
@@ -130,7 +133,7 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
-        return super.getRenderBoundingBox().grow(10);
+        return super.getRenderBoundingBox().grow(20);
     }
 
     @Override
@@ -195,7 +198,7 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
 
     @Override
     public boolean canRiderInteract() {
-        return true;
+        return false;
     }
 
     @Override

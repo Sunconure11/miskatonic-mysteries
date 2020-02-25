@@ -166,7 +166,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 if (tickCount >= rite.ticksNeeded) {
                     updateRiteStats();
                     if (checkGOOAdressed() && checkFocalPower()) {
-                        world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1F, 0.8F, false);
+                        world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 2F, 0.8F, false);
                         if (rite.type == OctagramRite.EnumType.PRIMED) {
                             primed = true;
                         } else {
@@ -294,8 +294,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public void flipAltarPages() {
         if (altarUsable() && !world.isRemote) {
-            getAltar().flipSpeed = Math.min(getAltar().flipSpeed + 0.03F, 0.8F); // Math.min(getAltar().flipSpeed + 0.03F, 0.5F);
-            System.out.println(getAltar().flipSpeed);
+            getAltar().flipSpeed = Math.min(getAltar().flipSpeed + 0.03F, 0.5F); // Math.min(getAltar().flipSpeed + 0.03F, 0.5F);
             PacketHandler.updateTE(getAltar());
         }
     }
