@@ -18,7 +18,7 @@ public class StatueRiteFocus extends BlockRiteFocus {
         if (world != null && pos != null){
             if (world.getBlockState(pos).getBlock() instanceof BlockStatue && octagram != null){
                 if (isBlessingMatching(octagram, world, pos)) {
-                    octagram.canOverload = !isBlessingMatching(octagram, world, pos);
+                    octagram.canOverload = !(isBlessingMatching(octagram, world, pos) && ((BlockStatue) world.getBlockState(pos).getBlock()).statue.isSpecial());
                     return super.getConduitAmount(octagram, world, pos);
                 }
                 return Math.round(super.getConduitAmount(octagram, world, pos) * 0.25F);

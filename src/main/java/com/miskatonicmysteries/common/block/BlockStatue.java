@@ -1,18 +1,11 @@
 package com.miskatonicmysteries.common.block;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
-import com.miskatonicmysteries.client.particles.ParticleOccultFlame;
-import com.miskatonicmysteries.client.render.tile.RenderStatue;
 import com.miskatonicmysteries.common.block.tile.BlockTileEntity;
-import com.miskatonicmysteries.common.block.tile.TileEntityAltar;
 import com.miskatonicmysteries.common.block.tile.TileEntityStatue;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.misc.IHasAssociatedBlessing;
-import com.miskatonicmysteries.common.network.PacketHandler;
-import com.miskatonicmysteries.registry.ModObjects;
-import com.miskatonicmysteries.util.InventoryUtil;
 import com.miskatonicmysteries.util.Util;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,26 +13,17 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.particle.ParticleEndRod;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class BlockStatue extends BlockTileEntity<TileEntityStatue> implements IHasAssociatedBlessing{
     public static Map<ResourceLocation, Statue> statues = new HashMap<>();
@@ -90,7 +74,6 @@ public class BlockStatue extends BlockTileEntity<TileEntityStatue> implements IH
             world.setBlockState(pos, state.withProperty(FACING, entityFacing), 2);
         }
         if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEntityStatue) {
-
             TileEntityStatue te = (TileEntityStatue) world.getTileEntity(pos);
             te.setBlessing(associatedGOO);
             te.statue = this.statue.name;
@@ -139,7 +122,10 @@ public class BlockStatue extends BlockTileEntity<TileEntityStatue> implements IH
 
     @Override
     public TileEntityStatue createTileEntity(World world, IBlockState state) {
-        return new TileEntityStatue();
+        TileEntityStatue statue = new TileEntityStatue();
+        statue.setBlessing(associatedGOO);
+        statue.statue = this.statue.name;
+        return statue;
     }
 
     @Override
@@ -156,12 +142,26 @@ public class BlockStatue extends BlockTileEntity<TileEntityStatue> implements IH
         private final String name;
         private final ResourceLocation loc;
         private final ModelBase model;
+        private final boolean isSpecial;
+
+        public Statue(String name, ResourceLocation loc, ModelBase model, boolean isSpecial) {
+            this.name = name;
+            this.loc = loc;
+            this.model = model;
+            this.isSpecial = isSpecial;
+            statues.put(new ResourceLocation(MiskatonicMysteries.MODID, name), this);
+        }
 
         public Statue(String name, ResourceLocation loc, ModelBase model) {
             this.name = name;
             this.loc = loc;
             this.model = model;
+            this.isSpecial = false;
             statues.put(new ResourceLocation(MiskatonicMysteries.MODID, name), this);
+        }
+
+        public boolean isSpecial() {
+            return isSpecial;
         }
 
         public String getName() {

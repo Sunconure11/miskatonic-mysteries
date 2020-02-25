@@ -2,11 +2,13 @@ package com.miskatonicmysteries.common.world.gen.processor;
 
 import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
+import com.miskatonicmysteries.common.block.BlockStatue;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -37,18 +39,16 @@ public class CthulhuStructureProcessor extends OldStructureProcessor {
         }else
             if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
                 float r = worldIn.rand.nextFloat();
-                if (r <= 0.6) {
+                if (r <= 0.5) {
                     return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1), null));
-                } else if (r <= 0.3) {
-                    switch (worldIn.rand.nextInt(4)) {
+                } else if (r <= 0.8 && !hasStatueInChunk(worldIn, pos)) {
+                    switch (worldIn.rand.nextInt(3)) {
                         case 0:
-                            return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_cthulhu_prismarine.getDefaultState(), null));
+                            return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_cthulhu_prismarine));
                         case 1:
-                            return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_cthulhu_mossy.getDefaultState(), null));
+                            return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_cthulhu_mossy));
                         case 2:
-                            return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_cthulhu_gold.getDefaultState(), null));
-                        case 3:
-                            return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_cthulhu_stone.getDefaultState(), null));
+                            return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_cthulhu_stone));
                     }
                 }else{
                     return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));

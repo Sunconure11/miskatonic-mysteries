@@ -2,10 +2,13 @@ package com.miskatonicmysteries.common.world.gen.processor;
 
 import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
+import com.miskatonicmysteries.common.block.BlockStatue;
+import com.miskatonicmysteries.common.block.tile.TileEntityStatue;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -19,6 +22,8 @@ public class ShubStructureProcessor extends OldStructureProcessor {
         super(groundY, false, true, !coldBiomeIn, Biomes.FOREST, rotation, mirror);
     }
 
+    //TODO: once the structure files have orientable blocks for the murals and the statues in, change the stuff accordingly so the stuff gets rotated
+
     @Nullable
     @Override
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
@@ -28,16 +33,14 @@ public class ShubStructureProcessor extends OldStructureProcessor {
             }
         }else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
             float r = worldIn.rand.nextFloat();
-            if (r <= 0.6) {
-                return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
-            } else if (r <= 0.3) {
-                switch (worldIn.rand.nextInt(3)) {
+            if (r <= 0.5) {
+                return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, worldIn.rand.nextBoolean()), null));
+            } else if (r <= 0.8 && !hasStatueInChunk(worldIn, pos)) {
+                switch (worldIn.rand.nextInt(2)) {
                     case 0:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_gold.getDefaultState(), null));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_shub_stone));
                     case 1:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_stone.getDefaultState(), null));
-                    case 2:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_shub_mossy.getDefaultState(), null));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_shub_mossy));
                     //case 3:
                      //   return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_terracotta.getDefaultState(), null));
                 }

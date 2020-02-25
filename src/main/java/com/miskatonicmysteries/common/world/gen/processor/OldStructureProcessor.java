@@ -1,9 +1,14 @@
 package com.miskatonicmysteries.common.world.gen.processor;
 
 import com.miskatonicmysteries.common.block.BlockMural;
+import com.miskatonicmysteries.common.block.BlockStatue;
+import com.miskatonicmysteries.common.block.tile.TileEntityStatue;
+import com.miskatonicmysteries.registry.ModObjects;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -17,9 +22,9 @@ import javax.annotation.Nullable;
 
 public class OldStructureProcessor implements ITemplateProcessor {
     protected int groundY;
-    protected boolean placeDirt = false;
-    protected  boolean crack = false, growMoss = false;
-    protected Biome biome = Biomes.FOREST;
+    protected boolean placeDirt;
+    protected  boolean crack, growMoss;
+    protected Biome biome;
 
     protected Mirror mirror;
     protected Rotation rotation;
@@ -64,5 +69,16 @@ public class OldStructureProcessor implements ITemplateProcessor {
             worldIn.setBlockState(pos.down(), worldIn.getBiome(pos).topBlock);
         }
         return blockInfoIn.blockState.getBlock().equals(Blocks.AIR) ? new Template.BlockInfo(pos, worldIn.getBlockState(pos), null) : blockInfoIn;
+    }
+
+    public Template.BlockInfo addStatue(World world, BlockPos pos, BlockStatue statue){
+        TileEntityStatue statueTile = new TileEntityStatue();
+        statueTile.setBlessing(statue.associatedGOO);
+        statueTile.statue = statue.statue.getName();
+        return new Template.BlockInfo(pos, statue.getDefaultState().withProperty(BlockStatue.FACING, EnumFacing.fromAngle(world.rand.nextInt(360))), statueTile.serializeNBT());
+    }
+
+    public boolean hasStatueInChunk(World world, BlockPos pos){
+        return world.getChunkFromBlockCoords(pos).getTileEntityMap().values().parallelStream().anyMatch(t -> t instanceof TileEntityStatue);
     }
 }

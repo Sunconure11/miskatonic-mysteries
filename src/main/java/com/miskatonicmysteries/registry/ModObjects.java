@@ -18,7 +18,6 @@ import com.miskatonicmysteries.common.misc.rites.focus.*;
 import com.miskatonicmysteries.util.Util;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -71,17 +70,17 @@ public class ModObjects {
 
     public static BlockStatue statue_cthulhu_mossy = new BlockStatue("statue_cthulhu_mossy", new BlockStatue.Statue("cthulhu_mossy", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/cthulhu/mossy.png"), new ModelCthulhuStatue()), Blessing.CTHULHU);
     public static BlockStatue statue_cthulhu_prismarine = new BlockStatue("statue_cthulhu_prismarine", new BlockStatue.Statue("cthulhu_prismarine", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/cthulhu/prismarine.png"), new ModelCthulhuStatue()), Blessing.CTHULHU);
-    public static BlockStatue statue_cthulhu_gold = new BlockStatue("statue_cthulhu_gold", new BlockStatue.Statue("cthulhu_gold", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/cthulhu/gold.png"), new ModelCthulhuStatue()), Blessing.CTHULHU);
+    public static BlockStatue statue_cthulhu_gold = new BlockStatue("statue_cthulhu_gold", new BlockStatue.Statue("cthulhu_gold", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/cthulhu/gold.png"), new ModelCthulhuStatue(), true), Blessing.CTHULHU);
     public static BlockStatue statue_cthulhu_stone = new BlockStatue("statue_cthulhu_stone", new BlockStatue.Statue("cthulhu_stone", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/cthulhu/stone.png"), new ModelCthulhuStatue()), Blessing.CTHULHU);
 
     public static BlockStatue statue_shub_mossy = new BlockStatue("statue_shub_mossy", new BlockStatue.Statue("shub_mossy", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/shub/mossy.png"), new ModelShubStatue()), Blessing.SHUB);
     public static BlockStatue statue_shub_basalt = new BlockStatue("statue_shub_basalt", new BlockStatue.Statue("shub_basalt", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/shub/basalt.png"), new ModelShubStatue()), Blessing.SHUB);
-    public static BlockStatue statue_shub_gold = new BlockStatue("statue_shub_gold", new BlockStatue.Statue("shub_gold", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/shub/gold.png"), new ModelShubStatue()), Blessing.SHUB);
+    public static BlockStatue statue_shub_gold = new BlockStatue("statue_shub_gold", new BlockStatue.Statue("shub_gold", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/shub/gold.png"), new ModelShubStatue(), true), Blessing.SHUB);
     public static BlockStatue statue_shub_stone = new BlockStatue("statue_shub_stone", new BlockStatue.Statue("shub_stone", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/shub/stone.png"), new ModelShubStatue()), Blessing.SHUB);
 
     public static BlockStatue statue_hastur_mossy = new BlockStatue("statue_hastur_mossy", new BlockStatue.Statue("hastur_mossy", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/hastur/mossy.png"), new ModelHasturStatue()), Blessing.HASTUR);
     public static BlockStatue statue_hastur_terracotta = new BlockStatue("statue_hastur_terracotta", new BlockStatue.Statue("hastur_terracotta", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/hastur/terracotta.png"), new ModelHasturStatue()), Blessing.HASTUR);
-    public static BlockStatue statue_hastur_gold = new BlockStatue("statue_hastur_gold", new BlockStatue.Statue("hastur_gold", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/hastur/gold.png"), new ModelHasturStatue()), Blessing.HASTUR);
+    public static BlockStatue statue_hastur_gold = new BlockStatue("statue_hastur_gold", new BlockStatue.Statue("hastur_gold", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/hastur/gold.png"), new ModelHasturStatue(), true), Blessing.HASTUR);
     public static BlockStatue statue_hastur_stone = new BlockStatue("statue_hastur_stone", new BlockStatue.Statue("hastur_stone", new ResourceLocation(MiskatonicMysteries.MODID, "textures/blocks/statues/hastur/stone.png"), new ModelHasturStatue()), Blessing.HASTUR);
 
     //ah, yes, the three physical states: block, fluid and item

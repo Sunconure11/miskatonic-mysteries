@@ -57,6 +57,21 @@ tile.octagram_shub.name=Black Goat's Chalk
 tile.octagram_hastur.name=Yellow King's Chalk
 item.chalk.name=Profane Chalk
 
+tile.statue_cthulhu_mossy.name=Mossy Cthulhu Statue
+tile.statue_cthulhu_stone.name=Stone Cthulhu Statue
+tile.statue_cthulhu_prismarine.name=Prismarine Cthulhu Statue
+tile.statue_cthulhu_gold.name=Golden Cthulhu Statue
+
+tile.statue_shub_mossy.name=Mossy Shub-Niggurath Statue
+tile.statue_shub_stone.name=Stone Shub-Niggurath Statue
+tile.statue_shub_basalt.name=Basalt Shub-Niggurath Statue
+tile.statue_shub_gold.name=Golden Shub-Niggurath Statue
+
+tile.statue_hastur_mossy.name=Mossy Hastur Statue
+tile.statue_hastur_stone.name=Stone Hastur Statue
+tile.statue_hastur_terracotta.name=Terracotta Hastur Statue
+tile.statue_hastur_gold.name=Golden Hastur Statue
+
 #ITEM
 item.research_notes_cthulhu.name=Research Notes
 item.research_notes_hastur.name=Research Notes
@@ -93,6 +108,9 @@ item.infested_wheat.name=Infested Wheat
 item.incantation_gate_key.name=Incantation of the Gate-and-Key
 
 item.re_agent.name=ReAgent
+item.laudanum.name=Laudanum
+item.syringe.name=Syringe
+item.essential_salts.name=Essential Salts
 
 #ENTITIES
 entity.shub_niggurath.name=Shub-Niggurath

@@ -2,6 +2,7 @@ package com.miskatonicmysteries.common.world.gen.processor;
 
 import com.miskatonicmysteries.common.block.BlockCandles;
 import com.miskatonicmysteries.common.block.BlockMural;
+import com.miskatonicmysteries.common.block.BlockStatue;
 import com.miskatonicmysteries.registry.ModObjects;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockOldLog;
@@ -10,6 +11,7 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -43,18 +45,16 @@ public class HasturStructureProcessor extends OldStructureProcessor {
             }
         } else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)) {
             float r = worldIn.rand.nextFloat();
-            if (r <= 0.6) {
-                return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, false), null));
-            } else if (r <= 0.3) {
-                switch (worldIn.rand.nextInt(4)) {
+            if (r <= 0.5) {
+                return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, worldIn.rand.nextBoolean()), null));
+            } else if (r <= 0.8 && !hasStatueInChunk(worldIn, pos)) {
+                switch (worldIn.rand.nextInt(3)) {
                     case 0:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_gold.getDefaultState(), null));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_terracotta));
                     case 1:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_mossy.getDefaultState(), null));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_mossy));
                     case 2:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_stone.getDefaultState(), null));
-                    case 3:
-                        return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_terracotta.getDefaultState(), null));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_stone));
                 }
             }else{
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));
