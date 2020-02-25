@@ -26,7 +26,7 @@ public class SpellPersonalFragment extends Spell {
     @Override
     public void cast(EntityPlayer caster) {
         EntityPersonalProjectile projectile = new EntityPersonalProjectile(caster.world, caster);
-        projectile.shoot(caster, caster.rotationPitch, caster.rotationYaw, 0, 1F, 0F);
+        projectile.shoot(caster, caster.rotationPitch, caster.rotationYaw, 0, 2F, 0F);
         float damageFactor = 9 * (1 - Sanity.Util.getSanity(caster) / (float) Sanity.SANITY_MAX);
         projectile.setDamage(3 + damageFactor);
         if (!caster.world.isRemote)

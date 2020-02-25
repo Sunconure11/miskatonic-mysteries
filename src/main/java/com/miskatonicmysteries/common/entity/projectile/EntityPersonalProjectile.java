@@ -72,4 +72,9 @@ public class EntityPersonalProjectile extends EntityThrowable { //nothing person
             }
         }
     }
+
+    @Override
+    protected float getGravityVelocity() {
+        return super.getGravityVelocity() / 2F;
+    }
 }

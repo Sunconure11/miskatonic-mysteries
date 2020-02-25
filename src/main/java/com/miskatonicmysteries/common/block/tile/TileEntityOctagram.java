@@ -166,6 +166,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                 if (tickCount >= rite.ticksNeeded) {
                     updateRiteStats();
                     if (checkGOOAdressed() && checkFocalPower()) {
+                        world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1F, 0.8F, false);
                         if (rite.type == OctagramRite.EnumType.PRIMED) {
                             primed = true;
                         } else {
