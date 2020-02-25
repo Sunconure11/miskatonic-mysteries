@@ -518,13 +518,10 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
             this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY + 0.5D, this.posZ, i));
         }
 
-        System.out.println("ah");
-        if (recipe.getItemToSell() != lastTradedStack){
-            System.out.println("yay");
+        if (recipe.getItemToSell() != lastTradedStack && !lastTradedStack.isEmpty()){
             refreshTrades();
         }
         lastTradedStack = recipe.getItemToSell();
-        System.out.println(world.isRemote);
     }
 
     public void refreshTrades(){
