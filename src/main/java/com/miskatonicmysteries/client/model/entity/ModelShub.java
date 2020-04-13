@@ -20,7 +20,6 @@ public class ModelShub extends ModelBase {
     public ModelRenderer body;
     public ModelRenderer waist;
     public ModelRenderer neck01;
-    public ModelRenderer branch01a;
     public ModelRenderer lBoob01;
     public ModelRenderer rBoob01;
     public ModelRenderer lBoob02;
@@ -29,8 +28,6 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rMouth01;
     public ModelRenderer NS;
     public ModelRenderer EW;
-    public ModelRenderer branch13a;
-    public ModelRenderer branch14a;
     public ModelRenderer lMouth02;
     public ModelRenderer rMouth02;
     public ModelRenderer lfLeg01;
@@ -58,10 +55,6 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rfHoof;
     public ModelRenderer rFClaw01;
     public ModelRenderer rFClaw02;
-    public ModelRenderer branch13b;
-    public ModelRenderer branch13c;
-    public ModelRenderer branch14b;
-    public ModelRenderer branch14c;
     public ModelRenderer neck02;
     public ModelRenderer mane02;
     public ModelRenderer mane04;
@@ -89,6 +82,7 @@ public class ModelShub extends ModelBase {
     public ModelRenderer rHorn03;
     public ModelRenderer rHorn04;
 
+    public ModelRenderer branch01a;
     public ModelRenderer branch01b;
     public ModelRenderer branch01c;
     public ModelRenderer branch01d;
@@ -140,6 +134,12 @@ public class ModelShub extends ModelBase {
     public ModelRenderer branch10a;
     public ModelRenderer branch11a;
     public ModelRenderer branch12a;
+    public ModelRenderer branch13a;
+    public ModelRenderer branch13b;
+    public ModelRenderer branch13c;
+    public ModelRenderer branch14a;
+    public ModelRenderer branch14b;
+    public ModelRenderer branch14c;
 
 
     public ModelRenderer rTentacle00[] = new ModelRenderer[5];
@@ -1012,24 +1012,24 @@ public class ModelShub extends ModelBase {
         moveTentaclesPassively(shub, ageInTicks);
         sit(shub.sittingProgress);
         openTheCursedMaw(shub.openingProgress);
-    }
+}
 
+    //when the player is grabbed, go into the according pose
     public void moveHead(EntityShub shub, float netHeadYaw, float headPitch){
         this.head.rotateAngleY = netHeadYaw * 0.017453292F;
         this.head.rotateAngleX = headPitch * 0.017453292F;
-        //this.head.rotationPointY = 0.0F;
     }
 
     public void moveTentaclesPassively(EntityShub shub, float ageInTicks) {
-        ModelAnimUtil.waveTentacle(lTentacle00, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(lTentacle01, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(lTentacle02, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(lTentacle03, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(lTentacle00, 0.8F, 0.2F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(lTentacle01, 0.3F, 0.5F, ModelAnimUtil.calculateTickSequenceProgress(150, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(lTentacle02, 0.6F, 0.2F, ModelAnimUtil.calculateTickSequenceProgress(170, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(lTentacle03, 0.6F, 0.1F, ModelAnimUtil.calculateTickSequenceProgress(165, ageInTicks), true);
 
-        ModelAnimUtil.waveTentacle(rTentacle00, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(rTentacle01, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(rTentacle02, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
-        ModelAnimUtil.waveTentacle(rTentacle03, 0.8F, 0F, ModelAnimUtil.calculateTickSequenceProgress(160, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(rTentacle00, 0.25F, 0.7F, ModelAnimUtil.calculateTickSequenceProgress(140, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(rTentacle01, 0.48F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(120, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(rTentacle02, 0.37F, 0.63F, ModelAnimUtil.calculateTickSequenceProgress(180, ageInTicks), true);
+        ModelAnimUtil.waveTentacle(rTentacle03, 0.28F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(170, ageInTicks), true);
     }
 
     public void sit(float progression) {

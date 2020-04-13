@@ -720,59 +720,31 @@ public class ModelAltDarkYoung extends ModelBase {
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+        if (entityIn instanceof EntityDarkYoung) {
+            doWalkingAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
+            doTentacleAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
+            doHurtAnims((EntityDarkYoung) entityIn);
+            doMawAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
+        }
+    }
 
+    private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
+        float progress =  1 - (float) Math.abs(0.5 - entityIn.swingProgress) * 2;
+        this.setRotateAngle(mouth01Top, -0.5759586531581287F, 0, 0, progress); //the one on the top
+        this.setRotateAngle(mouth02Top, -0.3759586531581287F, 0, 0, progress);
+        this.setRotateAngle(mouth03Top, -0.3759586531581287F, 0, 0, progress);
+
+        this.setRotateAngle(mouth01Lower, 0.3759586531581287F, 0, 0, progress);
+        this.setRotateAngle(mouth02Lower, 0.3759586531581287F, 0, 0, progress);
+        this.setRotateAngle(mouth03Lower, 0.3759586531581287F, 0, 0, progress);
+    }
+
+    private void doTentacleAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
         for(ModelRenderer[] t: tentacles){
             for(ModelRenderer s: t){
                 setRotateAngle(s, 0, 0, 0);
             }
         }
-
-        this.setRotateAngle(legBase01, 0.0F, 0.7853981633974483F, 0.0F);
-        this.setRotateAngle(legBase02, 0.0F, -0.7853981633974483F, 0.0F);
-
-
-        this.setRotateAngle(lfLeg01, 0.0F, 0.0F, -0.5235987755982988F);
-        this.setRotateAngle(lfLeg02, 0.0F, 0.0F, -0.5235987755982988F);
-        this.setRotateAngle(lfLeg03, 0.0F, 0.0F, -0.5759586531581287F);
-        this.setRotateAngle(lfHoof, 0.0F, 0.0F, 0.05235987755982988F);
-        this.setRotateAngle(lfHoofClaw01b, 0.0F, 0.7853981633974483F, 0.3665191429188092F);
-        this.setRotateAngle(lfHoofClaw02b, 0.0F, -0.7853981633974483F, 0.3665191429188092F);
-
-        this.setRotateAngle(rfLeg01, 0.0F, 0.0F, 0.5235987755982988F);
-        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, 0.5235987755982988F);
-        this.setRotateAngle(rfLeg03, 0.0F, 0.0F, 0.5759586531581287F);
-        this.setRotateAngle(rfHoof, 0.0F, 0.0F, -0.05235987755982988F);
-        this.setRotateAngle(rfHoofClaw01b, 0.0F, -0.7853981633974483F, -0.3665191429188092F);
-        this.setRotateAngle(rfHoofClaw02b, 0.0F, 0.7853981633974483F, -0.3665191429188092F);
-
-
-        this.setRotateAngle(lbLeg01, 0.0F, 0.0F, -0.5235987755982988F);
-        this.setRotateAngle(lbLeg02, 0.0F, 0.0F, -0.5235987755982988F);
-        this.setRotateAngle(lbLeg03, 0.0F, 0.0F, -0.5759586531581287F);
-        this.setRotateAngle(lbHoof, 0.0F, 0.0F, 0.05235987755982988F);
-        this.setRotateAngle(lbHoofClaw01b, 0.0F, 0.7853981633974483F, 0.3665191429188092F);
-        this.setRotateAngle(lbHoofClaw02b, 0.0F, -0.7853981633974483F, 0.3665191429188092F);
-
-        this.setRotateAngle(rbLeg01, 0.0F, 0.0F, 0.5235987755982988F);
-        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, 0.5235987755982988F);
-        this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 0.5759586531581287F);
-        this.setRotateAngle(rbHoof, 0.0F, 0.0F, -0.05235987755982988F);
-        this.setRotateAngle(rbHoofClaw01b, 0.0F, -0.7853981633974483F, -0.3665191429188092F);
-        this.setRotateAngle(rbHoofClaw02b, 0.0F, 0.7853981633974483F, -0.3665191429188092F);
-
-        this.setRotateAngle(mouth02Top, 0.0F, 0.0F, 0.7853981633974483F);
-        this.setRotateAngle(mouth02Lower, 0.0F, 0.0F, 0.7853981633974483F);
-
-        this.setRotateAngle(mouth03Top, 0.0F, 0.0F, -0.7853981633974483F);
-        this.setRotateAngle(mouth03Lower, 0.0F, 0.0F, -0.7853981633974483F);
-
-        this.setRotateAngle(lHorn01, 0.3141592653589793F, 0.0F, 0.5759586531581287F);
-        this.setRotateAngle(lHorn02, -0.13962634015954636F, 0.0F, -0.3141592653589793F);
-        this.setRotateAngle(lHorn03, -0.13962634015954636F, 0.0F, 0.3141592653589793F);
-
-        this.setRotateAngle(rHorn01, 0.3141592653589793F, 0.0F, -0.5759586531581287F);
-        this.setRotateAngle(rHorn02, -0.13962634015954636F, 0.0F, 0.3141592653589793F);
-        this.setRotateAngle(rHorn03, -0.13962634015954636F, 0.0F, -0.3141592653589793F);
 
         this.setRotateAngle(tentacle01[0], 0.5235987755982988F, 0.0F, 0.0F);
         this.setRotateAngle(tentacle01[1], -0.5235987755982988F, 0.0F, -0.03490658503988659F);
@@ -859,26 +831,6 @@ public class ModelAltDarkYoung extends ModelBase {
         this.setRotateAngle(tentacle15[1], 0.22689280275926282F, 0.0F, -0.17453292519943295F);
         this.setRotateAngle(tentacle15[3], 0.0F, 0.0F, 0.17453292519943295F);
 
-        if (entityIn instanceof EntityDarkYoung) {
-            doWalkingAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
-            doTentacleAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
-            doHurtAnims((EntityDarkYoung) entityIn);
-            doMawAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
-        }
-    }
-
-    private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        float progress =  1 - (float) Math.abs(0.5 - entityIn.swingProgress) * 2;
-        this.setRotateAngle(mouth01Top, -0.5759586531581287F, 0, 0, progress); //the one on the top
-        this.setRotateAngle(mouth02Top, -0.3759586531581287F, 0, 0, progress);
-        this.setRotateAngle(mouth03Top, -0.3759586531581287F, 0, 0, progress);
-
-        this.setRotateAngle(mouth01Lower, 0.3759586531581287F, 0, 0, progress);
-        this.setRotateAngle(mouth02Lower, 0.3759586531581287F, 0, 0, progress);
-        this.setRotateAngle(mouth03Lower, 0.3759586531581287F, 0, 0, progress);
-    }
-
-    private void doTentacleAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
         ModelAnimUtil.waveTentacle(tentacle01, 1F, 0.9F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle02, 0.1F, 1.3F, ModelAnimUtil.calculateTickSequenceProgress(70, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle03, 0.8F, 0.1F, ModelAnimUtil.calculateTickSequenceProgress(66, ageInTicks), true);
@@ -889,7 +841,6 @@ public class ModelAltDarkYoung extends ModelBase {
         ModelAnimUtil.waveTentacle(tentacle08, 0.15F, 1.2F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle09, 0.7F, 0.4F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle10, 0.3F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(68, ageInTicks), true);
-       //still need to set these
         ModelAnimUtil.waveTentacle(tentacle11, 0.3F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(68, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle12, 0.3F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(68, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle13, 0.3F, 0.6F, ModelAnimUtil.calculateTickSequenceProgress(68, ageInTicks), true);
@@ -899,10 +850,10 @@ public class ModelAltDarkYoung extends ModelBase {
     }
 
     private void doWalkingAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        this.rfLeg01.rotateAngleZ += MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount;
-        this.lfLeg01.rotateAngleZ += MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount;
-        this.rbLeg01.rotateAngleZ += MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount;
-        this.lbLeg01.rotateAngleZ += MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount;
+        this.rfLeg01.rotateAngleZ = (float) (0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.25 * limbSwingAmount);
+        this.lfLeg01.rotateAngleZ = (float)  (-0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F) * 0.25 * limbSwingAmount);
+        this.rbLeg01.rotateAngleZ = (float) (0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F) * 0.25 * limbSwingAmount) ;
+        this.lbLeg01.rotateAngleZ = (float) (-0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.25 * limbSwingAmount);
     }
 
     private void doHurtAnims(EntityDarkYoung entityIn){

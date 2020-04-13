@@ -87,10 +87,10 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         super.applyEntityAttributes();
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4);
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(4.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getType() == 1 ? 0.2 : 0.4);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(32.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getType() == 1 ? 5.0D : 4.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getType() == 1 ? 8.0 : 4.0D); //change values somewhere else if it's the variant
 
     }
 
@@ -135,10 +135,16 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         return false;
     }
 
+    @Override
+    public boolean hitByEntity(Entity entityIn) {
+        System.out.println(getType());
+        return super.hitByEntity(entityIn);
+    }
+
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-        setType((byte) world.rand.nextInt(2));
+        setType((byte) (world.rand.nextBoolean() ? 1 : 0));
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
@@ -166,11 +172,6 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
     @Override
     public float getEyeHeight() {
         return this.height * 0.5F;
-    }
-
-    @Override
-    public boolean canEntityBeSeen(Entity entityIn) { //Eye see all
-        return world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().grow(15, 5, 15)).contains(entityIn);
     }
 
     @Override

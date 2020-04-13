@@ -79,7 +79,7 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
-         this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+         this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
          this.tasks.addTask(2, new EntityAILookIdle(this));
         super.initEntityAI();
     }

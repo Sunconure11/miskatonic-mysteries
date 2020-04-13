@@ -17,8 +17,10 @@ public class RenderDarkYoung extends RenderLiving<EntityDarkYoung> {
     public static final ResourceLocation DARK_YOUNG_TEX = new ResourceLocation(MiskatonicMysteries.MODID, "textures/entity/dark_young/dark_young_1.png");
     public static final ResourceLocation DARK_YOUNG_TEX_ALT = new ResourceLocation(MiskatonicMysteries.MODID, "textures/entity/dark_young/dark_young_2.png");
 
+    public static final ModelBase DARK_YOUNG_0 = new ModelDarkYoung();
+    public static final ModelBase DARK_YOUNG_1 = new ModelAltDarkYoung();
     public RenderDarkYoung(RenderManager rendermanagerIn) {
-        super(rendermanagerIn, new ModelDarkYoung(), 1F);
+        super(rendermanagerIn, DARK_YOUNG_0, 1F);
         this.addLayer(new LayerDarkYoungEyes(this));
     }
 
@@ -37,10 +39,10 @@ public class RenderDarkYoung extends RenderLiving<EntityDarkYoung> {
     }
 
     public ModelBase getMainModel(EntityDarkYoung darkYoung) {
-        if (darkYoung.getType() == 0){
-            return new ModelDarkYoung();
+        if (darkYoung.getType() == 1){
+            return DARK_YOUNG_1;
         }
-        return new ModelAltDarkYoung();
+        return DARK_YOUNG_0;
     }
 
     @Nullable

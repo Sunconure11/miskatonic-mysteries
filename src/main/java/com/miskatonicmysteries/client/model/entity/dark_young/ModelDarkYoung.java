@@ -609,106 +609,6 @@ public class ModelDarkYoung extends ModelBase {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
 
-        for(ModelRenderer[] t: tentacles){
-            for(ModelRenderer s: t){
-                setRotateAngle(s, 0, 0, 0);
-            }
-        }
-
-        this.setRotateAngle(tentacle01[0], -0.20943951023931953F, 0.0F, 0.5235987755982988F);
-        this.setRotateAngle(lfHoofClaw02b_1, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(fur02, 0.08726646259971647F, 0.0F, 0.0F);
-        this.setRotateAngle(lrHoofClaw02b, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(tentacle02[5], 0.0F, 0.0F, -0.22689280275926282F);
-        this.setRotateAngle(tentacle03[3], 0.0F, 0.0F, -0.2617993877991494F);
-        this.setRotateAngle(rHindLeg03, -0.5009094953223726F, 0.0F, -0.2617993877991494F);
-        this.setRotateAngle(lHindHoof, 0.0F, 0.0F, 0.05235987755982988F);
-        this.setRotateAngle(tentacle03[2], 0.0F, 0.0F, -0.4363323129985824F);
-        this.setRotateAngle(lJawC, -0.7853981633974483F, 0.0F, 0.0F);
-        this.setRotateAngle(rForeleg03, -0.10471975511965977F, 0.0F, -0.13962634015954636F);
-        this.setRotateAngle(tail, 0.6981317007977318F, 0.0F, 0.0F);
-        this.setRotateAngle(tentacle05[0], -0.5759586531581287F, 0.0F, -0.2617993877991494F);
-        this.setRotateAngle(chest, -0.08726646259971647F, 0.0F, 0.0F);
-        this.setRotateAngle(rForeleg02, 0.0F, 0.0F, -0.2617993877991494F);
-        this.setRotateAngle(rJaw, -0.5759586531581287F, 0.10471975511965977F, -0.08726646259971647F);
-        this.setRotateAngle(rhHoofClaw02a, 0.4363323129985824F, -0.08726646259971647F, 0.0F);
-        this.setRotateAngle(lfHoofClaw02a, 0.4363323129985824F, 0.08726646259971647F, 0.0F);
-        this.setRotateAngle(tentacle06[2], -0.13962634015954636F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(lrHoofClaw02a, 0.4363323129985824F, 0.08726646259971647F, 0.0F);
-        this.setRotateAngle(tentacle04[1], 0.22689280275926282F, 0.0F, -0.17453292519943295F);
-        this.setRotateAngle(rJawB, 0.7853981633974483F, 0.0F, 0.0F);
-        this.setRotateAngle(rfHoofClaw01a, 0.4363323129985824F, 0.08726646259971647F, 0.0F);
-        this.setRotateAngle(rLegH, -0.22689280275926282F, 0.0F, 0.4363323129985824F);
-        this.setRotateAngle(tentacle08[2], 0.20943951023931953F, 0.0F, 0.0F);
-        this.setRotateAngle(tentacle10[2], 0.20943951023931953F, 0.0F, -0.3141592653589793F);
-        this.setRotateAngle(tentacle01[5], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(tentacle09[0], -0.3141592653589793F, 0.0F, 0.40142572795869574F);
-        this.setRotateAngle(tentacle01[2], 0.20943951023931953F, 0.0F, -0.22689280275926282F);
-        this.setRotateAngle(tentacle02[3], 0.0F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(tentacle07[3], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(tentacle02[4], 0.0F, 0.0F, -0.22689280275926282F);
-        this.setRotateAngle(lLegH, -0.22689280275926282F, 0.0F, -0.4363323129985824F);
-        this.setRotateAngle(lfHoofClaw01b, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(tentacle06[4], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(tentacle04[3], 0.0F, 0.0F, 0.17453292519943295F);
-        this.setRotateAngle(rhHoofClaw01b, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(tentacle09[3], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(fur01, -0.08726646259971647F, 0.0F, 0.0F);
-        this.setRotateAngle(lForeleg03, -0.10471975511965977F, 0.0F, 0.13962634015954636F);
-        this.setRotateAngle(lHindLeg03, -0.5009094953223726F, 0.0F, 0.2617993877991494F);
-        this.setRotateAngle(lfHoofClaw02b, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(tentacle02[0], -0.20943951023931953F, 0.0F, -0.4363323129985824F);
-        this.setRotateAngle(lfHoofClaw01a, 0.4363323129985824F, -0.08726646259971647F, 0.0F);
-        this.setRotateAngle(lhHoofClaw01a, 0.4363323129985824F, -0.08726646259971647F, 0.0F);
-        this.setRotateAngle(lhHoofClaw01b, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(body, 0.08726646259971647F, 0.0F, 0.0F);
-        this.setRotateAngle(tentacle06[0], -0.5759586531581287F, 0.0F, 0.12217304763960307F);
-        this.setRotateAngle(tentacle07[0], -0.5759586531581287F, 0.0F, 0.6283185307179586F);
-        this.setRotateAngle(tentacle05[4], 0.12217304763960307F, 0.0F, -0.2792526803190927F);
-        this.setRotateAngle(rJawC, -0.7853981633974483F, 0.0F, 0.0F);
-        this.setRotateAngle(tentacle05[2], -0.13962634015954636F, 0.0F, -0.4363323129985824F);
-        this.setRotateAngle(fur03, 0.08726646259971647F, 0.0F, 0.0F);
-        this.setRotateAngle(tentacle01[1], -0.08726646259971647F, 0.0F, -0.22689280275926282F);
-        this.setRotateAngle(tentacle08[1], -0.13962634015954636F, 0.0F, -0.12217304763960307F);
-        this.setRotateAngle(lHorn02, -0.13962634015954636F, 0.0F, -0.3141592653589793F);
-        this.setRotateAngle(tentacle01[3], -0.13962634015954636F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(lLegF, 0.19198621771937624F, 0.0F, -0.40142572795869574F);
-        this.setRotateAngle(rHindLeg02, 0.9075712110370513F, 0.0F, -0.17453292519943295F);
-        this.setRotateAngle(tentacle08[3], 0.12217304763960307F, 0.0F, 0.0F);
-        this.setRotateAngle(tentacle02[1], -0.17453292519943295F, 0.0F, 0.13962634015954636F);
-        this.setRotateAngle(tentacle07[1], -0.13962634015954636F, 0.0F, -0.12217304763960307F);
-        this.setRotateAngle(tentacle10[1], -0.13962634015954636F, 0.0F, 0.4363323129985824F);
-        this.setRotateAngle(lHorn01, -0.13962634015954636F, 0.0F, 0.3490658503988659F);
-        this.setRotateAngle(tentacle02[2], 0.13962634015954636F, 0.0F, -0.17453292519943295F);
-        this.setRotateAngle(tentacle09[2], 0.20943951023931953F, 0.0F, 0.3141592653589793F);
-        this.setRotateAngle(lJawB, 0.7853981633974483F, 0.0F, 0.0F);
-        this.setRotateAngle(lForeleg02, 0.0F, 0.0F, 0.2617993877991494F);
-        this.setRotateAngle(rHorn01, -0.13962634015954636F, 0.0F, -0.3490658503988659F);
-        this.setRotateAngle(tentacle04[0], 0.0F, 0.0F, -0.2792526803190927F);
-        this.setRotateAngle(tentacle08[0], -0.5759586531581287F, 0.0F, -0.45378560551852565F);
-        this.setRotateAngle(tentacle06[3], 0.20943951023931953F, 0.0F, 0.12217304763960307F);
-        this.setRotateAngle(tentacle03[0], 0.3490658503988659F, 0.0F, 0.08726646259971647F);
-        this.setRotateAngle(rhHoofClaw01a, 0.4363323129985824F, 0.08726646259971647F, 0.0F);
-        this.setRotateAngle(tentacle05[3], 0.20943951023931953F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(rHorn03, -0.13962634015954636F, 0.0F, -0.3141592653589793F);
-        this.setRotateAngle(tentacle06[1], 0.20943951023931953F, 0.0F, -0.22689280275926282F);
-        this.setRotateAngle(rHindHoof, 0.0F, 0.0F, -0.05235987755982988F);
-        this.setRotateAngle(rfHoofClaw02a, 0.4363323129985824F, -0.08726646259971647F, 0.0F);
-        this.setRotateAngle(rHorn02, -0.13962634015954636F, 0.0F, 0.3141592653589793F);
-        this.setRotateAngle(tentacle05[1], 0.20943951023931953F, 0.0F, 0.3490658503988659F);
-        this.setRotateAngle(tentacle03[2], 0.0F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(tentacle03[1], -0.2617993877991494F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(rear, -0.17453292519943295F, 0.0F, 0.0F);
-        this.setRotateAngle(lHindLeg02, 0.9075712110370513F, 0.0F, 0.17453292519943295F);
-        this.setRotateAngle(lHorn03, -0.13962634015954636F, 0.0F, 0.3141592653589793F);
-        this.setRotateAngle(tentacle09[1], -0.13962634015954636F, 0.0F, -0.4363323129985824F);
-        this.setRotateAngle(lhHoofClaw02b, -0.13962634015954636F, 0.13962634015954636F, 0.7853981633974483F);
-        this.setRotateAngle(lJaw, -0.5759586531581287F, -0.10471975511965977F, 0.08726646259971647F);
-        this.setRotateAngle(tentacle10[3], 0.12217304763960307F, 0.0F, -0.22689280275926282F);
-        this.setRotateAngle(tentacle01[4], 0.20943951023931953F, 0.0F, 0.22689280275926282F);
-        this.setRotateAngle(tentacle07[2], 0.20943951023931953F, 0.0F, 0.12217304763960307F);
-        this.setRotateAngle(rLegF, 0.19198621771937624F, 0.0F, 0.40142572795869574F);
-
         if (entityIn instanceof EntityDarkYoung) {
             doWalkingAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
             doMawAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
@@ -719,10 +619,10 @@ public class ModelDarkYoung extends ModelBase {
     }
 
     private void doWalkingAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        this.rLegF.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 0.7 * limbSwingAmount;
-        this.lLegF.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.7 * limbSwingAmount;
-        this.rLegH.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.7 * limbSwingAmount;
-        this.lLegH.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 0.7 * limbSwingAmount;
+        this.rLegF.rotateAngleX = (float) (0.19198621771937624F + MathHelper.cos(limbSwing * 0.6662F) * 0.7 * limbSwingAmount);
+        this.lLegF.rotateAngleX = (float) (0.19198621771937624F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.7 * limbSwingAmount);
+        this.rLegH.rotateAngleX = (float) (-0.22689280275926282F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.7 * limbSwingAmount);
+        this.lLegH.rotateAngleX = (float) (-0.22689280275926282F + MathHelper.cos(limbSwing * 0.6662F) * 0.7 * limbSwingAmount);
     }
 
     private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
@@ -738,6 +638,59 @@ public class ModelDarkYoung extends ModelBase {
 
 
     private void doTentacleAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
+        for(ModelRenderer[] t: tentacles){
+            for(ModelRenderer s: t){
+                setRotateAngle(s, 0, 0, 0);
+            }
+        }
+
+        this.setRotateAngle(tentacle01[0], -0.20943951023931953F, 0.0F, 0.5235987755982988F);
+        this.setRotateAngle(tentacle02[5], 0.0F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(tentacle03[2], 0.0F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(tentacle03[3], 0.0F, 0.0F, -0.2617993877991494F);
+        this.setRotateAngle(tentacle04[1], 0.22689280275926282F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(tentacle05[0], -0.5759586531581287F, 0.0F, -0.2617993877991494F);
+        this.setRotateAngle(tentacle06[2], -0.13962634015954636F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle08[2], 0.20943951023931953F, 0.0F, 0.0F);
+        this.setRotateAngle(tentacle10[2], 0.20943951023931953F, 0.0F, -0.3141592653589793F);
+        this.setRotateAngle(tentacle01[5], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle09[0], -0.3141592653589793F, 0.0F, 0.40142572795869574F);
+        this.setRotateAngle(tentacle01[2], 0.20943951023931953F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(tentacle02[3], 0.0F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle07[3], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle02[4], 0.0F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(tentacle06[4], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle04[3], 0.0F, 0.0F, 0.17453292519943295F);
+        this.setRotateAngle(tentacle09[3], 0.12217304763960307F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle02[0], -0.20943951023931953F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(tentacle06[0], -0.5759586531581287F, 0.0F, 0.12217304763960307F);
+        this.setRotateAngle(tentacle07[0], -0.5759586531581287F, 0.0F, 0.6283185307179586F);
+        this.setRotateAngle(tentacle05[4], 0.12217304763960307F, 0.0F, -0.2792526803190927F);
+        this.setRotateAngle(tentacle05[2], -0.13962634015954636F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(tentacle01[1], -0.08726646259971647F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(tentacle08[1], -0.13962634015954636F, 0.0F, -0.12217304763960307F);
+        this.setRotateAngle(tentacle01[3], -0.13962634015954636F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle08[3], 0.12217304763960307F, 0.0F, 0.0F);
+        this.setRotateAngle(tentacle02[1], -0.17453292519943295F, 0.0F, 0.13962634015954636F);
+        this.setRotateAngle(tentacle07[1], -0.13962634015954636F, 0.0F, -0.12217304763960307F);
+        this.setRotateAngle(tentacle10[1], -0.13962634015954636F, 0.0F, 0.4363323129985824F);
+        this.setRotateAngle(tentacle02[2], 0.13962634015954636F, 0.0F, -0.17453292519943295F);
+        this.setRotateAngle(tentacle09[2], 0.20943951023931953F, 0.0F, 0.3141592653589793F);
+        this.setRotateAngle(tentacle04[0], 0.0F, 0.0F, -0.2792526803190927F);
+        this.setRotateAngle(tentacle08[0], -0.5759586531581287F, 0.0F, -0.45378560551852565F);
+        this.setRotateAngle(tentacle06[3], 0.20943951023931953F, 0.0F, 0.12217304763960307F);
+        this.setRotateAngle(tentacle03[0], 0.3490658503988659F, 0.0F, 0.08726646259971647F);
+        this.setRotateAngle(tentacle05[3], 0.20943951023931953F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle06[1], 0.20943951023931953F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(tentacle05[1], 0.20943951023931953F, 0.0F, 0.3490658503988659F);
+        this.setRotateAngle(tentacle03[2], 0.0F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle03[1], -0.2617993877991494F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle09[1], -0.13962634015954636F, 0.0F, -0.4363323129985824F);
+        this.setRotateAngle(tentacle10[3], 0.12217304763960307F, 0.0F, -0.22689280275926282F);
+        this.setRotateAngle(tentacle01[4], 0.20943951023931953F, 0.0F, 0.22689280275926282F);
+        this.setRotateAngle(tentacle07[2], 0.20943951023931953F, 0.0F, 0.12217304763960307F);
+
+
         ModelAnimUtil.waveTentacle(tentacle01, 1F, 0.9F, ModelAnimUtil.calculateTickSequenceProgress(60, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle02, 0.1F, 1.3F, ModelAnimUtil.calculateTickSequenceProgress(70, ageInTicks), true);
         ModelAnimUtil.waveTentacle(tentacle03, 0.8F, 0.1F, ModelAnimUtil.calculateTickSequenceProgress(66, ageInTicks), true);
