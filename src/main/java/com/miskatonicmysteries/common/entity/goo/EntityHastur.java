@@ -21,4 +21,9 @@ public class EntityHastur extends AbstractOldOne {
     public GreatOldOneArea getDistortionBiome() {
         return ModBiomes.HASTUR;
     }
+
+    @Override
+    public int getParticleColor() {
+        return 13217024;
+    }
 }

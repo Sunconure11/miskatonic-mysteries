@@ -8,9 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MultiPartEntityPart;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
@@ -28,23 +26,16 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
+public class EntityShub extends AbstractOldOne {
     private static final DataParameter<Boolean> MOUTH_OPEN = EntityDataManager.createKey(EntityShub.class, DataSerializers.BOOLEAN);
-
-    private static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(EntityShub.class, DataSerializers.BOOLEAN);
-
-    public float sittingProgress = 0;
-    public float openingProgress = 0;
-
-    //tentacle code from https://github.com/Angry-Pixel/The-Betweenlands/blob/1.12-dev/src/main/java/thebetweenlands/common/entity/mobs/EntityShambler.java
-//    public MultiPartEntityPart tentacle_grip = new MultiPartEntityPart(this, "tentacle_grip", 0.5F, 0.5F);
+    public float openingProgress = 0;//todo add tentacle stuff later
 
     public EntityShub(World worldIn) {
         super(worldIn);
         setSize(5, 16);
     }
 
-    @Override
+   /* @Override
     public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
             //player.startRiding(this, true);
             if (player.isSneaking()) {
@@ -57,47 +48,29 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
                 }
             }
         return super.applyPlayerInteraction(player, vec, hand);
-    }
+    }*/
 
     @Override
     public void onLivingUpdate() {
-            if (isMouthOpen() && openingProgress < 1) {
-                openingProgress += 0.05F;
-            } else if (!isMouthOpen() && openingProgress > 0) {
-                openingProgress -= 0.05F;
-            }
-
-            if (isSitting() && sittingProgress < 1) {
-                sittingProgress += 0.01F;
-            } else if (!isSitting() && sittingProgress > 0) {
-                sittingProgress -= 0.01F;
-            }
+        if (isMouthOpen() && openingProgress < 1) {
+            openingProgress += 0.05F;
+        } else if (!isMouthOpen() && openingProgress > 0) {
+            openingProgress -= 0.05F;
+        }
         super.onLivingUpdate();
     }
 
 
     @Override
     protected void initEntityAI() {
-        this.tasks.addTask(0, new EntityAISwimming(this));
-         this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
-         this.tasks.addTask(2, new EntityAILookIdle(this));
         super.initEntityAI();
     }
 
     @Override
     protected void entityInit() {
         this.dataManager.register(MOUTH_OPEN, false);
-        this.dataManager.register(SITTING, false);
 
         super.entityInit();
-    }
-
-    public boolean isSitting() {
-        return dataManager.get(SITTING);// && sittingProgress >= 1;
-    }
-
-    public void setSitting(boolean sit) {
-        this.dataManager.set(SITTING, sit);
     }
 
     public boolean isMouthOpen() {
@@ -130,7 +103,6 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
     }
 
 
-
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return super.getRenderBoundingBox().grow(20);
@@ -143,40 +115,28 @@ public class EntityShub extends AbstractOldOne implements IEntityMultiPart {
 
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
-        compound.setBoolean("isSitting", isSitting());
         compound.setBoolean("mouthOpen", isMouthOpen());
-
-        compound.setFloat("sittingProgress", sittingProgress);
         compound.setFloat("openingProgress", openingProgress);
         super.writeEntityToNBT(compound);
     }
 
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound) {
-        setSitting(compound.getBoolean("isSitting"));
-        openMouth(compound.getBoolean("mouthOpen"));
+    public int getParticleColor() {
+        return 1445125;
+    }
 
-        sittingProgress = compound.getFloat("sittingProgress");
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        openMouth(compound.getBoolean("mouthOpen"));
         openingProgress = compound.getFloat("openingProgress");
         super.readEntityFromNBT(compound);
     }
 
     @Override
-    public World getWorld() {
-        return world;
-    }
-
-    @Override
-    public boolean attackEntityFromPart(MultiPartEntityPart part, DamageSource source, float damage) {
-        return attackEntityFrom(source, damage);
-    }
-
-
-    @Override
     public void updatePassenger(Entity entity) {
 
-        if(entity instanceof EntityPlayerMP) {
+        if (entity instanceof EntityPlayerMP) {
             NetHandlerPlayServer handler = ((EntityPlayerMP) entity).connection;
             try {
                 ReflectionHelper.findField(NetHandlerPlayServer.class, "floating", "field_184344_B", "B").set(handler, false);
