@@ -48,7 +48,7 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         super(worldIn);
         setSize(2.5F, 4.5F);
         experienceValue = 12;
-        navigator= new PathNavigateGroundIgnoreSpecial(this, worldIn);
+        navigator = new PathNavigateGroundIgnoreSpecial(this, worldIn);
     }
 
 

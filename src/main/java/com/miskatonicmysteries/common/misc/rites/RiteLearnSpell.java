@@ -1,6 +1,7 @@
 package com.miskatonicmysteries.common.misc.rites;
 
 import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.client.particles.ParticleColoredSmoke;
 import com.miskatonicmysteries.client.particles.ParticleOccultEnchant;
 import com.miskatonicmysteries.common.block.tile.TileEntityOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
@@ -33,12 +34,12 @@ public class RiteLearnSpell extends OctagramRite {
 
     @Override
     public boolean test(TileEntityOctagram octagram) {
-        return !octagram.getWorld().getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.grow(1, 0, 1).offset(octagram.getPos())).isEmpty();
+        return !octagram.getWorld().getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.grow(4, 0, 4).offset(octagram.getPos())).isEmpty();
     }
 
     @Override
     public void doRitual(TileEntityOctagram octagram, @Nullable EntityPlayer caster) {
-        List<EntityPlayer> players = octagram.getWorld().getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.grow(1, 0, 1).offset(octagram.getPos()));
+        List<EntityPlayer> players = octagram.getWorld().getEntitiesWithinAABB(EntityPlayer.class, Block.FULL_BLOCK_AABB.grow(1, 2, 1).offset(octagram.getPos()));
         if (!players.isEmpty()){
             caster = players.get(0);
         }
@@ -54,6 +55,9 @@ public class RiteLearnSpell extends OctagramRite {
         if (caster != null){
             Particle p = new ParticleOccultEnchant(octagram.getWorld(), octagram.getPos().getX() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 2), octagram.getPos().getY(), octagram.getPos().getZ() + 0.5 + (octagram.getWorld().rand.nextGaussian() / 2), 0, 0, 0, caster.posX, caster.posY + caster.getEyeHeight(), caster.posZ);
             Minecraft.getMinecraft().effectRenderer.addEffect(p);
+        } else if (octagram.tickCount >= ticksNeeded - 60) {
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(octagram.getWorld(), octagram.getPos().getX() + octagram.getWorld().rand.nextDouble(), octagram.getPos().getY() + 0.2D + octagram.getWorld().rand.nextDouble(), octagram.getPos().getZ() + octagram.getWorld().rand.nextDouble(), 12648448, 0.9F));
+
         }
     }
 

@@ -14,6 +14,6 @@ public abstract class RenderOldOne<T extends AbstractOldOne> extends RenderLivin
 
     @Override
     public boolean shouldRender(T livingEntity, ICamera camera, double camX, double camY, double camZ) {
-        return livingEntity.canEntityBeSeen(Minecraft.getMinecraft().getRenderViewEntity());
+        return !livingEntity.isParticleForm() && (Minecraft.getMinecraft().player.isCreative() || livingEntity.canEntityBeSeen(Minecraft.getMinecraft().player));
     }
 }

@@ -1,6 +1,9 @@
 package com.miskatonicmysteries.common.block.tile;
 
+import com.miskatonicmysteries.MiskatonicMysteries;
+import com.miskatonicmysteries.client.particles.ParticleColoredSmoke;
 import com.miskatonicmysteries.client.particles.ParticleOccultEnchant;
+import com.miskatonicmysteries.client.particles.ParticleOccultFlame;
 import com.miskatonicmysteries.common.block.BlockOctagram;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
@@ -48,6 +51,12 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public boolean canOverload = true;
 
+    public boolean hasEnough = false;
+    public boolean willOverload = false;
+    public boolean hasWrongGooAddressed = false;
+
+    public RiteEffect horribleThing = null;
+
     public BlockPos closestAltarPos = null;
 
     public float instability = 0;
@@ -78,6 +87,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         compound.setString("lastPlayerUUID", lastPlayerUUID);
         compound.setString("ownerUUID", ownerUUID);
         compound.setBoolean("canOverload", canOverload);
+        compound.setBoolean("willOverload", willOverload);
+        compound.setBoolean("hasWrongGooAddressed", hasWrongGooAddressed);
+        compound.setBoolean("hasEnough", hasEnough);
+        compound.setString("horribleThing", horribleThing != null ? horribleThing.getName().toString() : "");
         return super.writeToNBT(compound);
     }
 
@@ -92,6 +105,10 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         lastPlayerUUID = compound.getString("lastPlayerUUID");
         ownerUUID = compound.getString("ownerUUID");
         canOverload = compound.getBoolean("canOverload");
+        willOverload = compound.getBoolean("willOverload");
+        hasWrongGooAddressed = compound.getBoolean("hasWrongGooAddressed");
+        hasEnough = compound.getBoolean("hasEnough");
+        horribleThing = ModRegistries.RITE_EFFECTS.getOrDefault(compound.getString("horribleThing"), null);
         super.readFromNBT(compound);
     }
 
@@ -113,7 +130,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     public void interactCenter(World world, EntityPlayer player) {
         if (isValid()) {
-             start();
+            start();
             world.playSound(player, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 0.7F, 0.8F);
         } else if (isFilled()) {
             doFailingEffects(8);
@@ -137,8 +154,9 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
     public void update() {
         if (world.getTotalWorldTime() % 60 == 0) {
             updateRiteStats();
-            if (getOwnerUUID() == null){
-                world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false);
+            if (getOwnerUUID() == null) {
+                EntityPlayer player = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 20, false);
+                if (player != null) ownerUUID = player.getUniqueID().toString();
             }
         }
         if (!altarUsable()) {
@@ -163,9 +181,14 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                     currentRite = "";
                     return;
                 }
+                if (tickCount >= (rite.ticksNeeded - 60)) {
+                    if (tickCount % 20 == 0)
+                        checkConditions();
+                    if (world.isRemote) giveNotTooSubtleHintsBecauseHolyShitYouMightMessUpYourRitualDude();
+                }
                 if (tickCount >= rite.ticksNeeded) {
                     updateRiteStats();
-                    if (checkGOOAdressed() && checkFocalPower()) {
+                    if (!(hasWrongGooAddressed || !hasEnough || willOverload)) {
                         world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 2F, 0.8F, false);
                         if (rite.type == OctagramRite.EnumType.PRIMED) {
                             primed = true;
@@ -181,6 +204,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
                         }
                         finish(true);
                     } else {
+                        makeHorribleThingsHappen();
                         doFailingEffects(20);
                         finish(false);
                     }
@@ -219,9 +243,53 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
 
     }
 
+    public void checkConditions() {
+        hasEnough = (focusPower >= getCurrentRite().focusPower);
+        if (hasEnough) {
+            if (canOverload)
+                willOverload = focusPower > getCurrentRite().focusPower + getCurrentRite().overflowTolerance;
+            hasWrongGooAddressed = !(getCurrentRite().octagram == Blessing.NONE || getAssociatedBlessing() == getCurrentRite().octagram);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void giveNotTooSubtleHintsBecauseHolyShitYouMightMessUpYourRitualDude() {
+        int intensity = (int) (instability * 6);
+        if (!hasEnough)
+            for (int i = 0; i < 3; i++)
+                Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, getPos().getX() + world.rand.nextDouble(), getPos().getY() + 0.2D + world.rand.nextDouble(), getPos().getZ() + world.rand.nextDouble(), 14737660, 0.9F));
+        if (hasWrongGooAddressed)
+            for (int i = 0; i < intensity; i++)
+                Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, getPos().getX() + world.rand.nextDouble(), getPos().getY() + 0.2D + world.rand.nextDouble(), getPos().getZ() + world.rand.nextDouble(), 2359364, 1));
+        if (willOverload)
+            for (int i = 0; i < intensity * 2; i++) {
+                if (world.rand.nextBoolean())
+                    Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, getPos().getX() + world.rand.nextDouble(), getPos().getY() + 0.2D + world.rand.nextDouble(), getPos().getZ() + world.rand.nextDouble(), 0, 1));
+                else
+                    MiskatonicMysteries.proxy.generateParticle(new ParticleOccultFlame(world, getPos().getX() + world.rand.nextDouble(), getPos().getY() + 0.2D + world.rand.nextDouble(), getPos().getZ() + world.rand.nextDouble(), 0, 0, 0).multipleParticleScaleBy(0.8F + (float) world.rand.nextGaussian() / 20F));
+            }
+
+    }
+
+    public void makeHorribleThingsHappen() {
+        if (!world.isRemote) {
+            int checks = 1 + (int) (instability * 10);
+            if (hasWrongGooAddressed) {
+                RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.GOO_CHECK);
+                if (effect != null)
+                    effect.execute(this, RiteEffect.EnumTrigger.GOO_CHECK);
+            }
+            if (willOverload) {
+                RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.POWER_CHECK);
+                if (effect != null)
+                    effect.execute(this, RiteEffect.EnumTrigger.POWER_CHECK);
+            }
+        }
+    }
+
     public boolean checkFocalPower() {
         if (!world.isRemote) {
-            int checks = 1 + (int) (instability * 10); //let this depend on the instability, maybe like 10 * instability + 1 or so
+            int checks = 1 + (int) (instability * 10);
             RiteEffect effect = ModRegistries.Util.getRandomEffect(this, checks, RiteEffect.EnumTrigger.POWER_CHECK);
             if (effect != null && canOverload) {
                 effect.execute(this, RiteEffect.EnumTrigger.POWER_CHECK);
@@ -421,7 +489,7 @@ public class TileEntityOctagram extends TileEntityMod implements ITickable, IHas
         world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.PLAYERS, 1.5F, 1.2F);
         if (world.isRemote) {
             for (int i = 0; i < strength; i++) {
-                world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5F + world.rand.nextGaussian() / 3, pos.getY(), pos.getZ() + 0.5F + world.rand.nextGaussian() / 3, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 20, world.rand.nextGaussian() / 10);
+                world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, pos.getX() + 0.5F + world.rand.nextGaussian() / 3, pos.getY(), pos.getZ() + 0.5F + world.rand.nextGaussian() / 3, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 20, world.rand.nextGaussian() / 10);
             }
         }
     }

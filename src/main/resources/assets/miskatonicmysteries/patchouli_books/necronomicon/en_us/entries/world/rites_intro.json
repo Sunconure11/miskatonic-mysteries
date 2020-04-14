@@ -65,6 +65,15 @@
     },
     {
       "type": "text",
+      "title": "Warning Signs",
+      "text": "Thankfully, there are some warning signs to prevent bad things from happening in the first place. These signs start to appear a few seconds before the Rite is complete, so one would do better to immediately stop the Rite by closing the container of knowledge instead of trying to fix it while it still runs. $(br)The warning signs take the form of particles forming above the Octagram. "
+    },
+    {
+      "type": "text",
+      "text": "The amount of particles vaguely displays the instability present, the type of particles shows the present issue:$(br2)$(li)$(#A5A6FF)Light blue$() particles indicate too little focal power.$(br)$(li)Flames and fume indicate an overload.$(br)$(li)$(#3407961)Deep purple$() particles indicate that the wrong Great Old One is addressed.$(br)$(li)$(#B80000)Red$() particles indicate that something specific to the Rite is wrong."
+    },
+    {
+      "type": "text",
       "title": "An Example",
       "text": "As this explanation of rites has been long and weary, an example on how to do it right -and one on how to do it wrong- will be given. In both examples the Primed Rite $(l:world/rites/rite_hysteria)$(marked)Hysteria$() will be performed, and the used setups will be shown."
     },

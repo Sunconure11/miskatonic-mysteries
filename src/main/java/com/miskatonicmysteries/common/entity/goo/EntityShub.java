@@ -2,13 +2,16 @@ package com.miskatonicmysteries.common.entity.goo;
 
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.entity.EntityDarkYoung;
+import com.miskatonicmysteries.common.entity.IIgnoreMaterials;
+import com.miskatonicmysteries.common.entity.processor.PathNavigateGroundIgnoreSpecial;
 import com.miskatonicmysteries.common.world.biome.GreatOldOneArea;
 import com.miskatonicmysteries.registry.ModBiomes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityMultiPart;
-import net.minecraft.entity.MultiPartEntityPart;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
@@ -26,19 +29,27 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class EntityShub extends AbstractOldOne {
+import java.util.function.Predicate;
+
+public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
     private static final DataParameter<Boolean> MOUTH_OPEN = EntityDataManager.createKey(EntityShub.class, DataSerializers.BOOLEAN);
     public float openingProgress = 0;//todo add tentacle stuff later
 
     public EntityShub(World worldIn) {
         super(worldIn);
         setSize(5, 16);
+        navigator = new PathNavigateGroundIgnoreSpecial(this, worldIn);
     }
 
-   /* @Override
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.05F);
+    }
+
+     @Override
     public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-            //player.startRiding(this, true);
-            if (player.isSneaking()) {
+        /*if (player.isSneaking()) {
                 if (hand == EnumHand.MAIN_HAND) {
                     setSitting(!isSitting());
                 }
@@ -46,9 +57,9 @@ public class EntityShub extends AbstractOldOne {
                 if (hand == EnumHand.MAIN_HAND) {
                     openMouth(!isMouthOpen());
                 }
-            }
+            }*/
         return super.applyPlayerInteraction(player, vec, hand);
-    }*/
+    }
 
     @Override
     public void onLivingUpdate() {
@@ -164,5 +175,10 @@ public class EntityShub extends AbstractOldOne {
     @Override
     public boolean shouldRiderSit() {
         return false;
+    }
+
+    @Override
+    public Predicate<IBlockState> checkIgnore() {
+        return state -> state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLeaves;
     }
 }

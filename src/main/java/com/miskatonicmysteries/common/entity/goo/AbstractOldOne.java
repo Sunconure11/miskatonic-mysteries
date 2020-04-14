@@ -1,9 +1,8 @@
 package com.miskatonicmysteries.common.entity.goo;
 
 import com.google.common.base.Optional;
-import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.ModConfig;
-import com.miskatonicmysteries.client.particles.ParticleGOOSmoke;
+import com.miskatonicmysteries.client.particles.ParticleColoredSmoke;
 import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
@@ -11,12 +10,11 @@ import com.miskatonicmysteries.common.world.ExtendedWorld;
 import com.miskatonicmysteries.common.world.biome.GreatOldOneArea;
 import com.miskatonicmysteries.util.ColorUtil;
 import net.minecraft.block.material.EnumPushReaction;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.IEntityOwnable;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,7 +22,6 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -35,16 +32,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.nio.FloatBuffer;
 import java.util.UUID;
 
-public abstract class AbstractOldOne extends EntityLiving implements IEntityOwnable {
+public abstract class AbstractOldOne extends EntityCreature implements IEntityOwnable {
     //todo next: add GOO AI for occasional walking and sitting afterwards, then for growing if there is enough space, shrinking if there is too little
     //then add the possiblity of the particle form to the travel AI (this will make the GOO much faster)  (also fix the stuff clipping if the hitboxes expand)
     protected static final DataParameter<Optional<UUID>> SUMMONER = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     protected static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.BOOLEAN);
     protected static final DataParameter<Boolean> PARTICLE_FORM = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.BOOLEAN);
-    protected static final DataParameter<Float> SIZE = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.FLOAT);
+  //  protected static final DataParameter<Float> SIZE = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.FLOAT);
 
 
     //rendering var
@@ -52,11 +48,19 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
 
     public AbstractOldOne(World worldIn) {
         super(worldIn);
+        isImmuneToFire = true;
+    }
+
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(42.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(999);
     }
 
     @Override
     protected void entityInit() {
-        this.dataManager.register(SIZE, 1F);
+       // this.dataManager.register(SIZE, 1F);
         this.dataManager.register(PARTICLE_FORM, false);
         this.dataManager.register(SITTING, false);
         this.dataManager.register(SUMMONER, Optional.absent());
@@ -66,6 +70,8 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
+        //will need a special version for this in which it does that stuff the way vex fly, so without clipping, if in the particle form (this will also increase speed)
+        this.tasks.addTask(1, new EntityAIWander(this, getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
         //occasional travel, maybe, may sit if commanded to (must be given some treat i guess)--- travel AI will include the particle form transformation (or maybe I'll make it separate so it does it automatically...
         //(as to above) maybe an AI task that checks the path distance and space to decide if it should transform (this will allow it to clip through blocks and reduce the hitbox by a lot)
         this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
@@ -73,13 +79,13 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
         super.initEntityAI();
     }
 
-    public float getSize(){
+    /*public float getSize(){
         return dataManager.get(SIZE);
     }
 
     public void setSize(float size){
         dataManager.set(SIZE, size);
-    }
+    }*/
 
     public boolean isParticleForm(){
         return dataManager.get(PARTICLE_FORM);
@@ -98,7 +104,18 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
     }
 
     @Override
-    public void onLivingUpdate() {
+    public boolean hitByEntity(Entity entityIn) {
+        if (!world.isRemote)
+            setParticleForm(!isParticleForm());
+        return super.hitByEntity(entityIn);
+    }
+
+    public float getMoveSpeed(){
+        return isParticleForm() ? 3 : (float) getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
+    }
+    @Override
+    public void onLivingUpdate() { //todo also: when in particle form, the size will continuously shrink; this will be represented in the spread of the particles decreasing
+        if (isParticleForm()) noClip = true;
         if (!isParticleForm() && ticksExisted % ModConfig.EntitySettings.goos.greatOldOneManipulationInterval == 0) {
             manipulateEnvironment();
         }
@@ -112,15 +129,20 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
         } else if (!isSitting() && sittingProgress > 0) {
             sittingProgress -= 0.01F;
         }
-
         super.onLivingUpdate();
+
+        noClip = false;
+        setNoGravity(isParticleForm());
     }
 
     @SideOnly(Side.CLIENT)
     public void spawnTravelParticles(){
-        MiskatonicMysteries.proxy.generateParticle(new ParticleGOOSmoke(world, posX + rand.nextDouble(), posY + 0.5D + rand.nextDouble(), posZ + rand.nextDouble(), getParticleColor()));
+        for (int i = 0; i < 3; i++) Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble(), posY + 0.5D + rand.nextDouble(), posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
     }
 
+    public float getParticleAlpha(){
+        return 1;
+    }
     public abstract int getParticleColor();
 
     public void manipulateEnvironment() {
@@ -170,7 +192,7 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
         }
         compound.setBoolean("isSitting", isSitting());
         compound.setBoolean("isParticleForm", isParticleForm());
-        compound.setFloat("GOOSize", getSize());
+        //compound.setFloat("GOOSize", getSize());
         compound.setFloat("sittingProgress", sittingProgress);
         super.writeEntityToNBT(compound);
     }
@@ -187,7 +209,7 @@ public abstract class AbstractOldOne extends EntityLiving implements IEntityOwna
 
         setSitting(compound.getBoolean("isSitting"));
         setParticleForm(compound.getBoolean("isParticleForm"));
-        setSize(compound.getFloat("GOOSize"));
+        //setSize(compound.getFloat("GOOSize"));
         sittingProgress = compound.getFloat("sittingProgress");
         super.readEntityFromNBT(compound);
     }
