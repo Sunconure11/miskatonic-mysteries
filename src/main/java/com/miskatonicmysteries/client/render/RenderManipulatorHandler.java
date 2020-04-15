@@ -72,50 +72,6 @@ public class RenderManipulatorHandler {
         }
     }
 
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void addGOOFogDensity(EntityViewRenderEvent.FogDensity fogDensity) {
-        if (fogDensity.getEntity() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) fogDensity.getEntity();
-            AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
-            if (goo != null) {
-                fogDensity.setCanceled(true); //???
-                float density = (float) goo.getFogDensity(player, player.posX, player.posY, player.posZ, fogDensity.getDensity());
-                fogDensity.setDensity(density);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void addGOOFogColor(EntityViewRenderEvent.FogColors fogColors) {
-        if (fogColors.getEntity() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) fogColors.getEntity();
-            AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
-            if (goo != null) {
-                Color color = goo.getFogColor(player, player.posX, player.posY, player.posZ, new Color(fogColors.getRed(), fogColors.getGreen(), fogColors.getBlue()));
-                if (color != null) {
-
-                    fogColors.setRed(color.getRed() / 255F);
-                    fogColors.setGreen(color.getGreen() / 255F);
-                    fogColors.setBlue(color.getBlue() / 255F);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void addSpecialGOOFog(EntityViewRenderEvent.RenderFogEvent fogRender) {
-        if (fogRender.getEntity() instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) fogRender.getEntity();
-            AbstractOldOne goo = AbstractOldOne.getClosestGOO(player.world, player.getPosition(), AbstractOldOne.getInfluenceRadius() + 5, null);
-            if (goo != null) {
-                goo.renderSpecialFog(fogRender);
-            }
-        }
-    }
-
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     @SideOnly(Side.CLIENT)

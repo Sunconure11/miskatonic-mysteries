@@ -33,6 +33,9 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
     public static final int MAX_X = 12, MAX_Y = 9, MAX_Z = 12; //probably make one for each different type
     private static final Biome.SpawnListEntry ENTRY_CULTISTS_HASTUR = new Biome.SpawnListEntry(EntityHasturCultist.class, 1, 1, 4);
     protected int type;
+    public VillageComponentHasturShrine(){
+
+    }
     public VillageComponentHasturShrine(StructureBoundingBox boundingBox, EnumFacing par5, int type){
         this.setCoordBaseMode(par5);
         this.boundingBox = boundingBox;

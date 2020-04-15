@@ -53,14 +53,13 @@ public class BiomeManipulator {
         }
     }
 
-
-    public static void resetRandomOverridenBiome(World world){
+    public static void resetRandomOverriddenBiome(World world){
         ExtendedWorld extendedWorld = ExtendedWorld.get(world);
-        BlockPos randomPos = extendedWorld.GOO_AREAS.keySet().toArray(new BlockPos[extendedWorld.GOO_AREAS.size()])[world.rand.nextInt(extendedWorld.GOO_AREAS.size())];
-        extendedWorld.GOO_AREAS.remove(randomPos).onRemoved(world, randomPos); //onRemoved
+        BlockPos randomPos = extendedWorld.STORED_OVERRIDE_BIOMES.keySet().toArray(new BlockPos[extendedWorld.STORED_OVERRIDE_BIOMES.size()])[world.rand.nextInt(extendedWorld.STORED_OVERRIDE_BIOMES.size())];
+        BiomeManipulator.setBiome(world, extendedWorld.STORED_OVERRIDE_BIOMES.get(randomPos), randomPos);
+        extendedWorld.STORED_OVERRIDE_BIOMES.remove(randomPos);
         extendedWorld.setDirty(true);
     }
-
 
 
     public static void setBiome(World world, Biome biome, BlockPos pos) {

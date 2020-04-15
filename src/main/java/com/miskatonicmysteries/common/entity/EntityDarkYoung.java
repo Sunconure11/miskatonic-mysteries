@@ -145,6 +145,9 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         setType((byte) (world.rand.nextBoolean() ? 1 : 0));
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getType() == 1 ? 0.2 : 0.4);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getType() == 1 ? 5.0D : 4.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getType() == 1 ? 8.0 : 4.0D);
         return super.onInitialSpawn(difficulty, livingdata);
     }
 

@@ -1,5 +1,6 @@
 package com.miskatonicmysteries.client.model.entity;
 
+import com.miskatonicmysteries.common.entity.EntityDarkYoung;
 import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import com.miskatonicmysteries.util.ModelAnimUtil;
 import net.minecraft.client.model.ModelBase;
@@ -1012,10 +1013,35 @@ public class ModelShub extends ModelBase {
         moveTentaclesPassively(shub, ageInTicks);
         sit(shub.sittingProgress);
         openTheCursedMaw(shub.openingProgress);
-}
+        doWalkingAnims(limbSwing, limbSwingAmount);
+
+    }
+
+    private void doWalkingAnims(float limbSwing, float limbSwingAmount){
+        this.rfLeg01.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.15 * limbSwingAmount);
+        this.lfLeg01.rotateAngleZ += (float)  (MathHelper.cos(limbSwing * 0.6662F) * 0.15 * limbSwingAmount);
+        this.rbLeg01.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F) * 0.15 * limbSwingAmount) ;
+        this.lbLeg01.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.15 * limbSwingAmount);
+
+        this.rfLeg02.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
+        this.lfLeg02.rotateAngleZ += (float)  (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount);
+        this.rbLeg02.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount) ;
+        this.lbLeg02.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
+
+        this.rfLeg03.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
+        this.lfLeg03.rotateAngleZ += (float)  (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount);
+        this.rbLeg03.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount) ;
+        this.lbLeg03.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
+
+
+      /*  this.rfLeg01.rotateAngleZ = -0.45378560551852565F + (float) (0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.25 * limbSwingAmount);
+        this.lfLeg01.rotateAngleZ = 0.45378560551852565F + (float)  (-0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F) * 0.25 * limbSwingAmount);
+        this.rbLeg01.rotateAngleZ = (float) (0.45378560551852565F + MathHelper.cos(limbSwing * 0.6662F) * 0.25 * limbSwingAmount) ;
+        this.lbLeg01.rotateAngleZ = (float) (-0.45378560551852565F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.25 * limbSwingAmount);
+    */} //last two ones are not adjusted yet
 
     //when the player is grabbed, go into the according pose
-    public void moveHead(EntityShub shub, float netHeadYaw, float headPitch){
+    public void moveHead(EntityShub shub, float netHeadYaw, float headPitch) {
         this.head.rotateAngleY = netHeadYaw * 0.017453292F;
         this.head.rotateAngleX = headPitch * 0.017453292F;
     }

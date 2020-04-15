@@ -5,10 +5,8 @@ import com.miskatonicmysteries.common.entity.goo.AbstractOldOne;
 import com.miskatonicmysteries.common.world.ExtendedWorld;
 import com.miskatonicmysteries.registry.ModBiomes;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
 
 import java.awt.*;
 
@@ -39,7 +37,7 @@ public abstract class GreatOldOneArea<T extends AbstractOldOne>{
     //public abstract void directEffect(World world, BlockPos pos, T master);
 
     public static boolean isInGreatOldArea(World world, BlockPos pos){
-        return ExtendedWorld.get(world).GOO_AREAS.containsKey(new BlockPos(pos.getX(), STANDARD_HEIGHT, pos.getZ()));
+        return ExtendedWorld.get(world).STORED_OVERRIDE_BIOMES.containsKey(new BlockPos(pos.getX(), STANDARD_HEIGHT, pos.getZ()));
     }
 
     public Color getFogColor(){

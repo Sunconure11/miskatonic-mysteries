@@ -25,10 +25,12 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
@@ -44,7 +46,7 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.05F);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45F);
     }
 
      @Override
@@ -61,6 +63,13 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
         return super.applyPlayerInteraction(player, vec, hand);
     }
 
+    @Nullable
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+
+        return super.onInitialSpawn(difficulty, livingdata);
+    }
+
     @Override
     public void onLivingUpdate() {
         if (isMouthOpen() && openingProgress < 1) {
@@ -75,6 +84,7 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
     @Override
     protected void initEntityAI() {
         super.initEntityAI();
+        this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityPlayer.class, false));
     }
 
     @Override
@@ -99,8 +109,8 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
 
 
     @Override
-    public GreatOldOneArea getDistortionBiome() {
-        return ModBiomes.SHUB;
+    public Biome getDistortionBiome() {
+        return Biomes.MUSHROOM_ISLAND;
     }
 
     @Override

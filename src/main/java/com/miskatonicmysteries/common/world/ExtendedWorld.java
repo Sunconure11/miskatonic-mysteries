@@ -3,26 +3,27 @@ package com.miskatonicmysteries.common.world;
 import com.miskatonicmysteries.MiskatonicMysteries;
 import com.miskatonicmysteries.common.entity.goo.AbstractOldOne;
 import com.miskatonicmysteries.common.world.biome.GreatOldOneArea;
+import com.miskatonicmysteries.common.world.gen.BiomeManipulator;
+import com.miskatonicmysteries.common.world.gen.ModWorldGen;
 import com.miskatonicmysteries.registry.ModBiomes;
+import com.miskatonicmysteries.util.WorldGenUtil;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings({"ConstantConditions", "SameReturnValue", "NullableProblems", "WeakerAccess"})
 public class ExtendedWorld extends WorldSavedData {
 	private static final String TAG = MiskatonicMysteries.MODID + ".world_data";
 
-	public final Map<BlockPos, GreatOldOneArea> GOO_AREAS = new ConcurrentHashMap<>();
+	public final Map<BlockPos, Biome> STORED_OVERRIDE_BIOMES = new ConcurrentHashMap<>();
 	
 	public ExtendedWorld(String name) {
 		super(name);
@@ -37,29 +38,31 @@ public class ExtendedWorld extends WorldSavedData {
 		return data;
 	}
 
-	public static void addGreatOldOneArea(World world, AbstractOldOne goo, BlockPos pos, GreatOldOneArea area){
-		if (area != null) {
-			ExtendedWorld extendedWorld = get(world);
-			extendedWorld.GOO_AREAS.putIfAbsent(new BlockPos(pos.getX(), GreatOldOneArea.STANDARD_HEIGHT, pos.getZ()), area);
-			area.onAdded(goo, world, pos);
-			extendedWorld.markDirty();
-		}
+	/**
+	 * Adds a biome to the map of overridden biomes, so it may be restored, should it be replaced.
+	 * @param world
+	 * @param pos
+	 */
+	public static void addOverriddenBiome(World world, BlockPos pos){
+		ExtendedWorld extendedWorld = get(world);
+		extendedWorld.STORED_OVERRIDE_BIOMES.putIfAbsent(new BlockPos(pos.getX(), GreatOldOneArea.STANDARD_HEIGHT, pos.getZ()), world.getBiome(pos));
+		extendedWorld.markDirty();
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		for (NBTBase tag : nbt.getTagList("gooAreas", Constants.NBT.TAG_COMPOUND)){
-			GOO_AREAS.put(BlockPos.fromLong(((NBTTagCompound) tag).getLong("pos")), ModBiomes.GOO_EFFECT_MAP.get(((NBTTagCompound) tag).getString("area")));
+			STORED_OVERRIDE_BIOMES.put(BlockPos.fromLong(((NBTTagCompound) tag).getLong("pos")), Biome.getBiome(((NBTTagCompound) tag).getInteger("biomeId")));
 		}
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		NBTTagList biomeOverrides = new NBTTagList();
-		GOO_AREAS.forEach((pos, area) -> {
+		STORED_OVERRIDE_BIOMES.forEach((pos, biome) -> {
 			NBTTagCompound data = new NBTTagCompound();
 			data.setLong("pos", pos.toLong());
-			data.setString("area", area.getName());
+			data.setInteger("biomeId", Biome.getIdForBiome(biome));
 			biomeOverrides.appendTag(data);
 		});
 		nbt.setTag("gooAreas", biomeOverrides);

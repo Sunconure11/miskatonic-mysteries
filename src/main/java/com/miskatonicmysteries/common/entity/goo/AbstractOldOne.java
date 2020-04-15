@@ -7,15 +7,12 @@ import com.miskatonicmysteries.common.capability.blessing.BlessingCapability;
 import com.miskatonicmysteries.common.capability.blessing.blessings.Blessing;
 import com.miskatonicmysteries.common.capability.sanity.Sanity;
 import com.miskatonicmysteries.common.world.ExtendedWorld;
-import com.miskatonicmysteries.common.world.biome.GreatOldOneArea;
-import com.miskatonicmysteries.util.ColorUtil;
+import com.miskatonicmysteries.common.world.gen.BiomeManipulator;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -24,25 +21,26 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.UUID;
 
-public abstract class AbstractOldOne extends EntityCreature implements IEntityOwnable {
+public abstract class AbstractOldOne extends EntityCreature implements IEntityOwnable { //change back to EntityCreature
     //todo next: add GOO AI for occasional walking and sitting afterwards, then for growing if there is enough space, shrinking if there is too little
     //then add the possiblity of the particle form to the travel AI (this will make the GOO much faster)  (also fix the stuff clipping if the hitboxes expand)
     protected static final DataParameter<Optional<UUID>> SUMMONER = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     protected static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.BOOLEAN);
     protected static final DataParameter<Boolean> PARTICLE_FORM = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.BOOLEAN);
   //  protected static final DataParameter<Float> SIZE = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.FLOAT);
-
-
+    //also make GOOs "climb" blocks instead of just jumping (so things look less weird)
+    public EntityAIGOOWander gooWanderAI;
     //rendering var
     public float sittingProgress = 0;
 
@@ -71,11 +69,12 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
         //will need a special version for this in which it does that stuff the way vex fly, so without clipping, if in the particle form (this will also increase speed)
-        this.tasks.addTask(1, new EntityAIWander(this, getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+        gooWanderAI = new EntityAIGOOWander(this);
+        this.tasks.addTask(1, gooWanderAI);
         //occasional travel, maybe, may sit if commanded to (must be given some treat i guess)--- travel AI will include the particle form transformation (or maybe I'll make it separate so it does it automatically...
         //(as to above) maybe an AI task that checks the path distance and space to decide if it should transform (this will allow it to clip through blocks and reduce the hitbox by a lot)
-        this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
+      //  this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
+      //  this.tasks.addTask(3, new EntityAILookIdle(this));
         super.initEntityAI();
     }
 
@@ -111,12 +110,15 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
     }
 
     public float getMoveSpeed(){
-        return isParticleForm() ? 3 : (float) getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
+        return isParticleForm() ? 5 : (float) getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
     }
     @Override
     public void onLivingUpdate() { //todo also: when in particle form, the size will continuously shrink; this will be represented in the spread of the particles decreasing
-        if (isParticleForm()) noClip = true;
-        if (!isParticleForm() && ticksExisted % ModConfig.EntitySettings.goos.greatOldOneManipulationInterval == 0) {
+        if (gooWanderAI != null)
+            setParticleForm(gooWanderAI.shouldGoIntoParticleForm && hasPath());
+        if (isParticleForm()) noClip = posY > 0;
+
+        if (!isParticleForm() && ticksExisted % ModConfig.entities.goos.greatOldOneManipulationInterval == 0) {
             manipulateEnvironment();
         }
 
@@ -129,41 +131,63 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         } else if (!isSitting() && sittingProgress > 0) {
             sittingProgress -= 0.01F;
         }
+
         super.onLivingUpdate();
+
+        if (posY < -10){
+            setDead();
+        }
 
         noClip = false;
         setNoGravity(isParticleForm());
     }
 
+    @Override
+    public void setDead() {
+        if (world.isRemote){
+            spawnVanishingParticles();
+        }
+        super.setDead();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void spawnVanishingParticles(){
+        for (int i = 0; i < 50; i++) Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble() * 2, posY + getEyeHeight() * 0.5 + rand.nextDouble() * 2, posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
+    }
+
     @SideOnly(Side.CLIENT)
     public void spawnTravelParticles(){
-        for (int i = 0; i < 3; i++) Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble(), posY + 0.5D + rand.nextDouble(), posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
+        for (int i = 0; i < 5; i++) Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble(), posY + getEyeHeight() * 0.5 + rand.nextDouble(), posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
     }
 
     public float getParticleAlpha(){
         return 1;
     }
+
     public abstract int getParticleColor();
 
     public void manipulateEnvironment() {
         if (getDistortionBiome() != null) {
-            BlockPos randomPos = new BlockPos(posX - (getInfluenceRadius() / 2F) + world.rand.nextInt(getInfluenceRadius()), posY, posZ - (getInfluenceRadius() / 2F) + world.rand.nextInt(getInfluenceRadius()));
+            double a = Math.random() * 2 * Math.PI;
+            double r = getInfluenceRadius() * Math.sqrt(Math.random()); //get random point within a circle
+            BlockPos randomPos = new BlockPos(posX + Math.round((float) r * Math.cos(a)), posY, posZ + Math.round((float) r * Math.sin(a)));
             ExtendedWorld extendedWorld = ExtendedWorld.get(world);
-            if (!extendedWorld.GOO_AREAS.containsKey(randomPos)){
-                ExtendedWorld.addGreatOldOneArea(world, this, randomPos, getDistortionBiome());
-            }
-            if (getRNG().nextBoolean()){
-                extendedWorld.GOO_AREAS.forEach((areaPos, area) -> {
-                    if (area.getGOOClass().isInstance(this) && areaPos.getDistance((int) posX, (int) posY, (int) posZ) <= getInfluenceRadius()){
-                        area.update(this, world, areaPos);
-                    }
-                });
+            if (!extendedWorld.STORED_OVERRIDE_BIOMES.containsKey(randomPos)){
+                ExtendedWorld.addOverriddenBiome(world, randomPos);
+                BiomeManipulator.setBiome(world, getDistortionBiome(), randomPos);
             }
         }
     }
 
-    public static int getInfluenceRadius(){
-        return 32;
+    public int getInfluenceRadius(){
+        return 64;
+    }
+
+    @Nullable
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+        setHomePosAndDistance(getPosition(), 128);
+        return super.onInitialSpawn(difficulty, livingdata);
     }
 
     @Override
@@ -171,7 +195,7 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         setDead();
     }
 
-    public abstract GreatOldOneArea getDistortionBiome();
+    public abstract Biome getDistortionBiome();
 
     @Override
     public boolean isEntityInvulnerable(DamageSource source) {
@@ -289,28 +313,90 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         return greatOldOne;
     }
 
-    @SideOnly(Side.CLIENT)
-    public double getFogDensity(@Nullable EntityPlayer player, double xAt, double yAt, double zAt, float oldDensity){
-        double distance = getDistance(xAt, yAt, zAt);
-        double ratio = Math.sqrt(1 - distance / (float) getInfluenceRadius());
-        if (ratio < 0){
-            ratio = 0;
+    public static class EntityAIGOOWander extends EntityAIBase{
+        protected final AbstractOldOne goo;
+        protected double x;
+        protected double y;
+        protected double z;
+        protected int executionChance;
+        protected boolean mustUpdate;
+        protected boolean shouldGoIntoParticleForm;
+
+        public EntityAIGOOWander(AbstractOldOne creatureIn)
+        {
+            this.goo = creatureIn;
+            this.executionChance = 2;
+            this.setMutexBits(1);
         }
-        return oldDensity + ratio * 3;
-    }
 
-    @SideOnly(Side.CLIENT)
-    public Color getFogColor(@Nullable EntityPlayer player, double xAt, double yAt, double zAt, Color oldColor){
-        double distance = getDistance(xAt, yAt, zAt);
-        double ratio = Math.pow(1 - (distance / (float) getInfluenceRadius()), 2);
-        if (ratio < 0){
-            ratio = 0;
+        /**
+         * Returns whether the EntityAIBase should begin execution.
+         */
+        public boolean shouldExecute() {
+            if (!this.mustUpdate) {
+                if (this.goo.getIdleTime() >= 100)
+                {
+                    return false;
+                }
+
+                if (this.goo.getRNG().nextInt(this.executionChance) != 0)
+                {
+                    return false;
+                }
+            }
+
+            Vec3d vec3d = this.getPosition();
+
+            if (vec3d == null)
+            {
+                return false;
+            }
+            else
+            {
+                this.x = vec3d.x;
+                this.y = vec3d.y;
+                this.z = vec3d.z;
+                this.mustUpdate = false;
+                return true;
+            }
         }
-        return ColorUtil.blend(oldColor, Color.BLACK, 1 - ratio, ratio);
-    }
 
-    @SideOnly(Side.CLIENT)
-    public void renderSpecialFog(EntityViewRenderEvent.RenderFogEvent fogRender){
+        @Nullable
+        protected Vec3d getPosition()
+        {
+            return RandomPositionGenerator.getLandPos(this.goo, 28, 3);
+        }
 
+        /**
+         * Returns whether an in-progress EntityAIBase should continue executing
+         */
+        public boolean shouldContinueExecuting() {
+            return !this.goo.getNavigator().noPath();
+        }
+
+        /**
+         * Execute a one shot task or start executing a continuous task
+         */
+        public void startExecuting() {
+            System.out.println(x);
+            this.goo.getNavigator().tryMoveToXYZ(this.x, this.y, this.z, goo.getMoveSpeed());
+            shouldGoIntoParticleForm = goo.hasPath() && goo.getNavigator().getPath().getCurrentPathLength() > 64;
+        }
+
+        /**
+         * Makes task to bypass chance
+         */
+        public void makeUpdate()
+        {
+            this.mustUpdate = true;
+        }
+
+        /**
+         * Changes task random possibility for execution
+         */
+        public void setExecutionChance(int newchance)
+        {
+            this.executionChance = newchance;
+        }
     }
 }

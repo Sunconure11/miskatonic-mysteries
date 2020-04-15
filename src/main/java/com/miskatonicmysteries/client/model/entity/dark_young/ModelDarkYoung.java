@@ -611,7 +611,7 @@ public class ModelDarkYoung extends ModelBase {
 
         if (entityIn instanceof EntityDarkYoung) {
             doWalkingAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
-            doMawAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
+            doMawAnims();
             doTentacleAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
             doHurtAnims(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, (EntityDarkYoung) entityIn);
         }
@@ -625,8 +625,8 @@ public class ModelDarkYoung extends ModelBase {
         this.lLegH.rotateAngleX = (float) (-0.22689280275926282F + MathHelper.cos(limbSwing * 0.6662F) * 0.7 * limbSwingAmount);
     }
 
-    private void doMawAnims(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, EntityDarkYoung entityIn){
-        float progress =  1 - (float) Math.abs(0.5 - entityIn.swingProgress) * 2;
+    private void doMawAnims(){
+        float progress =  1 - (float) Math.abs(0.5 - swingProgress) * 2;
         this.setRotateAngle(lJaw, -0.5759586531581287F, -0.6981317007977318F, 0.3490658503988659F, progress);
         this.setRotateAngle(lJawB, 0.7853981633974483F, 0.0F, 0.0F, progress);
         this.setRotateAngle(lJawC, -0.7853981633974483F, 0.0F, 0.0F, progress);
