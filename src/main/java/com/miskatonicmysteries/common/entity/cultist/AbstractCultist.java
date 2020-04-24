@@ -105,7 +105,6 @@ public abstract class AbstractCultist extends EntityTameable implements INpc, IM
         super.onLivingUpdate();
     }
 
-    //Todo set the thing to a blockpos when standing near it (if it has an associated blessing)
     @Override
     protected void initEntityAI() {
         if (aiSit == null)

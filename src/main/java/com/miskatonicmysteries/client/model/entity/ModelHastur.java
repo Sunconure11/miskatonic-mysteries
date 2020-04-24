@@ -1,9 +1,11 @@
 package com.miskatonicmysteries.client.model.entity;
 
 import com.miskatonicmysteries.common.entity.goo.EntityHastur;
+import com.miskatonicmysteries.common.entity.goo.EntityShub;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * hastur - cybercat5555
@@ -685,9 +687,15 @@ public class ModelHastur extends ModelBase {
     }
 
     public void setAnimations(EntityHastur hastur, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
-
+        moveHead(netHeadYaw, headPitch);
+        this.rArm01.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F; //swing arm?
     }
 
+
+    public void moveHead(float netHeadYaw, float headPitch) {
+        this.head.rotateAngleY = netHeadYaw * 0.017453292F;
+        this.head.rotateAngleX = headPitch * 0.017453292F;
+    }
 
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {

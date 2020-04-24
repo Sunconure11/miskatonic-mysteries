@@ -30,9 +30,8 @@ public class RenderStatue extends TileEntitySpecialRenderer<TileEntityStatue> {
         GlStateManager.translate(x + 0.5, y + 1.5, z + 0.5);
         GlStateManager.rotate(180, 0, 0, 1);
         bindTexture(loc);
-        if (!tile.item && tile.getWorld().getBlockState(tile.getPos()).getPropertyKeys().contains(BlockHorizontal.FACING)) {
-            EnumFacing face = tile.getWorld().getBlockState(tile.getPos()).getValue(BlockHorizontal.FACING);
-            GlStateManager.rotate(face == EnumFacing.WEST ? 270 : face == EnumFacing.EAST ? 90 : face == EnumFacing.SOUTH ? 180 : 0, 0, 1, 0);
+        if (!tile.item && tile.getWorld().getBlockState(tile.getPos()).getPropertyKeys().contains(BlockStatue.FACING)) {
+            GlStateManager.rotate(tile.getWorld().getBlockState(tile.getPos()).getValue(BlockStatue.FACING) * 45, 0, 1, 0);
         }
         model.render(null, 0, 0, 0, 0, 0, 0.0625f);
         GlStateManager.popMatrix();

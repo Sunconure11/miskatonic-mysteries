@@ -54,7 +54,7 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
             if (this.averageGroundLvl < 0) {
                 this.averageGroundLvl = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
                 if (this.averageGroundLvl < 0) {
-                    return false; //it is indeed well possible that the bug is just in the structure
+                    return false;
                 }
                 this.boundingBox.offset(0, this.averageGroundLvl - this.boundingBox.maxY + MAX_Y - 2, 0);
             }
@@ -63,12 +63,14 @@ public class VillageComponentHasturShrine extends StructureVillagePieces.House1 
                 WorldServer worldServer = (WorldServer) worldIn;
                 MinecraftServer minecraftServer = worldIn.getMinecraftServer();
                 TemplateManager templateManager = worldServer.getStructureTemplateManager();
-                Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_" + type)); //replace with plains
+                Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/hastur_plains_" + type)); //replace with plains
                 if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SANDY)) {
                     return false;
                 }
                 if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.SAVANNA)) {
-                    template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/shrine_hastur_savanna_" + type));
+                    template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/hastur_savanna_" + type));
+                }else if (BiomeDictionary.hasType(worldIn.getBiome(position), BiomeDictionary.Type.CONIFEROUS)){
+                    template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID, "shrines/hastur/hastur_taiga_" + type));
                 }
 
                 if (worldIn.isRemote) return false;

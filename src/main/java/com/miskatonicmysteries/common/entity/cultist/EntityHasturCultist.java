@@ -70,6 +70,8 @@ public class EntityHasturCultist extends AbstractCultist {
         List<EntityVillager.ITradeList> trades = new ArrayList<>();
         trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 5 + random.nextInt(4)), new ItemStack(ModObjects.yellow_sign, 1))));
         trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 3 + random.nextInt(3)), new ItemStack(ModObjects.necronomicon, 1))));
+        trades.add((merchant, recipeList, random) -> recipeList.add(new MerchantRecipe(new ItemStack(ModObjects.gold_oceanic, 8 + random.nextInt(5)), new ItemStack(random.nextBoolean() ? ModObjects.statue_hastur_terracotta : ModObjects.statue_hastur_stone, 1))));
+
         return trades;
     }
 }

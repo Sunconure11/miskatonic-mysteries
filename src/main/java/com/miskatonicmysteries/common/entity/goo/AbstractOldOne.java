@@ -12,6 +12,7 @@ import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,15 +39,17 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
     protected static final DataParameter<Optional<UUID>> SUMMONER = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.OPTIONAL_UNIQUE_ID);
     protected static final DataParameter<Boolean> SITTING = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.BOOLEAN);
     protected static final DataParameter<Boolean> PARTICLE_FORM = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.BOOLEAN);
-  //  protected static final DataParameter<Float> SIZE = EntityDataManager.createKey(AbstractOldOne.class, DataSerializers.FLOAT);
+
     //also make GOOs "climb" blocks instead of just jumping (so things look less weird)
     public EntityAIGOOWander gooWanderAI;
     //rendering var
     public float sittingProgress = 0;
+    public float minimumWidth, minimumHeight;
 
     public AbstractOldOne(World worldIn) {
         super(worldIn);
         isImmuneToFire = true;
+        stepHeight = 1.5F;
     }
 
     @Override
@@ -58,7 +61,6 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
 
     @Override
     protected void entityInit() {
-       // this.dataManager.register(SIZE, 1F);
         this.dataManager.register(PARTICLE_FORM, false);
         this.dataManager.register(SITTING, false);
         this.dataManager.register(SUMMONER, Optional.absent());
@@ -73,24 +75,16 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         this.tasks.addTask(1, gooWanderAI);
         //occasional travel, maybe, may sit if commanded to (must be given some treat i guess)--- travel AI will include the particle form transformation (or maybe I'll make it separate so it does it automatically...
         //(as to above) maybe an AI task that checks the path distance and space to decide if it should transform (this will allow it to clip through blocks and reduce the hitbox by a lot)
-      //  this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
-      //  this.tasks.addTask(3, new EntityAILookIdle(this));
+        this.tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 18.0F));
+        this.tasks.addTask(3, new EntityAILookIdle(this));
         super.initEntityAI();
     }
 
-    /*public float getSize(){
-        return dataManager.get(SIZE);
-    }
-
-    public void setSize(float size){
-        dataManager.set(SIZE, size);
-    }*/
-
-    public boolean isParticleForm(){
+    public boolean isParticleForm() {
         return dataManager.get(PARTICLE_FORM);
     }
 
-    public void setParticleForm(boolean activate){
+    public void setParticleForm(boolean activate) {
         dataManager.set(PARTICLE_FORM, activate);
     }
 
@@ -102,28 +96,21 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         this.dataManager.set(SITTING, sit);
     }
 
-    @Override
-    public boolean hitByEntity(Entity entityIn) {
-        if (!world.isRemote)
-            setParticleForm(!isParticleForm());
-        return super.hitByEntity(entityIn);
-    }
-
-    public float getMoveSpeed(){
+    public float getMoveSpeed() {
         return isParticleForm() ? 5 : (float) getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
     }
+
     @Override
     public void onLivingUpdate() { //todo also: when in particle form, the size will continuously shrink; this will be represented in the spread of the particles decreasing
         if (gooWanderAI != null)
             setParticleForm(gooWanderAI.shouldGoIntoParticleForm && hasPath());
-        if (isParticleForm()) noClip = posY > 0;
+        if (isParticleForm()) {
+            noClip = posY > 1;
 
-        if (!isParticleForm() && ticksExisted % ModConfig.entities.goos.greatOldOneManipulationInterval == 0) {
-            manipulateEnvironment();
-        }
-
-        if (world.isRemote && isParticleForm()){
-            spawnTravelParticles();
+            if (world.isRemote) spawnTravelParticles();
+        }else{
+            checkSpace();
+            if (ticksExisted % ModConfig.entities.goos.greatOldOneManipulationInterval == 0) manipulateEnvironment();
         }
 
         if (isSitting() && sittingProgress < 1) {
@@ -132,35 +119,48 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
             sittingProgress -= 0.01F;
         }
 
-        super.onLivingUpdate();
-
-        if (posY < -10){
+        if (posY < -10) {
             setDead();
         }
 
+        super.onLivingUpdate();
         noClip = false;
         setNoGravity(isParticleForm());
     }
 
+    public void checkSpace(){
+        //this should actually be done in AI lol (mutexBits same as movement AI, but has a higher priority as it checks if there is space)
+        //if sitting
+            //if there is space (no collision with expanded hitbox (hitbox + 1) && maximum size is not reached yet
+                //grow
+
+        //if there is no space with normal entity box -1 or 0.2
+            //if the goo is not too small (Size > 1)
+                //shrink
+            //else
+                //search for place with space && particleForm
+    }
     @Override
     public void setDead() {
-        if (world.isRemote){
+        if (world.isRemote) {
             spawnVanishingParticles();
         }
         super.setDead();
     }
 
     @SideOnly(Side.CLIENT)
-    public void spawnVanishingParticles(){
-        for (int i = 0; i < 50; i++) Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble() * 2, posY + getEyeHeight() * 0.5 + rand.nextDouble() * 2, posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
+    public void spawnVanishingParticles() {
+        for (int i = 0; i < 50; i++)
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble() * 2, posY + getEyeHeight() * 0.5 + rand.nextDouble() * 2, posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
     }
 
     @SideOnly(Side.CLIENT)
-    public void spawnTravelParticles(){
-        for (int i = 0; i < 5; i++) Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble(), posY + getEyeHeight() * 0.5 + rand.nextDouble(), posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
+    public void spawnTravelParticles() {
+        for (int i = 0; i < 5; i++)
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleColoredSmoke(world, posX + rand.nextDouble(), posY + getEyeHeight() * 0.5 + rand.nextDouble(), posZ + rand.nextDouble(), getParticleColor(), getParticleAlpha()));
     }
 
-    public float getParticleAlpha(){
+    public float getParticleAlpha() {
         return 1;
     }
 
@@ -172,14 +172,14 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
             double r = getInfluenceRadius() * Math.sqrt(Math.random()); //get random point within a circle
             BlockPos randomPos = new BlockPos(posX + Math.round((float) r * Math.cos(a)), posY, posZ + Math.round((float) r * Math.sin(a)));
             ExtendedWorld extendedWorld = ExtendedWorld.get(world);
-            if (!extendedWorld.STORED_OVERRIDE_BIOMES.containsKey(randomPos)){
+            if (!extendedWorld.STORED_OVERRIDE_BIOMES.containsKey(randomPos)) {
                 ExtendedWorld.addOverriddenBiome(world, randomPos);
                 BiomeManipulator.setBiome(world, getDistortionBiome(), randomPos);
             }
         }
     }
 
-    public int getInfluenceRadius(){
+    public int getInfluenceRadius() {
         return 64;
     }
 
@@ -216,8 +216,9 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         }
         compound.setBoolean("isSitting", isSitting());
         compound.setBoolean("isParticleForm", isParticleForm());
-        //compound.setFloat("GOOSize", getSize());
         compound.setFloat("sittingProgress", sittingProgress);
+        compound.setFloat("minimumWidth", minimumWidth);
+        compound.setFloat("minimumHeight", minimumHeight);
         super.writeEntityToNBT(compound);
     }
 
@@ -233,8 +234,9 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
 
         setSitting(compound.getBoolean("isSitting"));
         setParticleForm(compound.getBoolean("isParticleForm"));
-        //setSize(compound.getFloat("GOOSize"));
         sittingProgress = compound.getFloat("sittingProgress");
+        minimumWidth = compound.getFloat("minimumWidth");
+        minimumHeight = compound.getFloat("minimumHeight");
         super.readEntityFromNBT(compound);
     }
 
@@ -297,15 +299,15 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
-        return super.getRenderBoundingBox().grow(3);
+        return super.getRenderBoundingBox().grow(10);
     }
 
-    public static AbstractOldOne getClosestGOO(World world, BlockPos pos, double distance, Blessing blessing){
+    public static AbstractOldOne getClosestGOO(World world, BlockPos pos, double distance, Blessing blessing) {
         double lastDistance = -1.0D;
         AbstractOldOne greatOldOne = null;
         for (AbstractOldOne checkedOldOne : world.getEntities(AbstractOldOne.class, o -> blessing == null || o.getAssociatedBlessing() == blessing)) {
             double distanceSquared = checkedOldOne.getDistanceSq(pos);
-            if ((distance < 0.0D || distanceSquared < distance * distance) && (lastDistance == -1.0D || distanceSquared < lastDistance)){
+            if ((distance < 0.0D || distanceSquared < distance * distance) && (lastDistance == -1.0D || distanceSquared < lastDistance)) {
                 lastDistance = distanceSquared;
                 greatOldOne = checkedOldOne;
             }
@@ -313,17 +315,16 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         return greatOldOne;
     }
 
-    public static class EntityAIGOOWander extends EntityAIBase{
+    public static class EntityAIGOOWander extends EntityAIBase {
         protected final AbstractOldOne goo;
         protected double x;
         protected double y;
         protected double z;
         protected int executionChance;
         protected boolean mustUpdate;
-        protected boolean shouldGoIntoParticleForm;
+        public boolean shouldGoIntoParticleForm;
 
-        public EntityAIGOOWander(AbstractOldOne creatureIn)
-        {
+        public EntityAIGOOWander(AbstractOldOne creatureIn) {
             this.goo = creatureIn;
             this.executionChance = 2;
             this.setMutexBits(1);
@@ -334,25 +335,20 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
          */
         public boolean shouldExecute() {
             if (!this.mustUpdate) {
-                if (this.goo.getIdleTime() >= 100)
-                {
+                if (this.goo.getIdleTime() >= 100) {
                     return false;
                 }
 
-                if (this.goo.getRNG().nextInt(this.executionChance) != 0)
-                {
+                if (this.goo.getRNG().nextInt(this.executionChance) != 0) {
                     return false;
                 }
             }
 
             Vec3d vec3d = this.getPosition();
 
-            if (vec3d == null)
-            {
+            if (vec3d == null) {
                 return false;
-            }
-            else
-            {
+            } else {
                 this.x = vec3d.x;
                 this.y = vec3d.y;
                 this.z = vec3d.z;
@@ -362,8 +358,7 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         }
 
         @Nullable
-        protected Vec3d getPosition()
-        {
+        protected Vec3d getPosition() {
             return RandomPositionGenerator.getLandPos(this.goo, 28, 3);
         }
 
@@ -378,7 +373,6 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
          * Execute a one shot task or start executing a continuous task
          */
         public void startExecuting() {
-            System.out.println(x);
             this.goo.getNavigator().tryMoveToXYZ(this.x, this.y, this.z, goo.getMoveSpeed());
             shouldGoIntoParticleForm = goo.hasPath() && goo.getNavigator().getPath().getCurrentPathLength() > 64;
         }
@@ -386,16 +380,14 @@ public abstract class AbstractOldOne extends EntityCreature implements IEntityOw
         /**
          * Makes task to bypass chance
          */
-        public void makeUpdate()
-        {
+        public void makeUpdate() {
             this.mustUpdate = true;
         }
 
         /**
          * Changes task random possibility for execution
          */
-        public void setExecutionChance(int newchance)
-        {
+        public void setExecutionChance(int newchance) {
             this.executionChance = newchance;
         }
     }

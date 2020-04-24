@@ -6,6 +6,7 @@ import com.miskatonicmysteries.common.block.BlockStatue;
 import com.miskatonicmysteries.common.block.tile.TileEntityStatue;
 import com.miskatonicmysteries.registry.ModObjects;
 import com.miskatonicmysteries.util.WorldGenUtil;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -31,18 +32,18 @@ public class ShubStructureProcessor extends OldStructureProcessor {
             if (worldIn.rand.nextBoolean()){
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.moss_stone_shubniggurath_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
             }
-        }else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
+        }else if (blockInfoIn.blockState.getBlock().equals(Blocks.NETHER_BRICK_STAIRS)){
             float r = worldIn.rand.nextFloat();
             if (r <= 0.5) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, worldIn.rand.nextBoolean()), null));
             } else if (r <= 0.8 && !hasStatueInChunk(worldIn, pos)) {
+                EnumFacing facing = blockInfoIn.blockState.getValue(BlockStairs.FACING);
+                int addDegrees = blockInfoIn.blockState.getValue(BlockStairs.SHAPE) == BlockStairs.EnumShape.INNER_LEFT  ? -1 :  blockInfoIn.blockState.getValue(BlockStairs.SHAPE) == BlockStairs.EnumShape.INNER_RIGHT ? 1 : 0;
                 switch (worldIn.rand.nextInt(2)) {
                     case 0:
-                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_shub_stone));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_shub_stone, facing, addDegrees));
                     case 1:
-                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_shub_mossy));
-                    //case 3:
-                     //   return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.statue_hastur_terracotta.getDefaultState(), null));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_shub_mossy, facing, addDegrees));
                 }
             }else{
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));

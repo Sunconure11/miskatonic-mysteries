@@ -13,7 +13,7 @@ public class VillageHasturShrineHandler implements VillagerRegistry.IVillageCrea
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int i) {
-        return new StructureVillagePieces.PieceWeight(VillageComponentHasturShrine.class, 5, 1);
+        return new StructureVillagePieces.PieceWeight(VillageComponentHasturShrine.class, 5, 1); //the random part should be cut out
     }
 
     @Override

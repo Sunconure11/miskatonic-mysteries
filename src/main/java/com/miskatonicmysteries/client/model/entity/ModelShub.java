@@ -1012,33 +1012,31 @@ public class ModelShub extends ModelBase {
         moveHead(shub, netHeadYaw, headPitch);
         moveTentaclesPassively(shub, ageInTicks);
         sit(shub.sittingProgress);
-        openTheCursedMaw(shub.openingProgress);
-        doWalkingAnims(limbSwing, limbSwingAmount);
+        openTheCursedMaw(shub, shub.openingProgress);
+        if (!shub.isSitting())
+            doWalkingAnims(limbSwing, limbSwingAmount);
 
     }
 
     private void doWalkingAnims(float limbSwing, float limbSwingAmount){
-        this.rfLeg01.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.15 * limbSwingAmount);
-        this.lfLeg01.rotateAngleZ += (float)  (MathHelper.cos(limbSwing * 0.6662F) * 0.15 * limbSwingAmount);
-        this.rbLeg01.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F) * 0.15 * limbSwingAmount) ;
-        this.lbLeg01.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.15 * limbSwingAmount);
+        float speedMult = 0.2662F;
+        float amountMult = 0.3F;
+        this.rfLeg01.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult + (float)Math.PI) * amountMult * limbSwingAmount);
+        this.lfLeg01.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult) * amountMult * limbSwingAmount);
+        this.rbLeg01.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult) * amountMult * limbSwingAmount) ;
+        this.lbLeg01.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult + (float)Math.PI) * amountMult * limbSwingAmount);
 
-        this.rfLeg02.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
-        this.lfLeg02.rotateAngleZ += (float)  (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount);
-        this.rbLeg02.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount) ;
-        this.lbLeg02.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
+        this.rfLeg02.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult + (float)Math.PI) * amountMult * limbSwingAmount);
+        this.lfLeg02.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult) * amountMult * limbSwingAmount);
+        this.rbLeg02.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult) * amountMult * limbSwingAmount) ;
+        this.lbLeg02.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult + (float)Math.PI) * amountMult * limbSwingAmount);
 
-        this.rfLeg03.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
-        this.lfLeg03.rotateAngleZ += (float)  (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount);
-        this.rbLeg03.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F) * 0.5 * limbSwingAmount) ;
-        this.lbLeg03.rotateAngleZ += (float) (MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.5 * limbSwingAmount);
+        this.rfLeg03.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult + (float)Math.PI) * amountMult * limbSwingAmount);
+        this.lfLeg03.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult) * amountMult * limbSwingAmount);
+        this.rbLeg03.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult) * amountMult * limbSwingAmount) ;
+        this.lbLeg03.rotateAngleZ += (MathHelper.cos(limbSwing * speedMult + (float)Math.PI) * amountMult * limbSwingAmount);
 
-
-      /*  this.rfLeg01.rotateAngleZ = -0.45378560551852565F + (float) (0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.25 * limbSwingAmount);
-        this.lfLeg01.rotateAngleZ = 0.45378560551852565F + (float)  (-0.5235987755982988F + MathHelper.cos(limbSwing * 0.6662F) * 0.25 * limbSwingAmount);
-        this.rbLeg01.rotateAngleZ = (float) (0.45378560551852565F + MathHelper.cos(limbSwing * 0.6662F) * 0.25 * limbSwingAmount) ;
-        this.lbLeg01.rotateAngleZ = (float) (-0.45378560551852565F + MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 0.25 * limbSwingAmount);
-    */} //last two ones are not adjusted yet
+    }
 
     //when the player is grabbed, go into the according pose
     public void moveHead(EntityShub shub, float netHeadYaw, float headPitch) {
@@ -1060,7 +1058,7 @@ public class ModelShub extends ModelBase {
 
     public void sit(float progression) {
         this.setRotateAngle(rbLeg01, 0.0F, 0.0F, 0.6981317007977318F, progression);
-        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F, progression);//change that
+        this.setRotateAngle(rbLeg02, 0.0F, 0.0F, -0.03490658503988659F, progression);
         this.setRotateAngle(rbLeg03, 0.0F, 0.0F, 1.2217304763960306F, progression);
 
         this.setRotateAngle(lbLeg01, 0.0F, 0.0F, -0.6981317007977318F, progression);
@@ -1068,11 +1066,11 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(lbLeg03, 0.0F, 0.0F, -1.2217304763960306F, progression);
 
         this.setRotateAngle(rfLeg01, -1.48352986419518F, 0.22689280275926282F, -0.17453292519943295F, progression);
-        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, -0.2617993877991494F, progression);//change that to work, look at the setAngles stuff
+        this.setRotateAngle(rfLeg02, 0.0F, 0.0F, -0.2617993877991494F, progression);
         this.setRotateAngle(rfLeg03, 0.0F, 0.0F, 0.2792526803190927F, progression);
 
         this.setRotateAngle(lfLeg01, -1.5707963267948966F, -0.22689280275926282F, 0.17453292519943295F, progression);
-        this.setRotateAngle(lfLeg02, 0, 0.0F, 0.2617993877991494F, progression);  ///that behaves weird - and only that
+        this.setRotateAngle(lfLeg02, 0, 0.0F, 0.2617993877991494F, progression);
         this.setRotateAngle(lfLeg03, 0.0F, 0.0F, -0.2792526803190927F, progression);
 
         this.setRotateAngle(rTentacle01[0], 0.6283185307179586F, 0.6283185307179586F, 0.0F, progression);
@@ -1121,11 +1119,13 @@ public class ModelShub extends ModelBase {
         this.setRotateAngle(rbHoof, 0.0F, 0.0F, -1.9198621771937625F, progression);
     }
 
-    public void openTheCursedMaw(float progression) {
+    public void openTheCursedMaw(EntityShub shub, float progression) {
         this.setRotateAngle(lMouth01, 0.0F, -0.9599310885968813F, 0.0F, progression);
         this.setRotateAngle(lMouth02, 0.0F, -0.9599310885968813F, 0.0F, progression);
         this.setRotateAngle(rMouth01, 0.0F, 0.9599310885968813F, 0.0F, progression);
         this.setRotateAngle(rMouth02, 0.0F, 0.9599310885968813F, 0.0F, progression);
+        rfLeg02.rotateAngleZ += MathHelper.sin(progression) * 0.75F * shub.sittingProgress;
+        lfLeg02.rotateAngleZ -= MathHelper.sin(progression) * 0.75F * shub.sittingProgress;
     }
 
     @Override

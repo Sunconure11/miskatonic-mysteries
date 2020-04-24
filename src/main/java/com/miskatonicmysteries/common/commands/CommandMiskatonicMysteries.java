@@ -76,7 +76,7 @@ public class CommandMiskatonicMysteries extends CommandBase{
             player = server.getEntityWorld().getPlayerEntityByName(args[0]);
             mode = args[1];
         }else{
-            throw new WrongUsageException(getUsage(sender)); //todo add localization to that later
+            throw new WrongUsageException(getUsage(sender));
         }
         if (args.length >= 3)
             value = args[2];

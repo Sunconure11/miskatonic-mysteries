@@ -36,8 +36,8 @@ public class CthulhuStructureProcessor extends OldStructureProcessor {
             }else if (worldIn.rand.nextFloat() < 0.2F){
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.moss_stone_cthulhu_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
             }
-        }else
-            if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
+        }/*else
+           if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)){
                 float r = worldIn.rand.nextFloat();
                 if (r <= 0.5) {
                     return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1), null));
@@ -53,7 +53,7 @@ public class CthulhuStructureProcessor extends OldStructureProcessor {
                 }else{
                     return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));
                 }
-        }
+        }*/
         if (!blockInfoIn.blockState.getBlock().equals(Blocks.AIR) && pos.getY() <= groundY){
             boolean flag = true;
             for (int i = 1; flag; i++){

@@ -32,7 +32,7 @@ public class WorldGenShubShrine extends WorldGenerator {
         WorldServer worldServer = (WorldServer) worldIn;
         MinecraftServer minecraftServer = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldServer.getStructureTemplateManager();
-        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/shub/shrine_shubniggurath_forest_" + (1 + rand.nextInt(4))));
+        Template template = templateManager.getTemplate(minecraftServer, new ResourceLocation(MiskatonicMysteries.MODID,"shrines/shub/shub_" + (1 + rand.nextInt(4))));
 
         if (canSpawnHere(template, worldServer, position)) {
             IBlockState iBlockState = worldIn.getBlockState(position);

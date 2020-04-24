@@ -98,7 +98,7 @@ public class MiskatonicMysteries {
         ModBiomes.registerBiomes();
         ModEntities.init();
         initTileEntities();
-        ModObjects.addBanners(); //todo, add the rest of the recipes
+        ModObjects.addBanners();
     }
 
     @EventHandler

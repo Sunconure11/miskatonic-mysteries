@@ -43,15 +43,16 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
         navigator = new PathNavigateGroundIgnoreSpecial(this, worldIn);
     }
 
+
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45F);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6F);
     }
 
      @Override
     public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-        /*if (player.isSneaking()) {
+        if (player.isSneaking()) {
                 if (hand == EnumHand.MAIN_HAND) {
                     setSitting(!isSitting());
                 }
@@ -59,7 +60,7 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
                 if (hand == EnumHand.MAIN_HAND) {
                     openMouth(!isMouthOpen());
                 }
-            }*/
+            }
         return super.applyPlayerInteraction(player, vec, hand);
     }
 
@@ -95,7 +96,7 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
     }
 
     public boolean isMouthOpen() {
-        return dataManager.get(MOUTH_OPEN);// && openingProgress >= 1;
+        return dataManager.get(MOUTH_OPEN);
     }
 
     public void openMouth(boolean open) {
@@ -115,7 +116,7 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
 
     @Override
     public float getEyeHeight() {
-        return super.getEyeHeight() - 5 * sittingProgress;
+        return super.getEyeHeight() - (isSitting() ? 5 : 0);
     }
 
     @Override
@@ -123,15 +124,15 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
         return 1;
     }
 
-
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
-        return super.getRenderBoundingBox().grow(20);
+        return super.getRenderBoundingBox().grow(5);
     }
 
     @Override
     public AxisAlignedBB getEntityBoundingBox() {
-        return super.getEntityBoundingBox().grow(0, -5 * sittingProgress * 0.5, 0).offset(0, -5 * sittingProgress * 0.5, 0);
+        AxisAlignedBB box = super.getEntityBoundingBox();
+        return isSitting() ? box.setMaxY(box.maxY - 5) : box;
     }
 
     @Override
@@ -152,29 +153,6 @@ public class EntityShub extends AbstractOldOne implements IIgnoreMaterials {
         openMouth(compound.getBoolean("mouthOpen"));
         openingProgress = compound.getFloat("openingProgress");
         super.readEntityFromNBT(compound);
-    }
-
-    @Override
-    public void updatePassenger(Entity entity) {
-
-        if (entity instanceof EntityPlayerMP) {
-            NetHandlerPlayServer handler = ((EntityPlayerMP) entity).connection;
-            try {
-                ReflectionHelper.findField(NetHandlerPlayServer.class, "floating", "field_184344_B", "B").set(handler, false);
-                ReflectionHelper.findField(NetHandlerPlayServer.class, "floatingTickCount", "field_147365_f", "C").set(handler, 0);
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        if (entity instanceof EntityLivingBase) {
-           /* double a = Math.toRadians(rotationYaw);
-            double offSetX = 0;//Math.sin(a) * getTongueLength() > 0 ? -0.125D : -0.35D;
-            double offSetZ = 0;//-Math.cos(a) * getTongueLength() > 0 ? -0.125D : -0.35D;
-            entity.setPosition(tentacle_grip.posX + offSetX, tentacle_grip.posY - entity.height * 0.3D, tentacle_grip.posZ + offSetZ);
-            if (entity.isSneaking())
-                entity.setSneaking(false);*/
-        }
     }
 
     @Override

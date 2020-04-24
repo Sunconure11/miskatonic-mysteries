@@ -53,6 +53,7 @@ public class WorldGenUtil {
                     entityliving.setLocationAndAngles((double) ((float) posX + 0.5F), (double) blockpos.getY(), (double) ((float) posZ + 0.5F), randomIn.nextFloat() * 360.0F, 0.0F);
                     worldIn.spawnEntity(entityliving);
                     ientitylivingdata = entityliving.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(entityliving)), ientitylivingdata);
+                    entityliving.enablePersistence();
                     flag = true;
                 }
 

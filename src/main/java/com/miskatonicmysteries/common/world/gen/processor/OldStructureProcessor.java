@@ -71,11 +71,11 @@ public class OldStructureProcessor implements ITemplateProcessor {
         return blockInfoIn.blockState.getBlock().equals(Blocks.AIR) ? new Template.BlockInfo(pos, worldIn.getBlockState(pos), null) : blockInfoIn;
     }
 
-    public Template.BlockInfo addStatue(World world, BlockPos pos, BlockStatue statue){
+    public Template.BlockInfo addStatue(World world, BlockPos pos, BlockStatue statue, EnumFacing facing, int addedRotation){
         TileEntityStatue statueTile = new TileEntityStatue();
         statueTile.setBlessing(statue.associatedGOO);
         statueTile.statue = statue.statue.getName();
-        return new Template.BlockInfo(pos, statue.getDefaultState().withProperty(BlockStatue.FACING, EnumFacing.fromAngle(world.rand.nextInt(360))), statueTile.serializeNBT());
+        return new Template.BlockInfo(pos, statue.getDefaultState().withProperty(BlockStatue.FACING, BlockStatue.getRotationFromFacing(facing, addedRotation)), statueTile.serializeNBT());
     }
 
     public boolean hasStatueInChunk(World world, BlockPos pos){

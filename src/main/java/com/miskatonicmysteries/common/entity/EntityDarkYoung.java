@@ -135,12 +135,6 @@ public class EntityDarkYoung extends EntityTameable implements IEntityMultiPart,
         return false;
     }
 
-    @Override
-    public boolean hitByEntity(Entity entityIn) {
-        System.out.println(getType());
-        return super.hitByEntity(entityIn);
-    }
-
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {

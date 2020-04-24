@@ -23,18 +23,13 @@ import net.minecraftforge.common.BiomeDictionary;
 import javax.annotation.Nullable;
 
 public class HasturStructureProcessor extends OldStructureProcessor {
-    public HasturStructureProcessor(Biome biome, int groundY, Rotation rotation, Mirror mirror) {
+    public HasturStructureProcessor(Biome biome, int groundY, Rotation rotation, Mirror mirror) { //todo fix crash
         super(groundY, true, true, false, biome, rotation, mirror);
     }
 
     @Nullable
     @Override
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
-        if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.CONIFEROUS)) {
-            blockInfoIn = new Template.BlockInfo(pos, getTaigaVariants(blockInfoIn.blockState), blockInfoIn.tileentityData);
-        }
-
-
         if (blockInfoIn.blockState.getBlock().equals(ModObjects.stone_hastur_mural)) {
             if (worldIn.rand.nextBoolean()) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.moss_stone_hastur_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
@@ -43,18 +38,20 @@ public class HasturStructureProcessor extends OldStructureProcessor {
             if (worldIn.rand.nextBoolean()) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.yellow_terracotta_hastur_mural.getDefaultState().withProperty(BlockMural.FACING, blockInfoIn.blockState.getValue(BlockMural.FACING)), null));
             }
-        } else if (blockInfoIn.blockState.getBlock().equals(Blocks.DIAMOND_BLOCK)) {
+        } else if (blockInfoIn.blockState.getBlock().equals(Blocks.NETHER_BRICK_STAIRS)) {
             float r = worldIn.rand.nextFloat();
             if (r <= 0.5) {
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, ModObjects.candles.getDefaultState().withProperty(BlockCandles.CANDLES, worldIn.rand.nextInt(4) + 1).withProperty(BlockCandles.LIT, worldIn.rand.nextBoolean()), null));
             } else if (r <= 0.8 && !hasStatueInChunk(worldIn, pos)) {
+                EnumFacing facing = blockInfoIn.blockState.getValue(BlockStairs.FACING);
+                int addDegrees = blockInfoIn.blockState.getValue(BlockStairs.SHAPE) == BlockStairs.EnumShape.INNER_LEFT  ? 1 :  blockInfoIn.blockState.getValue(BlockStairs.SHAPE) == BlockStairs.EnumShape.INNER_RIGHT ? -1 : 0;
                 switch (worldIn.rand.nextInt(3)) {
                     case 0:
-                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_terracotta));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_terracotta, facing, addDegrees));
                     case 1:
-                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_mossy));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_mossy, facing, addDegrees));
                     case 2:
-                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_stone));
+                        return super.processBlock(worldIn, pos, addStatue(worldIn, pos, ModObjects.statue_hastur_stone, facing, addDegrees));
                 }
             }else{
                 return super.processBlock(worldIn, pos, new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null));
