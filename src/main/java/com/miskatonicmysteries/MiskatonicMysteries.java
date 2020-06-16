@@ -213,6 +213,14 @@ public class MiskatonicMysteries {
         OreDictionary.registerOre("daggerMM", ModObjects.yellow_kings_dagger);
 
         OreDictionary.registerOre("wax", ModObjects.tallow);
+        OreDictionary.registerOre("materialWax", ModObjects.tallow);
+        OreDictionary.registerOre("materialBeeswax", ModObjects.tallow);
+        OreDictionary.registerOre("materialPressedWax", ModObjects.tallow);
+        OreDictionary.registerOre("itemBeeswax", ModObjects.tallow);
+        OreDictionary.registerOre("tallow", ModObjects.tallow);
+        OreDictionary.registerOre("clumpWax", ModObjects.tallow);
+        OreDictionary.registerOre("beeswax", ModObjects.tallow);
+        OreDictionary.registerOre("itemWax", ModObjects.tallow);
 
         OreDictionary.registerOre("skullSkeleton", new ItemStack(Items.SKULL, 1, 0));
         OreDictionary.registerOre("skullWitherSkeleton", new ItemStack(Items.SKULL, 1, 1));
